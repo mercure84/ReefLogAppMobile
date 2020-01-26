@@ -11,21 +11,19 @@ const Navigator = createBottomTabNavigator(
     Home: {
       screen: HomeScreen,
       navigationOptions: {
-        title: "Accueil"
-        //tabBarIcon: () => <Ionicons name="ios-home" size={25} />
+        tabBarLabel: "Accueil"
       }
     },
     DashBoard: {
       screen: DashboardScreen,
       navigationOptions: {
-        title: "Mon tableau de bord"
-        //tabBarIcon: () => <Ionicons name="speedometer" size={25} />
+        tabBarLabel: "Mon tableau de bord"
       }
     },
     Events: {
       screen: EventsScreen,
       navigationOptions: {
-        title: "Mes évènements"
+        tabBarLabel: "Mes évènements"
       }
     }
   },
