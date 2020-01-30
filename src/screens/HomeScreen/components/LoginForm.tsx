@@ -7,7 +7,7 @@ export const LoginForm = () => (
     <Text>Mon email : </Text>
     <TextInput placeholder="email@email.fr" />
     <Text>Mon mot de passe</Text>
-    <TextInput placeholder="mot de pass" />
+    <TextInput placeholder="mot de passe" />
     <Button title="Connexion" onPress={null} />
     <TouchableOpacity>
       <Text>Mot de passe oublié ?</Text>

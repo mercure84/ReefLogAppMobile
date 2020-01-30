@@ -6,8 +6,12 @@ export const SignupForm = () => (
   <View>
     <Text>Mon email : </Text>
     <TextInput placeholder="email@email.fr" />
-    <Text>Mon mot de passe</Text>
-    <TextInput placeholder="mot de pass" />
+    <Text>Mon pseudo : </Text>
+    <TextInput placeholder="pseudo" />
+    <Text>Choisir un mot de passe</Text>
+    <TextInput placeholder="mot de passe" />
+    <Text>Confirmer votre mot de passe </Text>
+    <TextInput placeholder="mot de passe" />
     <Button title="Créer mon compte" onPress={null} />
   </View>
 );
