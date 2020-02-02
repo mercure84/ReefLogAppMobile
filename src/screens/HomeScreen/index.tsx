@@ -95,6 +95,7 @@ const style = StyleSheet.create({
     alignSelf: "center"
   },
   homeImage: {
+    borderRadius: 100,
     width: 300,
     height: 200
   },

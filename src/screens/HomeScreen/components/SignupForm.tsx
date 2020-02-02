@@ -1,7 +1,11 @@
 import React, { useState } from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, ActivityIndicator } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { signUpService } from "../../../services/apiServices";
+
+const checkPassword = (password, repassword): boolean => {
+  return password === repassword && password.length > 5;
+};
 
 export const SignupForm = () => {
   const [email, setEmail] = useState("");
@@ -9,17 +13,19 @@ export const SignupForm = () => {
   const [password, setPassword] = useState("");
   const [repassword, setRepassword] = useState("");
   const [isPasswordOk, setPasswordOK] = useState(true);
+  const [isLoading, setLoading] = useState(false);
 
-  const checkPassword = () => {
-    console.log(password);
-    console.log(repassword);
-    password === repassword
-      ? password.length > 5
-        ? setPasswordOK(true)
-        : setPasswordOK(false)
-      : setPasswordOK(false);
-
-    console.log(isPasswordOk);
+  const submitNewMember = async (pEmail, pUsername, pPassword, pRepassword) => {
+    setLoading(true);
+    const response = await signUpService(
+      pEmail,
+      pUsername,
+      pPassword,
+      pRepassword
+    );
+    console.log("Réponse de ma requête = " + response);
+    setLoading(false);
+    console.log("Réponse de ma requête = " + response);
   };
 
   return (
@@ -50,29 +56,35 @@ export const SignupForm = () => {
       <Text>Choisir un mot de passe</Text>
       <TextInput
         textContentType="newPassword"
-        secureTextEntry={true}
+        secureTextEntry={false}
         maxLength={12}
         autoCompleteType="off"
         placeholder="mot de passe"
-        onChangeText={text => setPassword(text)}
+        onChangeText={text => (
+          setPassword(text), setPasswordOK(checkPassword(text, repassword))
+        )}
       />
       <Text>Confirmer votre mot de passe </Text>
       <TextInput
         textContentType="newPassword"
-        secureTextEntry={true}
+        secureTextEntry={false}
         maxLength={12}
         autoCompleteType="off"
         placeholder="mot de passe"
-        onChangeText={text => setRepassword(text)}
-        onBlur={() => checkPassword()}
+        onChangeText={text => (
+          setRepassword(text), setPasswordOK(checkPassword(password, text))
+        )}
       />
 
       <Button
         title="Créer mon compte"
-        onPress={() => (
-          checkPassword(), signUpService(email, username, password, repassword)
-        )}
+        onPress={() =>
+          isPasswordOk
+            ? submitNewMember(email, username, password, repassword)
+            : null
+        }
       />
+      {isLoading && <ActivityIndicator />}
     </View>
   );
 };

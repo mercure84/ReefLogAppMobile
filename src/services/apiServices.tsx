@@ -10,7 +10,7 @@ export const signUpService = async (
 ) => {
   const urlService = urlServer + "api/addNewMember";
   const newMember = {
-    nickName: newUsername,
+    userName: newUsername,
     email: newEmail,
     password: newPassword,
     repassword: newRepassword
@@ -18,10 +18,10 @@ export const signUpService = async (
 
   try {
     console.log(
-      "On va essayer d'ajouter le nouveau membre suivant : " +
+      "On demande l'ajout du nouveau membre suivant : " +
         newMember.email +
         ", " +
-        newMember.nickName
+        newMember.userName
     );
     const response = await fetch(urlService, {
       method: "POST",
@@ -31,7 +31,6 @@ export const signUpService = async (
       },
       body: JSON.stringify(newMember)
     });
-    console.log("La réponse est là : " + response);
     return response.json();
   } catch (error) {
     console.error(error);
