@@ -3,7 +3,7 @@ import { View, Text, Button } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 
 export const LoginForm = () => (
-  <View>
+  <View style={{ padding: 50 }}>
     <Text>Mon email : </Text>
     <TextInput placeholder="email@email.fr" />
     <Text>Mon mot de passe</Text>

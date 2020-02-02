@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   View,
+  KeyboardAvoidingView,
   Text,
   Button,
   TouchableOpacity,
@@ -23,15 +24,22 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
     displaySignupForm
   );
   return (
-    <View style={style.container}>
-      <View style={style.header}>
+    <KeyboardAvoidingView
+      style={style.container}
+      behavior="position"
+      enabled={true}
+    >
+      <KeyboardAvoidingView
+        contentContainerStyle={{ display: "none" }}
+        style={style.header}
+      >
         <Text style={style.title1}>Bienvenue sur REEFLOG !</Text>
         <Image
           resizeMode="contain"
           style={style.homeImage}
           source={require("../../assets/home.png")}
         />
-      </View>
+      </KeyboardAvoidingView>
       <View style={style.homeButton}>
         <View style={{ margin: 5 }}>
           <Button
@@ -59,14 +67,14 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
       <TouchableOpacity>
         <Text> A propos </Text>
       </TouchableOpacity>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
 const style = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center"
   },
   button: {

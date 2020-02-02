@@ -2,19 +2,28 @@ import { urlServer } from "../constants/constants";
 
 // service signUp : add a new member
 
-export const signUpService = async () => {
+export const signUpService = async (
+  newEmail,
+  newUsername,
+  newPassword,
+  newRepassword
+) => {
   const urlService = urlServer + "api/addNewMember";
   const newMember = {
-    lastName: "NomTestInteg",
-    firstName: "PrenomTestInteg",
-    nickName: "PseudoInteg",
-    email: "test123@chaville.fr",
-    password: "test123",
-    repassword: "test123"
+    nickName: newUsername,
+    email: newEmail,
+    password: newPassword,
+    repassword: newRepassword
   };
 
   try {
-    const response = await fetch("http://192.168.1.19:8080/api/addNewMember", {
+    console.log(
+      "On va essayer d'ajouter le nouveau membre suivant : " +
+        newMember.email +
+        ", " +
+        newMember.nickName
+    );
+    const response = await fetch(urlService, {
       method: "POST",
       headers: {
         Accept: "application/json",
