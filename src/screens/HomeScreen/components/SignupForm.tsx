@@ -13,7 +13,10 @@ export const SignupForm = () => {
   const [password, setPassword] = useState("");
   const [repassword, setRepassword] = useState("");
   const [isPasswordOk, setPasswordOK] = useState(true);
+
   const [isLoading, setLoading] = useState(false);
+  const [isInfoVisible, setInfoVisible] = useState(true);
+  const [info, setInfo] = useState();
 
   const submitNewMember = async (pEmail, pUsername, pPassword, pRepassword) => {
     setLoading(true);
@@ -23,19 +26,30 @@ export const SignupForm = () => {
       pPassword,
       pRepassword
     );
-    console.log("Réponse de ma requête = " + response);
+    console.log("réponse status = " + response.status);
+    response.role === "USER"
+      ? setInfo(
+          "Votre compte a bien été créé ! un email de confirmaton a été envoyé à " +
+            response.email
+        )
+      : setInfo("Un problème est survenu : " + response.message);
+    setInfoVisible(true);
     setLoading(false);
-    console.log("Réponse de ma requête = " + response);
   };
 
   return (
     <View style={{ padding: 50 }}>
+      {isLoading && <ActivityIndicator />}
+
       {!isPasswordOk && repassword.length > 0 && (
         <Text style={{ color: "red" }}>
           Vos mots de passe de correspondent pas, la taille doit être supérieure
           à 6 caractères !
         </Text>
       )}
+
+      {isInfoVisible && <Text>{info}</Text>}
+
       <Text>Mon email : </Text>
       <TextInput
         textContentType="emailAddress"
@@ -56,7 +70,7 @@ export const SignupForm = () => {
       <Text>Choisir un mot de passe</Text>
       <TextInput
         textContentType="newPassword"
-        secureTextEntry={false}
+        secureTextEntry={true}
         maxLength={12}
         autoCompleteType="off"
         placeholder="mot de passe"
@@ -67,7 +81,7 @@ export const SignupForm = () => {
       <Text>Confirmer votre mot de passe </Text>
       <TextInput
         textContentType="newPassword"
-        secureTextEntry={false}
+        secureTextEntry={true}
         maxLength={12}
         autoCompleteType="off"
         placeholder="mot de passe"
@@ -84,7 +98,6 @@ export const SignupForm = () => {
             : null
         }
       />
-      {isLoading && <ActivityIndicator />}
     </View>
   );
 };
