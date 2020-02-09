@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { View, Text, Button, ActivityIndicator } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { signUpService } from "../../../services/apiServices";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import { MessageInfo } from "./MessageInfo";
 
 const checkPassword = (password, repassword): boolean => {
   return password === repassword && password.length > 5;
@@ -24,7 +26,8 @@ export const SignupForm = ({ homeInfoCallBack, showSignupForm }) => {
       pPassword,
       pRepassword
     );
-    console.log("réponse status = " + response.status);
+    setLoading(false);
+    console.log("réponse status = " + response.role);
     if (response.role === "USER") {
       homeInfoCallBack(
         "Votre compte a bien été créé ! un email de confirmaton a été envoyé à " +
@@ -34,19 +37,15 @@ export const SignupForm = ({ homeInfoCallBack, showSignupForm }) => {
     } else {
       homeInfoCallBack("Un problème est survenu : " + response.message);
     }
-    setLoading(false);
   };
 
   return (
     <View style={{ padding: 50 }}>
       {isLoading && <ActivityIndicator />}
 
-      {!isPasswordOk && repassword.length > 0 && (
-        <Text style={{ color: "red" }}>
-          Vos mots de passe de correspondent pas, la taille doit être supérieure
-          à 6 caractères !
-        </Text>
-      )}
+      {!isPasswordOk && repassword.length > 0 ? (
+        <MessageInfo message="Mots de passe différents ou inférieurs à 6 caractères" />
+      ) : null}
 
       <Text>Mon email : </Text>
       <TextInput
@@ -87,7 +86,6 @@ export const SignupForm = ({ homeInfoCallBack, showSignupForm }) => {
           setRepassword(text), setPasswordOK(checkPassword(password, text))
         )}
       />
-
       <Button
         title="Créer mon compte"
         onPress={() =>

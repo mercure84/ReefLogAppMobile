@@ -10,10 +10,10 @@ export const signUpService = async (
 ) => {
   const urlService = urlServer + "api/addNewMember";
   const newMember = {
-    userName: newUsername,
-    email: newEmail,
-    password: newPassword,
-    repassword: newRepassword
+    userName: newUsername.toLowerCase(),
+    email: newEmail.toLowerCase(),
+    password: newPassword.toLowerCase(),
+    repassword: newRepassword.toLowerCase()
   };
 
   try {
@@ -37,6 +37,29 @@ export const signUpService = async (
   }
 };
 
-export const testService = () => {
-  console.log("la fonction fonctionne bien hihihihihi");
+// service de connexion
+
+export const loginService = async (pEmail: string, pPassword: string) => {
+  const urlService = urlServer + "api/login";
+  const credentials = {
+    username: pEmail.toLowerCase(),
+    password: pPassword.toLowerCase()
+  };
+
+  try {
+    console.log(
+      "On demande la connexion pour l'email /" + credentials.username
+    );
+    const response = await fetch(urlService, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(credentials)
+    });
+    return response.json();
+  } catch (error) {
+    console.error(error);
+  }
 };

@@ -51,7 +51,7 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
             onPress={() => {
               toggleDisplaySignup(true);
               toggleDisplayLogin(false);
-              setMessageInfo(null);
+              setMessageInfo("Création d'un compte :");
             }}
           />
         </View>
@@ -61,7 +61,7 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
             onPress={() => {
               toggleDisplaySignup(false);
               toggleDisplayLogin(true);
-              setMessageInfo(null);
+              setMessageInfo("Connexion :");
             }}
           />
         </View>
@@ -69,7 +69,12 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
       <View style={style.homeForms}>
         <MessageInfo message={messageInfo} />
 
-        {displayLoginFormState && <LoginForm />}
+        {displayLoginFormState && (
+          <LoginForm
+            homeInfoCallBack={setMessageInfo}
+            showLoginForm={toggleDisplayLogin}
+          />
+        )}
         {displaySignupFormState && (
           <SignupForm
             homeInfoCallBack={setMessageInfo}
