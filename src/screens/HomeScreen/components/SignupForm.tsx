@@ -7,7 +7,7 @@ const checkPassword = (password, repassword): boolean => {
   return password === repassword && password.length > 5;
 };
 
-export const SignupForm = ({ homeInfoCallBack }) => {
+export const SignupForm = ({ homeInfoCallBack, showSignupForm }) => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -15,8 +15,6 @@ export const SignupForm = ({ homeInfoCallBack }) => {
   const [isPasswordOk, setPasswordOK] = useState(true);
 
   const [isLoading, setLoading] = useState(false);
-  const [isInfoVisible, setInfoVisible] = useState(true);
-  const [info, setInfo] = useState();
 
   const submitNewMember = async (pEmail, pUsername, pPassword, pRepassword) => {
     setLoading(true);
@@ -27,13 +25,15 @@ export const SignupForm = ({ homeInfoCallBack }) => {
       pRepassword
     );
     console.log("réponse status = " + response.status);
-    response.role === "USER"
-      ? homeInfoCallBack(
-          "Votre compte a bien été créé ! un email de confirmaton a été envoyé à " +
-            response.email
-        )
-      : homeInfoCallBack("Un problème est survenu : " + response.message);
-
+    if (response.role === "USER") {
+      homeInfoCallBack(
+        "Votre compte a bien été créé ! un email de confirmaton a été envoyé à " +
+          response.email
+      );
+      showSignupForm(false);
+    } else {
+      homeInfoCallBack("Un problème est survenu : " + response.message);
+    }
     setLoading(false);
   };
 
@@ -47,8 +47,6 @@ export const SignupForm = ({ homeInfoCallBack }) => {
           à 6 caractères !
         </Text>
       )}
-
-      {isInfoVisible && <Text>{info}</Text>}
 
       <Text>Mon email : </Text>
       <TextInput

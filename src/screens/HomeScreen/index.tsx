@@ -51,6 +51,7 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
             onPress={() => {
               toggleDisplaySignup(true);
               toggleDisplayLogin(false);
+              setMessageInfo(null);
             }}
           />
         </View>
@@ -60,6 +61,7 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
             onPress={() => {
               toggleDisplaySignup(false);
               toggleDisplayLogin(true);
+              setMessageInfo(null);
             }}
           />
         </View>
@@ -69,7 +71,10 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
 
         {displayLoginFormState && <LoginForm />}
         {displaySignupFormState && (
-          <SignupForm homeInfoCallBack={setMessageInfo} />
+          <SignupForm
+            homeInfoCallBack={setMessageInfo}
+            showSignupForm={toggleDisplaySignup}
+          />
         )}
       </View>
       <TouchableOpacity>
