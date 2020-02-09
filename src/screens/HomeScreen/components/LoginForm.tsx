@@ -11,14 +11,14 @@ export const LoginForm = ({ homeInfoCallBack, showLoginForm }) => {
   const submitLogin = async (pEmail, pPassword) => {
     setLoading(true);
     const response = await loginService(pEmail, pPassword);
-    console.log("réponse = " + response);
-    if (response.status === "200") {
-      homeInfoCallBack("Connexion OK " + response.message);
+    setLoading(false);
+
+    if (response.token != null) {
+      homeInfoCallBack("Vous êtes connecté !");
       showLoginForm(false);
     } else {
       homeInfoCallBack("Un problème est survenu : " + response.message);
     }
-    setLoading(false);
   };
 
   return (
