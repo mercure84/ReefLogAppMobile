@@ -7,7 +7,7 @@ const checkPassword = (password, repassword): boolean => {
   return password === repassword && password.length > 5;
 };
 
-export const SignupForm = () => {
+export const SignupForm = ({ homeInfoCallBack }) => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -28,12 +28,12 @@ export const SignupForm = () => {
     );
     console.log("réponse status = " + response.status);
     response.role === "USER"
-      ? setInfo(
+      ? homeInfoCallBack(
           "Votre compte a bien été créé ! un email de confirmaton a été envoyé à " +
             response.email
         )
-      : setInfo("Un problème est survenu : " + response.message);
-    setInfoVisible(true);
+      : homeInfoCallBack("Un problème est survenu : " + response.message);
+
     setLoading(false);
   };
 

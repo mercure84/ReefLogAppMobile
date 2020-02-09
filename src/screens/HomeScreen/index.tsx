@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { LoginForm } from "./components/LoginForm";
 import { SignupForm } from "./components/SignupForm";
+import { MessageInfo } from "./components/MessageInfo";
 
 interface Props {
   displayLoginForm: boolean;
@@ -23,6 +24,9 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
   const [displaySignupFormState, toggleDisplaySignup] = useState(
     displaySignupForm
   );
+
+  const [messageInfo, setMessageInfo] = useState();
+
   return (
     <KeyboardAvoidingView
       style={style.container}
@@ -61,8 +65,12 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
         </View>
       </View>
       <View style={style.homeForms}>
+        <MessageInfo message={messageInfo} />
+
         {displayLoginFormState && <LoginForm />}
-        {displaySignupFormState && <SignupForm />}
+        {displaySignupFormState && (
+          <SignupForm homeInfoCallBack={setMessageInfo} />
+        )}
       </View>
       <TouchableOpacity>
         <Text> A propos </Text>
@@ -100,7 +108,8 @@ const style = StyleSheet.create({
     height: 200
   },
   homeForms: {
-    flex: 2
+    flex: 2,
+    alignItems: "center"
   }
 });
 
