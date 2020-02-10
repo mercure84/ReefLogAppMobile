@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from 'react';
 import {
   View,
   KeyboardAvoidingView,
@@ -6,49 +6,48 @@ import {
   Button,
   TouchableOpacity,
   StyleSheet,
-  Image
-} from "react-native";
-import { LoginForm } from "./components/LoginForm";
-import { SignupForm } from "./components/SignupForm";
-import { MessageInfo } from "./components/MessageInfo";
-import { getData } from "../../services/storageDevice";
+  Image,
+} from 'react-native';
+import {LoginForm} from './components/LoginForm';
+import {SignupForm} from './components/SignupForm';
+import {MessageInfo} from './components/MessageInfo';
+import {getData} from '../../services/storageDevice';
 
 interface Props {
   displayLoginForm: boolean;
   displaySignupForm: boolean;
 }
 
-const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
+const HomeScreen = ({displayLoginForm, displaySignupForm}: Props) => {
   const [displayLoginFormState, toggleDisplayLogin] = useState(
-    displayLoginForm
+    displayLoginForm,
   );
   const [displaySignupFormState, toggleDisplaySignup] = useState(
-    displaySignupForm
+    displaySignupForm,
   );
 
   const [messageInfo, setMessageInfo] = useState();
 
-  console.log("Token = " + getData("id_token"));
+  const token = getData('id_token');
+  console.log('Token = ' + token);
 
   return (
     <KeyboardAvoidingView
       style={style.container}
       behavior="position"
-      enabled={true}
-    >
+      enabled={true}>
       <KeyboardAvoidingView
-        contentContainerStyle={{ display: "none" }}
-        style={style.header}
-      >
+        contentContainerStyle={{display: 'none'}}
+        style={style.header}>
         <Text style={style.title1}>Bienvenue sur REEFLOG !</Text>
         <Image
           resizeMode="contain"
           style={style.homeImage}
-          source={require("../../assets/home.png")}
+          source={require('../../assets/home.png')}
         />
       </KeyboardAvoidingView>
       <View style={style.homeButton}>
-        <View style={{ margin: 5 }}>
+        <View style={{margin: 5}}>
           <Button
             title="Créer un compte"
             onPress={() => {
@@ -58,13 +57,13 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
             }}
           />
         </View>
-        <View style={{ margin: 5 }}>
+        <View style={{margin: 5}}>
           <Button
             title="Se connecter"
             onPress={() => {
               toggleDisplaySignup(false);
               toggleDisplayLogin(true);
-              setMessageInfo("Connexion :");
+              setMessageInfo('Connexion :');
             }}
           />
         </View>
@@ -95,35 +94,35 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
 const style = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "center"
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   button: {
-    margin: 20
+    margin: 20,
   },
   title1: {
     fontSize: 24,
-    fontWeight: "800",
-    textAlign: "center"
+    fontWeight: '800',
+    textAlign: 'center',
   },
   header: {
     padding: 50,
     flex: 1,
-    alignContent: "center"
+    alignContent: 'center',
   },
   homeButton: {
-    flexDirection: "row",
-    alignSelf: "center"
+    flexDirection: 'row',
+    alignSelf: 'center',
   },
   homeImage: {
     borderRadius: 100,
     width: 300,
-    height: 200
+    height: 200,
   },
   homeForms: {
     flex: 2,
-    alignItems: "center"
-  }
+    alignItems: 'center',
+  },
 });
 
 export default HomeScreen;

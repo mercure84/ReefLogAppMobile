@@ -2,7 +2,6 @@ import React from 'react';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 
 import {createAppContainer} from 'react-navigation';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import HomeScreen from '../screens/HomeScreen';
 import DashboardScreen from '../screens/DashBoardScreen';
