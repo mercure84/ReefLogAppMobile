@@ -29,7 +29,10 @@ const HomeScreen = ({displayLoginForm, displaySignupForm}: Props) => {
   const [messageInfo, setMessageInfo] = useState();
 
   const token = getData('id_token');
+  const emailUser = getData('emailUser');
+
   console.log('Token = ' + token);
+  console.log('Email actuellement stocké = ' + emailUser);
 
   return (
     <KeyboardAvoidingView
