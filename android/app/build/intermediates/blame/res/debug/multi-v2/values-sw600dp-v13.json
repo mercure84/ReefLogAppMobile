@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\Documents\\PROJET12\\MobAppReefLog\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-sw600dp-v13\\values-sw600dp-v13.xml",
+            "outputFile": "D:\\Documents\\PROJET12\\MobileReefLog\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-sw600dp-v13\\values-sw600dp-v13.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\julie\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.1.0.aar\\c7bd9ea816def84db4f4f4d68fda1724\\res\\values-sw600dp-v13\\values-sw600dp-v13.xml",
+                    "source": "C:\\Users\\julie\\.gradle\\caches\\transforms-2\\files-2.1\\b884ee12341edb0d559bcd44e10155b5\\appcompat-1.1.0\\res\\values-sw600dp-v13\\values-sw600dp-v13.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\julie\\.gradle\\caches\\transforms-1\\files-1.1\\material-1.0.0.aar\\34958965ecc7098443dd71015b1fb915\\res\\values-sw600dp-v13\\values-sw600dp-v13.xml",
+                    "source": "C:\\Users\\julie\\.gradle\\caches\\transforms-2\\files-2.1\\c192080d7654c49127da3bfcec4b17c3\\material-1.0.0\\res\\values-sw600dp-v13\\values-sw600dp-v13.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,10,11,12",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4",

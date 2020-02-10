@@ -1,14 +1,11 @@
-import React from "react";
-import { View, Text, Button, TouchableOpacity, StyleSheet } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import { getData } from "../services/storageDevice";
+import React from 'react';
+import {View, Text, Button, TouchableOpacity, StyleSheet} from 'react-native';
 
 class DashboardScreen extends React.Component {
   render() {
     return (
       <View style={style.container}>
         <Text>Votre Tableau de Bord</Text>
-        <Ionicons name="ios-settings" size={25} />
 
         <Text>Mon aquarium</Text>
         <Text>Mes derniers tests</Text>
@@ -23,9 +20,9 @@ class DashboardScreen extends React.Component {
 const style = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  }
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export default DashboardScreen;
