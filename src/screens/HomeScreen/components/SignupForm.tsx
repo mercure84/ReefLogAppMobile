@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { View, Text, Button, ActivityIndicator } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { signUpService } from "../../../services/apiServices";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import { MessageInfo } from "./MessageInfo";
 
 const checkPassword = (password, repassword): boolean => {

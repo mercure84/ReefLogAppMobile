@@ -11,6 +11,7 @@ import {
 import { LoginForm } from "./components/LoginForm";
 import { SignupForm } from "./components/SignupForm";
 import { MessageInfo } from "./components/MessageInfo";
+import { getData } from "../../services/storageDevice";
 
 interface Props {
   displayLoginForm: boolean;
@@ -26,6 +27,8 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
   );
 
   const [messageInfo, setMessageInfo] = useState();
+
+  console.log("Token = " + getData("id_token"));
 
   return (
     <KeyboardAvoidingView
