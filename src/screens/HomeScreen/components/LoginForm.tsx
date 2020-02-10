@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, Button, ActivityIndicator } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { loginService } from "../../../services/apiServices";
+import { storeData } from "../../../services/storageDevice";
 
 export const LoginForm = ({ homeInfoCallBack, showLoginForm }) => {
   const [email, setEmail] = useState("");
@@ -16,6 +17,7 @@ export const LoginForm = ({ homeInfoCallBack, showLoginForm }) => {
     if (response.token != null) {
       homeInfoCallBack("Vous êtes connecté !");
       showLoginForm(false);
+      storeData("id_token", response.token);
     } else {
       homeInfoCallBack("Un problème est survenu : " + response.message);
     }

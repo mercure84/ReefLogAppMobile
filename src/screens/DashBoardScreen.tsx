@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, Button, TouchableOpacity, StyleSheet } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { getData } from "../services/storageDevice";
 
 class DashboardScreen extends React.Component {
   render() {
@@ -12,7 +13,6 @@ class DashboardScreen extends React.Component {
         <Text>Mon aquarium</Text>
         <Text>Mes derniers tests</Text>
         <Text>Mes évènements</Text>
-        <Text>Followers : </Text>
         <TouchableOpacity></TouchableOpacity>
         <Button title="Un bouton" onPress={null} />
       </View>
