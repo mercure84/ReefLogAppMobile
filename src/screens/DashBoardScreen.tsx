@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Button, TouchableOpacity, StyleSheet} from 'react-native';
+import { View, Text, Button, TouchableOpacity, StyleSheet } from 'react-native';
 
 class DashboardScreen extends React.Component {
   render() {

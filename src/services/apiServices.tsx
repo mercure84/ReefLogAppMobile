@@ -19,9 +19,9 @@ export const signUpService = async (
   try {
     console.log(
       "On demande l'ajout du nouveau membre suivant : " +
-        newMember.email +
-        ", " +
-        newMember.userName
+      newMember.email +
+      ", " +
+      newMember.userName
     );
     const response = await fetch(urlService, {
       method: "POST",

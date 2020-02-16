@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   KeyboardAvoidingView,
@@ -8,17 +8,17 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import {LoginForm} from './components/LoginForm';
-import {SignupForm} from './components/SignupForm';
-import {MessageInfo} from './components/MessageInfo';
-import {getData} from '../../services/storageDevice';
+import { LoginForm } from './components/LoginForm';
+import { SignupForm } from './components/SignupForm';
+import { MessageInfo } from './components/MessageInfo';
+import { getData } from '../../services/storageDevice';
 
 interface Props {
   displayLoginForm: boolean;
   displaySignupForm: boolean;
 }
 
-const HomeScreen = ({displayLoginForm, displaySignupForm}: Props) => {
+const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
   const [displayLoginFormState, toggleDisplayLogin] = useState(
     displayLoginForm,
   );
@@ -40,7 +40,7 @@ const HomeScreen = ({displayLoginForm, displaySignupForm}: Props) => {
       behavior="position"
       enabled={true}>
       <KeyboardAvoidingView
-        contentContainerStyle={{display: 'none'}}
+        contentContainerStyle={{ display: 'none' }}
         style={style.header}>
         <Text style={style.title1}>Bienvenue sur REEFLOG !</Text>
         <Image
@@ -50,7 +50,7 @@ const HomeScreen = ({displayLoginForm, displaySignupForm}: Props) => {
         />
       </KeyboardAvoidingView>
       <View style={style.homeButton}>
-        <View style={{margin: 5}}>
+        <View style={{ margin: 5 }}>
           <Button
             title="Créer un compte"
             onPress={() => {
@@ -60,7 +60,7 @@ const HomeScreen = ({displayLoginForm, displaySignupForm}: Props) => {
             }}
           />
         </View>
-        <View style={{margin: 5}}>
+        <View style={{ margin: 5 }}>
           <Button
             title="Se connecter"
             onPress={() => {

@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
-import {View, Text, Button, ActivityIndicator} from 'react-native';
-import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
-import {loginService} from '../../../services/apiServices';
-import {storeData} from '../../../services/storageDevice';
+import React, { useState } from 'react';
+import { View, Text, Button, ActivityIndicator } from 'react-native';
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import { loginService } from '../../../services/apiServices';
+import { storeData } from '../../../services/storageDevice';
 
-export const LoginForm = ({homeInfoCallBack, showLoginForm}) => {
+export const LoginForm = ({ homeInfoCallBack, showLoginForm }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setLoading] = useState(false);
@@ -25,7 +25,7 @@ export const LoginForm = ({homeInfoCallBack, showLoginForm}) => {
   };
 
   return (
-    <View style={{padding: 50}}>
+    <View style={{ padding: 50 }}>
       {isLoading && <ActivityIndicator />}
 
       <Text>Mon email : </Text>

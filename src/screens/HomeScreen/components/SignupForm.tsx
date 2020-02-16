@@ -30,7 +30,7 @@ export const SignupForm = ({ homeInfoCallBack, showSignupForm }) => {
     if (response.role === "USER") {
       homeInfoCallBack(
         "Votre compte a bien été créé ! un email de confirmaton a été envoyé à " +
-          response.email
+        response.email
       );
       showSignupForm(false);
     } else {
