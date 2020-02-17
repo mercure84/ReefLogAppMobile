@@ -11,7 +11,6 @@ MERGED from [:react-native-gesture-handler] D:\Documents\PROJET12\MobileReefLog\
 MERGED from [:react-native-reanimated] D:\Documents\PROJET12\MobileReefLog\node_modules\react-native-reanimated\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-safe-area-context] D:\Documents\PROJET12\MobileReefLog\node_modules\react-native-safe-area-context\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-screens] D:\Documents\PROJET12\MobileReefLog\node_modules\react-native-screens\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-11:12
-MERGED from [:react-native-vector-icons] D:\Documents\PROJET12\MobileReefLog\node_modules\react-native-vector-icons\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-11:12
 MERGED from [com.facebook.react:react-native:0.61.5] C:\Users\julie\.gradle\caches\transforms-2\files-2.1\94d6389e5563b4e9ebe761380add65fd\jetified-react-native-0.61.5\AndroidManifest.xml:2:1-13:12
 MERGED from [org.webkit:android-jsc:r245459] C:\Users\julie\.gradle\caches\transforms-2\files-2.1\0f25c7a25a350b1fa744335bb1b06c5e\android-jsc-r245459\AndroidManifest.xml:2:1-11:12
 MERGED from [com.google.android.material:material:1.0.0] C:\Users\julie\.gradle\caches\transforms-2\files-2.1\c192080d7654c49127da3bfcec4b17c3\material-1.0.0\AndroidManifest.xml:17:1-24:12
@@ -160,8 +159,6 @@ MERGED from [:react-native-safe-area-context] D:\Documents\PROJET12\MobileReefLo
 MERGED from [:react-native-safe-area-context] D:\Documents\PROJET12\MobileReefLog\node_modules\react-native-safe-area-context\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-screens] D:\Documents\PROJET12\MobileReefLog\node_modules\react-native-screens\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-screens] D:\Documents\PROJET12\MobileReefLog\node_modules\react-native-screens\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
-MERGED from [:react-native-vector-icons] D:\Documents\PROJET12\MobileReefLog\node_modules\react-native-vector-icons\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
-MERGED from [:react-native-vector-icons] D:\Documents\PROJET12\MobileReefLog\node_modules\react-native-vector-icons\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
 MERGED from [com.facebook.react:react-native:0.61.5] C:\Users\julie\.gradle\caches\transforms-2\files-2.1\94d6389e5563b4e9ebe761380add65fd\jetified-react-native-0.61.5\AndroidManifest.xml:7:5-9:41
 MERGED from [com.facebook.react:react-native:0.61.5] C:\Users\julie\.gradle\caches\transforms-2\files-2.1\94d6389e5563b4e9ebe761380add65fd\jetified-react-native-0.61.5\AndroidManifest.xml:7:5-9:41
 MERGED from [org.webkit:android-jsc:r245459] C:\Users\julie\.gradle\caches\transforms-2\files-2.1\0f25c7a25a350b1fa744335bb1b06c5e\android-jsc-r245459\AndroidManifest.xml:7:5-9:41

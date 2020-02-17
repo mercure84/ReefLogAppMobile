@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, Button, ActivityIndicator } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
 import { signUpService } from "../../../services/apiServices";
 import { MessageInfo } from "./MessageInfo";
+import { TextInput } from "react-native-gesture-handler";
 
 const checkPassword = (password, repassword): boolean => {
   return password === repassword && password.length > 5;
