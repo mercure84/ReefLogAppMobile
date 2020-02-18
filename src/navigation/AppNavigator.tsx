@@ -11,13 +11,15 @@ import HomeScreen from '../screens/HomeScreen';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
+
 export const AppNavigator = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
+      <Tab.Navigator initialRouteName="DashBoard" >
         <Tab.Screen name="DashBoard" component={DashBoardScreen} />
         <Tab.Screen name="Story" component={EventsScreen} />
-        <Tab.Screen name="Parameters" component={ParametersScreen} />
+        <Tab.Screen name="Paramètres" component={ParametersScreen} />
+
       </Tab.Navigator>
     </NavigationContainer>
   );
@@ -27,7 +29,7 @@ export const HomeNavigator = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator headerMode="none">
         <Stack.Screen name="Home" component={HomeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
