@@ -1,4 +1,5 @@
 import React from 'react';
+import { Image } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -10,6 +11,38 @@ import ParametersScreen from '../screens/authentified/ParametersScreen';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
+//icons
+import dashboardIcon from '../assets/icons/home.png'
+import settingsIcon from '../assets/icons/settings-6.png'
+import story from '../assets/icons/notepad.png'
+
+
+
+const TabNavigator = () => {
+
+
+  return (
+
+    <Tab.Navigator initialRouteName="DashBoard">
+      <Tab.Screen name="DashBoard" component={DashBoardScreen} options={{
+        tabBarIcon: () => (
+          <Image source={dashboardIcon} style={{ height: 24, width: 24 }} />
+        ),
+      }} />
+      <Tab.Screen name="Story" component={EventsScreen} options={{
+        tabBarIcon: () => (
+          <Image source={story} style={{ height: 24, width: 24 }} />
+        ),
+      }} />
+      <Tab.Screen name="Paramètres" component={ParametersScreen} options={{
+        tabBarIcon: () => (
+          <Image source={settingsIcon} style={{ height: 24, width: 24 }} />
+        ),
+      }} />
+    </Tab.Navigator>
+  )
+}
+
 export const MainNavigator = ({ isTokenOK }) => {
 
   console.log("isTokenOK ??? " + isTokenOK)
@@ -20,22 +53,14 @@ export const MainNavigator = ({ isTokenOK }) => {
           (<Stack.Screen name="Identified">
             {
 
-              () => (<Tab.Navigator initialRouteName="DashBoard">
-                <Tab.Screen name="DashBoard" component={DashBoardScreen} />
-                <Tab.Screen name="Story" component={EventsScreen} />
-                <Tab.Screen name="Paramètres" component={ParametersScreen} />
-              </Tab.Navigator>)
+              () => TabNavigator()
             }
           </Stack.Screen>)
         }<Stack.Screen name="Signout" component={WelcomeScreen} />
         <Stack.Screen name="AuthentOk">
           {
 
-            () => (<Tab.Navigator initialRouteName="DashBoard">
-              <Tab.Screen name="DashBoard" component={DashBoardScreen} />
-              <Tab.Screen name="Story" component={EventsScreen} />
-              <Tab.Screen name="Paramètres" component={ParametersScreen} />
-            </Tab.Navigator>)
+            () => TabNavigator()
           }
         </Stack.Screen>
       </Stack.Navigator>
