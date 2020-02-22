@@ -3,11 +3,14 @@ import { View, Text, Button, ActivityIndicator } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { loginService } from '../../../services/apiServices';
 import { storeData } from '../../../services/storageDevice';
+import { useNavigation } from '@react-navigation/native';
 
 export const LoginForm = ({ homeInfoCallBack, showLoginForm }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setLoading] = useState(false);
+  const navigation = useNavigation()
+
 
   const submitLogin = async (pEmail, pPassword) => {
     setLoading(true);
@@ -19,6 +22,9 @@ export const LoginForm = ({ homeInfoCallBack, showLoginForm }) => {
       showLoginForm(false);
       storeData('id_token', response.token);
       storeData('emailUser', email);
+      navigation.navigate("AuthentOk")
+      homeInfoCallBack(null);
+
     } else {
       homeInfoCallBack('Un problème est survenu : ' + response.message);
     }

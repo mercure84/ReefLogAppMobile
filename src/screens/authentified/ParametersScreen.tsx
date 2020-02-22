@@ -1,8 +1,19 @@
 import React from "react";
 import { View, Text, Button, TouchableOpacity, StyleSheet } from "react-native";
-import { getData, removeData, storeData } from "../services/storageDevice";
+import { getData, removeData } from "../../services/storageDevice";
+import { useNavigation } from "@react-navigation/native";
+
+
+
+export const disconnect = () => {
+  removeData('id_token');
+
+}
+
+
 
 const ParametersScreen = () => {
+  const navigation = useNavigation();
 
   return (
     <View style={style.container}>
@@ -10,8 +21,8 @@ const ParametersScreen = () => {
       <TouchableOpacity>
         <Text>OPTIONS</Text>
       </TouchableOpacity>
-      <Button title="Kill Token" onPress={() => removeData('id_token')} />
-      <Button title="Display Token" onPress={() => getData('id_token')} />
+      <Button title="Se déconnecter" onPress={() => (disconnect(), navigation.navigate("Signout"))} />
+      <Button title="Afficher le Token" onPress={() => getData('id_token')} />
 
 
     </View>

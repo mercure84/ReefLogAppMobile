@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { AppNavigator } from "./src/navigation/AppNavigator"
-import { HomeNavigator } from "./src/navigation/AppNavigator"
+import { MainNavigator } from "./src/navigation/AppNavigator"
 import { getData } from './src/services/storageDevice';
 import { ActivityIndicator } from "react-native"
 
@@ -31,15 +30,6 @@ export default function App() {
 
   }
 
-  //TODO : faire une fonction qui demande la validité du token plutôt que juste en vérifier la présence
-  if (token != null) { return <AppNavigator />; }
-
-  else {
-
-    return <HomeNavigator />
-  }
+  return <MainNavigator isTokenOK={token ? true : false} />
 
 }
-
-
-
