@@ -1,7 +1,6 @@
 import { urlServer } from "../constants/constants";
 
 // service signUp : add a new member
-
 export const signUpService = async (
   newEmail,
   newUsername,
@@ -36,9 +35,7 @@ export const signUpService = async (
     console.error(error);
   }
 };
-
 // service de connexion
-
 export const loginService = async (pEmail: string, pPassword: string) => {
   const urlService = urlServer + "api/login";
   const credentials = {
@@ -63,3 +60,34 @@ export const loginService = async (pEmail: string, pPassword: string) => {
     console.error(error);
   }
 };
+
+
+// service checkToken
+
+
+export const checkToken = async (pEmail: string, pToken) => {
+
+  const urlService = urlServer + "api/checkToken";
+  const dataToValidate = {
+    email: pEmail.toLowerCase(),
+    token: pToken
+  }
+  try {
+    console.log("On demande la validatio du jeton trouvé avec l'email : " + dataToValidate.email);
+    const response = await fetch(urlService, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(dataToValidate)
+
+    });
+    return response.json();
+
+  } catch (error) {
+    console.log(error)
+  }
+
+
+}

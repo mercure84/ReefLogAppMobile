@@ -2,20 +2,27 @@ import React, { useState } from 'react';
 import { MainNavigator } from "./src/navigation/AppNavigator"
 import { getData } from './src/services/storageDevice';
 import { ActivityIndicator } from "react-native"
+import { checkToken } from './src/services/apiServices';
 
 export default function App() {
 
   const [isLoading, setLoading] = useState(true);
-  const [token, setToken] = useState();
+  const [isAuthentified, setAuthentified] = useState(false);
   // récupération du token 
 
 
-  const fetchToken = async () => {
+  const validateToken = async () => {
     try {
-      const value = await getData('id_token');
-      console.log("Token trouvé = " + value);
+      const storedToken = await getData('id_token');
+      const storedEmail = await getData('emailUser');
+      console.log("Token trouvé = " + storedToken + " et email = " + storedEmail);
+
+      if (storedEmail != null && storedToken != null) {
+
+        const data = await checkToken(storedEmail, storedToken);
+        setAuthentified(data.credentialValide === true)
+      }
       setLoading(false);
-      setToken(value);
     }
     catch (error) {
 
@@ -23,13 +30,13 @@ export default function App() {
     }
   }
 
-  fetchToken();
+  validateToken();
   if (isLoading) {
 
     return <ActivityIndicator />
 
   }
 
-  return <MainNavigator isTokenOK={token ? true : false} />
+  return <MainNavigator isTokenOK={isAuthentified} />
 
 }
