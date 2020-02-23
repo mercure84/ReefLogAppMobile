@@ -1,24 +1,14 @@
 import React, { FunctionComponent } from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 
 type Props = {
 
 };
 
-export const newTankForm: FunctionComponent<Props> = () => {
+export const NewTankForm: FunctionComponent<Props> = () => {
 
     return (
-
-        <View>
-
-
-
-
-
-        </View>
-
-
-
+        <Text>Un nouvel aquarium ici </Text>
 
 
     )

@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import WelcomeScreen from '../screens/welcome/WelcomeScreen';
-import DashBoardScreen from '../screens/authentified/DashBoardScreen';
+import DashBoardScreen from '../screens/authentified/DashBoard/DashBoardScreen';
 import EventsScreen from '../screens/authentified/EventsScreen';
 import ParametersScreen from '../screens/authentified/ParametersScreen';
 
