@@ -19,9 +19,9 @@ export const signUpService = async (
   try {
     console.log(
       "On demande l'ajout du nouveau membre suivant : " +
-      newMember.email +
-      ", " +
-      newMember.userName
+        newMember.email +
+        ", " +
+        newMember.userName
     );
     const response = await fetch(urlService, {
       method: "POST",
@@ -63,17 +63,18 @@ export const loginService = async (pEmail: string, pPassword: string) => {
   }
 };
 
-
 // service checkToken
 export const checkToken = async (pEmail: string, pToken) => {
-
   const urlService = urlServer + "api/checkToken";
   const dataToValidate = {
     email: pEmail.toLowerCase(),
     token: pToken
-  }
+  };
   try {
-    console.log("On demande la validation du jeton trouvé avec l'email : " + dataToValidate.email);
+    console.log(
+      "On demande la validation du jeton trouvé avec l'email : " +
+        dataToValidate.email
+    );
     const response = await fetch(urlService, {
       method: "POST",
       headers: {
@@ -81,23 +82,19 @@ export const checkToken = async (pEmail: string, pToken) => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(dataToValidate)
-
     });
     const dataResponse = response.json();
     console.log("Data = " + dataResponse);
     return dataResponse;
-
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-
-}
+};
 
 // service détail d'un membre
 export const getMemberDetail = async (pEmail: string) => {
-
   const email = pEmail.toLocaleLowerCase();
-  const token = await getData('id_token');
+  const token = await getData("id_token");
   const urlService = urlServer + "api/getMemberDetail/" + email;
 
   try {
@@ -114,8 +111,6 @@ export const getMemberDetail = async (pEmail: string) => {
     console.log("Data = " + dataResponse);
     return dataResponse;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-
-
-}
+};

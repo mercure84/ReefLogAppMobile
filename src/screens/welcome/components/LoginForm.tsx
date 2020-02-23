@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
-import { View, Text, Button, ActivityIndicator } from 'react-native';
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
-import { loginService } from '../../../services/apiServices';
-import { storeData } from '../../../services/storageDevice';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState } from "react";
+import { View, Text, Button, ActivityIndicator } from "react-native";
+import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
+import { loginService } from "../../../services/memberServices";
+import { storeData } from "../../../services/storageDevice";
+import { useNavigation } from "@react-navigation/native";
 
 export const LoginForm = ({ homeInfoCallBack, showLoginForm }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const navigation = useNavigation()
-
+  const navigation = useNavigation();
 
   const submitLogin = async (pEmail, pPassword) => {
     setLoading(true);
@@ -18,15 +17,14 @@ export const LoginForm = ({ homeInfoCallBack, showLoginForm }) => {
     setLoading(false);
 
     if (response.token != null) {
-      homeInfoCallBack('Vous êtes connecté !');
+      homeInfoCallBack("Vous êtes connecté !");
       showLoginForm(false);
-      storeData('id_token', ("Bearer " + response.token));
-      storeData('emailUser', email);
-      navigation.navigate("AuthentOk")
+      storeData("id_token", "Bearer " + response.token);
+      storeData("emailUser", email);
+      navigation.navigate("AuthentOk");
       homeInfoCallBack(null);
-
     } else {
-      homeInfoCallBack('Un problème est survenu : ' + response.message);
+      homeInfoCallBack("Un problème est survenu : " + response.message);
     }
   };
 

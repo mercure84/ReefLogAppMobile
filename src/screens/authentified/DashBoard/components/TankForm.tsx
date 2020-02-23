@@ -8,9 +8,8 @@ import {
   StyleSheet,
   Picker
 } from "react-native";
-import { Card } from "react-native-elements";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import RNDateTimePicker from "@react-native-community/datetimepicker";
+import { Card, Button } from "react-native-elements";
+import DatePicker from "react-native-datepicker";
 
 type Props = {};
 
@@ -31,7 +30,6 @@ export const NewTankForm: FunctionComponent<Props> = () => {
           onChangeText={text => null}
         />
       </View>
-
       <View style={styles.inputInlineContainer}>
         <View style={styles.inputInline}>
           <Text>Longueur</Text>
@@ -75,7 +73,6 @@ export const NewTankForm: FunctionComponent<Props> = () => {
           />
         </View>
       </View>
-
       <View style={styles.input}>
         <Text>Maintenance</Text>
         <Picker
@@ -89,7 +86,6 @@ export const NewTankForm: FunctionComponent<Props> = () => {
           <Picker.Item label="Autre" value="AUTRE" />
         </Picker>
       </View>
-
       <View style={styles.input}>
         <Text>Population principale</Text>
         <Picker
@@ -105,10 +101,31 @@ export const NewTankForm: FunctionComponent<Props> = () => {
           <Picker.Item label="SPS" value="SPS" />
         </Picker>
       </View>
-
       <View style={styles.input}>
         <Text>Mise en eau</Text>
+        <DatePicker
+          style={{ width: 150 }}
+          date={startDate} //initial date from state
+          mode="date" //The enum of date, datetime and time
+          format="DD-MM-YYYY"
+          maxDate={new Date()}
+          confirmBtnText="OK"
+          cancelBtnText="Annuler"
+          customStyles={{
+            dateIcon: {
+              position: "absolute",
+              left: 0,
+              top: 4,
+              marginLeft: 0
+            },
+            dateInput: {
+              marginLeft: 36
+            }
+          }}
+          onDateChange={date => setStartDate(date)}
+        />
       </View>
+      <Button title="Enregistrer" onPress={() => null} />
     </Card>
   );
 };
