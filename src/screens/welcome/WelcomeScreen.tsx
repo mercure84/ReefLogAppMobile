@@ -31,7 +31,7 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
 
   const [messageInfo, setMessageInfo] = useState();
 
-  const token = getData("id_token");
+  const token = getData("token");
   const emailUser = getData("emailUser");
 
   console.log("Token = " + token);

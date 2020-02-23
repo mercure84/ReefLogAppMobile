@@ -3,14 +3,9 @@ import { View, Text, Button, TouchableOpacity, StyleSheet } from "react-native";
 import { getData, removeData } from "../../services/storageDevice";
 import { useNavigation } from "@react-navigation/native";
 
-
-
 export const disconnect = () => {
-  removeData('id_token');
-
-}
-
-
+  removeData("token");
+};
 
 const ParametersScreen = () => {
   const navigation = useNavigation();
@@ -21,14 +16,14 @@ const ParametersScreen = () => {
       <TouchableOpacity>
         <Text>OPTIONS</Text>
       </TouchableOpacity>
-      <Button title="Se déconnecter" onPress={() => (disconnect(), navigation.navigate("Signout"))} />
-      <Button title="Afficher le Token" onPress={() => getData('id_token')} />
-
-
+      <Button
+        title="Se déconnecter"
+        onPress={() => (disconnect(), navigation.navigate("Signout"))}
+      />
+      <Button title="Afficher le Token" onPress={() => getData("token")} />
     </View>
   );
-}
-
+};
 
 const style = StyleSheet.create({
   container: {

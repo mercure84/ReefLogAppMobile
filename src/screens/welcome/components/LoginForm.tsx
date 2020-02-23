@@ -28,7 +28,7 @@ export const LoginForm = ({ homeInfoCallBack, showLoginForm }) => {
     if (response.token != null) {
       homeInfoCallBack("Vous êtes connecté !");
       showLoginForm(false);
-      storeData("id_token", "Bearer " + response.token);
+      storeData("token", "Bearer " + response.token);
       storeData("emailUser", email);
       navigation.navigate("AuthentOk");
       homeInfoCallBack(null);

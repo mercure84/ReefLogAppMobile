@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { Card, Button } from "react-native-elements";
 import DatePicker from "react-native-datepicker";
+import { addNewReefTank } from "../../../../services/tankServices";
 
 type Props = {
   infoCallBack: (text: string) => void;
@@ -23,23 +24,47 @@ export const NewTankForm: FunctionComponent<Props> = ({
   const [tankWidth, setWidth] = useState("");
   const [tankHeight, setHeight] = useState("");
   const [maintenance, setMaintenance] = useState("BERLINOIS");
+  const [sumpVolume, setSumpVolume] = useState();
   const [population, setPopulation] = useState("MIX");
   const [startDate, setStartDate] = useState(new Date());
   const [infoMessage, setInfoMessage] = useState("Décrivez votre Aquarium !");
+
   infoCallBack(infoMessage);
-  console.log(startDate);
+  // FIXME : récupérer l'ID du membre par le store
+  const memberId = 91;
 
   const checkForm = () => {
+    let isValide = false;
     if (
       tankName !== "" &&
       tankLength !== "" &&
       tankWidth !== "" &&
-      tankHeight !== ""
+      tankHeight !== "" &&
+      sumpVolume !== ""
     ) {
       setInfoMessage("Le formulaire est valide !");
+      isValide = true;
     } else {
+      isValide = false;
       setInfoMessage(
         "OOPS .... il y a un petit problème dans les données du formulaire"
+      );
+    }
+    return isValide;
+  };
+
+  const submitNewTank = () => {
+    if (checkForm()) {
+      addNewReefTank(
+        memberId,
+        tankName,
+        tankLength,
+        tankWidth,
+        tankHeight,
+        maintenance,
+        sumpVolume,
+        population,
+        startDate
       );
     }
   };
@@ -94,7 +119,7 @@ export const NewTankForm: FunctionComponent<Props> = ({
             maxLength={4}
             placeholder="0-9999 L"
             keyboardType="numeric"
-            onChangeText={text => null}
+            onChangeText={text => setSumpVolume(text)}
           />
         </View>
       </View>
@@ -150,7 +175,7 @@ export const NewTankForm: FunctionComponent<Props> = ({
           onDateChange={date => setStartDate(date)}
         />
       </View>
-      <Button title="Enregistrer" onPress={() => checkForm()} />
+      <Button title="Enregistrer" onPress={() => submitNewTank()} />
     </Card>
   );
 };

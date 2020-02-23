@@ -11,7 +11,7 @@ export default function App() {
 
   const validateToken = async () => {
     try {
-      const storedToken = await getData("id_token");
+      const storedToken = await getData("token");
       const storedEmail = await getData("emailUser");
       console.log(
         "Token trouvé = " + storedToken + " et email = " + storedEmail

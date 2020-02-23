@@ -94,7 +94,7 @@ export const checkToken = async (pEmail: string, pToken) => {
 // service détail d'un membre
 export const getMemberDetail = async (pEmail: string) => {
   const email = pEmail.toLocaleLowerCase();
-  const token = await getData("id_token");
+  const token = await getData("token");
   const urlService = urlServer + "api/getMemberDetail/" + email;
 
   try {
@@ -104,7 +104,7 @@ export const getMemberDetail = async (pEmail: string) => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + token
+        Authorization: token
       }
     });
     const dataResponse = response.json();
