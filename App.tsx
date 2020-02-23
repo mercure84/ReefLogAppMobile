@@ -20,7 +20,8 @@ export default function App() {
       if (storedEmail != null && storedToken != null) {
 
         const data = await checkToken(storedEmail, storedToken);
-        setAuthentified(data.credentialValide === true)
+        setAuthentified(data.credentialValide === true);
+
       }
       setLoading(false);
     }

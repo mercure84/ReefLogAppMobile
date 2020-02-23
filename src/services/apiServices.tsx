@@ -1,4 +1,5 @@
 import { urlServer } from "../constants/constants";
+import { getData } from "./storageDevice";
 
 // service signUp : add a new member
 export const signUpService = async (
@@ -35,6 +36,7 @@ export const signUpService = async (
     console.error(error);
   }
 };
+
 // service de connexion
 export const loginService = async (pEmail: string, pPassword: string) => {
   const urlService = urlServer + "api/login";
@@ -63,8 +65,6 @@ export const loginService = async (pEmail: string, pPassword: string) => {
 
 
 // service checkToken
-
-
 export const checkToken = async (pEmail: string, pToken) => {
 
   const urlService = urlServer + "api/checkToken";
@@ -73,7 +73,7 @@ export const checkToken = async (pEmail: string, pToken) => {
     token: pToken
   }
   try {
-    console.log("On demande la validatio du jeton trouvé avec l'email : " + dataToValidate.email);
+    console.log("On demande la validation du jeton trouvé avec l'email : " + dataToValidate.email);
     const response = await fetch(urlService, {
       method: "POST",
       headers: {
@@ -83,8 +83,36 @@ export const checkToken = async (pEmail: string, pToken) => {
       body: JSON.stringify(dataToValidate)
 
     });
-    return response.json();
+    const dataResponse = response.json();
+    console.log("Data = " + dataResponse);
+    return dataResponse;
 
+  } catch (error) {
+    console.log(error)
+  }
+
+}
+
+// service détail d'un membre
+export const getMemberDetail = async (pEmail: string) => {
+
+  const email = pEmail.toLocaleLowerCase();
+  const token = await getData('id_token');
+  const urlService = urlServer + "api/getMemberDetail/" + email;
+
+  try {
+    console.log("On demande les détails du membre : " + email);
+    const response = await fetch(urlService, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      }
+    });
+    const dataResponse = response.json();
+    console.log("Data = " + dataResponse);
+    return dataResponse;
   } catch (error) {
     console.log(error)
   }
