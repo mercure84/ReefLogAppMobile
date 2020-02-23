@@ -6,7 +6,10 @@ import {
   Button,
   TouchableOpacity,
   StyleSheet,
-  Image
+  Image,
+  ViewStyle,
+  TextStyle,
+  ImageStyle
 } from "react-native";
 import { LoginForm } from "./components/LoginForm";
 import { SignupForm } from "./components/SignupForm";
@@ -86,15 +89,32 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
             showSignupForm={toggleDisplaySignup}
           />
         )}
+
+        <TouchableOpacity style={styles.about}>
+          <Text> A propos </Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity>
-        <Text> A propos </Text>
-      </TouchableOpacity>
     </KeyboardAvoidingView>
   );
 };
 
-const styles = StyleSheet.create({
+type Style = {
+  about: ViewStyle;
+  container: ViewStyle;
+  button: ViewStyle;
+  title1: TextStyle;
+  header: ViewStyle;
+  homeButton: ViewStyle;
+  homeImage: ImageStyle;
+  homeForms: ViewStyle;
+};
+
+const styles = StyleSheet.create<Style>({
+  about: {
+    flex: 0.3,
+    justifyContent: "flex-end",
+    margin: 8
+  },
   container: {
     flex: 1,
     justifyContent: "flex-start",
