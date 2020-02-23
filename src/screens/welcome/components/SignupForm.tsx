@@ -107,15 +107,16 @@ export const SignupForm = ({ homeInfoCallBack, showSignupForm }) => {
             )}
           />
         </View>
+
+        <Button
+          title="Créer mon compte"
+          onPress={() =>
+            isPasswordOk
+              ? submitNewMember(email, username, password, repassword)
+              : null
+          }
+        />
       </Card>
-      <Button
-        title="Créer mon compte"
-        onPress={() =>
-          isPasswordOk
-            ? submitNewMember(email, username, password, repassword)
-            : null
-        }
-      />
     </View>
   );
 };

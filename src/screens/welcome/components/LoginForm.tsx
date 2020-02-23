@@ -1,9 +1,18 @@
 import React, { useState } from "react";
-import { View, Text, Button, ActivityIndicator } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  ActivityIndicator,
+  ViewStyle,
+  TextStyle,
+  StyleSheet
+} from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { loginService } from "../../../services/memberServices";
 import { storeData } from "../../../services/storageDevice";
 import { useNavigation } from "@react-navigation/native";
+import { Card } from "react-native-elements";
 
 export const LoginForm = ({ homeInfoCallBack, showLoginForm }) => {
   const [email, setEmail] = useState("");
@@ -29,31 +38,61 @@ export const LoginForm = ({ homeInfoCallBack, showLoginForm }) => {
   };
 
   return (
-    <View style={{ padding: 50 }}>
+    <View style={{ padding: 8 }}>
       {isLoading && <ActivityIndicator />}
-
-      <Text>Mon email : </Text>
-      <TextInput
-        textContentType="emailAddress"
-        keyboardType="email-address"
-        maxLength={30}
-        autoCompleteType="email"
-        placeholder="email@email.fr"
-        onChangeText={text => setEmail(text)}
-      />
-      <Text>Mon mot de passe</Text>
-      <TextInput
-        textContentType="newPassword"
-        secureTextEntry={true}
-        maxLength={12}
-        autoCompleteType="off"
-        placeholder="mot de passe"
-        onChangeText={text => setPassword(text)}
-      />
-      <Button title="Connexion" onPress={() => submitLogin(email, password)} />
-      <TouchableOpacity>
-        <Text>Mot de passe oublié ?</Text>
-      </TouchableOpacity>
+      <Card>
+        <View style={styles.input}>
+          <Text>Mon email : </Text>
+          <TextInput
+            style={styles.textInput}
+            textContentType="emailAddress"
+            keyboardType="email-address"
+            maxLength={30}
+            autoCompleteType="email"
+            placeholder="email@email.fr"
+            onChangeText={text => setEmail(text)}
+          />
+        </View>
+        <View style={styles.input}>
+          <Text>Mon mot de passe</Text>
+          <TextInput
+            style={styles.textInput}
+            textContentType="newPassword"
+            secureTextEntry={true}
+            maxLength={12}
+            autoCompleteType="off"
+            placeholder="mot de passe"
+            onChangeText={text => setPassword(text)}
+          />
+        </View>
+        <Button
+          title="Connexion"
+          onPress={() => submitLogin(email, password)}
+        />
+        <TouchableOpacity>
+          <Text>Mot de passe oublié ?</Text>
+        </TouchableOpacity>
+      </Card>
     </View>
   );
 };
+
+type Style = {
+  input: ViewStyle;
+  textInput: TextStyle;
+};
+
+const styles = StyleSheet.create<Style>({
+  input: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 2
+  },
+  textInput: {
+    backgroundColor: "lightgrey",
+    textAlign: "center",
+    height: 40,
+    width: "65%",
+    borderRadius: 5
+  }
+});
