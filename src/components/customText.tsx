@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import { Text, TextStyle } from "react-native";
 
 type Props = {
-  style: TextStyle;
+  style?: TextStyle;
   message: String;
   display: boolean;
 };
