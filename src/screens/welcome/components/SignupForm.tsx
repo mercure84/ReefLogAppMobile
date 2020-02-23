@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { View, Text, Button, ActivityIndicator } from "react-native";
+import { View, Text, Button, ActivityIndicator, StyleSheet, ViewStyle, TextStyle } from "react-native";
 import { signUpService } from "../../../services/apiServices";
 import { MessageInfo } from "./MessageInfo";
 import { TextInput } from "react-native-gesture-handler";
+import { Card } from "react-native-elements";
 
 const checkPassword = (password, repassword): boolean => {
   return password === repassword && password.length > 5;
@@ -39,52 +40,60 @@ export const SignupForm = ({ homeInfoCallBack, showSignupForm }) => {
   };
 
   return (
-    <View style={{ padding: 50 }}>
+    <View style={{ padding: 8 }}>
       {isLoading && <ActivityIndicator />}
 
       {!isPasswordOk && repassword.length > 0 ? (
         <MessageInfo message="Mots de passe différents ou inférieurs à 6 caractères" />
       ) : null}
 
-      <Text>Mon email : </Text>
-      <TextInput
-        textContentType="emailAddress"
-        keyboardType="email-address"
-        maxLength={30}
-        autoCompleteType="email"
-        placeholder="email@email.fr"
-        onChangeText={text => setEmail(text)}
-      />
-      <Text>Mon pseudo : </Text>
-      <TextInput
-        textContentType="nickname"
-        maxLength={12}
-        autoCompleteType="off"
-        placeholder="pseudo"
-        onChangeText={text => setUsername(text)}
-      />
-      <Text>Choisir un mot de passe</Text>
-      <TextInput
-        textContentType="newPassword"
-        secureTextEntry={true}
-        maxLength={12}
-        autoCompleteType="off"
-        placeholder="mot de passe"
-        onChangeText={text => (
-          setPassword(text), setPasswordOK(checkPassword(text, repassword))
-        )}
-      />
-      <Text>Confirmer votre mot de passe </Text>
-      <TextInput
-        textContentType="newPassword"
-        secureTextEntry={true}
-        maxLength={12}
-        autoCompleteType="off"
-        placeholder="mot de passe"
-        onChangeText={text => (
-          setRepassword(text), setPasswordOK(checkPassword(password, text))
-        )}
-      />
+      <Card title="Création d'un compte">
+        <View style={styles.input}>
+          <Text>Mon email</Text>
+          <TextInput style={styles.textInput}
+            textContentType="emailAddress"
+            keyboardType="email-address"
+            maxLength={30}
+            autoCompleteType="email"
+            placeholder="email@email.fr"
+            onChangeText={text => setEmail(text)}
+          /></View>
+        <View style={styles.input}>
+
+          <Text>Mon pseudo</Text>
+          <TextInput style={styles.textInput}
+            textContentType="nickname"
+            maxLength={12}
+            autoCompleteType="off"
+            placeholder="pseudo"
+            onChangeText={text => setUsername(text)}
+          /></View>
+        <View style={styles.input}>
+
+          <Text>Mon password</Text>
+          <TextInput style={styles.textInput}
+            textContentType="newPassword"
+            secureTextEntry={true}
+            maxLength={12}
+            autoCompleteType="off"
+            placeholder="mot de passe"
+            onChangeText={text => (
+              setPassword(text), setPasswordOK(checkPassword(text, repassword))
+            )}
+          /></View>
+        <View style={styles.input}>
+
+          <Text>Confirmer le mdp </Text>
+          <TextInput style={styles.textInput}
+            textContentType="newPassword"
+            secureTextEntry={true}
+            maxLength={12}
+            autoCompleteType="off"
+            placeholder="mot de passe"
+            onChangeText={text => (
+              setRepassword(text), setPasswordOK(checkPassword(password, text))
+            )}
+          /></View></Card>
       <Button
         title="Créer mon compte"
         onPress={() =>
@@ -96,3 +105,26 @@ export const SignupForm = ({ homeInfoCallBack, showSignupForm }) => {
     </View>
   );
 };
+
+type Style = {
+
+  input: ViewStyle,
+  textInput: TextStyle
+}
+
+const styles = StyleSheet.create<Style>({
+  input: {
+    flexDirection: "row",
+    justifyContent: 'space-between',
+    paddingVertical: 2
+
+  },
+  textInput: {
+    backgroundColor: 'lightgrey',
+    textAlign: "center",
+    height: 40,
+    width: '65%',
+    borderRadius: 5
+
+  }
+})

@@ -36,27 +36,27 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
 
   return (
     <KeyboardAvoidingView
-      style={style.container}
+      style={styles.container}
       behavior="position"
       enabled={true}>
       <KeyboardAvoidingView
         contentContainerStyle={{ display: 'none' }}
-        style={style.header}>
-        <Text style={style.title1}>Bienvenue sur REEFLOG !</Text>
+        style={styles.header}>
+        <Text style={styles.title1}>Bienvenue sur REEFLOG !</Text>
         <Image
           resizeMode="contain"
-          style={style.homeImage}
+          style={styles.homeImage}
           source={require('../../assets/home.png')}
         />
       </KeyboardAvoidingView>
-      <View style={style.homeButton}>
+      <View style={styles.homeButton}>
         <View style={{ margin: 5 }}>
           <Button
             title="Créer un compte"
             onPress={() => {
               toggleDisplaySignup(true);
               toggleDisplayLogin(false);
-              setMessageInfo("Création d'un compte :");
+              setMessageInfo("A vous de remplir :)");
             }}
           />
         </View>
@@ -66,12 +66,12 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
             onPress={() => {
               toggleDisplaySignup(false);
               toggleDisplayLogin(true);
-              setMessageInfo('Connexion :');
+              setMessageInfo('Saisissez email / mdp');
             }}
           />
         </View>
       </View>
-      <View style={style.homeForms}>
+      <View style={styles.homeForms}>
         <MessageInfo message={messageInfo} />
 
         {displayLoginFormState && (
@@ -94,7 +94,7 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
   );
 };
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-start',
@@ -109,9 +109,9 @@ const style = StyleSheet.create({
     textAlign: 'center',
   },
   header: {
-    padding: 50,
+    padding: 16,
     flex: 1,
-    alignContent: 'center',
+    alignItems: 'center',
   },
   homeButton: {
     flexDirection: 'row',
@@ -119,8 +119,8 @@ const style = StyleSheet.create({
   },
   homeImage: {
     borderRadius: 100,
-    width: 300,
-    height: 200,
+    width: 250,
+    height: 150,
   },
   homeForms: {
     flex: 2,
