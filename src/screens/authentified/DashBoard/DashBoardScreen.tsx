@@ -1,24 +1,27 @@
 import React, { useState } from "react";
-import { View, StyleSheet, ViewStyle } from "react-native";
-import { Header, Button, Text } from "react-native-elements";
+import { View, StyleSheet, ViewStyle, Text } from "react-native";
+import { Header, Button } from "react-native-elements";
 import { CustomMessage } from "../../../components/CustomText";
 import { NewTankForm } from "./components/TankForm";
 
 const DashboardScreen = () => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);
+  const [messageInfo, setMessageInfo] = useState("Vous n'avez aucun aquarium");
 
   return (
     <View style={styles.page}>
       <Header
-        centerComponent={<Text h4>Bienvenu cher X X </Text>}
+        centerComponent={
+          <Text style={{ fontSize: 24 }}>Bienvenu cher X X </Text>
+        }
         backgroundColor="green"
       />
-      <CustomMessage display={true} message="Vous n'avez aucun aquarium" />
       <Button
         title="Créer un Aquarium"
         onPress={() => setNewTankFormVisible(true)}
       />
-      {isNewTankFormVisible && <NewTankForm />}
+      <CustomMessage display={true} message={messageInfo} />
+      {isNewTankFormVisible && <NewTankForm infoCallBack={setMessageInfo} />}
     </View>
   );
 };

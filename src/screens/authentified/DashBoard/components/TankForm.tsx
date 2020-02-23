@@ -11,13 +11,38 @@ import {
 import { Card, Button } from "react-native-elements";
 import DatePicker from "react-native-datepicker";
 
-type Props = {};
+type Props = {
+  infoCallBack: (text: string) => void;
+};
 
-export const NewTankForm: FunctionComponent<Props> = () => {
-  const [maintance, setMaintenance] = useState("BERLINOIS");
+export const NewTankForm: FunctionComponent<Props> = ({
+  infoCallBack
+}: Props) => {
+  const [tankName, setName] = useState("");
+  const [tankLength, setLength] = useState("");
+  const [tankWidth, setWidth] = useState("");
+  const [tankHeight, setHeight] = useState("");
+  const [maintenance, setMaintenance] = useState("BERLINOIS");
   const [population, setPopulation] = useState("MIX");
   const [startDate, setStartDate] = useState(new Date());
+  const [infoMessage, setInfoMessage] = useState("Décrivez votre Aquarium !");
+  infoCallBack(infoMessage);
   console.log(startDate);
+
+  const checkForm = () => {
+    if (
+      tankName !== "" &&
+      tankLength !== "" &&
+      tankWidth !== "" &&
+      tankHeight !== ""
+    ) {
+      setInfoMessage("Le formulaire est valide !");
+    } else {
+      setInfoMessage(
+        "OOPS .... il y a un petit problème dans les données du formulaire"
+      );
+    }
+  };
 
   return (
     <Card title="Création d'un aquarium !">
@@ -27,7 +52,7 @@ export const NewTankForm: FunctionComponent<Props> = () => {
           style={styles.textInput}
           maxLength={30}
           placeholder="30 caractères maxi"
-          onChangeText={text => null}
+          onChangeText={text => setName(text)}
         />
       </View>
       <View style={styles.inputInlineContainer}>
@@ -38,7 +63,7 @@ export const NewTankForm: FunctionComponent<Props> = () => {
             maxLength={3}
             placeholder="0-500cm"
             keyboardType="numeric"
-            onChangeText={text => null}
+            onChangeText={text => setLength(text)}
           />
         </View>
         <View style={styles.inputInline}>
@@ -48,7 +73,7 @@ export const NewTankForm: FunctionComponent<Props> = () => {
             maxLength={3}
             placeholder="0-500cm"
             keyboardType="numeric"
-            onChangeText={text => null}
+            onChangeText={text => setWidth(text)}
           />
         </View>
         <View style={styles.inputInline}>
@@ -58,7 +83,7 @@ export const NewTankForm: FunctionComponent<Props> = () => {
             maxLength={3}
             placeholder="0-500cm"
             keyboardType="numeric"
-            onChangeText={text => null}
+            onChangeText={text => setHeight(text)}
           />
         </View>
 
@@ -78,7 +103,7 @@ export const NewTankForm: FunctionComponent<Props> = () => {
         <Picker
           style={{ height: 50, width: 150 }}
           mode="dropdown"
-          selectedValue={maintance}
+          selectedValue={maintenance}
           onValueChange={itemValue => setMaintenance(itemValue)}
         >
           <Picker.Item label="Berlinois" value="BERLINOIS" />
@@ -125,7 +150,7 @@ export const NewTankForm: FunctionComponent<Props> = () => {
           onDateChange={date => setStartDate(date)}
         />
       </View>
-      <Button title="Enregistrer" onPress={() => null} />
+      <Button title="Enregistrer" onPress={() => checkForm()} />
     </Card>
   );
 };
