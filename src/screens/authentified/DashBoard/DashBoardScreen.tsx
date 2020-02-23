@@ -21,7 +21,12 @@ const DashboardScreen = () => {
         onPress={() => setNewTankFormVisible(true)}
       />
       <CustomMessage display={true} message={messageInfo} />
-      {isNewTankFormVisible && <NewTankForm infoCallBack={setMessageInfo} />}
+      {isNewTankFormVisible && (
+        <NewTankForm
+          infoCallBack={setMessageInfo}
+          showFormCallback={setNewTankFormVisible}
+        />
+      )}
     </View>
   );
 };
