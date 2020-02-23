@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, Button, ActivityIndicator, StyleSheet, ViewStyle, TextStyle } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  ActivityIndicator,
+  StyleSheet,
+  ViewStyle,
+  TextStyle
+} from "react-native";
 import { signUpService } from "../../../services/apiServices";
 import { MessageInfo } from "./MessageInfo";
 import { TextInput } from "react-native-gesture-handler";
@@ -31,7 +39,7 @@ export const SignupForm = ({ homeInfoCallBack, showSignupForm }) => {
     if (response.role === "USER") {
       homeInfoCallBack(
         "Votre compte a bien été créé ! un email de confirmaton a été envoyé à " +
-        response.email
+          response.email
       );
       showSignupForm(false);
     } else {
@@ -50,28 +58,31 @@ export const SignupForm = ({ homeInfoCallBack, showSignupForm }) => {
       <Card title="Création d'un compte">
         <View style={styles.input}>
           <Text>Mon email</Text>
-          <TextInput style={styles.textInput}
+          <TextInput
+            style={styles.textInput}
             textContentType="emailAddress"
             keyboardType="email-address"
             maxLength={30}
             autoCompleteType="email"
             placeholder="email@email.fr"
             onChangeText={text => setEmail(text)}
-          /></View>
+          />
+        </View>
         <View style={styles.input}>
-
           <Text>Mon pseudo</Text>
-          <TextInput style={styles.textInput}
+          <TextInput
+            style={styles.textInput}
             textContentType="nickname"
             maxLength={12}
             autoCompleteType="off"
             placeholder="pseudo"
             onChangeText={text => setUsername(text)}
-          /></View>
+          />
+        </View>
         <View style={styles.input}>
-
           <Text>Mon password</Text>
-          <TextInput style={styles.textInput}
+          <TextInput
+            style={styles.textInput}
             textContentType="newPassword"
             secureTextEntry={true}
             maxLength={12}
@@ -80,11 +91,12 @@ export const SignupForm = ({ homeInfoCallBack, showSignupForm }) => {
             onChangeText={text => (
               setPassword(text), setPasswordOK(checkPassword(text, repassword))
             )}
-          /></View>
+          />
+        </View>
         <View style={styles.input}>
-
           <Text>Confirmer le mdp </Text>
-          <TextInput style={styles.textInput}
+          <TextInput
+            style={styles.textInput}
             textContentType="newPassword"
             secureTextEntry={true}
             maxLength={12}
@@ -93,7 +105,9 @@ export const SignupForm = ({ homeInfoCallBack, showSignupForm }) => {
             onChangeText={text => (
               setRepassword(text), setPasswordOK(checkPassword(password, text))
             )}
-          /></View></Card>
+          />
+        </View>
+      </Card>
       <Button
         title="Créer mon compte"
         onPress={() =>
@@ -107,24 +121,21 @@ export const SignupForm = ({ homeInfoCallBack, showSignupForm }) => {
 };
 
 type Style = {
-
-  input: ViewStyle,
-  textInput: TextStyle
-}
+  input: ViewStyle;
+  textInput: TextStyle;
+};
 
 const styles = StyleSheet.create<Style>({
   input: {
     flexDirection: "row",
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
     paddingVertical: 2
-
   },
   textInput: {
-    backgroundColor: 'lightgrey',
+    backgroundColor: "lightgrey",
     textAlign: "center",
     height: 40,
-    width: '65%',
+    width: "65%",
     borderRadius: 5
-
   }
-})
+});
