@@ -23,7 +23,7 @@ export interface Tank {
 
 // ajout d'un aquarium
 export const addNewReefTank = async (
-  newMemberId: number,
+  newMemberId: string,
   newName: string,
   newLength: string,
   newWidth: string,
@@ -58,6 +58,7 @@ export const addNewReefTank = async (
       body: JSON.stringify(newReefTank)
     });
     const dataResponse = response.json();
+    console.log("Aquarium registered");
     return dataResponse;
   } catch (error) {
     console.log(error);
@@ -69,7 +70,7 @@ export const addNewReefTank = async (
 export const getTankList = async (
   pMemberId: string,
   token: string
-): Promise<Tank[]> => {
+): Promise<Tank[] | any> => {
   const urlService = urlServer + "api/getAquariumList/" + pMemberId;
 
   try {

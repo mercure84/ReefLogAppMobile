@@ -10,7 +10,6 @@ import {
   ActivityIndicator
 } from "react-native";
 import { Card, Button } from "react-native-elements";
-import DatePicker from "react-native-datepicker";
 import { addNewReefTank } from "../../../../services/tankServices";
 
 export const NewTankForm = ({ infoCallBack, showFormCallback }) => {
@@ -29,7 +28,7 @@ export const NewTankForm = ({ infoCallBack, showFormCallback }) => {
   showFormCallback(isFormVisible);
   infoCallBack(infoMessage);
   // FIXME : récupérer l'ID du membre par le store
-  const memberId = 91;
+  const memberId = "91";
 
   const checkForm = () => {
     let isValide = false;
@@ -97,7 +96,7 @@ export const NewTankForm = ({ infoCallBack, showFormCallback }) => {
             <TextInput
               style={styles.textInputSmall}
               maxLength={3}
-              placeholder="0-500cm"
+              placeholder="0-999cm"
               keyboardType="numeric"
               onChangeText={text => setLength(text)}
             />
@@ -107,7 +106,7 @@ export const NewTankForm = ({ infoCallBack, showFormCallback }) => {
             <TextInput
               style={styles.textInputSmall}
               maxLength={3}
-              placeholder="0-500cm"
+              placeholder="0-999cm"
               keyboardType="numeric"
               onChangeText={text => setWidth(text)}
             />
@@ -117,7 +116,7 @@ export const NewTankForm = ({ infoCallBack, showFormCallback }) => {
             <TextInput
               style={styles.textInputSmall}
               maxLength={3}
-              placeholder="0-500cm"
+              placeholder="0-999cm"
               keyboardType="numeric"
               onChangeText={text => setHeight(text)}
             />
@@ -161,30 +160,6 @@ export const NewTankForm = ({ infoCallBack, showFormCallback }) => {
             <Picker.Item label="LPS" value="LPS" />
             <Picker.Item label="SPS" value="SPS" />
           </Picker>
-        </View>
-        <View style={styles.input}>
-          <Text>Mise en eau</Text>
-          <DatePicker
-            style={{ width: 150 }}
-            date={startDate} //initial date from state
-            mode="date" //The enum of date, datetime and time
-            format="DD-MM-YYYY"
-            maxDate={new Date()}
-            confirmBtnText="OK"
-            cancelBtnText="Annuler"
-            customStyles={{
-              dateIcon: {
-                position: "absolute",
-                left: 0,
-                top: 4,
-                marginLeft: 0
-              },
-              dateInput: {
-                marginLeft: 36
-              }
-            }}
-            onDateChange={date => setStartDate(date)}
-          />
         </View>
         <Button title="Enregistrer" onPress={() => submitNewTank()} />
       </Card>

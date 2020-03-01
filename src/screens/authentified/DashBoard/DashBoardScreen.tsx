@@ -15,7 +15,7 @@ import RootStore from "../../../store/RootStore";
 const DashboardScreen = observer(() => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);
   const [messageInfo, setMessageInfo] = useState("Vous n'avez aucun aquarium");
-  const [rootStore] = useState(() => new RootStore());
+  const [rootStore, setRootStore] = useState(new RootStore());
 
   rootStore.memberStore.memberState === "pending"
     ? rootStore.memberStore.fetchMember()
