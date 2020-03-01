@@ -3,10 +3,10 @@ import { getData } from "./storageDevice";
 
 // service signUp : add a new member
 export const signUpService = async (
-  newEmail,
-  newUsername,
-  newPassword,
-  newRepassword
+  newEmail: string,
+  newUsername: string,
+  newPassword: string,
+  newRepassword: string
 ) => {
   const urlService = urlServer + "api/addNewMember";
   const newMember = {

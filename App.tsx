@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Provider } from "mobx-react";
 import { MainNavigator } from "./src/navigation/AppNavigator";
 import { getData } from "./src/services/storageDevice";
 import { ActivityIndicator } from "react-native";
@@ -32,5 +33,9 @@ export default function App() {
     return <ActivityIndicator />;
   }
 
-  return <MainNavigator isTokenOK={isAuthentified} />;
+  return (
+    <Provider>
+      <MainNavigator isTokenOK={isAuthentified} />
+    </Provider>
+  );
 }

@@ -3,15 +3,15 @@ import { getData } from "./storageDevice";
 
 // ajout d'un aquarium
 export const addNewReefTank = async (
-  newMemberId,
-  newName,
-  newLength,
-  newWidth,
-  newHeight,
-  newMaintenance,
-  newSumpVolume,
-  newPopulation,
-  newStartDate
+  newMemberId: number,
+  newName: string,
+  newLength: string,
+  newWidth: string,
+  newHeight: string,
+  newMaintenance: string,
+  newSumpVolume: any,
+  newPopulation: string,
+  newStartDate: string | Date
 ) => {
   const urlService = urlServer + "api/addNewReefAquarium";
   const newReefTank = {
