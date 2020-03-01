@@ -1,5 +1,4 @@
 import { urlServer } from "../constants/constants";
-import { getData } from "./storageDevice";
 
 // service signUp : add a new member
 export const signUpService = async (
@@ -91,10 +90,23 @@ export const checkToken = async (pEmail: string, pToken) => {
   }
 };
 
+export type Member = {
+  id: string;
+  lastName?: any;
+  firstName?: any;
+  userName: string;
+  email: string;
+  password: string;
+  signupDate: string;
+  role: string;
+};
+
 // service détail d'un membre
-export const getMemberDetail = async (pEmail: string) => {
+export const getMemberDetail = async (
+  pEmail: string,
+  token: string
+): Promise<Member> => {
   const email = pEmail.toLocaleLowerCase();
-  const token = await getData("token");
   const urlService = urlServer + "api/getMemberDetail/" + email;
 
   try {
