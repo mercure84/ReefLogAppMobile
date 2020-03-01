@@ -4,6 +4,7 @@ import { MainNavigator } from "./src/navigation/AppNavigator";
 import { getData } from "./src/services/storageDevice";
 import { ActivityIndicator } from "react-native";
 import { checkToken } from "./src/services/memberServices";
+import RootStore from "./src/store/RootStore";
 
 export default function App() {
   const [isLoading, setLoading] = useState(true);
@@ -34,7 +35,7 @@ export default function App() {
   }
 
   return (
-    <Provider>
+    <Provider rootStore={new RootStore()}>
       <MainNavigator isTokenOK={isAuthentified} />
     </Provider>
   );

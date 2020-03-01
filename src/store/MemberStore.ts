@@ -1,8 +1,15 @@
 import { observable, action, runInAction } from "mobx";
 import { getData } from "../services/storageDevice";
-import { getMemberDetail, Member } from "..//services/memberServices";
+import { getMemberDetail, Member } from "../services/memberServices";
+import RootStore from "./RootStore";
 
-class memberStore {
+class MemberStore {
+  rootStore: RootStore;
+
+  constructor(rootStore: RootStore) {
+    this.rootStore = rootStore;
+  }
+
   @observable member = {
     pseudo: "",
     id: "",
@@ -15,7 +22,6 @@ class memberStore {
   // récupération des détails du membre pour alimenter notre store
   @action
   async fetchMember(): Promise<Member> {
-    console.log("démarrage fonction async fechmember");
     this.memberState = "pending";
 
     try {
@@ -31,7 +37,6 @@ class memberStore {
         this.member.id = memberDetail.id;
         this.member.pseudo = memberDetail.userName;
         this.memberState = "done";
-        console.log("success fonction async fechmember");
       });
 
       return memberDetail;
@@ -39,8 +44,7 @@ class memberStore {
       console.log(error);
       this.memberState = "error";
     }
-    console.log("fin fonction async fechmember");
   }
 }
 
-export default memberStore;
+export default MemberStore;

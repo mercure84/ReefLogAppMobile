@@ -1,5 +1,25 @@
 import { urlServer } from "../constants/constants";
 import { getData } from "./storageDevice";
+import { Member } from "./memberServices";
+
+// typage aquarium
+export interface Tank {
+  id: string;
+  name: string;
+  length: number;
+  width: number;
+  height: number;
+  startDate?: any;
+  equipmentList: any[];
+  member: Member;
+  sumpVolume: number;
+  typeOfMaintenance: string;
+  mainPopulation: string;
+  ballingDescription?: any;
+  liveRocksWeigth: number;
+  othersRocksWeight: number;
+  rawVolume: number;
+}
 
 // ajout d'un aquarium
 export const addNewReefTank = async (
@@ -38,6 +58,33 @@ export const addNewReefTank = async (
       body: JSON.stringify(newReefTank)
     });
     const dataResponse = response.json();
+    return dataResponse;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// récupérer la lister des aquariums d'un membre
+
+export const getTankList = async (
+  pMemberId: string,
+  token: string
+): Promise<Tank[]> => {
+  const urlService = urlServer + "api/getAquariumList/" + pMemberId;
+
+  try {
+    console.log("On demande la liste des aquariums de membre n° " + pMemberId);
+
+    const response = await fetch(urlService, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: token
+      }
+    });
+    const dataResponse = response.json();
+    console.log("Requête getTankList OK");
     return dataResponse;
   } catch (error) {
     console.log(error);

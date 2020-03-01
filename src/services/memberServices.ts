@@ -1,5 +1,18 @@
 import { urlServer } from "../constants/constants";
 
+// typage d'un membre
+
+export type Member = {
+  id: string;
+  lastName?: any;
+  firstName?: any;
+  userName: string;
+  email: string;
+  password: string;
+  signupDate: string;
+  role: string;
+};
+
 // service signUp : add a new member
 export const signUpService = async (
   newEmail: string,
@@ -90,17 +103,6 @@ export const checkToken = async (pEmail: string, pToken) => {
   }
 };
 
-export type Member = {
-  id: string;
-  lastName?: any;
-  firstName?: any;
-  userName: string;
-  email: string;
-  password: string;
-  signupDate: string;
-  role: string;
-};
-
 // service détail d'un membre
 export const getMemberDetail = async (
   pEmail: string,
@@ -120,7 +122,7 @@ export const getMemberDetail = async (
       }
     });
     const dataResponse = response.json();
-    console.log("Data = " + dataResponse);
+    console.log("Requête getMemberDetail OK");
     return dataResponse;
   } catch (error) {
     console.log(error);

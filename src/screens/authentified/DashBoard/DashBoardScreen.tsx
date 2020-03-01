@@ -10,26 +10,35 @@ import { Header, Button } from "react-native-elements";
 import { CustomMessage } from "../../../components/CustomText";
 import { NewTankForm } from "./components/TankForm";
 import { observer } from "mobx-react";
-import memberStore from "../../../store/memberStore";
+import RootStore from "../../../store/RootStore";
 
 const DashboardScreen = observer(() => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);
   const [messageInfo, setMessageInfo] = useState("Vous n'avez aucun aquarium");
-  const [dataMemberStore] = useState(() => new memberStore());
+  const [rootStore] = useState(() => new RootStore());
 
-  dataMemberStore.memberState === "pending"
-    ? dataMemberStore.fetchMember()
+  rootStore.memberStore.memberState === "pending"
+    ? rootStore.memberStore.fetchMember()
     : null;
+
+  //   rootStore.memberStore.memberState === "done" &&
+  //   rootStore.memberStore.tankState === "pending"
+  //   ? dataTankStore.fetchTankList()
+  //   : null;
+
+  // dataTankStore.tankState === "done"
+  //   ? console.log("Une liste d'aquariums a été trouvée :)")
+  //   : null;
 
   return (
     <View style={styles.page}>
-      {dataMemberStore.memberState === "pending" ? (
+      {rootStore.memberStore.memberState === "pending" ? (
         <ActivityIndicator />
       ) : (
         <Header
           centerComponent={
             <Text style={{ fontSize: 16 }}>
-              Bienvenue {dataMemberStore.member.pseudo.toUpperCase()} !
+              Bienvenue {rootStore.memberStore.member.pseudo.toUpperCase()} !
             </Text>
           }
           backgroundColor="green"
