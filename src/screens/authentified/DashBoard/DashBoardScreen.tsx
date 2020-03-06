@@ -21,37 +21,28 @@ const DashboardScreen = observer(() => {
     ? rootStore.memberStore.fetchMember()
     : null;
 
-  //   rootStore.memberStore.memberState === "done" &&
-  //   rootStore.memberStore.tankState === "pending"
-  //   ? dataTankStore.fetchTankList()
-  //   : null;
-
-  // dataTankStore.tankState === "done"
-  //   ? console.log("Une liste d'aquariums a été trouvée :)")
-  //   : null;
-
+  const isLoading = rootStore.memberStore.memberState === "pending";
+  const userName = rootStore.memberStore.member.pseudo.toUpperCase();
+  const memberId = rootStore.memberStore.member.id;
+  const handlePress = () => setNewTankFormVisible(true);
   return (
     <View style={styles.page}>
-      {rootStore.memberStore.memberState === "pending" ? (
+      {isLoading ? (
         <ActivityIndicator />
       ) : (
         <Header
           centerComponent={
-            <Text style={{ fontSize: 16 }}>
-              Bienvenue {rootStore.memberStore.member.pseudo.toUpperCase()} !
-            </Text>
+            <Text style={{ fontSize: 16 }}>Bienvenue {userName} !</Text>
           }
           backgroundColor="green"
         />
       )}
 
-      <Button
-        title="Créer un Aquarium"
-        onPress={() => setNewTankFormVisible(true)}
-      />
+      <Button title="Créer un Aquarium" onPress={handlePress} />
       <CustomMessage display={true} message={messageInfo} />
       {isNewTankFormVisible && (
         <NewTankForm
+          memberId={memberId}
           infoCallBack={setMessageInfo}
           showFormCallback={setNewTankFormVisible}
         />

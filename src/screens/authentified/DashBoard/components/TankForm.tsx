@@ -12,7 +12,7 @@ import {
 import { Card, Button } from "react-native-elements";
 import { addNewReefTank } from "../../../../services/tankServices";
 
-export const NewTankForm = ({ infoCallBack, showFormCallback }) => {
+export const NewTankForm = ({ infoCallBack, showFormCallback, memberId }) => {
   const [isLoading, setLoading] = useState(false);
   const [tankName, setName] = useState("");
   const [tankLength, setLength] = useState("");
@@ -23,12 +23,8 @@ export const NewTankForm = ({ infoCallBack, showFormCallback }) => {
   const [population, setPopulation] = useState("MIX");
   const [startDate, setStartDate] = useState(new Date());
   const [infoMessage, setInfoMessage] = useState("Décrivez votre Aquarium !");
-  const [isFormVisible, setFormVisible] = useState(true);
 
-  showFormCallback(isFormVisible);
   infoCallBack(infoMessage);
-  // FIXME : récupérer l'ID du membre par le store
-  const memberId = "91";
 
   const checkForm = () => {
     let isValide = false;
@@ -42,6 +38,8 @@ export const NewTankForm = ({ infoCallBack, showFormCallback }) => {
       isValide = true;
     } else {
       isValide = false;
+      setLoading(false);
+
       setInfoMessage(
         "OOPS .... il y a un petit problème dans les données du formulaire"
       );
@@ -68,11 +66,13 @@ export const NewTankForm = ({ infoCallBack, showFormCallback }) => {
 
       if (response != null) {
         setInfoMessage("L'aquarium a bien été enregistré");
-        setFormVisible(false);
+        setLoading(false);
+        showFormCallback(false);
       } else {
+        setLoading(false);
+
         setInfoMessage("Un problème est survenu");
       }
-      setLoading(false);
     }
   };
 
@@ -162,6 +162,7 @@ export const NewTankForm = ({ infoCallBack, showFormCallback }) => {
           </Picker>
         </View>
         <Button title="Enregistrer" onPress={() => submitNewTank()} />
+        <Button title="Annuler" onPress={() => showFormCallback(false)} />
       </Card>
     </View>
   );
