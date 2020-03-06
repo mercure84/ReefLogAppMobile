@@ -1,12 +1,24 @@
 import { urlServer } from "../constants/constants";
-import { getData } from "./storageDevice";
+
+// typage d'un membre
+
+export type Member = {
+  id: string;
+  lastName?: any;
+  firstName?: any;
+  userName: string;
+  email: string;
+  password: string;
+  signupDate: string;
+  role: string;
+};
 
 // service signUp : add a new member
 export const signUpService = async (
-  newEmail,
-  newUsername,
-  newPassword,
-  newRepassword
+  newEmail: string,
+  newUsername: string,
+  newPassword: string,
+  newRepassword: string
 ) => {
   const urlService = urlServer + "api/addNewMember";
   const newMember = {
@@ -92,9 +104,11 @@ export const checkToken = async (pEmail: string, pToken) => {
 };
 
 // service détail d'un membre
-export const getMemberDetail = async (pEmail: string) => {
+export const getMemberDetail = async (
+  pEmail: string,
+  token: string
+): Promise<Member> => {
   const email = pEmail.toLocaleLowerCase();
-  const token = await getData("token");
   const urlService = urlServer + "api/getMemberDetail/" + email;
 
   try {
@@ -108,7 +122,7 @@ export const getMemberDetail = async (pEmail: string) => {
       }
     });
     const dataResponse = response.json();
-    console.log("Data = " + dataResponse);
+    console.log("Requête getMemberDetail OK");
     return dataResponse;
   } catch (error) {
     console.log(error);

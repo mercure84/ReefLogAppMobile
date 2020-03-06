@@ -1,20 +1,21 @@
 import React, { useState } from "react";
-import {
-  View,
-  KeyboardAvoidingView,
-  Text,
-  Button,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-  ViewStyle,
-  TextStyle,
-  ImageStyle
-} from "react-native";
+
 import { LoginForm } from "./components/LoginForm";
 import { SignupForm } from "./components/SignupForm";
 import { MessageInfo } from "./components/MessageInfo";
 import { getData } from "../../services/storageDevice";
+import {
+  KeyboardAvoidingView,
+  View,
+  Text,
+  Image,
+  Button,
+  ViewStyle,
+  TextStyle,
+  ImageStyle,
+  StyleSheet
+} from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 interface Props {
   displayLoginForm: boolean;

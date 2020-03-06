@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { Provider } from "mobx-react";
 import { MainNavigator } from "./src/navigation/AppNavigator";
 import { getData } from "./src/services/storageDevice";
-import { ActivityIndicator } from "react-native";
 import { checkToken } from "./src/services/memberServices";
+import { ActivityIndicator } from "react-native";
+import RootStore from "./src/store/RootStore";
 
 export default function App() {
   const [isLoading, setLoading] = useState(true);
@@ -32,5 +34,9 @@ export default function App() {
     return <ActivityIndicator />;
   }
 
-  return <MainNavigator isTokenOK={isAuthentified} />;
+  return (
+    <Provider rootStore={new RootStore()}>
+      <MainNavigator isTokenOK={isAuthentified} />
+    </Provider>
+  );
 }
