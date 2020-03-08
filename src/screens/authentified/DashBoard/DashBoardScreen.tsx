@@ -15,7 +15,7 @@ import { MainTankDisplay } from "./components/MainTankDisplay";
 
 const DashboardScreen = observer(() => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);
-  const [messageInfo, setMessageInfo] = useState("Vous n'avez aucun aquarium");
+  const [messageInfo, setMessageInfo] = useState("");
   const [rootStore, setRootStore] = useState(new RootStore());
 
   if (rootStore.memberStore.memberState === "pending") {
@@ -34,8 +34,8 @@ const DashboardScreen = observer(() => {
 
   const member = rootStore.memberStore.member;
   const tankList = rootStore.tankStore.tankList;
-
   const handlePress = () => setNewTankFormVisible(true);
+
   return (
     <View style={styles.page}>
       {isMemberLoading ? (
@@ -43,11 +43,14 @@ const DashboardScreen = observer(() => {
       ) : (
         <Header
           centerComponent={
-            <Text style={{ fontSize: 16 }}>Bienvenue {member.userName} !</Text>
+            <Text style={{ fontSize: 16 }}>
+              Bienvenue {member.userName.toLocaleUpperCase()} !
+            </Text>
           }
           backgroundColor="green"
         />
       )}
+      <CustomMessage display={true} message={messageInfo} />
 
       {isTankLoading ? (
         <ActivityIndicator />
@@ -55,10 +58,7 @@ const DashboardScreen = observer(() => {
         <MainTankDisplay tankList={tankList} />
       )}
 
-      {tankList.length > 0 ?? (
-        <Button title="Créer un Aquarium" onPress={handlePress} />
-      )}
-      <CustomMessage display={true} message={messageInfo} />
+      <Button title="Créer un Aquarium" onPress={handlePress} />
       {isNewTankFormVisible && (
         <NewTankForm
           memberId={91}
