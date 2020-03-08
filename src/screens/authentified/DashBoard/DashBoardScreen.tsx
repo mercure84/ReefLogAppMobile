@@ -11,6 +11,7 @@ import { CustomMessage } from "../../../components/CustomMessage";
 import { NewTankForm } from "./components/TankForm";
 import { observer } from "mobx-react";
 import RootStore from "../../../store/RootStore";
+import { MainTankDisplay } from "./components/MainTankDisplay";
 
 const DashboardScreen = observer(() => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);
@@ -31,6 +32,9 @@ const DashboardScreen = observer(() => {
   const isMemberLoading = rootStore.memberStore.memberState === "pending";
   const isTankLoading = rootStore.tankStore.tankState === "pending";
 
+  const member = rootStore.memberStore.member;
+  const tankList = rootStore.tankStore.tankList;
+
   const handlePress = () => setNewTankFormVisible(true);
   return (
     <View style={styles.page}>
@@ -39,9 +43,7 @@ const DashboardScreen = observer(() => {
       ) : (
         <Header
           centerComponent={
-            <Text style={{ fontSize: 16 }}>
-              Bienvenue {rootStore.memberStore.member.userName} !
-            </Text>
+            <Text style={{ fontSize: 16 }}>Bienvenue {member.userName} !</Text>
           }
           backgroundColor="green"
         />
@@ -49,26 +51,13 @@ const DashboardScreen = observer(() => {
 
       {isTankLoading ? (
         <ActivityIndicator />
-      ) : rootStore.tankStore.tankList.length > 0 ? (
-        <View>
-          <Text style={{ fontSize: 16 }}>
-            Aquarium : {rootStore.tankStore.tankList[0].name}
-          </Text>
-          <Text style={{ fontSize: 16 }}>
-            Volume : {rootStore.tankStore.tankList[0].rawVolume} litres
-          </Text>
+      ) : (
+        <MainTankDisplay tankList={tankList} />
+      )}
 
-          <Text style={{ fontSize: 16 }}>
-            Maintenance : {rootStore.tankStore.tankList[0].typeOfMaintenance}
-          </Text>
-
-          <Text style={{ fontSize: 16 }}>
-            Population : {rootStore.tankStore.tankList[0].mainPopulation}
-          </Text>
-        </View>
-      ) : null}
-
-      <Button title="Créer un Aquarium" onPress={handlePress} />
+      {tankList.length > 0 ?? (
+        <Button title="Créer un Aquarium" onPress={handlePress} />
+      )}
       <CustomMessage display={true} message={messageInfo} />
       {isNewTankFormVisible && (
         <NewTankForm
