@@ -11,34 +11,25 @@ import { CustomMessage } from "../../../components/CustomMessage";
 import { NewTankForm } from "./components/TankForm";
 import { observer } from "mobx-react";
 import RootStore from "../../../store/RootStore";
-import { Member } from "../../../services/memberServices";
 
 const DashboardScreen = observer(() => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);
   const [messageInfo, setMessageInfo] = useState("Vous n'avez aucun aquarium");
   const [rootStore, setRootStore] = useState(new RootStore());
-  const [member, setMember] = useState<Member>();
 
-  rootStore.memberStore.memberState === "pending"
-    ? rootStore.memberStore.fetchMember()
-    : null;
-
+  if (rootStore.memberStore.memberState === "pending") {
+    rootStore.memberStore.fetchMember();
+  }
   console.log("etat du store member : " + rootStore.memberStore.memberState);
 
-  /*   rootStore.tankStore.tankState === "pending"
-    ? rootStore.tankStore.fetchTankList()
-    : null;
- */
-  /* console.log("etat du store tank : " + rootStore.tankStore.tankState);
+  if (rootStore.tankStore.tankState === "pending") {
+    rootStore.tankStore.fetchTankList();
+  }
 
-  if (rootStore.tankStore.tankState === "done") {
-  } */
+  console.log("etat du store tank : " + rootStore.tankStore.tankState);
+
   const isMemberLoading = rootStore.memberStore.memberState === "pending";
-  //const isTankLoading = rootStore.tankStore.tankState === "pending";
-  // const userName = rootStore.memberStore.member.userName.toUpperCase();
-  //const memberId = rootStore.memberStore.member.id;
-
-  //const mainTank: Tank = rootStore.tankStore.tankList[0];
+  const isTankLoading = rootStore.tankStore.tankState === "pending";
 
   const handlePress = () => setNewTankFormVisible(true);
   return (
@@ -48,29 +39,35 @@ const DashboardScreen = observer(() => {
       ) : (
         <Header
           centerComponent={
-            <Text style={{ fontSize: 16 }}>Bienvenue membre !</Text>
+            <Text style={{ fontSize: 16 }}>
+              Bienvenue {rootStore.memberStore.member.userName} !
+            </Text>
           }
           backgroundColor="green"
         />
       )}
 
-      {/*       {false ? (
+      {isTankLoading ? (
         <ActivityIndicator />
-      ) : (
+      ) : rootStore.tankStore.tankList.length > 0 ? (
         <View>
-          <Text style={{ fontSize: 16 }}>Aquarium : {mainTank.name} !</Text>
-          <Text style={{ fontSize: 16 }}>Volume : {mainTank.rawVolume} !</Text>
-
           <Text style={{ fontSize: 16 }}>
-            Maintenance : {mainTank.typeOfMaintenance} !
+            Aquarium : {rootStore.tankStore.tankList[0].name}
+          </Text>
+          <Text style={{ fontSize: 16 }}>
+            Volume : {rootStore.tankStore.tankList[0].rawVolume} litres
           </Text>
 
           <Text style={{ fontSize: 16 }}>
-            Population : {mainTank.mainPopulation} !
+            Maintenance : {rootStore.tankStore.tankList[0].typeOfMaintenance}
+          </Text>
+
+          <Text style={{ fontSize: 16 }}>
+            Population : {rootStore.tankStore.tankList[0].mainPopulation}
           </Text>
         </View>
-      )}
- */}
+      ) : null}
+
       <Button title="Créer un Aquarium" onPress={handlePress} />
       <CustomMessage display={true} message={messageInfo} />
       {isNewTankFormVisible && (
