@@ -7,7 +7,7 @@ import {
   ActivityIndicator
 } from "react-native";
 import { Header, Button } from "react-native-elements";
-import { CustomMessage } from "../../../components/CustomText";
+import { CustomMessage } from "../../../components/CustomMessage";
 import { NewTankForm } from "./components/TankForm";
 import { observer } from "mobx-react";
 import RootStore from "../../../store/RootStore";
