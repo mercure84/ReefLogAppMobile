@@ -10,12 +10,9 @@ class MemberStore {
     this.rootStore = rootStore;
   }
 
-  @observable member = {
-    pseudo: "",
-    id: "",
-    email: "",
-    token: ""
-  };
+  @observable member: Member
+  @observable token: string
+
 
   @observable memberState = "pending"; // "pending" / "done" / "error"
 
@@ -32,10 +29,8 @@ class MemberStore {
         asyncStoredToken
       );
       runInAction(() => {
-        this.member.email = asyncStoredMail;
-        this.member.token = asyncStoredToken;
-        this.member.id = memberDetail.id;
-        this.member.pseudo = memberDetail.userName;
+        this.token = asyncStoredToken;
+        this.member = memberDetail;
         this.memberState = "done";
       });
 
