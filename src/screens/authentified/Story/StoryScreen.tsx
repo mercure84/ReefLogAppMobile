@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -9,9 +9,15 @@ import {
 } from "react-native";
 import { Header } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
+import RootStore from "../../../store/RootStore";
 
 const StoryScreen = () => {
   const navigation = useNavigation();
+  const [rootStore, setRootStore] = useState(RootStore);
+
+  console.log(
+    "Etat du tankStore in StoryScreen " + rootStore.tankStore.tankState
+  );
 
   return (
     <View style={styles.page}>
