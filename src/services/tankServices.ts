@@ -75,7 +75,6 @@ export const getTankList = async (
 
   try {
     console.log("Service is fetching tankList for member n° " + pMemberId);
-
     const response = await fetch(urlService, {
       method: "GET",
       headers: {

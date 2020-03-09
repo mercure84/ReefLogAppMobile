@@ -68,6 +68,7 @@ export const getWaterTestList = async (
         });
 
         const dataResponse = response.json();
+        console.log("tests fetchés = " + dataResponse)
         return dataResponse;
 
     } catch (error) {

@@ -5,11 +5,6 @@ import { RootStore as RootStoreType } from "./RootStore";
 
 
 class MemberStore {
-  rootStore: RootStoreType;
-
-  constructor(rootStore) {
-    this.rootStore = rootStore;
-  }
 
   @observable member: Member
   @observable token: string

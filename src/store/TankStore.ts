@@ -10,7 +10,6 @@ class TankStore {
   }
 
   @observable tankList: Tank[] = [];
-
   @observable tankState = "pending"; // "pending" / "done" / "error"
 
   // récupération de la liste des aquariums du membre

@@ -10,7 +10,7 @@ class WaterTestStore {
     }
 
     @observable waterTestList: WaterTest[] = [];
-    @observable waterTestState = "pending"
+    @observable waterTestState = "pending";
 
     @action
     async fetchWaterTestList(): Promise<WaterTest[]> {
@@ -18,9 +18,8 @@ class WaterTestStore {
         if (this.rootStore.tankStore.tankState === "done") {
             const tankId = this.rootStore.tankStore.tankList[0].id
             if (tankId !== null) {
-
                 try {
-                    console.log("fetching of WaterTestList")
+                    console.log("Store is fetching  WaterTestList")
                     const memberToken = this.rootStore.memberStore.token;
                     const waterTestList = await getWaterTestList(tankId, memberToken);
                     runInAction(() => {
