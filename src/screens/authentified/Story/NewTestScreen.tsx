@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { Header } from "react-native-elements";
-import { TestCollectionForm } from "./components/TestCollectionForm";
+import { WaterTestForm } from "./components/WaterTestForm";
 
 export const NewTestScreen = () => {
   return (
@@ -13,7 +13,7 @@ export const NewTestScreen = () => {
         backgroundColor="green"
       />
 
-      <TestCollectionForm />
+      <WaterTestForm />
     </View>
   );
 };

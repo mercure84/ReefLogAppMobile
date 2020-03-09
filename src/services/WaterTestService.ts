@@ -1,8 +1,8 @@
 import React from "react"
-import { urlServer } from "src/constants/constants";
+import { urlServer } from "../constants/constants";
 import { getData } from "./storageDevice";
 
-export interface TestCollection {
+export interface WaterTest {
     id?: string;
     dateTime?: Date
     temperature: number;
@@ -19,11 +19,16 @@ export interface TestCollection {
 }
 
 
-// ajout d'une collection de test
-export const addNewTestCollection = async (
-    newTestCollection: TestCollection
+// ajout d'un nouveau test
+export const addNewWaterTest = async (
+    aquariumId: string,
+    newWaterTest: WaterTest
 ) => {
-    const urlService = urlServer + "api/addNewTestCollection";
+    const urlService = urlServer + "api/addNewWaterTest";
+    const newWaterTestForm = {
+        aquariumId: aquariumId,
+        waterTest: newWaterTest
+    }
     try {
         const token = await getData("token");
         const response = await fetch(urlService, {
@@ -33,7 +38,7 @@ export const addNewTestCollection = async (
                 "Content-Type": "application/json",
                 Authorization: token
             },
-            body: JSON.stringify(newTestCollection)
+            body: JSON.stringify(newWaterTestForm)
         });
         const dataResponse = response.json();
         console.log("Tests enregistrés");

@@ -5,17 +5,67 @@ import {
   Button,
   ViewStyle,
   TextStyle,
-  StyleSheet
+  StyleSheet,
+  ActivityIndicator
 } from "react-native";
 import { Card } from "react-native-elements";
 import { TextInput } from "react-native-gesture-handler";
-import { TestCollection } from "../../../../services/WaterTestService";
+import {
+  WaterTest,
+  addNewWaterTest
+} from "../../../../services/waterTestService";
+import { CustomMessage } from "../../../../components/CustomMessage";
+import { useNavigation } from "@react-navigation/native";
 
-export const TestCollectionForm = () => {
-  const [TestCollection, setTestCollection] = useState<TestCollection>();
+export const WaterTestForm = () => {
+  const [isLoading, setLoading] = useState(false);
+  const [waterTest, setWaterTest] = useState<WaterTest>();
+  const [infoMessage, setInfoMessage] = useState(
+    "Saisissez les données de vos tests !"
+  );
+  const navigation = useNavigation();
+
+  const checkForm = () => {
+    let goodValues = 0;
+    Object.keys(waterTest).forEach(function(key) {
+      let value = waterTest[key];
+      isNaN(value) ? (value = null) : null;
+      if (value !== undefined && value !== null && typeof value === "number") {
+        goodValues++;
+      }
+    });
+    if (goodValues > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const submitWaterTest = async () => {
+    if (waterTest !== undefined && checkForm()) {
+      setLoading(true);
+      setInfoMessage(
+        "Votre formulaire est correct, nous allons l'enregistrer... "
+      );
+      const response = await addNewWaterTest("171", waterTest);
+
+      if (response != null) {
+        setInfoMessage("Le test a bien été enregistré !");
+        setLoading(false);
+        navigation.navigate("mainStory");
+      } else {
+        setInfoMessage("Un problème est survenu");
+        setLoading(true);
+      }
+    } else {
+      setInfoMessage("Votre formulaire est incorrect, merci de le vérifier !");
+    }
+  };
 
   return (
     <View>
+      {isLoading && <ActivityIndicator />}
+      <CustomMessage message={infoMessage} display={infoMessage !== null} />
       <Card>
         <View style={styles.input}>
           <Text>Date et Heure</Text>
@@ -36,8 +86,8 @@ export const TestCollectionForm = () => {
               placeholder="0-99 °C"
               keyboardType="decimal-pad"
               onChangeText={text =>
-                setTestCollection({
-                  ...TestCollection,
+                setWaterTest({
+                  ...waterTest,
                   temperature: parseFloat(text)
                 })
               }
@@ -51,8 +101,8 @@ export const TestCollectionForm = () => {
               placeholder="0-99"
               keyboardType="decimal-pad"
               onChangeText={text =>
-                setTestCollection({
-                  ...TestCollection,
+                setWaterTest({
+                  ...waterTest,
                   salinity: parseFloat(text)
                 })
               }
@@ -66,8 +116,8 @@ export const TestCollectionForm = () => {
               placeholder="0-99"
               keyboardType="decimal-pad"
               onChangeText={text =>
-                setTestCollection({
-                  ...TestCollection,
+                setWaterTest({
+                  ...waterTest,
                   alcalinity: parseFloat(text)
                 })
               }
@@ -83,8 +133,8 @@ export const TestCollectionForm = () => {
               placeholder="0-14"
               keyboardType="decimal-pad"
               onChangeText={text =>
-                setTestCollection({
-                  ...TestCollection,
+                setWaterTest({
+                  ...waterTest,
                   pH: parseFloat(text)
                 })
               }
@@ -98,8 +148,8 @@ export const TestCollectionForm = () => {
               placeholder="0-999"
               keyboardType="numeric"
               onChangeText={text =>
-                setTestCollection({
-                  ...TestCollection,
+                setWaterTest({
+                  ...waterTest,
                   calcium: parseFloat(text)
                 })
               }
@@ -113,8 +163,8 @@ export const TestCollectionForm = () => {
               placeholder="0-9999"
               keyboardType="numeric"
               onChangeText={text =>
-                setTestCollection({
-                  ...TestCollection,
+                setWaterTest({
+                  ...waterTest,
                   magnesium: parseFloat(text)
                 })
               }
@@ -130,8 +180,8 @@ export const TestCollectionForm = () => {
               placeholder="0-9"
               keyboardType="decimal-pad"
               onChangeText={text =>
-                setTestCollection({
-                  ...TestCollection,
+                setWaterTest({
+                  ...waterTest,
                   ammoniac: parseFloat(text)
                 })
               }
@@ -145,8 +195,8 @@ export const TestCollectionForm = () => {
               placeholder="0-9"
               keyboardType="decimal-pad"
               onChangeText={text =>
-                setTestCollection({
-                  ...TestCollection,
+                setWaterTest({
+                  ...waterTest,
                   nitrates: parseFloat(text)
                 })
               }
@@ -160,8 +210,8 @@ export const TestCollectionForm = () => {
               placeholder="0-9"
               keyboardType="decimal-pad"
               onChangeText={text =>
-                setTestCollection({
-                  ...TestCollection,
+                setWaterTest({
+                  ...waterTest,
                   nitrites: parseFloat(text)
                 })
               }
@@ -177,8 +227,8 @@ export const TestCollectionForm = () => {
               placeholder="0-9"
               keyboardType="decimal-pad"
               onChangeText={text =>
-                setTestCollection({
-                  ...TestCollection,
+                setWaterTest({
+                  ...waterTest,
                   phosphates: parseFloat(text)
                 })
               }
@@ -192,18 +242,22 @@ export const TestCollectionForm = () => {
               placeholder="0-9"
               keyboardType="decimal-pad"
               onChangeText={text =>
-                setTestCollection({
-                  ...TestCollection,
+                setWaterTest({
+                  ...waterTest,
                   silicates: parseFloat(text)
                 })
               }
             />
           </View>
         </View>
+        <View style={styles.buttonContainer}>
+          <Button title="Enregistrer" onPress={() => submitWaterTest()} />
+          <Button
+            title="Annuler"
+            onPress={() => navigation.navigate("mainStory")}
+          />
+        </View>
       </Card>
-
-      <Button title="Enregistrer" onPress={() => null} />
-      <Button title="Annuler" onPress={() => null} />
     </View>
   );
 };
@@ -214,6 +268,7 @@ type Style = {
   inputInline: ViewStyle;
   textInput: TextStyle;
   textInputSmall: TextStyle;
+  buttonContainer: ViewStyle;
 };
 
 const styles = StyleSheet.create<Style>({
@@ -244,5 +299,8 @@ const styles = StyleSheet.create<Style>({
     height: 40,
     width: "100%",
     borderRadius: 10
+  },
+  buttonContainer: {
+    padding: 16
   }
 });
