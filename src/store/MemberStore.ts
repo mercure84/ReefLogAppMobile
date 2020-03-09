@@ -1,10 +1,11 @@
 import { observable, action, runInAction } from "mobx";
 import { getData } from "../services/storageDevice";
 import { getMemberDetail, Member } from "../services/memberServices";
-import RootStore from "./RootStore";
+import { RootStore as RootStoreType } from "./RootStore";
+
 
 class MemberStore {
-  rootStore: any;
+  rootStore: RootStoreType;
 
   constructor(rootStore) {
     this.rootStore = rootStore;

@@ -3,21 +3,24 @@ import {
   View,
   Text,
   Button,
-  TouchableOpacity,
   StyleSheet,
-  ViewStyle
+  ViewStyle,
+  ActivityIndicator
 } from "react-native";
 import { Header } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import RootStore from "../../../store/RootStore";
+import { observer } from "mobx-react";
 
-const StoryScreen = () => {
+const StoryScreen = observer(() => {
   const navigation = useNavigation();
   const [rootStore, setRootStore] = useState(RootStore);
 
-  console.log(
-    "Etat du tankStore in StoryScreen " + rootStore.tankStore.tankState
-  );
+  if (rootStore.waterTestStore.waterTestState === "pending") {
+    rootStore.waterTestStore.fetchWaterTestList();
+  }
+
+  const isTestsLoading = rootStore.waterTestStore.waterTestState === "pending";
 
   return (
     <View style={styles.page}>
@@ -25,16 +28,16 @@ const StoryScreen = () => {
         centerComponent={<Text style={{ fontSize: 16 }}>Mon journal</Text>}
         backgroundColor="green"
       />
-      <TouchableOpacity>
-        <Text>Liste à définir</Text>
-      </TouchableOpacity>
+      {isTestsLoading ? <ActivityIndicator /> : null}
       <Button
         title="Ajouter un test de mon eau"
         onPress={() => navigation.navigate("addTests")}
       />
+
+      {}
     </View>
   );
-};
+});
 
 type Style = {
   page: ViewStyle;

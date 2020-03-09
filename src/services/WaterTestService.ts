@@ -47,3 +47,31 @@ export const addNewWaterTest = async (
         console.log(error);
     }
 };
+
+// récupérer la liste des tests d'un aquarium
+
+export const getWaterTestList = async (
+    pTankId: string,
+    token: string
+): Promise<WaterTest[] | any> => {
+    const urlService = urlServer + "api/getWaterTestList/" + pTankId;
+    try {
+        console.log("Service is fetching waterTestList for tank n° " + pTankId);
+
+        const response = await fetch(urlService, {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: token
+            }
+        });
+
+        const dataResponse = response.json();
+        return dataResponse;
+
+    } catch (error) {
+        console.log(error)
+    }
+
+}

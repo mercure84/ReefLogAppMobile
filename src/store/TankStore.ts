@@ -1,9 +1,9 @@
 import { observable, action, runInAction } from "mobx";
 import { Tank, getTankList } from "../services/tankServices";
-import RootStore from "./RootStore";
+import { RootStore as RootStoreType } from "./RootStore";
 
 class TankStore {
-  rootStore: any;
+  rootStore: RootStoreType;
 
   constructor(rootStore) {
     this.rootStore = rootStore;
@@ -20,12 +20,9 @@ class TankStore {
     this.tankState = "pending";
     if (this.rootStore.memberStore.memberState === "done") {
       const memberId = this.rootStore.memberStore.member.id;
-
-      console.log("memberId = " + memberId);
       if (memberId !== null) {
         try {
-          console.log("démarrage de l'appel aux tankList");
-          this.tankState = "pending";
+          console.log("Store is Fetching tankList");
           const memberToken = this.rootStore.memberStore.token;
           const tankList = await getTankList(memberId, memberToken);
           runInAction(() => {
