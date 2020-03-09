@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Card } from "react-native-elements";
 import { TextInput } from "react-native-gesture-handler";
-import { TestCollection } from "../../../../services/testService";
+import { TestCollection } from "../../../../services/WaterTestService";
 
 export const TestCollectionForm = () => {
   const [TestCollection, setTestCollection] = useState<TestCollection>();
@@ -32,9 +32,9 @@ export const TestCollectionForm = () => {
             <Text>Température</Text>
             <TextInput
               style={styles.textInputSmall}
-              maxLength={2}
+              maxLength={5}
               placeholder="0-99 °C"
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               onChangeText={text =>
                 setTestCollection({
                   ...TestCollection,
@@ -47,9 +47,9 @@ export const TestCollectionForm = () => {
             <Text>Salinité (ppt)</Text>
             <TextInput
               style={styles.textInputSmall}
-              maxLength={2}
+              maxLength={5}
               placeholder="0-99"
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               onChangeText={text =>
                 setTestCollection({
                   ...TestCollection,
@@ -62,13 +62,139 @@ export const TestCollectionForm = () => {
             <Text>Alcalinité (KH)</Text>
             <TextInput
               style={styles.textInputSmall}
-              maxLength={2}
+              maxLength={5}
               placeholder="0-99"
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               onChangeText={text =>
                 setTestCollection({
                   ...TestCollection,
                   alcalinity: parseFloat(text)
+                })
+              }
+            />
+          </View>
+        </View>
+        <View style={styles.inputInlineContainer}>
+          <View style={styles.inputInline}>
+            <Text>pH</Text>
+            <TextInput
+              style={styles.textInputSmall}
+              maxLength={5}
+              placeholder="0-14"
+              keyboardType="decimal-pad"
+              onChangeText={text =>
+                setTestCollection({
+                  ...TestCollection,
+                  pH: parseFloat(text)
+                })
+              }
+            />
+          </View>
+          <View style={styles.inputInline}>
+            <Text>Calcium (ppm)</Text>
+            <TextInput
+              style={styles.textInputSmall}
+              maxLength={3}
+              placeholder="0-999"
+              keyboardType="numeric"
+              onChangeText={text =>
+                setTestCollection({
+                  ...TestCollection,
+                  calcium: parseFloat(text)
+                })
+              }
+            />
+          </View>
+          <View style={styles.inputInline}>
+            <Text>Magnesium (ppm)</Text>
+            <TextInput
+              style={styles.textInputSmall}
+              maxLength={4}
+              placeholder="0-9999"
+              keyboardType="numeric"
+              onChangeText={text =>
+                setTestCollection({
+                  ...TestCollection,
+                  magnesium: parseFloat(text)
+                })
+              }
+            />
+          </View>
+        </View>
+        <View style={styles.inputInlineContainer}>
+          <View style={styles.inputInline}>
+            <Text>Ammoniac (ppm)</Text>
+            <TextInput
+              style={styles.textInputSmall}
+              maxLength={4}
+              placeholder="0-9"
+              keyboardType="decimal-pad"
+              onChangeText={text =>
+                setTestCollection({
+                  ...TestCollection,
+                  ammoniac: parseFloat(text)
+                })
+              }
+            />
+          </View>
+          <View style={styles.inputInline}>
+            <Text>Nitrates (ppm)</Text>
+            <TextInput
+              style={styles.textInputSmall}
+              maxLength={4}
+              placeholder="0-9"
+              keyboardType="decimal-pad"
+              onChangeText={text =>
+                setTestCollection({
+                  ...TestCollection,
+                  nitrates: parseFloat(text)
+                })
+              }
+            />
+          </View>
+          <View style={styles.inputInline}>
+            <Text>Nitrites (ppm)</Text>
+            <TextInput
+              style={styles.textInputSmall}
+              maxLength={4}
+              placeholder="0-9"
+              keyboardType="decimal-pad"
+              onChangeText={text =>
+                setTestCollection({
+                  ...TestCollection,
+                  nitrites: parseFloat(text)
+                })
+              }
+            />
+          </View>
+        </View>
+        <View style={styles.inputInlineContainer}>
+          <View style={styles.inputInline}>
+            <Text>Phosphates (ppm)</Text>
+            <TextInput
+              style={styles.textInputSmall}
+              maxLength={4}
+              placeholder="0-9"
+              keyboardType="decimal-pad"
+              onChangeText={text =>
+                setTestCollection({
+                  ...TestCollection,
+                  phosphates: parseFloat(text)
+                })
+              }
+            />
+          </View>
+          <View style={styles.inputInline}>
+            <Text>Silicates (ppm)</Text>
+            <TextInput
+              style={styles.textInputSmall}
+              maxLength={4}
+              placeholder="0-9"
+              keyboardType="decimal-pad"
+              onChangeText={text =>
+                setTestCollection({
+                  ...TestCollection,
+                  silicates: parseFloat(text)
                 })
               }
             />

@@ -3,17 +3,19 @@ import { urlServer } from "src/constants/constants";
 import { getData } from "./storageDevice";
 
 export interface TestCollection {
-    dateTime: Date
-    id: string;
-    pH: number;
-    alcalinity: number;
-    calcium: number;
+    id?: string;
+    dateTime?: Date
     temperature: number;
-    salinity: number;
-    magnesium: number;
-    nitrates: number;
-    nitrites: number;
-    phosphates: number;
+    salinity?: number;
+    alcalinity?: number;
+    pH?: number;
+    calcium?: number;
+    magnesium?: number;
+    ammoniac?: number;
+    nitrates?: number;
+    nitrites?: number;
+    phosphates?: number;
+    silicates?: number;
 }
 
 
