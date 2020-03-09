@@ -4,9 +4,9 @@ import { getMemberDetail, Member } from "../services/memberServices";
 import RootStore from "./RootStore";
 
 class MemberStore {
-  rootStore: RootStore;
+  rootStore: any;
 
-  constructor(rootStore: RootStore) {
+  constructor(rootStore) {
     this.rootStore = rootStore;
   }
 

@@ -3,9 +3,9 @@ import { Tank, getTankList } from "../services/tankServices";
 import RootStore from "./RootStore";
 
 class TankStore {
-  rootStore: RootStore;
+  rootStore: any;
 
-  constructor(rootStore: RootStore) {
+  constructor(rootStore) {
     this.rootStore = rootStore;
   }
 
