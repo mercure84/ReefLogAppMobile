@@ -6,6 +6,7 @@ export class RootStore {
   memberStore: MemberStore;
   tankStore: TankStore;
   waterTestStore: WaterTestStore;
+
   constructor() {
     this.memberStore = new MemberStore(this);
     this.tankStore = new TankStore(this);

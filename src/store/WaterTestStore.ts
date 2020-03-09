@@ -24,7 +24,7 @@ class WaterTestStore {
                     const waterTestList = await getWaterTestList(tankId, memberToken);
                     runInAction(() => {
                         console.log("waterTestList Success");
-                        this.waterTestState = waterTestList;
+                        this.waterTestList = waterTestList;
                         this.waterTestState = "done";
                     });
                     return waterTestList;

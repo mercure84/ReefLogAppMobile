@@ -29,7 +29,6 @@ class TankStore {
             this.tankList = tankList;
             this.tankState = "done";
           });
-
           return tankList;
         } catch (error) {
           console.log(error);

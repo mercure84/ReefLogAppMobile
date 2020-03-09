@@ -20,10 +20,13 @@ const StoryScreen = observer(() => {
   if (rootStore.waterTestStore.waterTestState === "pending") {
     rootStore.waterTestStore.fetchWaterTestList();
   }
+  const isTestsLoading = rootStore.waterTestStore.waterTestState === "pending";
+  const dataWaterTestList = rootStore.waterTestStore.waterTestList;
+  console.log("lenght of Data waterList " + dataWaterTestList.length);
+  console.log(
+    "Etat du store waterTest :  " + rootStore.waterTestStore.waterTestState
+  );
 
-  const isTestsLoading = !(rootStore.waterTestStore.waterTestState === "done");
-  const waterTestList = rootStore.waterTestStore.waterTestList;
-  console.log(waterTestList);
   return (
     <View style={styles.page}>
       <Header
@@ -37,7 +40,7 @@ const StoryScreen = observer(() => {
       {isTestsLoading ? (
         <ActivityIndicator />
       ) : (
-        <WaterTestListDisplay waterTestList={waterTestList} />
+        <WaterTestListDisplay waterTestList={dataWaterTestList} />
       )}
     </View>
   );

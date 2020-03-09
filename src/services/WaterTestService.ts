@@ -5,7 +5,7 @@ import { getData } from "./storageDevice";
 export interface WaterTest {
     id?: string;
     dateTime?: Date
-    temperature: number;
+    temperature?: number;
     salinity?: number;
     alcalinity?: number;
     pH?: number;

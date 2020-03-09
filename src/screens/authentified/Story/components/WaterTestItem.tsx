@@ -9,11 +9,9 @@ type Props = {
 export const WaterTestItem = ({ waterTest }: Props) => {
   return (
     <View>
-      {waterTest.dateTime ?? <Text>Date : {waterTest.dateTime} </Text>}
-      {waterTest.temperature ?? <Text>Date : {waterTest.temperature} </Text>}
-      {waterTest.salinity ?? <Text>Date : {waterTest.salinity} </Text>}
-      {waterTest.alcalinity ?? <Text>Date : {waterTest.alcalinity} </Text>}
-      {waterTest.calcium ?? <Text>Date : {waterTest.calcium} </Text>}
+      {waterTest.temperature ?? (
+        <Text>Température : {waterTest.temperature} </Text>
+      )}
     </View>
   );
 };
