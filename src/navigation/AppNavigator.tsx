@@ -5,8 +5,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import WelcomeScreen from "../screens/welcome/WelcomeScreen";
 import DashBoardScreen from "../screens/authentified/DashBoard/DashBoardScreen";
-import EventsScreen from "../screens/authentified/EventsScreen";
-import ParametersScreen from "../screens/authentified/ParametersScreen";
+import StoryScreen from "../screens/authentified/Story/StoryScreen";
+import ParametersScreen from "../screens/authentified/Parameters/ParametersScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -15,6 +15,7 @@ const Stack = createStackNavigator();
 import dashboardIcon from "../assets/icons/home.png";
 import settingsIcon from "../assets/icons/settings-6.png";
 import story from "../assets/icons/notepad.png";
+import { StoryNavigator } from "../screens/authentified/Story/StoryNavigator";
 
 const TabNavigator = () => {
   return (
@@ -29,8 +30,8 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Story"
-        component={EventsScreen}
+        name="Journal"
+        component={StoryNavigator}
         options={{
           tabBarIcon: () => (
             <Image source={story} style={{ height: 24, width: 24 }} />
@@ -51,7 +52,6 @@ const TabNavigator = () => {
 };
 
 export const MainNavigator = ({ isTokenOK }) => {
-  console.log("isTokenOK ??? " + isTokenOK);
   return (
     <NavigationContainer>
       <Stack.Navigator headerMode="none">

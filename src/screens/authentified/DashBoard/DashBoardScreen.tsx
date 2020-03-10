@@ -16,7 +16,7 @@ import { MainTankDisplay } from "./components/MainTankDisplay";
 const DashboardScreen = observer(() => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);
   const [messageInfo, setMessageInfo] = useState("");
-  const [rootStore, setRootStore] = useState(new RootStore());
+  const [rootStore, setRootStore] = useState(RootStore);
 
   if (rootStore.memberStore.memberState === "pending") {
     rootStore.memberStore.fetchMember();
@@ -33,7 +33,7 @@ const DashboardScreen = observer(() => {
   const isTankLoading = rootStore.tankStore.tankState === "pending";
 
   const member = rootStore.memberStore.member;
-  const tankList = rootStore.tankStore.tankList;
+  const tankList = rootStore.tankStore.tankList.slice();
   const handlePress = () => setNewTankFormVisible(true);
 
   return (

@@ -31,9 +31,9 @@ export const signUpService = async (
   try {
     console.log(
       "On demande l'ajout du nouveau membre suivant : " +
-        newMember.email +
-        ", " +
-        newMember.userName
+      newMember.email +
+      ", " +
+      newMember.userName
     );
     const response = await fetch(urlService, {
       method: "POST",
@@ -85,7 +85,7 @@ export const checkToken = async (pEmail: string, pToken) => {
   try {
     console.log(
       "On demande la validation du jeton trouvé avec l'email : " +
-        dataToValidate.email
+      dataToValidate.email
     );
     const response = await fetch(urlService, {
       method: "POST",
@@ -96,7 +96,6 @@ export const checkToken = async (pEmail: string, pToken) => {
       body: JSON.stringify(dataToValidate)
     });
     const dataResponse = response.json();
-    console.log("Data = " + dataResponse);
     return dataResponse;
   } catch (error) {
     console.log(error);
