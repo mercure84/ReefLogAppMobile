@@ -17,7 +17,7 @@ export const WaterTestListDisplay = ({ waterTestList }: Props) => {
         renderItem={({ item }) => <WaterTestItem waterTest={item} />}
         keyExtractor={item => item.id.toString()}
         ListEmptyComponent={<Text>Aucun test n'est enregistré :(</Text>}
-        scrollEnabled={false}
+        scrollEnabled={true}
       />
     </View>
   );

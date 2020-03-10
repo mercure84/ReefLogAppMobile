@@ -10,6 +10,7 @@ import {
   TextStyle
 } from "react-native";
 import create from "../../../../assets/icons/create.png";
+
 import Moment from "moment";
 import "moment/locale/fr";
 import { TouchableOpacity } from "react-native-gesture-handler";

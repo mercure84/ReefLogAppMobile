@@ -36,17 +36,15 @@ const StoryScreen = observer(() => {
         centerComponent={<Text style={{ fontSize: 16 }}>Mon journal</Text>}
         backgroundColor="green"
       />
-      <ScrollView>
-        <Button
-          title="Ajouter un test de mon eau"
-          onPress={() => navigation.navigate("addTests")}
-        />
-        {isTestsLoading ? (
-          <ActivityIndicator />
-        ) : (
-          <WaterTestListDisplay waterTestList={dataWaterTestList} />
-        )}
-      </ScrollView>
+      <Button
+        title="Ajouter un test de mon eau"
+        onPress={() => navigation.navigate("addTests")}
+      />
+      {isTestsLoading ? (
+        <ActivityIndicator />
+      ) : (
+        <WaterTestListDisplay waterTestList={dataWaterTestList} />
+      )}
     </View>
   );
 });
