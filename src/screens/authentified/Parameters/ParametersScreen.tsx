@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, Button, TouchableOpacity, StyleSheet } from "react-native";
-import { getData, removeData } from "../../services/storageDevice";
 import { useNavigation } from "@react-navigation/native";
+import { removeData, getData } from "../../../services/storageDevice";
 
 export const disconnect = () => {
   removeData("token");

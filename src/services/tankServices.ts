@@ -65,7 +65,7 @@ export const addNewReefTank = async (
   }
 };
 
-// récupérer la lister des aquariums d'un membre
+// récupérer la liste des aquariums d'un membre
 
 export const getTankList = async (
   pMemberId: string,
@@ -74,8 +74,7 @@ export const getTankList = async (
   const urlService = urlServer + "api/getAquariumList/" + pMemberId;
 
   try {
-    console.log("On demande la liste des aquariums de membre n° " + pMemberId);
-
+    console.log("Service is fetching tankList for member n° " + pMemberId);
     const response = await fetch(urlService, {
       method: "GET",
       headers: {
