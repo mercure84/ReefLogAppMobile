@@ -1,17 +1,16 @@
 import React from "react";
 import { WaterTest } from "../../../../services/waterTestService";
-import { View, Text, StyleSheet } from "react-native";
+import { Text, Image } from "react-native";
 import { Card } from "react-native-elements";
-import { LoginForm } from "src/screens/welcome/components/LoginForm";
-
+import create from "../../../../assets/icons/create.png";
 type Props = {
   waterTest: WaterTest;
 };
 
 export const WaterTestItem = ({ waterTest }: Props) => {
-  //console.log("ammonium = " + waterTest.ammoniac);
   return (
     <Card>
+      <Image source={create} style={{ height: 24, width: 24 }} />
       <Text>Date : {waterTest.date}</Text>
       {waterTest.temperature !== null ? (
         <Text>Température : {waterTest.temperature} °C </Text>
