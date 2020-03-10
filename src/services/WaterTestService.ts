@@ -1,14 +1,13 @@
-import React from "react"
 import { urlServer } from "../constants/constants";
 import { getData } from "./storageDevice";
 
 export interface WaterTest {
-    id?: string;
-    dateTime?: Date
+    id?: number;
+    date?: Date
     temperature?: number;
     salinity?: number;
     alcalinity?: number;
-    pH?: number;
+    ph?: number;
     calcium?: number;
     magnesium?: number;
     ammoniac?: number;

@@ -2,33 +2,23 @@ import React from "react";
 import { WaterTest } from "../../../../services/waterTestService";
 import { FlatList, Text, View } from "react-native";
 import { WaterTestItem } from "./WaterTestItem";
-import { observer } from "mobx-react";
 
 type Props = {
   waterTestList: WaterTest[];
 };
 
-export const WaterTestListDisplay = observer(({ waterTestList }: Props) => {
-  console.log(
-    "Test d'une donnée de waterTestList = " + waterTestList[0].temperature
-  );
+export const WaterTestListDisplay = ({ waterTestList }: Props) => {
+  console.log("WTLIst = " + waterTestList.toString());
 
-  const data = waterTestList;
-  console.log(
-    data[0].temperature +
-      "   " +
-      data[1].temperature +
-      "   " +
-      data[2].temperature
-  );
   return (
     <View>
       <FlatList
-        data={data}
+        data={waterTestList}
         renderItem={({ item }) => <WaterTestItem waterTest={item} />}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.id.toString()}
         ListEmptyComponent={<Text>Aucun test n'est enregistré :(</Text>}
+        scrollEnabled={false}
       />
     </View>
   );
-});
+};

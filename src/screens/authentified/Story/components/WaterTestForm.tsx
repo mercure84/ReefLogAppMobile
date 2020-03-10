@@ -135,7 +135,7 @@ export const WaterTestForm = () => {
               onChangeText={text =>
                 setWaterTest({
                   ...waterTest,
-                  pH: parseFloat(text)
+                  ph: parseFloat(text)
                 })
               }
             />

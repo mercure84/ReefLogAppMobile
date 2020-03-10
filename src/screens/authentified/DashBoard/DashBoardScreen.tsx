@@ -33,7 +33,7 @@ const DashboardScreen = observer(() => {
   const isTankLoading = rootStore.tankStore.tankState === "pending";
 
   const member = rootStore.memberStore.member;
-  const tankList = rootStore.tankStore.tankList;
+  const tankList = rootStore.tankStore.tankList.slice();
   const handlePress = () => setNewTankFormVisible(true);
 
   return (

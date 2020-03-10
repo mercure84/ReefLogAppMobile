@@ -1,5 +1,5 @@
 import { WaterTest, getWaterTestList } from './../services/waterTestService';
-import { observable, action, runInAction } from "mobx";
+import { observable, action, runInAction, computed, toJS } from "mobx";
 import { RootStore as RootStoreType } from "./RootStore";
 
 class WaterTestStore {
@@ -11,6 +11,11 @@ class WaterTestStore {
 
     @observable waterTestList: WaterTest[] = [];
     @observable waterTestState = "pending";
+
+    @computed get waterTestListData() {
+        return toJS(this.waterTestList)
+    }
+
 
     @action
     async fetchWaterTestList(): Promise<WaterTest[]> {
