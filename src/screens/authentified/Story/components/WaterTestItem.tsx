@@ -1,17 +1,37 @@
 import React from "react";
 import { WaterTest } from "../../../../services/waterTestService";
-import { Text, Image } from "react-native";
-import { Card } from "react-native-elements";
+import {
+  Text,
+  Image,
+  StyleSheet,
+  View,
+  ViewStyle,
+  ImageStyle,
+  TextStyle
+} from "react-native";
 import create from "../../../../assets/icons/create.png";
+import Moment from "moment";
+import "moment/locale/fr";
+import { TouchableOpacity } from "react-native-gesture-handler";
+
 type Props = {
   waterTest: WaterTest;
 };
 
 export const WaterTestItem = ({ waterTest }: Props) => {
   return (
-    <Card>
-      <Image source={create} style={{ height: 24, width: 24 }} />
-      <Text>Date : {waterTest.date}</Text>
+    <View style={styles.testContainer}>
+      <View style={styles.header}>
+        <View style={styles.item}>
+          <Text style={styles.date}>
+            Date : {Moment(waterTest.date).format("lll")}
+          </Text>
+        </View>
+        <TouchableOpacity>
+          <Image source={create} style={styles.icon} />
+        </TouchableOpacity>
+      </View>
+
       {waterTest.temperature !== null ? (
         <Text>Température : {waterTest.temperature} °C </Text>
       ) : null}
@@ -40,6 +60,38 @@ export const WaterTestItem = ({ waterTest }: Props) => {
         <Text>Silicates : {waterTest.silicates} ppm </Text>
       ) : null}
       {waterTest.ph !== null ? <Text>pH : {waterTest.ph} </Text> : null}
-    </Card>
+    </View>
   );
 };
+
+type Style = {
+  testContainer: ViewStyle;
+  header: ViewStyle;
+  icon: ImageStyle;
+  item: ViewStyle;
+  date: TextStyle;
+};
+
+const styles = StyleSheet.create<Style>({
+  testContainer: {
+    borderColor: "grey",
+    borderRadius: 4,
+    borderWidth: 1,
+    padding: 8,
+    margin: 8
+  },
+  item: {
+    flex: 3
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-around"
+  },
+  icon: {
+    height: 32,
+    width: 32
+  },
+  date: {
+    fontWeight: "bold"
+  }
+});
