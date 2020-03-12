@@ -1,4 +1,4 @@
-import { WaterTest, getWaterTestList } from './../services/waterTestService';
+import { WaterTest, getWaterTestList } from '../services/waterTestService';
 import { observable, action, runInAction, computed, toJS } from "mobx";
 import { RootStore as RootStoreType } from "./RootStore";
 

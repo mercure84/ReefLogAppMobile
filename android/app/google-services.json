@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "677282630802",
+    "firebase_url": "https://reeflog-b3773.firebaseio.com",
+    "project_id": "reeflog-b3773",
+    "storage_bucket": "reeflog-b3773.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:677282630802:android:8c175f904e7b30e1b42a4b",
+        "android_client_info": {
+          "package_name": "com.mobilereeflog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "677282630802-atdn5i6lt3njjijk044n0lt15ru1dv24.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiXVVSPrdUu11NL-RXxuiW0Uw9p0Cfsuc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "677282630802-atdn5i6lt3njjijk044n0lt15ru1dv24.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
