@@ -1,5 +1,6 @@
 import { urlServer } from "../constants/constants";
 import { getData } from "./storageDevice";
+import { Tank } from "./tankServices";
 
 export interface WaterTest {
     id?: number;
@@ -15,15 +16,20 @@ export interface WaterTest {
     nitrites?: number;
     phosphates?: number;
     silicates?: number;
+    aquarium?: Tank;
 }
 
 
 // ajout d'un nouveau test
-export const addNewWaterTest = async (
+export const saveWaterTest = async (
     aquariumId: string,
-    newWaterTest: WaterTest
+    newWaterTest: WaterTest,
+    update: boolean
 ) => {
-    const urlService = urlServer + "api/addNewWaterTest";
+    const suffixUrl = update ? "api/updateWaterTest" : "api/addNewWaterTest"
+    //purge du champ de l'aquarium si on est dans le cas d'un update
+    newWaterTest.aquarium = null;
+    const urlService = urlServer + suffixUrl;
     const newWaterTestForm = {
         aquariumId: aquariumId,
         waterTest: newWaterTest

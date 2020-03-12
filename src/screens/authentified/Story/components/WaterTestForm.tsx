@@ -12,14 +12,23 @@ import { Card } from "react-native-elements";
 import { TextInput } from "react-native-gesture-handler";
 import {
   WaterTest,
-  addNewWaterTest
+  saveWaterTest
 } from "../../../../services/waterTestService";
 import { CustomMessage } from "../../../../components/CustomMessage";
 import { useNavigation } from "@react-navigation/native";
+import RootStore from "../../../../store/RootStore";
 
-export const WaterTestForm = () => {
+type Props = {
+  waterTestToUpdate: WaterTest;
+};
+
+export const WaterTestForm = ({ waterTestToUpdate }: Props) => {
+  const [rootStore, setRootStore] = useState(RootStore);
+
+  const toUpdate = waterTestToUpdate !== null;
+  toUpdate;
   const [isLoading, setLoading] = useState(false);
-  const [waterTest, setWaterTest] = useState<WaterTest>();
+  const [waterTest, setWaterTest] = useState<WaterTest>(waterTestToUpdate);
   const [infoMessage, setInfoMessage] = useState(
     "Saisissez les données de vos tests !"
   );
@@ -47,10 +56,11 @@ export const WaterTestForm = () => {
       setInfoMessage(
         "Votre formulaire est correct, nous allons l'enregistrer... "
       );
-      const response = await addNewWaterTest("171", waterTest);
+      const response = await saveWaterTest("171", waterTest, toUpdate);
 
       if (response != null) {
         setInfoMessage("Le test a bien été enregistré !");
+        rootStore.waterTestStore.fetchWaterTestList();
         setLoading(false);
         navigation.navigate("mainStory");
       } else {
@@ -61,7 +71,6 @@ export const WaterTestForm = () => {
       setInfoMessage("Votre formulaire est incorrect, merci de le vérifier !");
     }
   };
-
   return (
     <View>
       {isLoading && <ActivityIndicator />}
@@ -72,7 +81,7 @@ export const WaterTestForm = () => {
           <TextInput
             style={styles.textInput}
             maxLength={30}
-            placeholder="30 caractères maxi"
+            placeholder={"30 caractères maxi"}
             onChangeText={text => null}
             enabled={false}
           />
@@ -83,13 +92,18 @@ export const WaterTestForm = () => {
             <TextInput
               style={styles.textInputSmall}
               maxLength={5}
-              placeholder="0-99 °C"
+              placeholder={"0-99 °C"}
               keyboardType="decimal-pad"
               onChangeText={text =>
                 setWaterTest({
                   ...waterTest,
                   temperature: parseFloat(text)
                 })
+              }
+              defaultValue={
+                toUpdate && waterTest.temperature !== null
+                  ? waterTest.temperature.toString()
+                  : null
               }
             />
           </View>
@@ -106,6 +120,11 @@ export const WaterTestForm = () => {
                   salinity: parseFloat(text)
                 })
               }
+              defaultValue={
+                toUpdate && waterTest.salinity !== null
+                  ? waterTest.salinity.toString()
+                  : null
+              }
             />
           </View>
           <View style={styles.inputInline}>
@@ -120,6 +139,11 @@ export const WaterTestForm = () => {
                   ...waterTest,
                   alcalinity: parseFloat(text)
                 })
+              }
+              defaultValue={
+                toUpdate && waterTest.alcalinity !== null
+                  ? waterTest.alcalinity.toString()
+                  : null
               }
             />
           </View>
@@ -138,6 +162,11 @@ export const WaterTestForm = () => {
                   ph: parseFloat(text)
                 })
               }
+              defaultValue={
+                toUpdate && waterTest.ph !== null
+                  ? waterTest.ph.toString()
+                  : null
+              }
             />
           </View>
           <View style={styles.inputInline}>
@@ -153,6 +182,11 @@ export const WaterTestForm = () => {
                   calcium: parseFloat(text)
                 })
               }
+              defaultValue={
+                toUpdate && waterTest.calcium !== null
+                  ? waterTest.calcium.toString()
+                  : null
+              }
             />
           </View>
           <View style={styles.inputInline}>
@@ -167,6 +201,11 @@ export const WaterTestForm = () => {
                   ...waterTest,
                   magnesium: parseFloat(text)
                 })
+              }
+              defaultValue={
+                toUpdate && waterTest.magnesium !== null
+                  ? waterTest.magnesium.toString()
+                  : null
               }
             />
           </View>
@@ -185,6 +224,11 @@ export const WaterTestForm = () => {
                   ammoniac: parseFloat(text)
                 })
               }
+              defaultValue={
+                toUpdate && waterTest.ammoniac !== null
+                  ? waterTest.ammoniac.toString()
+                  : null
+              }
             />
           </View>
           <View style={styles.inputInline}>
@@ -200,6 +244,11 @@ export const WaterTestForm = () => {
                   nitrates: parseFloat(text)
                 })
               }
+              defaultValue={
+                toUpdate && waterTest.nitrates !== null
+                  ? waterTest.nitrates.toString()
+                  : null
+              }
             />
           </View>
           <View style={styles.inputInline}>
@@ -214,6 +263,11 @@ export const WaterTestForm = () => {
                   ...waterTest,
                   nitrites: parseFloat(text)
                 })
+              }
+              defaultValue={
+                toUpdate && waterTest.nitrites !== null
+                  ? waterTest.nitrites.toString()
+                  : null
               }
             />
           </View>
@@ -232,6 +286,11 @@ export const WaterTestForm = () => {
                   phosphates: parseFloat(text)
                 })
               }
+              defaultValue={
+                toUpdate && waterTest.phosphates !== null
+                  ? waterTest.phosphates.toString()
+                  : null
+              }
             />
           </View>
           <View style={styles.inputInline}>
@@ -246,6 +305,11 @@ export const WaterTestForm = () => {
                   ...waterTest,
                   silicates: parseFloat(text)
                 })
+              }
+              defaultValue={
+                toUpdate && waterTest.silicates !== null
+                  ? waterTest.silicates.toString()
+                  : null
               }
             />
           </View>
