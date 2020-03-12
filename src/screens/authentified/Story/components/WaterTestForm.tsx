@@ -60,6 +60,7 @@ export const WaterTestForm = ({ waterTestToUpdate }: Props) => {
 
       if (response != null) {
         setInfoMessage("Le test a bien été enregistré !");
+        rootStore.waterTestStore.fetchWaterTestList();
         setLoading(false);
         navigation.navigate("mainStory");
       } else {
