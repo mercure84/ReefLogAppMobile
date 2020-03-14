@@ -35,6 +35,8 @@ const DashboardScreen = observer(() => {
   const member = rootStore.memberStore.member;
   const tankList = rootStore.tankStore.tankList.slice();
   const newTankPress = () => setNewTankFormVisible(true);
+  const populationPress = () => null;
+  const equipmentPress = () => null;
 
   return (
     <View style={styles.page}>
@@ -68,6 +70,13 @@ const DashboardScreen = observer(() => {
           showFormCallback={setNewTankFormVisible}
           tankToSave={null}
         />
+      )}
+
+      {tankList[0] !== null && (
+        <Button title="Mes pensionnaires" onPress={populationPress} />
+      )}
+      {tankList[0] !== null && (
+        <Button title="Mon équipement" onPress={equipmentPress} />
       )}
     </View>
   );
