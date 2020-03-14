@@ -13,6 +13,7 @@ export const WaterTestListDisplay = ({ waterTestList }: Props) => {
   return (
     <View>
       <FlatList
+        style={{ marginBottom: 64 }}
         data={waterTestList}
         renderItem={({ item }) => <WaterTestItem waterTest={item} />}
         keyExtractor={item => item.id.toString()}

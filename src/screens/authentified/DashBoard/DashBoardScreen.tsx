@@ -34,7 +34,7 @@ const DashboardScreen = observer(() => {
 
   const member = rootStore.memberStore.member;
   const tankList = rootStore.tankStore.tankList.slice();
-  const handlePress = () => setNewTankFormVisible(true);
+  const newTankPress = () => setNewTankFormVisible(true);
 
   return (
     <View style={styles.page}>
@@ -58,7 +58,9 @@ const DashboardScreen = observer(() => {
         <MainTankDisplay tankList={tankList} />
       )}
 
-      <Button title="Créer un Aquarium" onPress={handlePress} />
+      {tankList.length === 0 && (
+        <Button title="Créer un Aquarium" onPress={newTankPress} />
+      )}
       {isNewTankFormVisible && (
         <NewTankForm
           memberId={91}

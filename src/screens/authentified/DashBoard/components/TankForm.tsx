@@ -19,7 +19,7 @@ export const NewTankForm = ({ infoCallBack, showFormCallback, memberId }) => {
   const [tankWidth, setWidth] = useState("");
   const [tankHeight, setHeight] = useState("");
   const [maintenance, setMaintenance] = useState("BERLINOIS");
-  const [sumpVolume, setSumpVolume] = useState();
+  const [sumpVolume, setSumpVolume] = useState("");
   const [population, setPopulation] = useState("MIX");
   const [startDate, setStartDate] = useState(new Date());
   const [infoMessage, setInfoMessage] = useState("Décrivez votre Aquarium !");
