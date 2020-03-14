@@ -10,42 +10,23 @@ export interface Tank {
   width: number;
   height: number;
   startDate?: any;
-  equipmentList: any[];
-  member: Member;
+  member?: Member;
   sumpVolume: number;
   typeOfMaintenance: string;
   mainPopulation: string;
   ballingDescription?: any;
-  liveRocksWeigth: number;
-  othersRocksWeight: number;
-  rawVolume: number;
+  liveRocksWeigth?: number;
+  othersRocksWeight?: number;
+  rawVolume?: number;
 }
 
 // ajout d'un aquarium
-export const addNewReefTank = async (
-  newMemberId: string,
-  newName: string,
-  newLength: string,
-  newWidth: string,
-  newHeight: string,
-  newMaintenance: string,
-  newSumpVolume: any,
-  newPopulation: string,
-  newStartDate: string | Date
-) => {
+export const addNewReefTank = async (newMemberId: string, newTank: Tank) => {
   const urlService = urlServer + "api/addNewReefAquarium";
   const newReefTank = {
     memberId: newMemberId,
-    name: newName,
-    height: newHeight,
-    width: newWidth,
-    length: newLength,
-    sumpVolume: newSumpVolume,
-    typeOfMaintenance: newMaintenance,
-    mainPopulation: newPopulation,
-    startDate: newStartDate
+    reefAquarium: newTank
   };
-  console.log("la date s'affiche comme ça " + newStartDate);
   try {
     const token = await getData("token");
     const response = await fetch(urlService, {

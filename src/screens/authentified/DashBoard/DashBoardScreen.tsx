@@ -63,9 +63,10 @@ const DashboardScreen = observer(() => {
       )}
       {isNewTankFormVisible && (
         <NewTankForm
-          memberId={91}
+          memberId={member.id}
           infoCallBack={setMessageInfo}
           showFormCallback={setNewTankFormVisible}
+          tankToSave={null}
         />
       )}
     </View>
