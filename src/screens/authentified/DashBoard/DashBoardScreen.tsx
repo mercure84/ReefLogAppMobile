@@ -12,11 +12,13 @@ import { NewTankForm } from "./components/TankForm";
 import { observer } from "mobx-react";
 import RootStore from "../../../store/RootStore";
 import { MainTankDisplay } from "./components/MainTankDisplay";
+import { useNavigation } from "@react-navigation/native";
 
 const DashboardScreen = observer(() => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);
   const [messageInfo, setMessageInfo] = useState("");
   const [rootStore, setRootStore] = useState(RootStore);
+  const navigation = useNavigation();
 
   if (rootStore.memberStore.memberState === "pending") {
     rootStore.memberStore.fetchMember();
@@ -35,8 +37,8 @@ const DashboardScreen = observer(() => {
   const member = rootStore.memberStore.member;
   const tankList = rootStore.tankStore.tankList.slice();
   const newTankPress = () => setNewTankFormVisible(true);
-  const populationPress = () => null;
-  const equipmentPress = () => null;
+  const populationPress = () => navigation.navigate("handlePopulation");
+  const equipmentPress = () => navigation.navigate("handleEquipment");
 
   return (
     <View style={styles.page}>
