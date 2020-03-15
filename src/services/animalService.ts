@@ -84,7 +84,7 @@ export const getAnimals = async (
     });
 
     const dataResponse = response.json();
-    console.log("tests fetchés = " + dataResponse);
+    console.log("animals fetchés = " + dataResponse);
     return dataResponse;
   } catch (error) {
     console.log(error);
