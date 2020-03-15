@@ -10,7 +10,7 @@ import {
   ActivityIndicator
 } from "react-native";
 import { Card, Button } from "react-native-elements";
-import { addNewReefTank, Tank } from "../../../../services/tankServices";
+import { addNewReefTank, Tank } from "../../../../services/tankService";
 
 type Props = {
   infoCallBack: (string: string) => void;

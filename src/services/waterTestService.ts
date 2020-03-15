@@ -1,6 +1,6 @@
 import { urlServer } from "../constants/constants";
 import { getData } from "./storageDevice";
-import { Tank } from "./tankServices";
+import { Tank } from "./tankService";
 
 export interface WaterTest {
   id?: string;

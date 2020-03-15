@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Tank } from "../../../../services/tankServices";
+import { Tank } from "../../../../services/tankService";
 import { View, Text, StyleSheet, ViewStyle, TextStyle } from "react-native";
 
 type Props = {

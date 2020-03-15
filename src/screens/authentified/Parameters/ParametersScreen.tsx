@@ -20,7 +20,11 @@ const ParametersScreen = () => {
         title="Se déconnecter"
         onPress={() => (disconnect(), navigation.navigate("Signout"))}
       />
-      <Button title="Afficher le Token" onPress={() => getData("token")} />
+      <Button title="Mettre à jour mon profil" onPress={() => null} />
+      <Button
+        title="Envoyer un message à l'administrateur"
+        onPress={() => null}
+      />
     </View>
   );
 };

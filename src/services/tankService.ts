@@ -1,6 +1,6 @@
 import { urlServer } from "../constants/constants";
 import { getData } from "./storageDevice";
-import { Member } from "./memberServices";
+import { Member } from "./memberService";
 
 // typage aquarium
 export interface Tank {
