@@ -16,7 +16,7 @@ class AnimalStore {
 
   @observable animals: Animal[] = [];
   @observable animalState = "pending";
-  @observable animalSpecies: String[];
+  @observable animalSpecies: AnimalSpecies;
   @observable animalSpeciesState = "pending";
 
   @computed get animalsData() {
