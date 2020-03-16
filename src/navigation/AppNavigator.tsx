@@ -13,6 +13,7 @@ const Stack = createStackNavigator();
 import dashboardIcon from "../assets/icons/home.png";
 import settingsIcon from "../assets/icons/settings-6.png";
 import story from "../assets/icons/notepad.png";
+
 import { StoryNavigator } from "../screens/authentified/Story/StoryNavigator";
 import { DashBoardNavigator } from "../screens/authentified/DashBoard/DashBoardNavigator";
 

@@ -26,6 +26,19 @@ export interface Animal {
   cucumberSpecies?: string;
 }
 
+export interface AnimalSpecies {
+  star?: string[];
+  crustacean?: string[];
+  anemone?: string[];
+  cucumber?: string[];
+  fish?: string[];
+  sps?: string[];
+  urchin?: string[];
+  mollusk?: string[];
+  lps?: string[];
+  soft?: string[];
+}
+
 export const saveAnimal = async (
   pAquariumId: string,
   newAnimal: Animal,
@@ -85,6 +98,28 @@ export const getAnimals = async (
 
     const dataResponse = response.json();
     console.log("animals fetchés = " + dataResponse);
+    return dataResponse;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getAnimalSpecies = async (
+  animalKind?: string
+): Promise<AnimalSpecies | any> => {
+  const urlService = urlServer + "api/getAnimalSpecies/" + animalKind;
+  try {
+    console.log("Service is fetching AnimalsSpecies for " + animalKind);
+
+    const response = await fetch(urlService, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    });
+    const dataResponse = response.json();
+    console.log("animalsSpecies fetchés = " + dataResponse);
     return dataResponse;
   } catch (error) {
     console.log(error);

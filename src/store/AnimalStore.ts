@@ -1,7 +1,11 @@
-import { getAnimals } from "./../services/animalService";
+import {
+  getAnimals,
+  Animal,
+  AnimalSpecies,
+  getAnimalSpecies
+} from "./../services/animalService";
 import { observable, action, runInAction, computed, toJS } from "mobx";
 import { RootStore as RootStoreType } from "./RootStore";
-import { Animal } from "../services/animalService";
 
 class AnimalStore {
   rootStore: RootStoreType;
@@ -12,9 +16,15 @@ class AnimalStore {
 
   @observable animals: Animal[] = [];
   @observable animalState = "pending";
+  @observable animalSpecies: String[];
+  @observable animalSpeciesState = "pending";
 
   @computed get animalsData() {
     return toJS(this.animals);
+  }
+
+  @computed get animalSpeciesData() {
+    return toJS(this.animalSpecies);
   }
 
   @action
@@ -38,6 +48,24 @@ class AnimalStore {
           this.animalState = "error";
         }
       }
+    }
+  }
+
+  @action
+  async fetchAnimalSpecies(kindAnimal: string): Promise<AnimalSpecies> {
+    this.animalSpeciesState = "pending";
+    try {
+      console.log("Store is fetching Animals SPECIES");
+      const animalSpecies = await getAnimalSpecies(kindAnimal);
+      runInAction(() => {
+        console.log("animalsSpecies success");
+        this.animalSpecies = animalSpecies;
+        this.animalSpeciesState = "done";
+      });
+      return animalSpecies;
+    } catch (error) {
+      console.log(error);
+      this.animalSpeciesState = "error";
     }
   }
 }

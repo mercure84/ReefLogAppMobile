@@ -4,7 +4,8 @@ import {
   View,
   ViewStyle,
   StyleSheet,
-  ActivityIndicator
+  ActivityIndicator,
+  Button
 } from "react-native";
 import { Header } from "react-native-elements";
 import RootStore from "../../../store/RootStore";
@@ -27,6 +28,10 @@ export const PopulationScreen = observer(() => {
           <Text style={{ fontSize: 16 }}>Mes pensionnaires</Text>
         }
         backgroundColor="green"
+      />
+      <Button
+        onPress={() => navigation.navigate("newAnimal")}
+        title="Ajouter un pensionnaire"
       />
 
       {isAnimalsLoading ? (
