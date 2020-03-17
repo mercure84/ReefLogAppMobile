@@ -32,34 +32,46 @@ export const AnimalItem = ({ animal }: Props) => {
           <Text style={styles.date}>
             Date d'arrinée : {Moment(animal.incomingDate).format("lll")}
           </Text>
-          {animal.anemoneSpecies !== null ? (
-            <Text>Anémone : {animal.anemoneSpecies}</Text>
+          {animal.anemoneSpecies !== undefined ? (
+            <Text style={styles.animalType}>
+              Anémone : {animal.anemoneSpecies}
+            </Text>
           ) : null}
-          {animal.crustaceanSpecies !== null ? (
-            <Text>Détritivore : {animal.crustaceanSpecies}</Text>
+          {animal.crustaceanSpecies !== undefined ? (
+            <Text style={styles.animalType}>
+              Crustacé : {animal.crustaceanSpecies}
+            </Text>
           ) : null}
-          {animal.cucumberSpecies !== null ? (
-            <Text>Concombre : {animal.cucumberSpecies} </Text>
+          {animal.cucumberSpecies !== undefined ? (
+            <Text style={styles.animalType}>
+              Concombre : {animal.cucumberSpecies}{" "}
+            </Text>
           ) : null}
-          {animal.fishSpecies !== null ? (
-            <Text>Poisson : {animal.fishSpecies}</Text>
+          {animal.fishSpecies !== undefined ? (
+            <Text style={styles.animalType}>
+              Poisson : {animal.fishSpecies}
+            </Text>
           ) : null}
-          {animal.lpsSpecies !== null ? (
-            <Text>LPS : {animal.lpsSpecies} </Text>
+          {animal.lpsSpecies !== undefined ? (
+            <Text style={styles.animalType}>LPS : {animal.lpsSpecies} </Text>
           ) : null}
-          {animal.spsSpecies !== null ? (
-            <Text>SPS : {animal.spsSpecies} </Text>
+          {animal.spsSpecies !== undefined ? (
+            <Text style={styles.animalType}>SPS : {animal.spsSpecies} </Text>
           ) : null}
-          {animal.softSpecies !== null ? (
-            <Text>Mou : {animal.softSpecies} </Text>
+          {animal.softSpecies !== undefined ? (
+            <Text style={styles.animalType}>Mou : {animal.softSpecies} </Text>
           ) : null}
-          {animal.softSpecies !== null ? (
-            <Text>Détritivore : {animal.molluskSpecies} </Text>
+          {animal.softSpecies !== undefined ? (
+            <Text style={styles.animalType}>
+              Détritivore : {animal.molluskSpecies}{" "}
+            </Text>
           ) : null}
-          {animal.urchinSpecies !== null ? (
-            <Text>Oursin : {animal.urchinSpecies} </Text>
+          {animal.urchinSpecies !== undefined ? (
+            <Text style={styles.animalType}>
+              Oursin : {animal.urchinSpecies}{" "}
+            </Text>
           ) : null}
-          {animal.starSpecies !== null ? (
+          {animal.starSpecies !== undefined ? (
             <Text>{animal.starSpecies} </Text>
           ) : null}
 
@@ -79,6 +91,7 @@ export const AnimalItem = ({ animal }: Props) => {
 
 type Style = {
   testContainer: ViewStyle;
+  animalType: TextStyle;
   header: ViewStyle;
   icon: ImageStyle;
   item: ViewStyle;
@@ -106,5 +119,8 @@ const styles = StyleSheet.create<Style>({
   },
   date: {
     fontWeight: "bold"
+  },
+  animalType: {
+    color: "blue"
   }
 });

@@ -47,18 +47,19 @@ export const saveAnimal = async (
   const suffixUrl = update ? "api/updateAnimal" : "api/addAnimal";
   newAnimal.aquarium = null;
   const urlService = urlServer + suffixUrl;
+
   const newAnimalForm = {
     aquariumId: pAquariumId,
-    anemone: newAnimal.anemoneSpecies !== null ? newAnimal : null,
-    soft: newAnimal.softSpecies !== null ? newAnimal : null,
-    sps: newAnimal.spsSpecies !== null ? newAnimal : null,
-    lps: newAnimal.lpsSpecies !== null ? newAnimal : null,
-    fish: newAnimal.fishSpecies !== null ? newAnimal : null,
-    uchin: newAnimal.urchinSpecies !== null ? newAnimal : null,
-    star: newAnimal.starSpecies !== null ? newAnimal : null,
-    mollusk: newAnimal.molluskSpecies !== null ? newAnimal : null,
-    crustacean: newAnimal.crustaceanSpecies !== null ? newAnimal : null,
-    cucumber: newAnimal.cucumberSpecies !== null ? newAnimal : null
+    anemone: newAnimal.anemoneSpecies !== undefined ? newAnimal : null,
+    soft: newAnimal.softSpecies !== undefined ? newAnimal : null,
+    sps: newAnimal.spsSpecies !== undefined ? newAnimal : null,
+    lps: newAnimal.lpsSpecies !== undefined ? newAnimal : null,
+    fish: newAnimal.fishSpecies !== undefined ? newAnimal : null,
+    uchin: newAnimal.urchinSpecies !== undefined ? newAnimal : null,
+    star: newAnimal.starSpecies !== undefined ? newAnimal : null,
+    mollusk: newAnimal.molluskSpecies !== undefined ? newAnimal : null,
+    crustacean: newAnimal.crustaceanSpecies !== undefined ? newAnimal : null,
+    cucumber: newAnimal.cucumberSpecies !== undefined ? newAnimal : null
   };
 
   try {

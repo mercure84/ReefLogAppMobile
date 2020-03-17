@@ -42,16 +42,15 @@ export const AnimalForm = observer(
         rootStore.animalStore.animalSpeciesState +
         " et animalForm = " +
         animalTypeForm +
-        "animal species = " +
+        " animal species = " +
         animalSpecies
     );
 
     const toUpdate = animalToSave !== null;
-    toUpdate;
     const [isLoading, setLoading] = useState(false);
     const [animal, setAnimal] = useState<Animal>(animalToSave);
     const [infoMessage, setInfoMessage] = useState(
-      "Saisieez les données pour un nouveau " + animalTypeForm
+      "Saisissez les données pour un nouveau " + animalTypeForm
     );
     const navigation = useNavigation();
 
@@ -138,7 +137,11 @@ export const AnimalForm = observer(
                 >
                   {animalSpecies.fish.map((item, index) => {
                     return (
-                      <Picker.Item label={item} value={index} key={index} />
+                      <Picker.Item
+                        label={item}
+                        value={item.toString()}
+                        key={index}
+                      />
                     );
                   })}
                 </Picker>
