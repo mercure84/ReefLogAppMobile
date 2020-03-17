@@ -21,7 +21,22 @@ export const NewAnimalScreen = observer(() => {
   const [animalType, setAnimalType] = useState("");
   const showAnimalForm = (animalTypeForm: string) => {
     setShowForm(true);
+    showReefCleenerSelection(false);
+    showCoralSelection(false);
     setAnimalType(animalTypeForm);
+  };
+
+  const [isCoralSelection, showCoralSelection] = useState(false);
+  const [isReefCleanerSelection, showReefCleenerSelection] = useState(false);
+
+  const handleCoralSelection = () => {
+    showCoralSelection(true);
+    showReefCleenerSelection(false);
+  };
+
+  const handleReefCleanerSelection = () => {
+    showCoralSelection(false);
+    showReefCleenerSelection(true);
   };
 
   return (
@@ -47,17 +62,48 @@ export const NewAnimalScreen = observer(() => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.iconContainer}
-              onPress={() => showAnimalForm("coral")}
+              onPress={handleCoralSelection}
             >
               <Image source={coralIcon} style={styles.icon} />
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.iconContainer}
-              onPress={() => showAnimalForm("reefCleaner")}
+              onPress={handleReefCleanerSelection}
             >
               <Image source={reefCleanerIcon} style={styles.icon} />
             </TouchableOpacity>
           </View>
+          {isCoralSelection && (
+            <View>
+              <Button title="Soft" onPress={() => showAnimalForm("soft")} />
+              <Button title="LPS" onPress={() => showAnimalForm("lps")} />
+              <Button title="SPS" onPress={() => showAnimalForm("sps")} />
+              <Button
+                title="Anémone"
+                onPress={() => showAnimalForm("anemone")}
+              />
+            </View>
+          )}
+
+          {isReefCleanerSelection && (
+            <View>
+              <Button title="Oursin" onPress={() => showAnimalForm("urchin")} />
+              <Button title="Etoile" onPress={() => showAnimalForm("star")} />
+              <Button
+                title="Concombre"
+                onPress={() => showAnimalForm("cucumber")}
+              />
+              <Button
+                title="Crustacé"
+                onPress={() => showAnimalForm("crustacean")}
+              />
+
+              <Button
+                title="Mollusque"
+                onPress={() => showAnimalForm("mollusk")}
+              />
+            </View>
+          )}
         </View>
       )}
       {showForm && (
