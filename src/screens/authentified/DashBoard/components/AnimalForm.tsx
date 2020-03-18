@@ -28,7 +28,16 @@ type Props = {
 
 export const AnimalForm = observer(
   ({ animalToSave, animalTypeForm }: Props) => {
+    const toUpdate = animalToSave !== null;
+    const [isLoading, setLoading] = useState(false);
+    const [animal, setAnimal] = useState<Animal>(animalToSave);
+    const [infoMessage, setInfoMessage] = useState(
+      "Saisissez les données pour un nouveau " + animalTypeForm
+    );
+    const navigation = useNavigation();
+
     const [rootStore, setRootStore] = useState(RootStore);
+    const [speciesInPicker, setSpeciesInPicker] = useState("");
     let animalSpecies = null;
 
     if (rootStore.animalStore.animalSpeciesState === "pending") {
@@ -71,6 +80,7 @@ export const AnimalForm = observer(
     }
 
     const setSpecies = (text: string) => {
+      setSpeciesInPicker(text);
       switch (animalTypeForm) {
         case "fish":
           setAnimal({
@@ -143,14 +153,6 @@ export const AnimalForm = observer(
         " animal species = " +
         animalSpecies
     );
-
-    const toUpdate = animalToSave !== null;
-    const [isLoading, setLoading] = useState(false);
-    const [animal, setAnimal] = useState<Animal>(animalToSave);
-    const [infoMessage, setInfoMessage] = useState(
-      "Saisissez les données pour un nouveau " + animalTypeForm
-    );
-    const navigation = useNavigation();
 
     const isAnimalSpeciesLoading =
       rootStore.animalStore.animalSpeciesState === "pending";
@@ -226,9 +228,7 @@ export const AnimalForm = observer(
                 <Picker
                   style={{ height: 50, width: 200 }}
                   mode="dialog"
-                  selectedValue={
-                    animal !== null ? animal.fishSpecies : animalSpecies
-                  }
+                  selectedValue={speciesInPicker}
                   onValueChange={itemValue => setSpecies(itemValue)}
                 >
                   {animalSpecies.map((item, index) => {

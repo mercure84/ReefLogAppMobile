@@ -55,7 +55,7 @@ export const saveAnimal = async (
     sps: newAnimal.spsSpecies !== undefined ? newAnimal : null,
     lps: newAnimal.lpsSpecies !== undefined ? newAnimal : null,
     fish: newAnimal.fishSpecies !== undefined ? newAnimal : null,
-    uchin: newAnimal.urchinSpecies !== undefined ? newAnimal : null,
+    urchin: newAnimal.urchinSpecies !== undefined ? newAnimal : null,
     star: newAnimal.starSpecies !== undefined ? newAnimal : null,
     mollusk: newAnimal.molluskSpecies !== undefined ? newAnimal : null,
     crustacean: newAnimal.crustaceanSpecies !== undefined ? newAnimal : null,

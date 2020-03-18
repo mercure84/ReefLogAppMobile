@@ -44,7 +44,7 @@ export const AnimalItem = ({ animal }: Props) => {
           ) : null}
           {animal.cucumberSpecies !== undefined ? (
             <Text style={styles.animalType}>
-              Concombre : {animal.cucumberSpecies}{" "}
+              Concombre : {animal.cucumberSpecies}
             </Text>
           ) : null}
           {animal.fishSpecies !== undefined ? (
@@ -61,18 +61,18 @@ export const AnimalItem = ({ animal }: Props) => {
           {animal.softSpecies !== undefined ? (
             <Text style={styles.animalType}>Mou : {animal.softSpecies} </Text>
           ) : null}
-          {animal.softSpecies !== undefined ? (
+          {animal.molluskSpecies !== undefined ? (
             <Text style={styles.animalType}>
-              Détritivore : {animal.molluskSpecies}{" "}
+              Mollusque : {animal.molluskSpecies}
             </Text>
           ) : null}
           {animal.urchinSpecies !== undefined ? (
             <Text style={styles.animalType}>
-              Oursin : {animal.urchinSpecies}{" "}
+              Oursin : {animal.urchinSpecies}
             </Text>
           ) : null}
           {animal.starSpecies !== undefined ? (
-            <Text>{animal.starSpecies} </Text>
+            <Text>Etoile {animal.starSpecies} </Text>
           ) : null}
 
           <Text>{animal.name}</Text>
