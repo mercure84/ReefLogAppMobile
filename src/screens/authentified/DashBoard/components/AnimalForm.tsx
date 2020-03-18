@@ -35,48 +35,12 @@ export const AnimalForm = observer(
       "Saisissez les données pour un nouveau " + animalTypeForm
     );
     const navigation = useNavigation();
-
     const [rootStore, setRootStore] = useState(RootStore);
     const [speciesInPicker, setSpeciesInPicker] = useState("");
-    let animalSpecies = null;
+    let animalSpecies: string[] = [];
 
     if (rootStore.animalStore.animalSpeciesState === "pending") {
       rootStore.animalStore.fetchAnimalSpecies();
-    }
-
-    if (rootStore.animalStore.animalSpeciesState === "done") {
-      switch (animalTypeForm) {
-        case "fish":
-          animalSpecies = rootStore.animalStore.animalSpeciesData.fish;
-          break;
-        case "soft":
-          animalSpecies = rootStore.animalStore.animalSpeciesData.soft;
-          break;
-        case "lps":
-          animalSpecies = rootStore.animalStore.animalSpeciesData.lps;
-          break;
-        case "sps":
-          animalSpecies = rootStore.animalStore.animalSpeciesData.sps;
-          break;
-        case "anemone":
-          animalSpecies = rootStore.animalStore.animalSpeciesData.anemone;
-          break;
-        case "urchin":
-          animalSpecies = rootStore.animalStore.animalSpeciesData.urchin;
-          break;
-        case "star":
-          animalSpecies = rootStore.animalStore.animalSpeciesData.star;
-          break;
-        case "mollusk":
-          animalSpecies = rootStore.animalStore.animalSpeciesData.mollusk;
-          break;
-        case "cucumber":
-          animalSpecies = rootStore.animalStore.animalSpeciesData.cucumber;
-          break;
-        case "crustacean":
-          animalSpecies = rootStore.animalStore.animalSpeciesData.crustacean;
-          break;
-      }
     }
 
     const setSpecies = (text: string) => {
@@ -145,14 +109,70 @@ export const AnimalForm = observer(
       }
     };
 
-    console.log(
-      "status du animalSpeciesState = " +
-        rootStore.animalStore.animalSpeciesState +
-        " et animalForm = " +
-        animalTypeForm +
-        " animal species = " +
-        animalSpecies
-    );
+    if (rootStore.animalStore.animalSpeciesState === "done") {
+      switch (animalTypeForm) {
+        case "fish":
+          animalSpecies = rootStore.animalStore.animalSpeciesData.fish;
+          if (animal === null || animal.fishSpecies === undefined) {
+            setSpecies(animalSpecies[0]);
+          }
+          break;
+        case "soft":
+          animalSpecies = rootStore.animalStore.animalSpeciesData.soft;
+          if (animal === null || animal.softSpecies === undefined) {
+            setSpecies(animalSpecies[0]);
+          }
+          break;
+        case "lps":
+          animalSpecies = rootStore.animalStore.animalSpeciesData.lps;
+          if (animal === null || animal.lpsSpecies === undefined) {
+            setSpecies(animalSpecies[0]);
+          }
+          break;
+        case "sps":
+          animalSpecies = rootStore.animalStore.animalSpeciesData.sps;
+          if (animal === null || animal.spsSpecies === undefined) {
+            setSpecies(animalSpecies[0]);
+          }
+          break;
+        case "anemone":
+          animalSpecies = rootStore.animalStore.animalSpeciesData.anemone;
+          if (animal === null || animal.anemoneSpecies === undefined) {
+            setSpecies(animalSpecies[0]);
+          }
+          break;
+        case "urchin":
+          animalSpecies = rootStore.animalStore.animalSpeciesData.urchin;
+          if (animal === null || animal.urchinSpecies === undefined) {
+            setSpecies(animalSpecies[0]);
+          }
+          break;
+        case "star":
+          animalSpecies = rootStore.animalStore.animalSpeciesData.star;
+          if (animal === null || animal.starSpecies === undefined) {
+            setSpecies(animalSpecies[0]);
+          }
+          break;
+        case "mollusk":
+          animalSpecies = rootStore.animalStore.animalSpeciesData.mollusk;
+          if (animal === null || animal.molluskSpecies === undefined) {
+            setSpecies(animalSpecies[0]);
+          }
+          break;
+        case "cucumber":
+          animalSpecies = rootStore.animalStore.animalSpeciesData.cucumber;
+          if (animal === null || animal.cucumberSpecies === undefined) {
+            setSpecies(animalSpecies[0]);
+          }
+          break;
+        case "crustacean":
+          animalSpecies = rootStore.animalStore.animalSpeciesData.crustacean;
+          if (animal === null || animal.crustaceanSpecies === undefined) {
+            setSpecies(animalSpecies[0]);
+          }
+          break;
+      }
+    }
 
     const isAnimalSpeciesLoading =
       rootStore.animalStore.animalSpeciesState === "pending";

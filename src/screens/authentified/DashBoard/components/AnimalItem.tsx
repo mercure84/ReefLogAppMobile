@@ -30,7 +30,7 @@ export const AnimalItem = ({ animal }: Props) => {
       <View style={styles.header}>
         <View style={styles.item}>
           <Text style={styles.date}>
-            Date d'arrinée : {Moment(animal.incomingDate).format("lll")}
+            Date d'arrivée : {Moment(animal.incomingDate).format("lll")}
           </Text>
           {animal.anemoneSpecies !== undefined ? (
             <Text style={styles.animalType}>
