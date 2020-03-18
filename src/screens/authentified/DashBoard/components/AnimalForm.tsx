@@ -29,13 +29,111 @@ type Props = {
 export const AnimalForm = observer(
   ({ animalToSave, animalTypeForm }: Props) => {
     const [rootStore, setRootStore] = useState(RootStore);
+    let animalSpecies = null;
 
     if (rootStore.animalStore.animalSpeciesState === "pending") {
-      rootStore.animalStore.fetchAnimalSpecies(animalTypeForm);
+      rootStore.animalStore.fetchAnimalSpecies();
     }
 
-    const animalSpecies: AnimalSpecies =
-      rootStore.animalStore.animalSpeciesData;
+    if (rootStore.animalStore.animalSpeciesState === "done") {
+      switch (animalTypeForm) {
+        case "fish":
+          animalSpecies = rootStore.animalStore.animalSpeciesData.fish;
+          break;
+        case "soft":
+          animalSpecies = rootStore.animalStore.animalSpeciesData.soft;
+          break;
+        case "lps":
+          animalSpecies = rootStore.animalStore.animalSpeciesData.lps;
+          break;
+        case "sps":
+          animalSpecies = rootStore.animalStore.animalSpeciesData.sps;
+          break;
+        case "anemone":
+          animalSpecies = rootStore.animalStore.animalSpeciesData.anemone;
+          break;
+        case "urchin":
+          animalSpecies = rootStore.animalStore.animalSpeciesData.urchin;
+          break;
+        case "star":
+          animalSpecies = rootStore.animalStore.animalSpeciesData.star;
+          break;
+        case "mollusk":
+          animalSpecies = rootStore.animalStore.animalSpeciesData.mollusk;
+          break;
+        case "cucumber":
+          animalSpecies = rootStore.animalStore.animalSpeciesData.cucumber;
+          break;
+        case "crustacean":
+          animalSpecies = rootStore.animalStore.animalSpeciesData.crustacean;
+          break;
+      }
+    }
+
+    const setSpecies = (text: string) => {
+      switch (animalTypeForm) {
+        case "fish":
+          setAnimal({
+            ...animal,
+            fishSpecies: text
+          });
+          break;
+        case "soft":
+          setAnimal({
+            ...animal,
+            softSpecies: text
+          });
+          break;
+        case "lps":
+          setAnimal({
+            ...animal,
+            lpsSpecies: text
+          });
+          break;
+        case "sps":
+          setAnimal({
+            ...animal,
+            spsSpecies: text
+          });
+          break;
+        case "anemone":
+          setAnimal({
+            ...animal,
+            anemoneSpecies: text
+          });
+          break;
+        case "urchin":
+          setAnimal({
+            ...animal,
+            urchinSpecies: text
+          });
+          break;
+        case "star":
+          setAnimal({
+            ...animal,
+            starSpecies: text
+          });
+          break;
+        case "mollusk":
+          setAnimal({
+            ...animal,
+            molluskSpecies: text
+          });
+          break;
+        case "cucumber":
+          setAnimal({
+            ...animal,
+            cucumberSpecies: text
+          });
+          break;
+        case "crustacean":
+          setAnimal({
+            ...animal,
+            crustaceanSpecies: text
+          });
+          break;
+      }
+    };
 
     console.log(
       "status du animalSpeciesState = " +
@@ -77,7 +175,7 @@ export const AnimalForm = observer(
       return false;
     };
 
-    const submitWaterTest = async () => {
+    const submitAnimal = async () => {
       if (animal !== undefined && checkForm()) {
         setLoading(true);
         setInfoMessage(
@@ -129,13 +227,11 @@ export const AnimalForm = observer(
                   style={{ height: 50, width: 200 }}
                   mode="dialog"
                   selectedValue={
-                    animal !== null ? animal.fishSpecies : animalSpecies.fish[0]
+                    animal !== null ? animal.fishSpecies : animalSpecies
                   }
-                  onValueChange={itemValue =>
-                    setAnimal({ ...animal, fishSpecies: itemValue })
-                  }
+                  onValueChange={itemValue => setSpecies(itemValue)}
                 >
-                  {animalSpecies.fish.map((item, index) => {
+                  {animalSpecies.map((item, index) => {
                     return (
                       <Picker.Item
                         label={item}
@@ -169,7 +265,7 @@ export const AnimalForm = observer(
               <Picker
                 style={{ height: 50, width: 150 }}
                 mode="dialog"
-                selectedValue={animal !== null ? animal.currentSize : "M"}
+                selectedValue={animal === null ? "M" : animal.currentSize}
                 onValueChange={itemValue =>
                   setAnimal({ ...animal, currentSize: itemValue })
                 }
@@ -218,7 +314,7 @@ export const AnimalForm = observer(
             </View>
           </View>
           <View style={styles.buttonContainer}>
-            <Button title="Enregistrer" onPress={() => submitWaterTest()} />
+            <Button title="Enregistrer" onPress={() => submitAnimal()} />
             <Button
               title="Annuler"
               onPress={() => navigation.navigate("handlePopulation")}

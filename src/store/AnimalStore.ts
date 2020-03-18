@@ -52,11 +52,11 @@ class AnimalStore {
   }
 
   @action
-  async fetchAnimalSpecies(kindAnimal: string): Promise<AnimalSpecies> {
+  async fetchAnimalSpecies(): Promise<AnimalSpecies> {
     this.animalSpeciesState = "pending";
     try {
       console.log("Store is fetching Animals SPECIES");
-      const animalSpecies = await getAnimalSpecies(kindAnimal);
+      const animalSpecies = await getAnimalSpecies();
       runInAction(() => {
         console.log("animalsSpecies success");
         this.animalSpecies = animalSpecies;

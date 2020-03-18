@@ -105,12 +105,10 @@ export const getAnimals = async (
   }
 };
 
-export const getAnimalSpecies = async (
-  animalKind?: string
-): Promise<AnimalSpecies | any> => {
-  const urlService = urlServer + "api/getAnimalSpecies/" + animalKind;
+export const getAnimalSpecies = async (): Promise<AnimalSpecies | any> => {
+  const urlService = urlServer + "api/getAnimalSpecies";
   try {
-    console.log("Service is fetching AnimalsSpecies for " + animalKind);
+    console.log("Service is fetching AnimalsSpecies");
 
     const response = await fetch(urlService, {
       method: "GET",

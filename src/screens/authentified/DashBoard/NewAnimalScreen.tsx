@@ -15,8 +15,11 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import fishIcon from "../../../assets/icons/fish.png";
 import coralIcon from "../../../assets/icons/coral.png";
 import reefCleanerIcon from "../../../assets/icons/reefcleaner.png";
+import RootStore from "../../../store/RootStore";
 
 export const NewAnimalScreen = observer(() => {
+  const [rootStore, setRootStore] = useState(RootStore);
+
   const [showForm, setShowForm] = useState(false);
   const [animalType, setAnimalType] = useState("");
   const showAnimalForm = (animalTypeForm: string) => {
