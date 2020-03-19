@@ -22,9 +22,10 @@ type Props = {
 
 export const AnimalItem = ({ animal }: Props) => {
   const navigation = useNavigation();
-  const handlePress = () => null;
-  /*     navigation.navigate("addTests", { waterTest: waterTest });
-   */
+  const handlePress = () => {
+    navigation.navigate("updateAnimal", { animal: animal });
+  };
+
   return (
     <View style={styles.testContainer}>
       <View style={styles.header}>

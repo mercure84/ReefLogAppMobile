@@ -14,20 +14,19 @@ import { TextInput } from "react-native-gesture-handler";
 import { CustomMessage } from "../../../../components/CustomMessage";
 import { useNavigation } from "@react-navigation/native";
 import RootStore from "../../../../store/RootStore";
-import {
-  Animal,
-  saveAnimal,
-  AnimalSpecies
-} from "../../../../services/animalService";
+import { Animal, saveAnimal } from "../../../../services/animalService";
 import { observer } from "mobx-react";
 
 type Props = {
   animalToSave: Animal;
-  animalTypeForm: string;
+  animalTypeForm?: string;
 };
-
 export const AnimalForm = observer(
   ({ animalToSave, animalTypeForm }: Props) => {
+    console.log(
+      "animal Name = " + animalToSave + " , et species = " + animalTypeForm
+    );
+
     const toUpdate = animalToSave !== null;
     const [isLoading, setLoading] = useState(false);
     const [animal, setAnimal] = useState<Animal>(animalToSave);
@@ -39,7 +38,10 @@ export const AnimalForm = observer(
     const [speciesInPicker, setSpeciesInPicker] = useState("");
     let animalSpecies: string[] = [];
 
-    if (rootStore.animalStore.animalSpeciesState === "pending") {
+    if (
+      rootStore.animalStore.animalSpeciesState === "pending" ||
+      animalSpecies === []
+    ) {
       rootStore.animalStore.fetchAnimalSpecies();
     }
 
@@ -309,7 +311,9 @@ export const AnimalForm = observer(
                   })
                 }
                 defaultValue={
-                  toUpdate && animal.name !== null ? animal.name : "1"
+                  toUpdate && animal.quantity !== null
+                    ? animal.quantity.toString()
+                    : "1"
                 }
               />
             </View>
@@ -328,7 +332,7 @@ export const AnimalForm = observer(
                   })
                 }
                 defaultValue={
-                  toUpdate && animal.name !== null ? animal.name : null
+                  toUpdate && animal.notes !== null ? animal.notes : null
                 }
               />
             </View>

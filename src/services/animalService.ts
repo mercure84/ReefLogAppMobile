@@ -39,6 +39,39 @@ export interface AnimalSpecies {
   soft?: string[];
 }
 
+export const getSpecies = (animal: Animal) => {
+  if (animal.crustaceanSpecies !== undefined) {
+    return "crustaceanSpecies";
+  }
+  if (animal.softSpecies !== undefined) {
+    return "softSpecies";
+  }
+  if (animal.lpsSpecies !== undefined) {
+    return "lpsSpecies";
+  }
+  if (animal.spsSpecies !== undefined) {
+    return "spsSpecies";
+  }
+  if (animal.fishSpecies !== undefined) {
+    return "fishSpecies";
+  }
+  if (animal.anemoneSpecies !== undefined) {
+    return "anemoneSpecies";
+  }
+  if (animal.molluskSpecies !== undefined) {
+    return "molluskSpecies";
+  }
+  if (animal.cucumberSpecies !== undefined) {
+    return "cucumberSpecies";
+  }
+  if (animal.urchinSpecies !== undefined) {
+    return "urchinSpecies";
+  }
+  if (animal.starSpecies !== undefined) {
+    return "starSpecies";
+  }
+};
+
 export const saveAnimal = async (
   pAquariumId: string,
   newAnimal: Animal,

@@ -24,9 +24,7 @@ type Props = {
 
 export const WaterTestForm = ({ waterTestToUpdate }: Props) => {
   const [rootStore, setRootStore] = useState(RootStore);
-
   const toUpdate = waterTestToUpdate !== null;
-  toUpdate;
   const [isLoading, setLoading] = useState(false);
   const [waterTest, setWaterTest] = useState<WaterTest>(waterTestToUpdate);
   const [infoMessage, setInfoMessage] = useState(
