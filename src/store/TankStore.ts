@@ -1,5 +1,5 @@
 import { observable, action, runInAction } from "mobx";
-import { Tank, getTankList } from "../services/tankServices";
+import { Tank, getTankList } from "../services/tankService";
 import { RootStore as RootStoreType } from "./RootStore";
 
 class TankStore {

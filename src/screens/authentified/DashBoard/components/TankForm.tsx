@@ -10,18 +10,23 @@ import {
   ActivityIndicator
 } from "react-native";
 import { Card, Button } from "react-native-elements";
-import { addNewReefTank } from "../../../../services/tankServices";
+import { addNewReefTank, Tank } from "../../../../services/tankService";
 
-export const NewTankForm = ({ infoCallBack, showFormCallback, memberId }) => {
+type Props = {
+  infoCallBack: (string: string) => void;
+  showFormCallback: (boolean: boolean) => void;
+  memberId: string;
+  tankToSave: Tank;
+};
+
+export const NewTankForm = ({
+  infoCallBack,
+  showFormCallback,
+  memberId,
+  tankToSave
+}: Props) => {
   const [isLoading, setLoading] = useState(false);
-  const [tankName, setName] = useState("");
-  const [tankLength, setLength] = useState("");
-  const [tankWidth, setWidth] = useState("");
-  const [tankHeight, setHeight] = useState("");
-  const [maintenance, setMaintenance] = useState("BERLINOIS");
-  const [sumpVolume, setSumpVolume] = useState();
-  const [population, setPopulation] = useState("MIX");
-  const [startDate, setStartDate] = useState(new Date());
+  const [tank, setTank] = useState<Tank>(tankToSave);
   const [infoMessage, setInfoMessage] = useState("Décrivez votre Aquarium !");
 
   infoCallBack(infoMessage);
@@ -29,11 +34,11 @@ export const NewTankForm = ({ infoCallBack, showFormCallback, memberId }) => {
   const checkForm = () => {
     let isValide = false;
     if (
-      tankName !== "" &&
-      tankLength !== "" &&
-      tankWidth !== "" &&
-      tankHeight !== "" &&
-      sumpVolume !== ""
+      tank.name !== "" &&
+      tank.length !== null &&
+      tank.height !== null &&
+      tank.width !== null &&
+      tank.sumpVolume !== null
     ) {
       isValide = true;
     } else {
@@ -52,17 +57,7 @@ export const NewTankForm = ({ infoCallBack, showFormCallback, memberId }) => {
     if (checkForm()) {
       setInfoMessage("Le formulaire est valide ! Enregistrement en cours...");
 
-      const response = await addNewReefTank(
-        memberId,
-        tankName,
-        tankLength,
-        tankWidth,
-        tankHeight,
-        maintenance,
-        sumpVolume,
-        population,
-        startDate
-      );
+      const response = await addNewReefTank(memberId, tank);
 
       if (response != null) {
         setInfoMessage("L'aquarium a bien été enregistré");
@@ -87,7 +82,12 @@ export const NewTankForm = ({ infoCallBack, showFormCallback, memberId }) => {
             style={styles.textInput}
             maxLength={30}
             placeholder="30 caractères maxi"
-            onChangeText={text => setName(text)}
+            onChangeText={text =>
+              setTank({
+                ...tank,
+                name: text
+              })
+            }
           />
         </View>
         <View style={styles.inputInlineContainer}>
@@ -98,7 +98,12 @@ export const NewTankForm = ({ infoCallBack, showFormCallback, memberId }) => {
               maxLength={3}
               placeholder="0-999cm"
               keyboardType="numeric"
-              onChangeText={text => setLength(text)}
+              onChangeText={text =>
+                setTank({
+                  ...tank,
+                  length: parseFloat(text)
+                })
+              }
             />
           </View>
           <View style={styles.inputInline}>
@@ -108,7 +113,12 @@ export const NewTankForm = ({ infoCallBack, showFormCallback, memberId }) => {
               maxLength={3}
               placeholder="0-999cm"
               keyboardType="numeric"
-              onChangeText={text => setWidth(text)}
+              onChangeText={text =>
+                setTank({
+                  ...tank,
+                  width: parseFloat(text)
+                })
+              }
             />
           </View>
           <View style={styles.inputInline}>
@@ -118,7 +128,12 @@ export const NewTankForm = ({ infoCallBack, showFormCallback, memberId }) => {
               maxLength={3}
               placeholder="0-999cm"
               keyboardType="numeric"
-              onChangeText={text => setHeight(text)}
+              onChangeText={text =>
+                setTank({
+                  ...tank,
+                  height: parseFloat(text)
+                })
+              }
             />
           </View>
 
@@ -129,7 +144,12 @@ export const NewTankForm = ({ infoCallBack, showFormCallback, memberId }) => {
               maxLength={4}
               placeholder="0-9999 L"
               keyboardType="numeric"
-              onChangeText={text => setSumpVolume(text)}
+              onChangeText={text =>
+                setTank({
+                  ...tank,
+                  sumpVolume: parseFloat(text)
+                })
+              }
             />
           </View>
         </View>
@@ -138,8 +158,10 @@ export const NewTankForm = ({ infoCallBack, showFormCallback, memberId }) => {
           <Picker
             style={{ height: 50, width: 150 }}
             mode="dropdown"
-            selectedValue={maintenance}
-            onValueChange={itemValue => setMaintenance(itemValue)}
+            selectedValue={tank !== null ? tank.typeOfMaintenance : "BERLINOIS"}
+            onValueChange={itemValue =>
+              setTank({ ...tank, typeOfMaintenance: itemValue })
+            }
           >
             <Picker.Item label="Berlinois" value="BERLINOIS" />
             <Picker.Item label="Jaubert" value="JAUBERT" />
@@ -151,8 +173,10 @@ export const NewTankForm = ({ infoCallBack, showFormCallback, memberId }) => {
           <Picker
             style={{ height: 50, width: 150 }}
             mode="dropdown"
-            selectedValue={population}
-            onValueChange={itemValue => setPopulation(itemValue)}
+            selectedValue={tank !== null ? tank.mainPopulation : "MIX"}
+            onValueChange={itemValue =>
+              setTank({ ...tank, mainPopulation: itemValue })
+            }
           >
             <Picker.Item label="Fish-Only" value="FISH_ONLY" />
             <Picker.Item label="Mixte" value="MIX" />

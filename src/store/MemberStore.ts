@@ -1,18 +1,16 @@
 import { observable, action, runInAction } from "mobx";
 import { getData } from "../services/storageDevice";
-import { getMemberDetail, Member } from "../services/memberServices";
+import { getMemberDetail, Member } from "../services/memberService";
 import { RootStore as RootStoreType } from "./RootStore";
 
-
 class MemberStore {
-
   rootStore: RootStoreType;
 
   constructor(rootStore) {
     this.rootStore = rootStore;
   }
-  @observable member: Member
-  @observable token: string
+  @observable member: Member;
+  @observable token: string;
 
   @observable memberState = "pending"; // "pending" / "done" / "error"
 

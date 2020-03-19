@@ -8,7 +8,7 @@ import {
   ViewStyle,
   TextStyle
 } from "react-native";
-import { signUpService } from "../../../services/memberServices";
+import { signUpService } from "../../../services/memberService";
 import { MessageInfo } from "./MessageInfo";
 import { TextInput } from "react-native-gesture-handler";
 import { Card } from "react-native-elements";

@@ -30,7 +30,7 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
     displaySignupForm
   );
 
-  const [messageInfo, setMessageInfo] = useState();
+  const [messageInfo, setMessageInfo] = useState("");
 
   const token = getData("token");
   const emailUser = getData("emailUser");
