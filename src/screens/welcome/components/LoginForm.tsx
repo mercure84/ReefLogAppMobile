@@ -9,7 +9,7 @@ import {
   StyleSheet
 } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
-import { loginService } from "../../../services/memberServices";
+import { loginService } from "../../../services/memberService";
 import { storeData } from "../../../services/storageDevice";
 import { useNavigation } from "@react-navigation/native";
 import { Card } from "react-native-elements";

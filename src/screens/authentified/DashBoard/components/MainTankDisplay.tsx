@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Tank } from "../../../../services/tankServices";
+import { Tank } from "../../../../services/tankService";
 import { View, Text, StyleSheet, ViewStyle, TextStyle } from "react-native";
 
 type Props = {
@@ -11,7 +11,7 @@ export const MainTankDisplay = ({ tankList }: Props) => {
     <View style={styles.container}>
       <Text style={styles.mainTitle}>{tankList[0].name}</Text>
       <Text style={styles.detailText}>
-        Volume : {tankList[0].rawVolume} litres
+        Volume brut : {tankList[0].rawVolume} litres
       </Text>
 
       <Text style={styles.detailText}>
@@ -40,11 +40,13 @@ const styles = StyleSheet.create<Style>({
     backgroundColor: "grey",
     padding: 8,
     margin: 16,
-    borderRadius: 15
+    borderRadius: 15,
+    width: "96%"
   },
   mainTitle: {
     fontSize: 24,
-    margin: 8
+    margin: 8,
+    textAlign: "center"
   },
   detailText: {
     fontSize: 16,

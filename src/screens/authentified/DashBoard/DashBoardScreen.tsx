@@ -12,11 +12,13 @@ import { NewTankForm } from "./components/TankForm";
 import { observer } from "mobx-react";
 import RootStore from "../../../store/RootStore";
 import { MainTankDisplay } from "./components/MainTankDisplay";
+import { useNavigation } from "@react-navigation/native";
 
 const DashboardScreen = observer(() => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);
   const [messageInfo, setMessageInfo] = useState("");
   const [rootStore, setRootStore] = useState(RootStore);
+  const navigation = useNavigation();
 
   if (rootStore.memberStore.memberState === "pending") {
     rootStore.memberStore.fetchMember();
@@ -34,7 +36,9 @@ const DashboardScreen = observer(() => {
 
   const member = rootStore.memberStore.member;
   const tankList = rootStore.tankStore.tankList.slice();
-  const handlePress = () => setNewTankFormVisible(true);
+  const newTankPress = () => setNewTankFormVisible(true);
+  const populationPress = () => navigation.navigate("handlePopulation");
+  const equipmentPress = () => navigation.navigate("handleEquipment");
 
   return (
     <View style={styles.page}>
@@ -58,13 +62,23 @@ const DashboardScreen = observer(() => {
         <MainTankDisplay tankList={tankList} />
       )}
 
-      <Button title="Créer un Aquarium" onPress={handlePress} />
+      {tankList.length === 0 && (
+        <Button title="Créer un Aquarium" onPress={newTankPress} />
+      )}
       {isNewTankFormVisible && (
         <NewTankForm
-          memberId={91}
+          memberId={member.id}
           infoCallBack={setMessageInfo}
           showFormCallback={setNewTankFormVisible}
+          tankToSave={null}
         />
+      )}
+
+      {tankList[0] !== null && (
+        <Button title="Mes pensionnaires" onPress={populationPress} />
+      )}
+      {tankList[0] !== null && (
+        <Button title="Mon équipement" onPress={equipmentPress} />
       )}
     </View>
   );

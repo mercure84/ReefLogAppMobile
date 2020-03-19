@@ -24,9 +24,7 @@ type Props = {
 
 export const WaterTestForm = ({ waterTestToUpdate }: Props) => {
   const [rootStore, setRootStore] = useState(RootStore);
-
   const toUpdate = waterTestToUpdate !== null;
-  toUpdate;
   const [isLoading, setLoading] = useState(false);
   const [waterTest, setWaterTest] = useState<WaterTest>(waterTestToUpdate);
   const [infoMessage, setInfoMessage] = useState(
@@ -56,7 +54,11 @@ export const WaterTestForm = ({ waterTestToUpdate }: Props) => {
       setInfoMessage(
         "Votre formulaire est correct, nous allons l'enregistrer... "
       );
-      const response = await saveWaterTest("171", waterTest, toUpdate);
+      const response = await saveWaterTest(
+        rootStore.tankStore.tankList[0].id,
+        waterTest,
+        toUpdate
+      );
 
       if (response != null) {
         setInfoMessage("Le test a bien été enregistré !");

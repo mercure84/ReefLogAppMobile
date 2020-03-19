@@ -12,7 +12,6 @@ import { useNavigation } from "@react-navigation/native";
 import RootStore from "../../../store/RootStore";
 import { observer } from "mobx-react";
 import { WaterTestListDisplay } from "./components/WaterTestListDisplay";
-import { ScrollView } from "react-native-gesture-handler";
 
 const StoryScreen = observer(() => {
   const navigation = useNavigation();
@@ -23,12 +22,6 @@ const StoryScreen = observer(() => {
   }
   const isTestsLoading = rootStore.waterTestStore.waterTestState === "pending";
   const dataWaterTestList = rootStore.waterTestStore.waterTestListData;
-  console.log("lenght of Data waterList " + dataWaterTestList.length);
-  console.log("Data waterList " + dataWaterTestList);
-
-  console.log(
-    "Etat du store waterTest :  " + rootStore.waterTestStore.waterTestState
-  );
 
   return (
     <View style={styles.page}>

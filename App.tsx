@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Provider } from "mobx-react";
 import { MainNavigator } from "./src/navigation/AppNavigator";
 import { getData } from "./src/services/storageDevice";
-import { checkToken } from "./src/services/memberServices";
+import { checkToken } from "./src/services/memberService";
 import { ActivityIndicator } from "react-native";
 import RootStore from "./src/store/RootStore";
 
