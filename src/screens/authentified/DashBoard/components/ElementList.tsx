@@ -2,9 +2,10 @@ import React from "react";
 import { FlatList, Text, View } from "react-native";
 import { Animal } from "../../../../services/animalService";
 import { AnimalItem } from "./AnimalItem";
+import { Equipment } from "src/services/equipmentService";
 
 type Props = {
-  elements: Animal[];
+  elements: Animal[] | Equipment[] | any;
 };
 
 export const ElementList = ({ elements }: Props) => {
