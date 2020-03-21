@@ -137,6 +137,11 @@ export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
             onChangeText={text =>
               setEquipment({ ...equipment, power: parseFloat(text) })
             }
+            defaultValue={
+              isUpdating && equipment.quantity !== null
+                ? equipment.quantity.toString()
+                : "1"
+            }
           />
         </View>
 

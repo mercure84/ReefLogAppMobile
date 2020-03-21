@@ -18,7 +18,7 @@ export const DashBoardNavigator = () => {
       <Stack.Screen name="newAnimal" component={NewAnimalScreen} />
       <Stack.Screen name="updateAnimal" component={UpdateAnimalScreen} />
       <Stack.Screen
-        name="newEquipment"
+        name="saveEquipment"
         component={NewEquipmentScreen}
         initialParams={{ equipment: null }}
       />
