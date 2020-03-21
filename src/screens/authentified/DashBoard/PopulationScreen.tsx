@@ -11,7 +11,7 @@ import { Header } from "react-native-elements";
 import RootStore from "../../../store/RootStore";
 import { useNavigation } from "@react-navigation/native";
 import { observer } from "mobx-react";
-import { AnimalsListDisplay } from "./components/AnimalsListDisplay";
+import { ElementList } from "./components/ElementList";
 
 export const PopulationScreen = observer(() => {
   const navigation = useNavigation();
@@ -37,7 +37,7 @@ export const PopulationScreen = observer(() => {
       {isAnimalsLoading ? (
         <ActivityIndicator />
       ) : (
-        <AnimalsListDisplay animals={dataAnimals} />
+        <ElementList elements={dataAnimals} />
       )}
     </View>
   );
