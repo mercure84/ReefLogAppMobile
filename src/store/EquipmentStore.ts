@@ -1,7 +1,8 @@
-import { getEquipments, deleteEquipment } from "./../services/equipmentService";
+import { getEquipments } from "./../services/equipmentService";
 import { observable, action, runInAction, computed, toJS } from "mobx";
 import { RootStore as RootStoreType } from "./RootStore";
 import { Equipment } from "../services/equipmentService";
+import { deleteItem } from "../services/rootService";
 
 class EquipmentStore {
   rootStore: RootStoreType;
@@ -47,7 +48,7 @@ class EquipmentStore {
     try {
       console.log("Store is deleting the equipment n° ");
       const memberToken = this.rootStore.memberStore.token;
-      await deleteEquipment(id, memberToken);
+      await deleteItem(id, "equipment", memberToken);
       runInAction(() => {
         this.equipmentState = "done";
       });
