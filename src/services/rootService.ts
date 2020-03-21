@@ -1,5 +1,4 @@
 import { urlServer } from "./../constants/constants";
-import { getData } from "./storageDevice";
 
 const getUrlService = (item: string) => {
   switch (item) {
@@ -14,7 +13,7 @@ const getUrlService = (item: string) => {
 
 //FONCTION QUI PERMET D'APPELER LE SERVICE DE SUPPRESSION DES ANIMAL, EQUIPMENT, WATERTESTS
 export const deleteItem = async (
-  pId: number,
+  pId: number | string,
   kindItem: string,
   token: string
 ) => {

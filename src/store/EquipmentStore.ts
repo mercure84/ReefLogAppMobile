@@ -43,10 +43,10 @@ class EquipmentStore {
   }
 
   @action
-  async storeDeleteEquipment(id: number) {
+  async storeDeleteEquipment(id: number | string) {
     this.equipmentState = "pending";
     try {
-      console.log("Store is deleting the equipment n° ");
+      console.log("Store is deleting the equipment n° " + id);
       const memberToken = this.rootStore.memberStore.token;
       await deleteItem(id, "equipment", memberToken);
       runInAction(() => {
