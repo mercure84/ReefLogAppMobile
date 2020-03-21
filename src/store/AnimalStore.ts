@@ -6,6 +6,7 @@ import {
 } from "./../services/animalService";
 import { observable, action, runInAction, computed, toJS } from "mobx";
 import { RootStore as RootStoreType } from "./RootStore";
+import { deleteItem } from "../services/rootService";
 
 class AnimalStore {
   rootStore: RootStoreType;
@@ -66,6 +67,21 @@ class AnimalStore {
     } catch (error) {
       console.log(error);
       this.animalSpeciesState = "error";
+    }
+  }
+
+  @action
+  async storeDeleteAnimal(id: number | string) {
+    this.animalState = "pending";
+    try {
+      console.log("Store is deleting the equipment n° " + id);
+      const memberToken = this.rootStore.memberStore.token;
+      await deleteItem(id, "animal", memberToken);
+      runInAction(() => {
+        this.animalState = "done";
+      });
+    } catch (error) {
+      console.log(error);
     }
   }
 }

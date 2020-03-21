@@ -11,7 +11,7 @@ const getUrlService = (item: string) => {
   }
 };
 
-//FONCTION QUI PERMET D'APPELER LE SERVICE DE SUPPRESSION DES ANIMAL, EQUIPMENT, WATERTESTS
+//FONCTION QUI PERMET D'APPELER LE SERVICE DE SUPPRESSION DE ANIMAL, EQUIPMENT, WATERTEST
 export const deleteItem = async (
   pId: number | string,
   kindItem: string,

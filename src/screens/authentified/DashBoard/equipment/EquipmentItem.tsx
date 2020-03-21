@@ -9,8 +9,7 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image,
-  Button
+  Image
 } from "react-native";
 import Moment from "moment";
 
