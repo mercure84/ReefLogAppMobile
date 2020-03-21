@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { Header } from "react-native-elements";
-import { WaterTestForm } from "./components/WaterTestForm";
+import { WaterTestForm } from "./WaterTestForm";
 import Moment from "moment";
 import "moment/locale/fr";
 

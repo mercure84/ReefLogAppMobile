@@ -1,7 +1,7 @@
 import React from "react";
 import { Header, Text } from "react-native-elements";
 import { View } from "react-native";
-import { EquipmentForm } from "./components/EquipmentForm";
+import { EquipmentForm } from "./EquipmentForm";
 
 export const NewEquipmentScreen = ({ route }) => {
   const { equipment } = route.params;
@@ -11,7 +11,7 @@ export const NewEquipmentScreen = ({ route }) => {
         centerComponent={
           <Text style={{ fontSize: 16 }}>Ajouter un matériel</Text>
         }
-        backgroundColor="red"
+        backgroundColor="yellow"
       />
 
       <EquipmentForm equipmentToUpdate={equipment} />

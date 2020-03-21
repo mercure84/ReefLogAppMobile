@@ -12,7 +12,7 @@ import { Header } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import RootStore from "../../../store/RootStore";
 import { observer } from "mobx-react";
-import { WaterTestItem } from "./components/WaterTestItem";
+import { WaterTestItem } from "./waterTest/WaterTestItem";
 
 const StoryScreen = observer(() => {
   const navigation = useNavigation();

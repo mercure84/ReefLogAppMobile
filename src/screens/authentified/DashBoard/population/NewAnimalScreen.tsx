@@ -10,11 +10,11 @@ import {
 } from "react-native";
 import { Header } from "react-native-elements";
 import { observer } from "mobx-react";
-import { AnimalForm } from "./components/AnimalForm";
+import { AnimalForm } from "./AnimalForm";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import fishIcon from "../../../assets/icons/fish.png";
-import coralIcon from "../../../assets/icons/coral.png";
-import reefCleanerIcon from "../../../assets/icons/reefcleaner.png";
+import fishIcon from "../../../../assets/icons/fish.png";
+import coralIcon from "../../../../assets/icons/coral.png";
+import reefCleanerIcon from "../../../../assets/icons/reefcleaner.png";
 
 export const NewAnimalScreen = observer(() => {
   const [showForm, setShowForm] = useState(false);

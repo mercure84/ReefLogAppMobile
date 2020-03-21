@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { WaterTest } from "../../../../services/waterTestService";
 import {
   Text,
@@ -11,20 +11,35 @@ import {
 } from "react-native";
 import createIcon from "../../../../assets/icons/createIcon.png";
 import deleteIcon from "../../../../assets/icons/deleteIcon.png";
+import RootStore from "../../../../store/RootStore";
 
 import Moment from "moment";
 import "moment/locale/fr";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
+import { CustomModal } from "../../../../components/ModalDeleteConfirmation";
 
 type Props = {
   waterTest: WaterTest;
 };
 
 export const WaterTestItem = ({ waterTest }: Props) => {
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [rootStore] = useState(RootStore);
+
   const navigation = useNavigation();
   const handlePress = () =>
     navigation.navigate("addTests", { waterTest: waterTest });
+
+  const handlePressDelete = () => {
+    isModalVisible ? setModalVisible(false) : setModalVisible(true);
+  };
+
+  const confirmDelete = (pWaterTest: WaterTest) => {
+    rootStore.waterTestStore.storeDeleteWaterTest(pWaterTest.id);
+    rootStore.waterTestStore.fetchWaterTestList();
+    handlePressDelete();
+  };
 
   return (
     <View style={styles.testContainer}>
@@ -36,6 +51,9 @@ export const WaterTestItem = ({ waterTest }: Props) => {
         </View>
         <TouchableOpacity onPress={handlePress}>
           <Image source={createIcon} style={styles.icon} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handlePressDelete}>
+          <Image source={deleteIcon} style={styles.icon} />
         </TouchableOpacity>
       </View>
 
@@ -67,6 +85,14 @@ export const WaterTestItem = ({ waterTest }: Props) => {
         <Text>Silicates : {waterTest.silicates} ppm </Text>
       ) : null}
       {waterTest.ph !== null ? <Text>pH : {waterTest.ph} </Text> : null}
+
+      <CustomModal
+        isModaleVisible={isModalVisible}
+        message={`Confirmez vous la suppression du test du "
+        ${waterTest.date} ?`}
+        buttonYesFonction={() => confirmDelete(waterTest)}
+        buttonNoFonction={handlePressDelete}
+      />
     </View>
   );
 };

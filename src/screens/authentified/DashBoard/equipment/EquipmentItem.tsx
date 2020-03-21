@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Equipment } from "../../../../services/equipmentService";
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -17,11 +17,26 @@ type Props = {
   equipment: Equipment;
 };
 import createIcon from "../../../../assets/icons/createIcon.png";
+import deleteIcon from "../../../../assets/icons/deleteIcon.png";
+import RootStore from "../../../../store/RootStore";
+import { CustomModal } from "../../../../components/ModalDeleteConfirmation";
 
 export const EquipmentItem = ({ equipment }: Props) => {
   const navigation = useNavigation();
+  const [rootStore] = useState(RootStore);
   const handlePress = () => {
     navigation.navigate("saveEquipment", { equipment: equipment });
+  };
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const handlePressDelete = () => {
+    isModalVisible ? setModalVisible(false) : setModalVisible(true);
+  };
+
+  const confirmDelete = (pEquipment: Equipment) => {
+    rootStore.equipmentStore.storeDeleteEquipment(pEquipment.id);
+    rootStore.equipmentStore.fetchEquipments();
+    handlePressDelete();
   };
 
   return (
@@ -29,7 +44,7 @@ export const EquipmentItem = ({ equipment }: Props) => {
       <View style={styles.header}>
         <View style={styles.item}>
           <Text style={styles.date}>
-            Date d'installation :{" "}
+            Date d'installation :
             {Moment(equipment.dateInstallation).format("lll")}
           </Text>
           <Text>Type : {equipment.typeOfEquipment}</Text>
@@ -43,10 +58,21 @@ export const EquipmentItem = ({ equipment }: Props) => {
         <TouchableOpacity onPress={handlePress}>
           <Image source={createIcon} style={styles.icon} />
         </TouchableOpacity>
+        <TouchableOpacity onPress={handlePressDelete}>
+          <Image source={deleteIcon} style={styles.icon} />
+        </TouchableOpacity>
       </View>
 
       <Text>Quantité : {equipment.quantity}</Text>
       <Text>Notes : {equipment.description}</Text>
+
+      <CustomModal
+        isModaleVisible={isModalVisible}
+        message={`Confirmez vous la suppression de l'équipement :"
+        ${equipment.typeOfEquipment} ${equipment.mark} ?`}
+        buttonYesFonction={() => confirmDelete(equipment)}
+        buttonNoFonction={handlePressDelete}
+      />
     </View>
   );
 };
