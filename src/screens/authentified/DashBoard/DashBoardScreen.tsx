@@ -8,10 +8,10 @@ import {
 } from "react-native";
 import { Header, Button } from "react-native-elements";
 import { CustomMessage } from "../../../components/CustomMessage";
-import { NewTankForm } from "./components/TankForm";
+import { NewTankForm } from "./aquarium/TankForm";
 import { observer } from "mobx-react";
 import RootStore from "../../../store/RootStore";
-import { MainTankDisplay } from "./components/MainTankDisplay";
+import { MainTankDisplay } from "./aquarium/MainTankDisplay";
 import { useNavigation } from "@react-navigation/native";
 
 const DashboardScreen = observer(() => {

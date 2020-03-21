@@ -5,13 +5,14 @@ import {
   Button,
   StyleSheet,
   ViewStyle,
-  ActivityIndicator
+  ActivityIndicator,
+  FlatList
 } from "react-native";
 import { Header } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import RootStore from "../../../store/RootStore";
 import { observer } from "mobx-react";
-import { WaterTestListDisplay } from "./components/WaterTestListDisplay";
+import { WaterTestItem } from "./waterTest/WaterTestItem";
 
 const StoryScreen = observer(() => {
   const navigation = useNavigation();
@@ -36,7 +37,14 @@ const StoryScreen = observer(() => {
       {isTestsLoading ? (
         <ActivityIndicator />
       ) : (
-        <WaterTestListDisplay waterTestList={dataWaterTestList} />
+        <FlatList
+          style={{ marginBottom: 64 }}
+          data={dataWaterTestList}
+          renderItem={({ item }) => <WaterTestItem waterTest={item} />}
+          keyExtractor={item => item.id.toString()}
+          ListEmptyComponent={<Text>Aucun enregistrement :(</Text>}
+          scrollEnabled={true}
+        />
       )}
     </View>
   );
