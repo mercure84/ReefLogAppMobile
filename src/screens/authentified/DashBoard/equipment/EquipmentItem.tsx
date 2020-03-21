@@ -17,6 +17,7 @@ type Props = {
   equipment: Equipment;
 };
 import createIcon from "../../../../assets/icons/createIcon.png";
+import deleteIcon from "../../../../assets/icons/deleteIcon.png";
 
 export const EquipmentItem = ({ equipment }: Props) => {
   const navigation = useNavigation();
@@ -29,7 +30,7 @@ export const EquipmentItem = ({ equipment }: Props) => {
       <View style={styles.header}>
         <View style={styles.item}>
           <Text style={styles.date}>
-            Date d'installation :{" "}
+            Date d'installation :
             {Moment(equipment.dateInstallation).format("lll")}
           </Text>
           <Text>Type : {equipment.typeOfEquipment}</Text>
@@ -42,6 +43,9 @@ export const EquipmentItem = ({ equipment }: Props) => {
         </View>
         <TouchableOpacity onPress={handlePress}>
           <Image source={createIcon} style={styles.icon} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handlePress}>
+          <Image source={deleteIcon} style={styles.icon} />
         </TouchableOpacity>
       </View>
 

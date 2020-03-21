@@ -1,11 +1,11 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import DashBoardScreen from "./DashBoardScreen";
-import { PopulationScreen } from "./PopulationScreen";
-import { EquipmentScreen } from "./EquipmentScreen";
-import { NewAnimalScreen } from "./NewAnimalScreen";
-import { UpdateAnimalScreen } from "./UpdateAnimalScreen";
-import { NewEquipmentScreen } from "./NewEquipmentScreen";
+import { PopulationScreen } from "./population/PopulationScreen";
+import { EquipmentScreen } from "./equipment/EquipmentScreen";
+import { NewAnimalScreen } from "./population/NewAnimalScreen";
+import { UpdateAnimalScreen } from "./population/UpdateAnimalScreen";
+import { NewEquipmentScreen } from "./equipment/NewEquipmentScreen";
 
 const Stack = createStackNavigator();
 

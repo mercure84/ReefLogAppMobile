@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { observer } from "mobx-react";
 import { View, ViewStyle, StyleSheet, Text } from "react-native";
 import { Header } from "react-native-elements";
-import { AnimalForm } from "./components/AnimalForm";
-import { getSpecies } from "../../../services/animalService";
+import { AnimalForm } from "./AnimalForm";
+import { getSpecies } from "../../../../services/animalService";
 
 export const UpdateAnimalScreen = observer(({ route }) => {
   const { animal } = route.params;

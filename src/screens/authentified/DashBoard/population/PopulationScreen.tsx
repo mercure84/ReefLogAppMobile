@@ -9,10 +9,10 @@ import {
   FlatList
 } from "react-native";
 import { Header } from "react-native-elements";
-import RootStore from "../../../store/RootStore";
+import RootStore from "../../../../store/RootStore";
 import { useNavigation } from "@react-navigation/native";
 import { observer } from "mobx-react";
-import { AnimalItem } from "./components/AnimalItem";
+import { AnimalItem } from "./AnimalItem";
 
 export const PopulationScreen = observer(() => {
   const navigation = useNavigation();
@@ -28,7 +28,7 @@ export const PopulationScreen = observer(() => {
         centerComponent={
           <Text style={{ fontSize: 16 }}>Mes pensionnaires</Text>
         }
-        backgroundColor="green"
+        backgroundColor="red"
       />
       <Button
         onPress={() => navigation.navigate("newAnimal")}
