@@ -34,7 +34,7 @@ export const AnimalForm = observer(
       "Saisissez les données pour un nouveau " + animalTypeForm
     );
     const navigation = useNavigation();
-    const [rootStore, setRootStore] = useState(RootStore);
+    const [rootStore] = useState(RootStore);
     const [speciesInPicker, setSpeciesInPicker] = useState("");
     let animalSpecies: string[] = [];
 
@@ -160,13 +160,13 @@ export const AnimalForm = observer(
           navigation.navigate("handlePopulation");
         } else {
           setInfoMessage("Un problème est survenu");
-          setLoading(true);
         }
       } else {
         setInfoMessage(
           "Votre formulaire est incorrect, merci de le vérifier !"
         );
       }
+      setLoading(false);
     };
     return (
       <View>

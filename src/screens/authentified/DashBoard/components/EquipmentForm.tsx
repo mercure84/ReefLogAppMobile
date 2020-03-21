@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { Equipment } from "../../../../services/equipmentService";
+import {
+  Equipment,
+  saveEquipment
+} from "../../../../services/equipmentService";
 import RootStore from "../../../../store/RootStore";
 import {
   ActivityIndicator,
@@ -22,15 +25,45 @@ type Props = {
 
 export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
   const navigation = useNavigation();
-  const [rootStore, setRootStore] = useState(RootStore);
   const [equipment, setEquipment] = useState<Equipment>(equipmentToUpdate);
   const [infoMessage, setInfoMessage] = useState(
     "Saisissez les données de votre matériel !"
   );
+  const isUpdating = equipmentToUpdate !== null;
+  const [rootStore] = useState(RootStore);
 
-  const [materialTypeInPicker, setMaterialTypeInPicker] = useState("");
   const [isLoading, setLoading] = useState(false);
-  let materialTypes: string[] = [];
+
+  const checkForm = () => {
+    if (equipment.typeOfEquipment !== "" && equipment.mark !== null) {
+      return true;
+    } else {
+      setInfoMessage("Oups il ya un problème dans votre formulaire");
+      return false;
+    }
+  };
+
+  const submitEquipment = async () => {
+    setLoading(true);
+    if (checkForm) {
+      setInfoMessage("Le formulaire est valide ! Enregistrement en cours...");
+      const response = await saveEquipment(
+        rootStore.tankStore.tankList[0].id,
+        equipment,
+        isUpdating
+      );
+      if (response != null) {
+        setInfoMessage("L'équipement a été enregistré !");
+        rootStore.equipmentStore.fetchEquipments();
+        setLoading(false);
+        navigation.navigate("handleEquipment");
+      } else {
+        setInfoMessage("Un problème est survenu");
+      }
+
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -133,7 +166,7 @@ export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
         </View>
 
         <View style={styles.buttonContainer}>
-          <Button title="Enregistrer" onPress={() => null} />
+          <Button title="Enregistrer" onPress={() => submitEquipment()} />
           <Button
             title="Annuler"
             onPress={() => navigation.navigate("handleEquipment")}
