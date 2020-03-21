@@ -3,6 +3,7 @@ import { Tank } from "./tankService";
 import { getData } from "./storageDevice";
 
 export interface Equipment {
+  dateInstallation?: Date;
   id?: number;
   typeOfEquipment: string;
   mark?: string;

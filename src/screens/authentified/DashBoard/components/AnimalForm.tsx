@@ -27,14 +27,14 @@ export const AnimalForm = observer(
       "animal Name = " + animalToSave + " , et species = " + animalTypeForm
     );
 
-    const toUpdate = animalToSave !== null;
+    const isUpdating = animalToSave !== null;
     const [isLoading, setLoading] = useState(false);
     const [animal, setAnimal] = useState<Animal>(animalToSave);
     const [infoMessage, setInfoMessage] = useState(
       "Saisissez les données pour un nouveau " + animalTypeForm
     );
     const navigation = useNavigation();
-    const [rootStore, setRootStore] = useState(RootStore);
+    const [rootStore] = useState(RootStore);
     const [speciesInPicker, setSpeciesInPicker] = useState("");
     let animalSpecies: string[] = [];
 
@@ -47,68 +47,10 @@ export const AnimalForm = observer(
 
     const setSpecies = (text: string) => {
       setSpeciesInPicker(text);
-      switch (animalTypeForm) {
-        case "fish":
-          setAnimal({
-            ...animal,
-            fishSpecies: text
-          });
-          break;
-        case "soft":
-          setAnimal({
-            ...animal,
-            softSpecies: text
-          });
-          break;
-        case "lps":
-          setAnimal({
-            ...animal,
-            lpsSpecies: text
-          });
-          break;
-        case "sps":
-          setAnimal({
-            ...animal,
-            spsSpecies: text
-          });
-          break;
-        case "anemone":
-          setAnimal({
-            ...animal,
-            anemoneSpecies: text
-          });
-          break;
-        case "urchin":
-          setAnimal({
-            ...animal,
-            urchinSpecies: text
-          });
-          break;
-        case "star":
-          setAnimal({
-            ...animal,
-            starSpecies: text
-          });
-          break;
-        case "mollusk":
-          setAnimal({
-            ...animal,
-            molluskSpecies: text
-          });
-          break;
-        case "cucumber":
-          setAnimal({
-            ...animal,
-            cucumberSpecies: text
-          });
-          break;
-        case "crustacean":
-          setAnimal({
-            ...animal,
-            crustaceanSpecies: text
-          });
-          break;
-      }
+      setAnimal({
+        ...animal,
+        [animalTypeForm + "Species"]: text
+      });
     };
 
     if (rootStore.animalStore.animalSpeciesState === "done") {
@@ -208,7 +150,7 @@ export const AnimalForm = observer(
         const response = await saveAnimal(
           rootStore.tankStore.tankList[0].id,
           animal,
-          toUpdate
+          isUpdating
         );
 
         if (response != null) {
@@ -218,13 +160,13 @@ export const AnimalForm = observer(
           navigation.navigate("handlePopulation");
         } else {
           setInfoMessage("Un problème est survenu");
-          setLoading(true);
         }
       } else {
         setInfoMessage(
           "Votre formulaire est incorrect, merci de le vérifier !"
         );
       }
+      setLoading(false);
     };
     return (
       <View>
@@ -278,7 +220,7 @@ export const AnimalForm = observer(
                   })
                 }
                 defaultValue={
-                  toUpdate && animal.name !== null ? animal.name : null
+                  isUpdating && animal.name !== null ? animal.name : null
                 }
               />
             </View>
@@ -311,7 +253,7 @@ export const AnimalForm = observer(
                   })
                 }
                 defaultValue={
-                  toUpdate && animal.quantity !== null
+                  isUpdating && animal.quantity !== null
                     ? animal.quantity.toString()
                     : "1"
                 }
@@ -332,7 +274,7 @@ export const AnimalForm = observer(
                   })
                 }
                 defaultValue={
-                  toUpdate && animal.notes !== null ? animal.notes : null
+                  isUpdating && animal.notes !== null ? animal.notes : null
                 }
               />
             </View>

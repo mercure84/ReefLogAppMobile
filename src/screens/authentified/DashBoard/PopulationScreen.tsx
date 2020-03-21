@@ -5,17 +5,18 @@ import {
   ViewStyle,
   StyleSheet,
   ActivityIndicator,
-  Button
+  Button,
+  FlatList
 } from "react-native";
 import { Header } from "react-native-elements";
 import RootStore from "../../../store/RootStore";
 import { useNavigation } from "@react-navigation/native";
 import { observer } from "mobx-react";
-import { AnimalsListDisplay } from "./components/AnimalsListDisplay";
+import { AnimalItem } from "./components/AnimalItem";
 
 export const PopulationScreen = observer(() => {
   const navigation = useNavigation();
-  const [rootStore, setRootStore] = useState(RootStore);
+  const [rootStore] = useState(RootStore);
   if (rootStore.animalStore.animalState === "pending") {
     rootStore.animalStore.fetchAnimals();
   }
@@ -37,7 +38,14 @@ export const PopulationScreen = observer(() => {
       {isAnimalsLoading ? (
         <ActivityIndicator />
       ) : (
-        <AnimalsListDisplay animals={dataAnimals} />
+        <FlatList
+          style={{ marginBottom: 64 }}
+          data={dataAnimals}
+          renderItem={({ item }) => <AnimalItem animal={item} />}
+          keyExtractor={item => item.id.toString()}
+          ListEmptyComponent={<Text>Aucun enregistrement</Text>}
+          scrollEnabled={true}
+        />
       )}
     </View>
   );

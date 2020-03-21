@@ -41,34 +41,34 @@ export interface AnimalSpecies {
 
 export const getSpecies = (animal: Animal) => {
   if (animal.crustaceanSpecies !== undefined) {
-    return "crustaceanSpecies";
+    return "crustacean";
   }
   if (animal.softSpecies !== undefined) {
-    return "softSpecies";
+    return "soft";
   }
   if (animal.lpsSpecies !== undefined) {
-    return "lpsSpecies";
+    return "lps";
   }
   if (animal.spsSpecies !== undefined) {
-    return "spsSpecies";
+    return "sps";
   }
   if (animal.fishSpecies !== undefined) {
-    return "fishSpecies";
+    return "fish";
   }
   if (animal.anemoneSpecies !== undefined) {
-    return "anemoneSpecies";
+    return "anemone";
   }
   if (animal.molluskSpecies !== undefined) {
-    return "molluskSpecies";
+    return "mollusk";
   }
   if (animal.cucumberSpecies !== undefined) {
-    return "cucumberSpecies";
+    return "cucumber";
   }
   if (animal.urchinSpecies !== undefined) {
-    return "urchinSpecies";
+    return "urchin";
   }
   if (animal.starSpecies !== undefined) {
-    return "starSpecies";
+    return "star";
   }
 };
 

@@ -13,7 +13,7 @@ class EquipmentStore {
   @observable equipments: Equipment[] = [];
   @observable equipmentState = "pending";
 
-  @computed get animalsData() {
+  @computed get equipmentsData() {
     return toJS(this.equipments);
   }
 
@@ -24,11 +24,11 @@ class EquipmentStore {
       const tankId = this.rootStore.tankStore.tankList[0].id;
       if (tankId !== null) {
         try {
-          console.log("Store is fetching  Animals");
+          console.log("Store is fetching  Equipments");
           const memberToken = this.rootStore.memberStore.token;
           const equipments = await getEquipments(tankId, memberToken);
           runInAction(() => {
-            console.log("animals Success");
+            console.log("equipments Success");
             this.equipments = equipments;
             this.equipmentState = "done";
           });
