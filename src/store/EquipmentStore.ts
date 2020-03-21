@@ -1,4 +1,4 @@
-import { getEquipments } from "./../services/equipmentService";
+import { getEquipments, deleteEquipment } from "./../services/equipmentService";
 import { observable, action, runInAction, computed, toJS } from "mobx";
 import { RootStore as RootStoreType } from "./RootStore";
 import { Equipment } from "../services/equipmentService";
@@ -38,6 +38,21 @@ class EquipmentStore {
           this.equipmentState = "error";
         }
       }
+    }
+  }
+
+  @action
+  async storeDeleteEquipment(id: number) {
+    this.equipmentState = "pending";
+    try {
+      console.log("Store is deleting the equipment n° ");
+      const memberToken = this.rootStore.memberStore.token;
+      await deleteEquipment(id, memberToken);
+      runInAction(() => {
+        this.equipmentState = "done";
+      });
+    } catch (error) {
+      console.log(error);
     }
   }
 }

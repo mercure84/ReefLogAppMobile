@@ -21,9 +21,11 @@ type Props = {
 import createIcon from "../../../../assets/icons/createIcon.png";
 import deleteIcon from "../../../../assets/icons/deleteIcon.png";
 import { Card } from "react-native-elements";
+import RootStore from "../../../../store/RootStore";
 
 export const EquipmentItem = ({ equipment }: Props) => {
   const navigation = useNavigation();
+  const [rootStore] = useState(RootStore);
   const handlePress = () => {
     navigation.navigate("saveEquipment", { equipment: equipment });
   };
@@ -31,6 +33,11 @@ export const EquipmentItem = ({ equipment }: Props) => {
 
   const handlePressDelete = () => {
     isModalVisible ? setModalVisible(false) : setModalVisible(true);
+  };
+
+  const confirmDelete = (pEquipment: Equipment) => {
+    rootStore.equipmentStore.storeDeleteEquipment(pEquipment.id);
+    handlePressDelete();
   };
 
   return (
@@ -68,7 +75,7 @@ export const EquipmentItem = ({ equipment }: Props) => {
               {equipment.typeOfEquipment} {equipment.mark}{" "}
             </Text>
           </Card>
-          <Button title="Oui" onPress={handlePressDelete} />
+          <Button title="Oui" onPress={() => confirmDelete(equipment)} />
           <Button title="Non" onPress={handlePressDelete} />
         </View>
       </Modal>
