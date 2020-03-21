@@ -81,12 +81,14 @@ export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
         </View>
 
         <View style={styles.input}>
-          <Text>Taille :</Text>
+          <Text>Type :</Text>
           <Picker
             style={{ height: 50, width: 150 }}
             mode="dialog"
             selectedValue={
-              equipment === null ? null : equipment.typeOfEquipment
+              equipment === null
+                ? setEquipment({ ...equipment, typeOfEquipment: "SKIMMER" })
+                : equipment.typeOfEquipment
             }
             onValueChange={itemValue =>
               setEquipment({ ...equipment, typeOfEquipment: itemValue })

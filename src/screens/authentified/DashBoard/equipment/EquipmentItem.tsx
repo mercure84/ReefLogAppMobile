@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Equipment } from "../../../../services/equipmentService";
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -9,20 +9,28 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image
+  Image,
+  Button
 } from "react-native";
 import Moment from "moment";
+import Modal from "react-native-modal";
 
 type Props = {
   equipment: Equipment;
 };
 import createIcon from "../../../../assets/icons/createIcon.png";
 import deleteIcon from "../../../../assets/icons/deleteIcon.png";
+import { Card } from "react-native-elements";
 
 export const EquipmentItem = ({ equipment }: Props) => {
   const navigation = useNavigation();
   const handlePress = () => {
     navigation.navigate("saveEquipment", { equipment: equipment });
+  };
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const handlePressDelete = () => {
+    isModalVisible ? setModalVisible(false) : setModalVisible(true);
   };
 
   return (
@@ -44,13 +52,26 @@ export const EquipmentItem = ({ equipment }: Props) => {
         <TouchableOpacity onPress={handlePress}>
           <Image source={createIcon} style={styles.icon} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={handlePress}>
+        <TouchableOpacity onPress={handlePressDelete}>
           <Image source={deleteIcon} style={styles.icon} />
         </TouchableOpacity>
       </View>
 
       <Text>Quantité : {equipment.quantity}</Text>
       <Text>Notes : {equipment.description}</Text>
+
+      <Modal isVisible={isModalVisible} backdropOpacity={0.5}>
+        <View style={{ flex: 0.5, justifyContent: "center" }}>
+          <Card>
+            <Text>
+              Confirmez vous la suppression de l'équipement{" "}
+              {equipment.typeOfEquipment} {equipment.mark}{" "}
+            </Text>
+          </Card>
+          <Button title="Oui" onPress={handlePressDelete} />
+          <Button title="Non" onPress={handlePressDelete} />
+        </View>
+      </Modal>
     </View>
   );
 };
