@@ -47,68 +47,10 @@ export const AnimalForm = observer(
 
     const setSpecies = (text: string) => {
       setSpeciesInPicker(text);
-      switch (animalTypeForm) {
-        case "fish":
-          setAnimal({
-            ...animal,
-            fishSpecies: text
-          });
-          break;
-        case "soft":
-          setAnimal({
-            ...animal,
-            softSpecies: text
-          });
-          break;
-        case "lps":
-          setAnimal({
-            ...animal,
-            lpsSpecies: text
-          });
-          break;
-        case "sps":
-          setAnimal({
-            ...animal,
-            spsSpecies: text
-          });
-          break;
-        case "anemone":
-          setAnimal({
-            ...animal,
-            anemoneSpecies: text
-          });
-          break;
-        case "urchin":
-          setAnimal({
-            ...animal,
-            urchinSpecies: text
-          });
-          break;
-        case "star":
-          setAnimal({
-            ...animal,
-            starSpecies: text
-          });
-          break;
-        case "mollusk":
-          setAnimal({
-            ...animal,
-            molluskSpecies: text
-          });
-          break;
-        case "cucumber":
-          setAnimal({
-            ...animal,
-            cucumberSpecies: text
-          });
-          break;
-        case "crustacean":
-          setAnimal({
-            ...animal,
-            crustaceanSpecies: text
-          });
-          break;
-      }
+      setAnimal({
+        ...animal,
+        [animalTypeForm + "Species"]: text
+      });
     };
 
     if (rootStore.animalStore.animalSpeciesState === "done") {
