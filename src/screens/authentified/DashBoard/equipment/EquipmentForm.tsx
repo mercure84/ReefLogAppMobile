@@ -142,7 +142,7 @@ export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
             maxLength={4}
             placeholder={"0-9999"}
             onChangeText={text =>
-              setEquipment({ ...equipment, power: parseFloat(text) })
+              setEquipment({ ...equipment, quantity: parseFloat(text) })
             }
             defaultValue={
               isUpdating && equipment.quantity !== null

@@ -1,28 +1,30 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Button } from "react-native";
 import Modal from "react-native-modal";
+import { Card } from "react-native-elements";
 
 type Props = {
-  details: string;
-  id: string | number;
-  kind: string;
-  isVisible: boolean;
+  message: string;
+  isModaleVisible: boolean;
+  buttonYesFonction: () => void;
+  buttonNoFonction: () => void;
 };
 
-export const ModalDeleteConfirmation = ({
-  details,
-  id,
-  kind,
-  isVisible
+export const CustomModal = ({
+  message,
+  buttonYesFonction,
+  buttonNoFonction,
+  isModaleVisible
 }: Props) => {
   return (
-    <View>
-      <Modal isVisible={isVisible}>
-        <View style={{ flex: 1 }}>
-          <Text>Confirmez vous la suppression de bla bla bla dla Pookie</Text>
-        </View>
-      </Modal>
-      )}
-    </View>
+    <Modal isVisible={isModaleVisible} backdropOpacity={0.5}>
+      <View style={{ flex: 0.5, justifyContent: "center" }}>
+        <Card>
+          <Text>{message}</Text>
+        </Card>
+        <Button title="Oui" onPress={buttonYesFonction} />
+        <Button title="Non" onPress={buttonNoFonction} />
+      </View>
+    </Modal>
   );
 };

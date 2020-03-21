@@ -13,15 +13,14 @@ import {
   Button
 } from "react-native";
 import Moment from "moment";
-import Modal from "react-native-modal";
 
 type Props = {
   equipment: Equipment;
 };
 import createIcon from "../../../../assets/icons/createIcon.png";
 import deleteIcon from "../../../../assets/icons/deleteIcon.png";
-import { Card } from "react-native-elements";
 import RootStore from "../../../../store/RootStore";
+import { CustomModal } from "../../../../components/ModalDeleteConfirmation";
 
 export const EquipmentItem = ({ equipment }: Props) => {
   const navigation = useNavigation();
@@ -37,6 +36,7 @@ export const EquipmentItem = ({ equipment }: Props) => {
 
   const confirmDelete = (pEquipment: Equipment) => {
     rootStore.equipmentStore.storeDeleteEquipment(pEquipment.id);
+    rootStore.equipmentStore.fetchEquipments();
     handlePressDelete();
   };
 
@@ -67,18 +67,13 @@ export const EquipmentItem = ({ equipment }: Props) => {
       <Text>Quantité : {equipment.quantity}</Text>
       <Text>Notes : {equipment.description}</Text>
 
-      <Modal isVisible={isModalVisible} backdropOpacity={0.5}>
-        <View style={{ flex: 0.5, justifyContent: "center" }}>
-          <Card>
-            <Text>
-              Confirmez vous la suppression de l'équipement{" "}
-              {equipment.typeOfEquipment} {equipment.mark}{" "}
-            </Text>
-          </Card>
-          <Button title="Oui" onPress={() => confirmDelete(equipment)} />
-          <Button title="Non" onPress={handlePressDelete} />
-        </View>
-      </Modal>
+      <CustomModal
+        isModaleVisible={isModalVisible}
+        message={`Confirmez vous la suppression de l'équipement :"
+        ${equipment.typeOfEquipment} ${equipment.mark} ?`}
+        buttonYesFonction={() => confirmDelete(equipment)}
+        buttonNoFonction={handlePressDelete}
+      />
     </View>
   );
 };
