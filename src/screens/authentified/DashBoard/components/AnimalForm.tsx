@@ -27,7 +27,7 @@ export const AnimalForm = observer(
       "animal Name = " + animalToSave + " , et species = " + animalTypeForm
     );
 
-    const toUpdate = animalToSave !== null;
+    const isUpdating = animalToSave !== null;
     const [isLoading, setLoading] = useState(false);
     const [animal, setAnimal] = useState<Animal>(animalToSave);
     const [infoMessage, setInfoMessage] = useState(
@@ -150,7 +150,7 @@ export const AnimalForm = observer(
         const response = await saveAnimal(
           rootStore.tankStore.tankList[0].id,
           animal,
-          toUpdate
+          isUpdating
         );
 
         if (response != null) {
@@ -220,7 +220,7 @@ export const AnimalForm = observer(
                   })
                 }
                 defaultValue={
-                  toUpdate && animal.name !== null ? animal.name : null
+                  isUpdating && animal.name !== null ? animal.name : null
                 }
               />
             </View>
@@ -253,7 +253,7 @@ export const AnimalForm = observer(
                   })
                 }
                 defaultValue={
-                  toUpdate && animal.quantity !== null
+                  isUpdating && animal.quantity !== null
                     ? animal.quantity.toString()
                     : "1"
                 }
@@ -274,7 +274,7 @@ export const AnimalForm = observer(
                   })
                 }
                 defaultValue={
-                  toUpdate && animal.notes !== null ? animal.notes : null
+                  isUpdating && animal.notes !== null ? animal.notes : null
                 }
               />
             </View>

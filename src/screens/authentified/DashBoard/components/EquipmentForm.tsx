@@ -60,7 +60,6 @@ export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
       } else {
         setInfoMessage("Un problème est survenu");
       }
-
       setLoading(false);
     }
   };
@@ -114,6 +113,9 @@ export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
             maxLength={30}
             placeholder={"30 caractères maxi"}
             onChangeText={text => setEquipment({ ...equipment, mark: text })}
+            defaultValue={
+              isUpdating && equipment.mark !== null ? equipment.mark : null
+            }
           />
         </View>
 
@@ -124,6 +126,9 @@ export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
             maxLength={30}
             placeholder={"30 caractères maxi"}
             onChangeText={text => setEquipment({ ...equipment, model: text })}
+            defaultValue={
+              isUpdating && equipment.model !== null ? equipment.model : null
+            }
           />
         </View>
 
@@ -155,6 +160,11 @@ export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
             onChangeText={text =>
               setEquipment({ ...equipment, power: parseFloat(text) })
             }
+            defaultValue={
+              isUpdating && equipment.power !== null
+                ? equipment.power.toString()
+                : null
+            }
           />
         </View>
 
@@ -166,6 +176,11 @@ export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
             placeholder={"250 caractères maxi"}
             onChangeText={text =>
               setEquipment({ ...equipment, description: text })
+            }
+            defaultValue={
+              isUpdating && equipment.description !== null
+                ? equipment.description
+                : null
             }
           />
         </View>

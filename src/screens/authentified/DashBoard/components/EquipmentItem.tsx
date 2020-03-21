@@ -36,7 +36,6 @@ export const EquipmentItem = ({ equipment }: Props) => {
           {equipment.mark !== undefined && (
             <Text>Marque : {equipment.mark}</Text>
           )}
-          <Text>Type : {equipment.typeOfEquipment}</Text>
           {equipment.model !== undefined && (
             <Text>Modèle : {equipment.model}</Text>
           )}
