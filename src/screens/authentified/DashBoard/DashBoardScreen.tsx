@@ -73,7 +73,7 @@ const DashboardScreen = observer(() => {
           memberId={member.id}
           infoCallBack={setMessageInfo}
           showFormCallback={toggleTankForm}
-          tankToSave={tankList[0]}
+          tankToSave={tankList[0] ?? null}
         />
       )}
 

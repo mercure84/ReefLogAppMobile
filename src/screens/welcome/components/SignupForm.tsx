@@ -50,7 +50,7 @@ export const SignupForm = ({
           homeInfoCallBack("Compte mis à jour");
         } else {
           homeInfoCallBack(
-            "Votre compte a bien été créé ! un email de confirmaton a été envoyé à " +
+            "Votre compte a bien été créé ! un email de confirmation a été envoyé à " +
               response.email
           );
           showSignupForm(false);
