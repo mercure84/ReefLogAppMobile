@@ -17,35 +17,49 @@ const checkPassword = (password, repassword): boolean => {
   return password === repassword && password.length > 5;
 };
 
-export const SignupForm = ({ homeInfoCallBack, showSignupForm }) => {
-  const [signUpForm, setSignUpForm] = useState<SignUpForm>();
-  const [isPasswordOk, setPasswordOK] = useState(true);
+type Props = {
+  showSignupForm?;
+  homeInfoCallBack?;
+  memberToUpdate?: SignUpForm;
+};
 
+export const SignupForm = ({
+  showSignupForm,
+  memberToUpdate,
+  homeInfoCallBack
+}: Props) => {
+  const [signUpForm, setSignUpForm] = useState<SignUpForm>(memberToUpdate);
+  const [isPasswordOk, setPasswordOK] = useState(true);
+  const [localInfo, setLocalInfo] = useState("");
+  const isUpdating = memberToUpdate !== null;
   const [isLoading, setLoading] = useState(false);
 
   const submitNewMember = async (signUpForm: SignUpForm) => {
-    setLoading(true);
-    const response = await signUpService(signUpForm);
-    setLoading(false);
-    console.log("réponse status = " + response.role);
-    if (response.role === "USER") {
-      homeInfoCallBack(
-        "Votre compte a bien été créé ! un email de confirmaton a été envoyé à " +
-          response.email
-      );
-      showSignupForm(false);
+    if (checkPassword(signUpForm.password, signUpForm.repassword)) {
+      setLoading(true);
+      const response = await signUpService(signUpForm, isUpdating);
+      setLoading(false);
+      console.log("réponse status = " + response.role);
+      if (response.role === "USER") {
+        homeInfoCallBack(
+          "Votre compte a bien été créé ! un email de confirmaton a été envoyé à " +
+            response.email
+        );
+        showSignupForm(false);
+      } else {
+        setLocalInfo("Un problème est survenu : " + response.message);
+      }
     } else {
-      homeInfoCallBack("Un problème est survenu : " + response.message);
+      setLocalInfo(
+        "Il y a un souci avec votre formulaire ! vérifiez vos mots de passe"
+      );
     }
   };
 
   return (
     <View style={{ padding: 8 }}>
       {isLoading && <ActivityIndicator />}
-
-      {!isPasswordOk && signUpForm.repassword.length > 0 ? (
-        <MessageInfo message="Mots de passe différents ou inférieurs à 6 caractères" />
-      ) : null}
+      <MessageInfo message={localInfo} />
 
       <Card title="Création d'un compte">
         <View style={styles.input}>
@@ -84,10 +98,6 @@ export const SignupForm = ({ homeInfoCallBack, showSignupForm }) => {
             placeholder="mot de passe"
             onChangeText={text => {
               setSignUpForm({ ...signUpForm, password: text });
-              signUpForm.password !== undefined &&
-              signUpForm.repassword !== undefined
-                ? setPasswordOK(checkPassword(text, signUpForm.repassword))
-                : null;
             }}
           />
         </View>
@@ -100,13 +110,9 @@ export const SignupForm = ({ homeInfoCallBack, showSignupForm }) => {
             maxLength={12}
             autoCompleteType="off"
             placeholder="mot de passe"
-            onChangeText={text => {
-              setSignUpForm({ ...signUpForm, repassword: text });
-              signUpForm.password !== undefined &&
-              signUpForm.repassword !== undefined
-                ? setPasswordOK(checkPassword(text, signUpForm.password))
-                : null;
-            }}
+            onChangeText={text =>
+              setSignUpForm({ ...signUpForm, repassword: text })
+            }
           />
         </View>
 

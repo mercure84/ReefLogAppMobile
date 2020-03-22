@@ -20,8 +20,11 @@ export type SignUpForm = {
   repassword: string;
 };
 
-// service signUp : add a new member
-export const signUpService = async (signUpForm: SignUpForm) => {
+// service signUp : add ou update a new member
+export const signUpService = async (
+  signUpForm: SignUpForm,
+  isUpdating?: boolean
+) => {
   const urlService = urlServer + "api/addNewMember";
   const newMember = {
     userName: signUpForm.userName.toLowerCase(),
