@@ -13,27 +13,29 @@ export type Member = {
   role: string;
 };
 
+export type SignUpForm = {
+  email: string;
+  userName: string;
+  password: string;
+  repassword: string;
+};
+
 // service signUp : add a new member
-export const signUpService = async (
-  newEmail: string,
-  newUsername: string,
-  newPassword: string,
-  newRepassword: string
-) => {
+export const signUpService = async (signUpForm: SignUpForm) => {
   const urlService = urlServer + "api/addNewMember";
   const newMember = {
-    userName: newUsername.toLowerCase(),
-    email: newEmail.toLowerCase(),
-    password: newPassword.toLowerCase(),
-    repassword: newRepassword.toLowerCase()
+    userName: signUpForm.userName.toLowerCase(),
+    email: signUpForm.email.toLowerCase(),
+    password: signUpForm.password.toLowerCase(),
+    repassword: signUpForm.repassword.toLowerCase()
   };
 
   try {
     console.log(
       "On demande l'ajout du nouveau membre suivant : " +
-      newMember.email +
-      ", " +
-      newMember.userName
+        newMember.email +
+        ", " +
+        newMember.userName
     );
     const response = await fetch(urlService, {
       method: "POST",
@@ -85,7 +87,7 @@ export const checkToken = async (pEmail: string, pToken) => {
   try {
     console.log(
       "On demande la validation du jeton trouvé avec l'email : " +
-      dataToValidate.email
+        dataToValidate.email
     );
     const response = await fetch(urlService, {
       method: "POST",

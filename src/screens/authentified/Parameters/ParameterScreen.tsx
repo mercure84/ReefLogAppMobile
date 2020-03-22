@@ -19,15 +19,16 @@ const ParameterScreen = () => {
       />
 
       <Button
-        title="Se déconnecter"
-        onPress={() => (disconnect(), navigation.navigate("Signout"))}
-      />
-      <Button
         title="Mon profil"
         onPress={() => navigation.navigate("myProfil")}
       />
       <Button title="Alertes" onPress={() => navigation.navigate("myAlerts")} />
       <Button title="Outils" onPress={() => navigation.navigate("myTools")} />
+      <Button
+        color="orange"
+        title="Se déconnecter"
+        onPress={() => (disconnect(), navigation.navigate("Signout"))}
+      />
     </View>
   );
 };

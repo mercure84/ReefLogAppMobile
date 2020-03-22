@@ -8,7 +8,7 @@ import {
   ViewStyle,
   TextStyle
 } from "react-native";
-import { signUpService } from "../../../services/memberService";
+import { signUpService, SignUpForm } from "../../../services/memberService";
 import { MessageInfo } from "./MessageInfo";
 import { TextInput } from "react-native-gesture-handler";
 import { Card } from "react-native-elements";
@@ -18,22 +18,14 @@ const checkPassword = (password, repassword): boolean => {
 };
 
 export const SignupForm = ({ homeInfoCallBack, showSignupForm }) => {
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [repassword, setRepassword] = useState("");
+  const [signUpForm, setSignUpForm] = useState<SignUpForm>();
   const [isPasswordOk, setPasswordOK] = useState(true);
 
   const [isLoading, setLoading] = useState(false);
 
-  const submitNewMember = async (pEmail, pUsername, pPassword, pRepassword) => {
+  const submitNewMember = async (signUpForm: SignUpForm) => {
     setLoading(true);
-    const response = await signUpService(
-      pEmail,
-      pUsername,
-      pPassword,
-      pRepassword
-    );
+    const response = await signUpService(signUpForm);
     setLoading(false);
     console.log("réponse status = " + response.role);
     if (response.role === "USER") {
@@ -51,7 +43,7 @@ export const SignupForm = ({ homeInfoCallBack, showSignupForm }) => {
     <View style={{ padding: 8 }}>
       {isLoading && <ActivityIndicator />}
 
-      {!isPasswordOk && repassword.length > 0 ? (
+      {!isPasswordOk && signUpForm.repassword.length > 0 ? (
         <MessageInfo message="Mots de passe différents ou inférieurs à 6 caractères" />
       ) : null}
 
@@ -65,7 +57,7 @@ export const SignupForm = ({ homeInfoCallBack, showSignupForm }) => {
             maxLength={30}
             autoCompleteType="email"
             placeholder="email@email.fr"
-            onChangeText={text => setEmail(text)}
+            onChangeText={text => setSignUpForm({ ...signUpForm, email: text })}
           />
         </View>
         <View style={styles.input}>
@@ -76,7 +68,9 @@ export const SignupForm = ({ homeInfoCallBack, showSignupForm }) => {
             maxLength={12}
             autoCompleteType="off"
             placeholder="pseudo"
-            onChangeText={text => setUsername(text)}
+            onChangeText={text =>
+              setSignUpForm({ ...signUpForm, userName: text })
+            }
           />
         </View>
         <View style={styles.input}>
@@ -88,9 +82,13 @@ export const SignupForm = ({ homeInfoCallBack, showSignupForm }) => {
             maxLength={12}
             autoCompleteType="off"
             placeholder="mot de passe"
-            onChangeText={text => (
-              setPassword(text), setPasswordOK(checkPassword(text, repassword))
-            )}
+            onChangeText={text => {
+              setSignUpForm({ ...signUpForm, password: text });
+              signUpForm.password !== undefined &&
+              signUpForm.repassword !== undefined
+                ? setPasswordOK(checkPassword(text, signUpForm.repassword))
+                : null;
+            }}
           />
         </View>
         <View style={styles.input}>
@@ -102,19 +100,19 @@ export const SignupForm = ({ homeInfoCallBack, showSignupForm }) => {
             maxLength={12}
             autoCompleteType="off"
             placeholder="mot de passe"
-            onChangeText={text => (
-              setRepassword(text), setPasswordOK(checkPassword(password, text))
-            )}
+            onChangeText={text => {
+              setSignUpForm({ ...signUpForm, repassword: text });
+              signUpForm.password !== undefined &&
+              signUpForm.repassword !== undefined
+                ? setPasswordOK(checkPassword(text, signUpForm.password))
+                : null;
+            }}
           />
         </View>
 
         <Button
           title="Créer mon compte"
-          onPress={() =>
-            isPasswordOk
-              ? submitNewMember(email, username, password, repassword)
-              : null
-          }
+          onPress={() => (isPasswordOk ? submitNewMember(signUpForm) : null)}
         />
       </Card>
     </View>

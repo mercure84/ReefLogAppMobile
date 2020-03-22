@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, ViewStyle, StyleSheet } from "react-native";
-import { Header } from "react-native/Libraries/NewAppScreen";
+import { Header } from "react-native-elements";
 
 export const ToolsScreen = () => {
   return (
