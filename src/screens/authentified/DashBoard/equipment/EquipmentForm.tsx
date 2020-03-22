@@ -14,7 +14,7 @@ import {
   Text,
   Picker
 } from "react-native";
-import { CustomMessage } from "../../../../components/CustomMessage";
+import { MessageInfo } from "../../../../components/MessageInfo";
 import { Card } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import { TextInput } from "react-native-gesture-handler";
@@ -67,7 +67,7 @@ export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
   return (
     <>
       {isLoading && <ActivityIndicator />}
-      <CustomMessage message={infoMessage} display={infoMessage !== null} />
+      <MessageInfo message={infoMessage} />
       <Card>
         <View style={styles.input}>
           <Text>Date d'installation</Text>

@@ -8,19 +8,22 @@ import {
   ViewStyle,
   TextStyle
 } from "react-native";
-import { signUpService, SignUpForm } from "../../../services/memberService";
-import { MessageInfo } from "./MessageInfo";
+import { signUpService, SignUp } from "../../../services/memberService";
+import { MessageInfo } from "../../../components/MessageInfo";
 import { TextInput } from "react-native-gesture-handler";
 import { Card } from "react-native-elements";
+import RootStore from "../../../store/RootStore";
 
 const checkPassword = (password, repassword): boolean => {
-  return password === repassword && password.length > 5;
+  if (password !== null && repassword !== null) {
+    return password === repassword && password.length > 5;
+  } else return false;
 };
 
 type Props = {
-  showSignupForm?;
-  homeInfoCallBack?;
-  memberToUpdate?: SignUpForm;
+  showSignupForm?: (boolean: boolean) => void;
+  homeInfoCallBack?: (string: string) => void;
+  memberToUpdate?: SignUp;
 };
 
 export const SignupForm = ({
@@ -28,24 +31,30 @@ export const SignupForm = ({
   memberToUpdate,
   homeInfoCallBack
 }: Props) => {
-  const [signUpForm, setSignUpForm] = useState<SignUpForm>(memberToUpdate);
-  const [isPasswordOk, setPasswordOK] = useState(true);
+  const [signUpForm, setSignUpForm] = useState<SignUp>(memberToUpdate);
   const [localInfo, setLocalInfo] = useState("");
+  const [rootStore] = useState(RootStore);
+
   const isUpdating = memberToUpdate !== null;
   const [isLoading, setLoading] = useState(false);
 
-  const submitNewMember = async (signUpForm: SignUpForm) => {
+  const submitNewMember = async (signUpForm: SignUp) => {
     if (checkPassword(signUpForm.password, signUpForm.repassword)) {
       setLoading(true);
       const response = await signUpService(signUpForm, isUpdating);
       setLoading(false);
       console.log("réponse status = " + response.role);
       if (response.role === "USER") {
-        homeInfoCallBack(
-          "Votre compte a bien été créé ! un email de confirmaton a été envoyé à " +
-            response.email
-        );
-        showSignupForm(false);
+        if (isUpdating) {
+          rootStore.memberStore.fetchMember();
+          homeInfoCallBack("Compte mis à jour");
+        } else {
+          homeInfoCallBack(
+            "Votre compte a bien été créé ! un email de confirmaton a été envoyé à " +
+              response.email
+          );
+          showSignupForm(false);
+        }
       } else {
         setLocalInfo("Un problème est survenu : " + response.message);
       }
@@ -61,7 +70,11 @@ export const SignupForm = ({
       {isLoading && <ActivityIndicator />}
       <MessageInfo message={localInfo} />
 
-      <Card title="Création d'un compte">
+      <Card
+        title={
+          isUpdating ? "Modification de votre compte " : "Création d'un compte"
+        }
+      >
         <View style={styles.input}>
           <Text>Mon email</Text>
           <TextInput
@@ -72,6 +85,9 @@ export const SignupForm = ({
             autoCompleteType="email"
             placeholder="email@email.fr"
             onChangeText={text => setSignUpForm({ ...signUpForm, email: text })}
+            defaultValue={
+              isUpdating && signUpForm.email !== null ? signUpForm.email : null
+            }
           />
         </View>
         <View style={styles.input}>
@@ -84,6 +100,9 @@ export const SignupForm = ({
             placeholder="pseudo"
             onChangeText={text =>
               setSignUpForm({ ...signUpForm, userName: text })
+            }
+            defaultValue={
+              isUpdating && signUpForm.userName ? signUpForm.userName : null
             }
           />
         </View>
@@ -118,7 +137,7 @@ export const SignupForm = ({
 
         <Button
           title="Créer mon compte"
-          onPress={() => (isPasswordOk ? submitNewMember(signUpForm) : null)}
+          onPress={() => submitNewMember(signUpForm)}
         />
       </Card>
     </View>

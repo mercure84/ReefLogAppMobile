@@ -7,7 +7,7 @@ import {
   ActivityIndicator
 } from "react-native";
 import { Header, Button } from "react-native-elements";
-import { CustomMessage } from "../../../components/CustomMessage";
+import { MessageInfo } from "../../../components/MessageInfo";
 import { NewTankForm } from "./aquarium/TankForm";
 import { observer } from "mobx-react";
 import RootStore from "../../../store/RootStore";
@@ -54,7 +54,7 @@ const DashboardScreen = observer(() => {
           backgroundColor="green"
         />
       )}
-      <CustomMessage display={true} message={messageInfo} />
+      <MessageInfo message={messageInfo} />
 
       {isTankLoading ? (
         <ActivityIndicator />
