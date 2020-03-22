@@ -1,4 +1,6 @@
+import { RootStore } from "./../store/RootStore";
 import { urlServer } from "../constants/constants";
+import { getData } from "./storageDevice";
 
 // typage d'un membre
 
@@ -13,33 +15,41 @@ export type Member = {
   role: string;
 };
 
-// service signUp : add a new member
-export const signUpService = async (
-  newEmail: string,
-  newUsername: string,
-  newPassword: string,
-  newRepassword: string
-) => {
-  const urlService = urlServer + "api/addNewMember";
-  const newMember = {
-    userName: newUsername.toLowerCase(),
-    email: newEmail.toLowerCase(),
-    password: newPassword.toLowerCase(),
-    repassword: newRepassword.toLowerCase()
-  };
+export type SignUp = {
+  idToUpdate?: string;
+  email: string;
+  userName: string;
+  password: string;
+  repassword: string;
+};
 
+// service signUp : add ou update a new member
+export const signUpService = async (
+  signUpForm: SignUp,
+  isUpdating?: boolean
+) => {
+  const urlService = !isUpdating
+    ? urlServer + "api/addNewMember"
+    : urlServer + "api/updateMember";
+  const newMember = {
+    idToUpdate: signUpForm.idToUpdate ?? null,
+    userName: signUpForm.userName.toLowerCase(),
+    email: signUpForm.email.toLowerCase(),
+    password: signUpForm.password.toLowerCase(),
+    repassword: signUpForm.repassword.toLowerCase()
+  };
+  console.log(
+    "url du service = " + urlService + "idToUpdate = " + newMember.idToUpdate
+  );
   try {
-    console.log(
-      "On demande l'ajout du nouveau membre suivant : " +
-      newMember.email +
-      ", " +
-      newMember.userName
-    );
+    const token = await getData("token");
+
     const response = await fetch(urlService, {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: token
       },
       body: JSON.stringify(newMember)
     });
@@ -85,7 +95,7 @@ export const checkToken = async (pEmail: string, pToken) => {
   try {
     console.log(
       "On demande la validation du jeton trouvé avec l'email : " +
-      dataToValidate.email
+        dataToValidate.email
     );
     const response = await fetch(urlService, {
       method: "POST",

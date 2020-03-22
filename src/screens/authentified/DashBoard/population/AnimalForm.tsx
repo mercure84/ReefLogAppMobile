@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { Card } from "react-native-elements";
 import { TextInput } from "react-native-gesture-handler";
-import { CustomMessage } from "../../../../components/CustomMessage";
+import { MessageInfo } from "../../../../components/MessageInfo";
 import { useNavigation } from "@react-navigation/native";
 import RootStore from "../../../../store/RootStore";
 import { Animal, saveAnimal } from "../../../../services/animalService";
@@ -171,7 +171,7 @@ export const AnimalForm = observer(
     return (
       <View>
         {isLoading && <ActivityIndicator />}
-        <CustomMessage message={infoMessage} display={infoMessage !== null} />
+        <MessageInfo message={infoMessage} />
         <Card>
           <View style={styles.input}>
             <Text>Date d'arrivée</Text>

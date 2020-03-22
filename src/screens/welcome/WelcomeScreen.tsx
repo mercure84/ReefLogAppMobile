@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { LoginForm } from "./components/LoginForm";
 import { SignupForm } from "./components/SignupForm";
-import { MessageInfo } from "./components/MessageInfo";
+import { MessageInfo } from "../../components/MessageInfo";
 import { getData } from "../../services/storageDevice";
 import {
   KeyboardAvoidingView,
@@ -88,6 +88,7 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
           <SignupForm
             homeInfoCallBack={setMessageInfo}
             showSignupForm={toggleDisplaySignup}
+            memberToUpdate={null}
           />
         )}
 
