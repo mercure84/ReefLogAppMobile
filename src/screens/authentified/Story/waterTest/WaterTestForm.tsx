@@ -14,7 +14,7 @@ import {
   WaterTest,
   saveWaterTest
 } from "../../../../services/waterTestService";
-import { CustomMessage } from "../../../../components/CustomMessage";
+import { MessageInfo } from "../../../../components/MessageInfo";
 import { useNavigation } from "@react-navigation/native";
 import RootStore from "../../../../store/RootStore";
 
@@ -76,7 +76,7 @@ export const WaterTestForm = ({ waterTestToUpdate }: Props) => {
   return (
     <View>
       {isLoading && <ActivityIndicator />}
-      <CustomMessage message={infoMessage} display={infoMessage !== null} />
+      <MessageInfo message={infoMessage} />
       <Card>
         <View style={styles.input}>
           <Text>Date et Heure</Text>

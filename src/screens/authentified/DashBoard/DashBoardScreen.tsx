@@ -7,38 +7,38 @@ import {
   ActivityIndicator
 } from "react-native";
 import { Header, Button } from "react-native-elements";
-import { CustomMessage } from "../../../components/CustomMessage";
+import { MessageInfo } from "../../../components/MessageInfo";
 import { NewTankForm } from "./aquarium/TankForm";
 import { observer } from "mobx-react";
 import RootStore from "../../../store/RootStore";
-import { MainTankDisplay } from "./aquarium/MainTankDisplay";
+import { MainTankItem } from "./aquarium/MainTankItem";
 import { useNavigation } from "@react-navigation/native";
 
 const DashboardScreen = observer(() => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);
+  const [isTankItemVisible, setTankItemVisible] = useState(true);
   const [messageInfo, setMessageInfo] = useState("");
-  const [rootStore, setRootStore] = useState(RootStore);
+  const [rootStore] = useState(RootStore);
   const navigation = useNavigation();
 
   if (rootStore.memberStore.memberState === "pending") {
     rootStore.memberStore.fetchMember();
   }
-  console.log("etat du store member : " + rootStore.memberStore.memberState);
-
   if (rootStore.tankStore.tankState === "pending") {
     rootStore.tankStore.fetchTankList();
   }
 
-  console.log("etat du store tank : " + rootStore.tankStore.tankState);
-
   const isMemberLoading = rootStore.memberStore.memberState === "pending";
   const isTankLoading = rootStore.tankStore.tankState === "pending";
-
   const member = rootStore.memberStore.member;
   const tankList = rootStore.tankStore.tankList.slice();
   const newTankPress = () => setNewTankFormVisible(true);
   const populationPress = () => navigation.navigate("handlePopulation");
   const equipmentPress = () => navigation.navigate("handleEquipment");
+  const toggleTankForm = () => {
+    setTankItemVisible(!isTankItemVisible);
+    setNewTankFormVisible(!isNewTankFormVisible);
+  };
 
   return (
     <View style={styles.page}>
@@ -54,23 +54,26 @@ const DashboardScreen = observer(() => {
           backgroundColor="green"
         />
       )}
-      <CustomMessage display={true} message={messageInfo} />
+      <MessageInfo message={messageInfo} />
 
       {isTankLoading ? (
         <ActivityIndicator />
       ) : (
-        <MainTankDisplay tankList={tankList} />
+        isTankItemVisible && (
+          <MainTankItem editFunction={toggleTankForm} tankList={tankList} />
+        )
       )}
 
       {tankList.length === 0 && (
         <Button title="Créer un Aquarium" onPress={newTankPress} />
       )}
+
       {isNewTankFormVisible && (
         <NewTankForm
           memberId={member.id}
           infoCallBack={setMessageInfo}
-          showFormCallback={setNewTankFormVisible}
-          tankToSave={null}
+          showFormCallback={toggleTankForm}
+          tankToSave={tankList[0] ?? null}
         />
       )}
 

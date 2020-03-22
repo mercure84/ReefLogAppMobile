@@ -1,15 +1,32 @@
-import React, { useState } from "react";
+import React from "react";
 import { Tank } from "../../../../services/tankService";
-import { View, Text, StyleSheet, ViewStyle, TextStyle } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ViewStyle,
+  TextStyle,
+  TouchableOpacity,
+  Image,
+  ImageStyle
+} from "react-native";
 
 type Props = {
   tankList: Tank[];
+  editFunction: () => void;
 };
 
-export const MainTankDisplay = ({ tankList }: Props) => {
+import createIcon from "../../../../assets/icons/createIcon.png";
+
+export const MainTankItem = ({ tankList, editFunction }: Props) => {
   return tankList.length > 0 ? (
     <View style={styles.container}>
-      <Text style={styles.mainTitle}>{tankList[0].name}</Text>
+      <View style={styles.header}>
+        <Text style={styles.mainTitle}>{tankList[0].name}</Text>
+        <TouchableOpacity onPress={editFunction}>
+          <Image source={createIcon} style={styles.icon} />
+        </TouchableOpacity>
+      </View>
       <Text style={styles.detailText}>
         Volume brut : {tankList[0].rawVolume} litres
       </Text>
@@ -33,6 +50,8 @@ type Style = {
   container: ViewStyle;
   mainTitle: TextStyle;
   detailText: TextStyle;
+  icon: ImageStyle;
+  header: ViewStyle;
 };
 
 const styles = StyleSheet.create<Style>({
@@ -51,5 +70,14 @@ const styles = StyleSheet.create<Style>({
   detailText: {
     fontSize: 16,
     textAlign: "center"
+  },
+  icon: {
+    height: 32,
+    width: 32
+  },
+
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-around"
   }
 });

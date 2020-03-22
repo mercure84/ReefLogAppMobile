@@ -4,7 +4,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import WelcomeScreen from "../screens/welcome/WelcomeScreen";
-import ParametersScreen from "../screens/authentified/Parameters/ParametersScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -16,6 +15,7 @@ import story from "../assets/icons/notepad.png";
 
 import { StoryNavigator } from "../screens/authentified/Story/StoryNavigator";
 import { DashBoardNavigator } from "../screens/authentified/DashBoard/DashBoardNavigator";
+import { ParameterNavigator } from "../screens/authentified/Parameters/ParameterNavigator";
 
 const TabNavigator = () => {
   return (
@@ -40,7 +40,7 @@ const TabNavigator = () => {
       />
       <Tab.Screen
         name="Paramètres"
-        component={ParametersScreen}
+        component={ParameterNavigator}
         options={{
           tabBarIcon: () => (
             <Image source={settingsIcon} style={{ height: 24, width: 24 }} />

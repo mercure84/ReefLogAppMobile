@@ -1,4 +1,4 @@
-import { urlServer } from "../constants/constants";
+import { urlServer } from "./../constants/constants";
 import { getData } from "./storageDevice";
 import { Member } from "./memberService";
 
@@ -21,8 +21,14 @@ export interface Tank {
 }
 
 // ajout d'un aquarium
-export const addNewReefTank = async (newMemberId: string, newTank: Tank) => {
-  const urlService = urlServer + "api/addNewReefAquarium";
+export const saveReefTank = async (
+  newMemberId: string,
+  newTank: Tank,
+  update: boolean
+) => {
+  const urlService = update
+    ? urlServer + "api/updateReefAquarium"
+    : urlServer + "api/addNewReefAquarium";
   const newReefTank = {
     memberId: newMemberId,
     reefAquarium: newTank
