@@ -10,7 +10,8 @@ import {
   ActivityIndicator
 } from "react-native";
 import { Card, Button } from "react-native-elements";
-import { addNewReefTank, Tank } from "../../../../services/tankService";
+import { saveReefTank, Tank } from "../../../../services/tankService";
+import RootStore from "../../../../store/RootStore";
 
 type Props = {
   infoCallBack: (string: string) => void;
@@ -27,7 +28,10 @@ export const NewTankForm = ({
 }: Props) => {
   const [isLoading, setLoading] = useState(false);
   const [tank, setTank] = useState<Tank>(tankToSave);
-  const [infoMessage, setInfoMessage] = useState("Décrivez votre Aquarium !");
+  const [infoMessage, setInfoMessage] = useState("");
+  const [rootStore] = useState(RootStore);
+
+  const isUpdating = tankToSave !== null;
 
   infoCallBack(infoMessage);
 
@@ -52,16 +56,16 @@ export const NewTankForm = ({
     return isValide;
   };
 
-  const submitNewTank = async () => {
+  const saveTank = async () => {
     setLoading(true);
     if (checkForm()) {
       setInfoMessage("Le formulaire est valide ! Enregistrement en cours...");
 
-      const response = await addNewReefTank(memberId, tank);
+      const response = await saveReefTank(memberId, tank, isUpdating);
 
       if (response != null) {
-        setInfoMessage("L'aquarium a bien été enregistré");
         setLoading(false);
+        rootStore.tankStore.fetchTankList();
         showFormCallback(false);
       } else {
         setLoading(false);
@@ -88,6 +92,7 @@ export const NewTankForm = ({
                 name: text
               })
             }
+            defaultValue={isUpdating && tank.name !== null ? tank.name : null}
           />
         </View>
         <View style={styles.inputInlineContainer}>
@@ -104,6 +109,11 @@ export const NewTankForm = ({
                   length: parseFloat(text)
                 })
               }
+              defaultValue={
+                isUpdating && tank.length !== null
+                  ? tank.length.toString()
+                  : null
+              }
             />
           </View>
           <View style={styles.inputInline}>
@@ -119,6 +129,9 @@ export const NewTankForm = ({
                   width: parseFloat(text)
                 })
               }
+              defaultValue={
+                isUpdating && tank.width !== null ? tank.width.toString() : null
+              }
             />
           </View>
           <View style={styles.inputInline}>
@@ -133,6 +146,11 @@ export const NewTankForm = ({
                   ...tank,
                   height: parseFloat(text)
                 })
+              }
+              defaultValue={
+                isUpdating && tank.height !== null
+                  ? tank.height.toString()
+                  : null
               }
             />
           </View>
@@ -150,6 +168,11 @@ export const NewTankForm = ({
                   sumpVolume: parseFloat(text)
                 })
               }
+              defaultValue={
+                isUpdating && tank.sumpVolume !== null
+                  ? tank.sumpVolume.toString()
+                  : null
+              }
             />
           </View>
         </View>
@@ -158,7 +181,11 @@ export const NewTankForm = ({
           <Picker
             style={{ height: 50, width: 150 }}
             mode="dropdown"
-            selectedValue={tank !== null ? tank.typeOfMaintenance : "BERLINOIS"}
+            selectedValue={
+              tank === null
+                ? setTank({ ...tank, typeOfMaintenance: "BERLINOIS" })
+                : tank.typeOfMaintenance
+            }
             onValueChange={itemValue =>
               setTank({ ...tank, typeOfMaintenance: itemValue })
             }
@@ -173,7 +200,11 @@ export const NewTankForm = ({
           <Picker
             style={{ height: 50, width: 150 }}
             mode="dropdown"
-            selectedValue={tank !== null ? tank.mainPopulation : "MIX"}
+            selectedValue={
+              tank === null
+                ? setTank({ ...tank, mainPopulation: "MIX" })
+                : tank.mainPopulation
+            }
             onValueChange={itemValue =>
               setTank({ ...tank, mainPopulation: itemValue })
             }
@@ -185,8 +216,13 @@ export const NewTankForm = ({
             <Picker.Item label="SPS" value="SPS" />
           </Picker>
         </View>
-        <Button title="Enregistrer" onPress={() => submitNewTank()} />
-        <Button title="Annuler" onPress={() => showFormCallback(false)} />
+        <Button title="Enregistrer" onPress={() => saveTank()} />
+        <Button
+          title="Annuler"
+          onPress={() => {
+            showFormCallback(false);
+          }}
+        />
       </Card>
     </View>
   );
