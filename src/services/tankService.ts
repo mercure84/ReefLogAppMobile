@@ -9,7 +9,7 @@ export interface Tank {
   length: number;
   width: number;
   height: number;
-  startDate?: any;
+  startDate?: Date;
   member?: Member;
   sumpVolume: number;
   typeOfMaintenance: string;

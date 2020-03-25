@@ -7,11 +7,14 @@ import {
   TextInput,
   StyleSheet,
   Picker,
-  ActivityIndicator
+  ActivityIndicator,
+  Button
 } from "react-native";
-import { Card, Button } from "react-native-elements";
+import { Card } from "react-native-elements";
 import { saveReefTank, Tank } from "../../../../services/tankService";
 import RootStore from "../../../../store/RootStore";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import Moment from "moment";
 
 type Props = {
   infoCallBack: (string: string) => void;
@@ -27,6 +30,7 @@ export const NewTankForm = ({
   tankToSave
 }: Props) => {
   const [isLoading, setLoading] = useState(false);
+  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [tank, setTank] = useState<Tank>(tankToSave);
   const [infoMessage, setInfoMessage] = useState("");
   const [rootStore] = useState(RootStore);
@@ -76,11 +80,47 @@ export const NewTankForm = ({
     }
   };
 
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || tank.startDate;
+    setTank({
+      ...tank,
+      startDate: currentDate
+    });
+    setDatePickerVisible(false);
+  };
+  console.log("StartDate = " + Moment(tank.startDate).format("llll"));
+  console.log("NewDate = " + new Date());
+
   return (
     <View>
       {isLoading && <ActivityIndicator />}
 
       <Card title="Création d'un aquarium !">
+        <View style={styles.input}>
+          <Text>Mise en eau</Text>
+
+          <Button
+            title={
+              isUpdating && Moment(tank.startDate) !== null
+                ? Moment(tank.startDate)
+                    .format("ll")
+                    .toString()
+                : new Date().toString()
+            }
+            onPress={() => setDatePickerVisible(true)}
+          />
+
+          {isDatePickerVisible && (
+            <DateTimePicker
+              value={new Date()}
+              mode={"date"}
+              locale="fr-FR"
+              display="default"
+              onChange={onChange}
+            />
+          )}
+        </View>
+
         <View style={styles.input}>
           <Text>Nom</Text>
           <TextInput
