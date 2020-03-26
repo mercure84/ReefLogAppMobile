@@ -13,7 +13,7 @@ import {
 import { Card } from "react-native-elements";
 import { saveReefTank, Tank } from "../../../../services/tankService";
 import RootStore from "../../../../store/RootStore";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Moment from "moment";
 
 type Props = {
@@ -64,32 +64,28 @@ export const NewTankForm = ({
     setLoading(true);
     if (checkForm()) {
       setInfoMessage("Le formulaire est valide ! Enregistrement en cours...");
-
       const response = await saveReefTank(memberId, tank, isUpdating);
-      rootStore.tankStore.fetchTankList();
       if (response != null) {
+        rootStore.tankStore.fetchTankList();
         setLoading(false);
         setInfoMessage("");
-
         showFormCallback(false);
       } else {
         setLoading(false);
-
         setInfoMessage("Un problème est survenu");
       }
     }
   };
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || tank.startDate;
+  const setDate = date => {
+    setDatePickerVisible(false);
+
     setTank({
       ...tank,
-      startDate: currentDate
+      startDate: date
     });
     setDatePickerVisible(false);
   };
-  console.log("StartDate = " + Moment(tank.startDate).format("llll"));
-  console.log("NewDate = " + new Date());
 
   return (
     <View>
@@ -110,15 +106,15 @@ export const NewTankForm = ({
             onPress={() => setDatePickerVisible(true)}
           />
 
-          {isDatePickerVisible && (
-            <DateTimePicker
-              value={new Date()}
-              mode={"date"}
-              locale="fr-FR"
-              display="default"
-              onChange={onChange}
-            />
-          )}
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            date={new Date(Moment(tank.startDate).toString()) ?? new Date()}
+            locale="fr-FR"
+            mode="date"
+            display="calendar"
+            onConfirm={setDate}
+            onCancel={() => setDatePickerVisible(false)}
+          />
         </View>
 
         <View style={styles.input}>
