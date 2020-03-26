@@ -15,6 +15,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import fishIcon from "../../../../assets/icons/fish.png";
 import coralIcon from "../../../../assets/icons/coral.png";
 import reefCleanerIcon from "../../../../assets/icons/reefcleaner.png";
+import { GoBackButton } from "../../../../components/GoBackButton";
 
 export const NewAnimalScreen = observer(() => {
   const [showForm, setShowForm] = useState(false);
@@ -42,6 +43,7 @@ export const NewAnimalScreen = observer(() => {
   return (
     <View style={styles.page}>
       <Header
+        leftComponent={<GoBackButton />}
         centerComponent={
           <Text style={{ fontSize: 16 }}>Ajouter un pensionnaire</Text>
         }

@@ -12,11 +12,31 @@ const Stack = createStackNavigator();
 export const DashBoardNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="main" component={DashBoardScreen} />
-      <Stack.Screen name="handlePopulation" component={PopulationScreen} />
-      <Stack.Screen name="handleEquipment" component={EquipmentScreen} />
-      <Stack.Screen name="newAnimal" component={NewAnimalScreen} />
-      <Stack.Screen name="updateAnimal" component={UpdateAnimalScreen} />
+      <Stack.Screen
+        name="main"
+        component={DashBoardScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="handlePopulation"
+        component={PopulationScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="handleEquipment"
+        component={EquipmentScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="newAnimal"
+        component={NewAnimalScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="updateAnimal"
+        component={UpdateAnimalScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="saveEquipment"
         component={NewEquipmentScreen}

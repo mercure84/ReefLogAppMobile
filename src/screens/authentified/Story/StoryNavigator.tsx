@@ -8,11 +8,16 @@ const Stack = createStackNavigator();
 export const StoryNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="mainStory" component={StoryScreen} />
+      <Stack.Screen
+        name="mainStory"
+        component={StoryScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="addTests"
         component={NewTestScreen}
         initialParams={{ waterTest: null }}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

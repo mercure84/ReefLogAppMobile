@@ -13,6 +13,7 @@ import { Header } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import RootStore from "../../../../store/RootStore";
 import { EquipmentItem } from "./EquipmentItem";
+import { GoBackButton } from "../../../../components/GoBackButton";
 
 export const EquipmentScreen = observer(() => {
   const navigation = useNavigation();
@@ -29,6 +30,7 @@ export const EquipmentScreen = observer(() => {
   return (
     <View style={styles.page}>
       <Header
+        leftComponent={<GoBackButton />}
         centerComponent={<Text style={{ fontSize: 16 }}>Mes équipements</Text>}
         backgroundColor="yellow"
       />

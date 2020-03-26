@@ -4,6 +4,7 @@ import { Header } from "react-native-elements";
 import { WaterTestForm } from "./WaterTestForm";
 import Moment from "moment";
 import "moment/locale/fr";
+import { GoBackButton } from "../../../../components/GoBackButton";
 
 export const NewTestScreen = ({ route }) => {
   const { waterTest } = route.params;
@@ -16,6 +17,7 @@ export const NewTestScreen = ({ route }) => {
   return (
     <View>
       <Header
+        leftComponent={<GoBackButton />}
         centerComponent={<Text style={{ fontSize: 16 }}>{title}</Text>}
         backgroundColor="green"
       />

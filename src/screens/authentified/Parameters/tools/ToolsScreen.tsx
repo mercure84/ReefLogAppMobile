@@ -1,11 +1,13 @@
 import React from "react";
 import { View, Text, ViewStyle, StyleSheet } from "react-native";
 import { Header } from "react-native-elements";
+import { GoBackButton } from "../../../../components/GoBackButton";
 
 export const ToolsScreen = () => {
   return (
     <View style={styles.page}>
       <Header
+        leftComponent={<GoBackButton />}
         centerComponent={<Text style={{ fontSize: 16 }}>Mes outils</Text>}
         backgroundColor="pink"
       />
