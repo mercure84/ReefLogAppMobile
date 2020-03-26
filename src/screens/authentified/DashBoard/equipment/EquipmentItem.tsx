@@ -45,7 +45,7 @@ export const EquipmentItem = ({ equipment }: Props) => {
         <View style={styles.item}>
           <Text style={styles.date}>
             Date d'installation :
-            {Moment(equipment.dateInstallation).format("lll")}
+            {Moment(equipment.dateInstallation).format("ll")}
           </Text>
           <Text>Type : {equipment.typeOfEquipment}</Text>
           {equipment.mark !== undefined && (
