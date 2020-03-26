@@ -97,18 +97,24 @@ export const NewTankForm = ({
 
           <Button
             title={
-              isUpdating && Moment(tank.startDate) !== null
+              tank !== null
                 ? Moment(tank.startDate)
                     .format("ll")
                     .toString()
-                : new Date().toString()
+                : Moment(new Date())
+                    .format("ll")
+                    .toString()
             }
             onPress={() => setDatePickerVisible(true)}
           />
 
           <DateTimePickerModal
             isVisible={isDatePickerVisible}
-            date={new Date(Moment(tank.startDate).toString()) ?? new Date()}
+            date={
+              tank !== null
+                ? new Date(Moment(tank.startDate).toString())
+                : new Date()
+            }
             locale="fr-FR"
             mode="date"
             display="calendar"

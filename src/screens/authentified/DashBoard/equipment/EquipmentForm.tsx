@@ -86,11 +86,13 @@ export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
           <Text>Date d'installation</Text>
           <Button
             title={
-              isUpdating && Moment(equipment.dateInstallation) !== null
+              equipment !== null
                 ? Moment(equipment.dateInstallation)
                     .format("ll")
                     .toString()
-                : new Date().toString()
+                : Moment(new Date())
+                    .format("ll")
+                    .toString()
             }
             onPress={() => setDatePickerVisible(true)}
           />
@@ -98,8 +100,9 @@ export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
           <DateTimePickerModal
             isVisible={isDatePickerVisible}
             date={
-              new Date(Moment(equipment.dateInstallation).toString()) ??
-              new Date()
+              equipment !== null
+                ? new Date(Moment(equipment.dateInstallation).toString())
+                : new Date()
             }
             locale="fr-FR"
             mode="date"

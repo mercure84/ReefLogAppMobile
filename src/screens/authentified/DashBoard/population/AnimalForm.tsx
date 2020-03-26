@@ -25,10 +25,6 @@ type Props = {
 };
 export const AnimalForm = observer(
   ({ animalToSave, animalTypeForm }: Props) => {
-    console.log(
-      "animal Name = " + animalToSave + " , et species = " + animalTypeForm
-    );
-
     const isUpdating = animalToSave !== null;
     const [isLoading, setLoading] = useState(false);
     const [animal, setAnimal] = useState<Animal>(animalToSave);
@@ -192,11 +188,13 @@ export const AnimalForm = observer(
             <Text>Date d'installation</Text>
             <Button
               title={
-                isUpdating && Moment(animal.incomingDate) !== null
+                animal !== null
                   ? Moment(animal.incomingDate)
                       .format("ll")
                       .toString()
-                  : new Date().toString()
+                  : Moment(new Date())
+                      .format("ll")
+                      .toString()
               }
               onPress={() => setDatePickerVisible(true)}
             />
@@ -204,7 +202,9 @@ export const AnimalForm = observer(
             <DateTimePickerModal
               isVisible={isDatePickerVisible}
               date={
-                new Date(Moment(animal.incomingDate).toString()) ?? new Date()
+                animal !== null
+                  ? new Date(Moment(animal.incomingDate).toString())
+                  : new Date()
               }
               locale="fr-FR"
               mode="date"
