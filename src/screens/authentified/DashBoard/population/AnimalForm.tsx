@@ -174,7 +174,7 @@ export const AnimalForm = observer(
 
       setAnimal({
         ...animal,
-        exitDate: date
+        incomingDate: date
       });
       setDatePickerVisible(false);
     };
@@ -185,7 +185,7 @@ export const AnimalForm = observer(
         <MessageInfo message={infoMessage} />
         <Card>
           <View style={styles.input}>
-            <Text>Date d'installation</Text>
+            <Text>Date d'arrivée</Text>
             <Button
               title={
                 animal !== null
