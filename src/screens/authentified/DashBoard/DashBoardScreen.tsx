@@ -13,6 +13,7 @@ import { observer } from "mobx-react";
 import RootStore from "../../../store/RootStore";
 import { MainTankItem } from "./aquarium/MainTankItem";
 import { useNavigation } from "@react-navigation/native";
+import { TankPicture } from "./aquarium/TankPicture";
 
 const DashboardScreen = observer(() => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);
@@ -76,6 +77,8 @@ const DashboardScreen = observer(() => {
           tankToSave={tankList[0] ?? null}
         />
       )}
+
+      <TankPicture />
 
       {tankList[0] !== null && (
         <Button title="Mes pensionnaires" onPress={populationPress} />
