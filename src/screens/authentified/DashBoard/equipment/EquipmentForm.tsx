@@ -18,6 +18,8 @@ import { MessageInfo } from "../../../../components/MessageInfo";
 import { Card } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import { TextInput } from "react-native-gesture-handler";
+import Moment from "moment";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 type Props = {
   equipmentToUpdate: Equipment;
@@ -26,6 +28,7 @@ type Props = {
 export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
   const navigation = useNavigation();
   const [equipment, setEquipment] = useState<Equipment>(equipmentToUpdate);
+  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [infoMessage, setInfoMessage] = useState(
     "Saisissez les données de votre matériel !"
   );
@@ -64,6 +67,16 @@ export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
     }
   };
 
+  const setDate = date => {
+    setDatePickerVisible(false);
+
+    setEquipment({
+      ...equipment,
+      dateInstallation: date
+    });
+    setDatePickerVisible(false);
+  };
+
   return (
     <>
       {isLoading && <ActivityIndicator />}
@@ -71,12 +84,31 @@ export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
       <Card>
         <View style={styles.input}>
           <Text>Date d'installation</Text>
-          <TextInput
-            style={styles.textInput}
-            maxLength={30}
-            placeholder={"30 caractères maxi"}
-            onChangeText={text => null}
-            enabled={false}
+          <Button
+            title={
+              equipment !== null
+                ? Moment(equipment.dateInstallation)
+                    .format("ll")
+                    .toString()
+                : Moment(new Date())
+                    .format("ll")
+                    .toString()
+            }
+            onPress={() => setDatePickerVisible(true)}
+          />
+
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            date={
+              equipment !== null
+                ? new Date(Moment(equipment.dateInstallation).toString())
+                : new Date()
+            }
+            locale="fr-FR"
+            mode="date"
+            display="calendar"
+            onConfirm={setDate}
+            onCancel={() => setDatePickerVisible(false)}
           />
         </View>
 

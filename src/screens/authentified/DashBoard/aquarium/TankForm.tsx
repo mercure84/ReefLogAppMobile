@@ -7,11 +7,14 @@ import {
   TextInput,
   StyleSheet,
   Picker,
-  ActivityIndicator
+  ActivityIndicator,
+  Button
 } from "react-native";
-import { Card, Button } from "react-native-elements";
+import { Card } from "react-native-elements";
 import { saveReefTank, Tank } from "../../../../services/tankService";
 import RootStore from "../../../../store/RootStore";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import Moment from "moment";
 
 type Props = {
   infoCallBack: (string: string) => void;
@@ -27,6 +30,7 @@ export const NewTankForm = ({
   tankToSave
 }: Props) => {
   const [isLoading, setLoading] = useState(false);
+  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [tank, setTank] = useState<Tank>(tankToSave);
   const [infoMessage, setInfoMessage] = useState("");
   const [rootStore] = useState(RootStore);
@@ -60,20 +64,27 @@ export const NewTankForm = ({
     setLoading(true);
     if (checkForm()) {
       setInfoMessage("Le formulaire est valide ! Enregistrement en cours...");
-
       const response = await saveReefTank(memberId, tank, isUpdating);
-      rootStore.tankStore.fetchTankList();
       if (response != null) {
+        rootStore.tankStore.fetchTankList();
         setLoading(false);
         setInfoMessage("");
-
         showFormCallback(false);
       } else {
         setLoading(false);
-
         setInfoMessage("Un problème est survenu");
       }
     }
+  };
+
+  const setDate = date => {
+    setDatePickerVisible(false);
+
+    setTank({
+      ...tank,
+      startDate: date
+    });
+    setDatePickerVisible(false);
   };
 
   return (
@@ -81,6 +92,37 @@ export const NewTankForm = ({
       {isLoading && <ActivityIndicator />}
 
       <Card title="Création d'un aquarium !">
+        <View style={styles.input}>
+          <Text>Mise en eau</Text>
+
+          <Button
+            title={
+              tank !== null
+                ? Moment(tank.startDate)
+                    .format("ll")
+                    .toString()
+                : Moment(new Date())
+                    .format("ll")
+                    .toString()
+            }
+            onPress={() => setDatePickerVisible(true)}
+          />
+
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            date={
+              tank !== null
+                ? new Date(Moment(tank.startDate).toString())
+                : new Date()
+            }
+            locale="fr-FR"
+            mode="date"
+            display="calendar"
+            onConfirm={setDate}
+            onCancel={() => setDatePickerVisible(false)}
+          />
+        </View>
+
         <View style={styles.input}>
           <Text>Nom</Text>
           <TextInput

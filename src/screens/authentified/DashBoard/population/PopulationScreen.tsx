@@ -13,6 +13,7 @@ import RootStore from "../../../../store/RootStore";
 import { useNavigation } from "@react-navigation/native";
 import { observer } from "mobx-react";
 import { AnimalItem } from "./AnimalItem";
+import { GoBackButton } from "../../../../components/GoBackButton";
 
 export const PopulationScreen = observer(() => {
   const navigation = useNavigation();
@@ -25,6 +26,7 @@ export const PopulationScreen = observer(() => {
   return (
     <View style={styles.page}>
       <Header
+        leftComponent={<GoBackButton />}
         centerComponent={
           <Text style={{ fontSize: 16 }}>Mes pensionnaires</Text>
         }

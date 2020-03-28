@@ -10,10 +10,26 @@ const Stack = createStackNavigator();
 export const ParameterNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="main" component={ParameterScreen} />
-      <Stack.Screen name="myProfil" component={MyProfilScreen} />
-      <Stack.Screen name="myAlerts" component={AlertsScreen} />
-      <Stack.Screen name="myTools" component={ToolsScreen} />
+      <Stack.Screen
+        name="main"
+        component={ParameterScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="myProfil"
+        component={MyProfilScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="myAlerts"
+        component={AlertsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="myTools"
+        component={ToolsScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };

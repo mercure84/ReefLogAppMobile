@@ -15,7 +15,7 @@ import Moment from "moment";
 import "moment/locale/fr";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
-import { Animal } from "src/services/animalService";
+import { Animal } from "../../../../services/animalService";
 import RootStore from "../../../../store/RootStore";
 import { CustomModal } from "../../../../components/ModalDeleteConfirmation";
 
@@ -46,7 +46,7 @@ export const AnimalItem = ({ animal }: Props) => {
       <View style={styles.header}>
         <View style={styles.item}>
           <Text style={styles.date}>
-            Date d'arrivée : {Moment(animal.incomingDate).format("lll")}
+            Date d'arrivée : {Moment(animal.incomingDate).format("ll")}
           </Text>
           {animal.anemoneSpecies !== undefined ? (
             <Text style={styles.animalType}>

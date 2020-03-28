@@ -16,6 +16,8 @@ import { useNavigation } from "@react-navigation/native";
 import RootStore from "../../../../store/RootStore";
 import { Animal, saveAnimal } from "../../../../services/animalService";
 import { observer } from "mobx-react";
+import Moment from "moment";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 type Props = {
   animalToSave: Animal;
@@ -23,13 +25,11 @@ type Props = {
 };
 export const AnimalForm = observer(
   ({ animalToSave, animalTypeForm }: Props) => {
-    console.log(
-      "animal Name = " + animalToSave + " , et species = " + animalTypeForm
-    );
-
     const isUpdating = animalToSave !== null;
     const [isLoading, setLoading] = useState(false);
     const [animal, setAnimal] = useState<Animal>(animalToSave);
+    const [isDatePickerVisible, setDatePickerVisible] = useState(false);
+
     const [infoMessage, setInfoMessage] = useState(
       "Saisissez les données pour un nouveau " + animalTypeForm
     );
@@ -168,6 +168,17 @@ export const AnimalForm = observer(
       }
       setLoading(false);
     };
+
+    const setDate = date => {
+      setDatePickerVisible(false);
+
+      setAnimal({
+        ...animal,
+        incomingDate: date
+      });
+      setDatePickerVisible(false);
+    };
+
     return (
       <View>
         {isLoading && <ActivityIndicator />}
@@ -175,12 +186,31 @@ export const AnimalForm = observer(
         <Card>
           <View style={styles.input}>
             <Text>Date d'arrivée</Text>
-            <TextInput
-              style={styles.textInput}
-              maxLength={30}
-              placeholder={"30 caractères maxi"}
-              onChangeText={text => null}
-              enabled={false}
+            <Button
+              title={
+                animal !== null
+                  ? Moment(animal.incomingDate)
+                      .format("ll")
+                      .toString()
+                  : Moment(new Date())
+                      .format("ll")
+                      .toString()
+              }
+              onPress={() => setDatePickerVisible(true)}
+            />
+
+            <DateTimePickerModal
+              isVisible={isDatePickerVisible}
+              date={
+                animal !== null
+                  ? new Date(Moment(animal.incomingDate).toString())
+                  : new Date()
+              }
+              locale="fr-FR"
+              mode="date"
+              display="calendar"
+              onConfirm={setDate}
+              onCancel={() => setDatePickerVisible(false)}
             />
           </View>
           <View style={styles.inputInlineContainer}>

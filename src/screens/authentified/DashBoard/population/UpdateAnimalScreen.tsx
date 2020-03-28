@@ -4,6 +4,7 @@ import { View, ViewStyle, StyleSheet, Text } from "react-native";
 import { Header } from "react-native-elements";
 import { AnimalForm } from "./AnimalForm";
 import { getSpecies } from "../../../../services/animalService";
+import { GoBackButton } from "../../../../components/GoBackButton";
 
 export const UpdateAnimalScreen = observer(({ route }) => {
   const { animal } = route.params;
@@ -11,6 +12,7 @@ export const UpdateAnimalScreen = observer(({ route }) => {
   return (
     <View style={styles.page}>
       <Header
+        leftComponent={<GoBackButton />}
         centerComponent={
           <Text style={{ fontSize: 16 }}>Ajouter un pensionnaire</Text>
         }

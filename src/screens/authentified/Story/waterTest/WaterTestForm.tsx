@@ -17,13 +17,16 @@ import {
 import { MessageInfo } from "../../../../components/MessageInfo";
 import { useNavigation } from "@react-navigation/native";
 import RootStore from "../../../../store/RootStore";
+import Moment from "moment";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 type Props = {
   waterTestToUpdate: WaterTest;
 };
 
 export const WaterTestForm = ({ waterTestToUpdate }: Props) => {
-  const [rootStore, setRootStore] = useState(RootStore);
+  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
+  const [rootStore] = useState(RootStore);
   const toUpdate = waterTestToUpdate !== null;
   const [isLoading, setLoading] = useState(false);
   const [waterTest, setWaterTest] = useState<WaterTest>(waterTestToUpdate);
@@ -73,19 +76,48 @@ export const WaterTestForm = ({ waterTestToUpdate }: Props) => {
       setInfoMessage("Votre formulaire est incorrect, merci de le vérifier !");
     }
   };
+
+  const setDate = date => {
+    setDatePickerVisible(false);
+
+    setWaterTest({
+      ...waterTest,
+      date: date
+    });
+    setDatePickerVisible(false);
+  };
+
   return (
     <View>
       {isLoading && <ActivityIndicator />}
       <MessageInfo message={infoMessage} />
       <Card>
         <View style={styles.input}>
-          <Text>Date et Heure</Text>
-          <TextInput
-            style={styles.textInput}
-            maxLength={30}
-            placeholder={"30 caractères maxi"}
-            onChangeText={text => null}
-            enabled={false}
+          <Text>Date d'arrivée</Text>
+          <Button
+            title={
+              waterTest !== null
+                ? Moment(waterTest.date)
+                    .format("lll")
+                    .toString()
+                : Moment(new Date())
+                    .format("lll")
+                    .toString()
+            }
+            onPress={() => setDatePickerVisible(true)}
+          />
+
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            date={
+              waterTest !== null
+                ? new Date(Moment(waterTest.date).toString())
+                : new Date()
+            }
+            locale="fr-FR"
+            mode="datetime"
+            onConfirm={setDate}
+            onCancel={() => setDatePickerVisible(false)}
           />
         </View>
         <View style={styles.inputInlineContainer}>
