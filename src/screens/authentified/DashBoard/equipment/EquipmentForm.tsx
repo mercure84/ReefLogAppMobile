@@ -57,7 +57,6 @@ export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
       );
       if (response != null) {
         setInfoMessage("L'équipement a été enregistré !");
-        rootStore.equipmentStore.fetchEquipments();
         setLoading(false);
         navigation.navigate("handleEquipment");
       } else {
@@ -65,6 +64,7 @@ export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
       }
       setLoading(false);
     }
+    rootStore.equipmentStore.fetchEquipments();
   };
 
   const setDate = date => {

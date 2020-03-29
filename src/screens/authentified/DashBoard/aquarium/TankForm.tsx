@@ -66,7 +66,6 @@ export const NewTankForm = ({
       setInfoMessage("Le formulaire est valide ! Enregistrement en cours...");
       const response = await saveReefTank(memberId, tank, isUpdating);
       if (response != null) {
-        rootStore.tankStore.fetchTankList();
         setLoading(false);
         setInfoMessage("");
         showFormCallback(false);
@@ -75,6 +74,7 @@ export const NewTankForm = ({
         setInfoMessage("Un problème est survenu");
       }
     }
+    rootStore.tankStore.fetchTankList();
   };
 
   const setDate = date => {

@@ -155,7 +155,6 @@ export const AnimalForm = observer(
 
         if (response != null) {
           setInfoMessage("L'animal a bien été enregistré !");
-          rootStore.animalStore.fetchAnimals();
           setLoading(false);
           navigation.navigate("handlePopulation");
         } else {
@@ -166,6 +165,8 @@ export const AnimalForm = observer(
           "Votre formulaire est incorrect, merci de le vérifier !"
         );
       }
+      rootStore.animalStore.fetchAnimals();
+
       setLoading(false);
     };
 
