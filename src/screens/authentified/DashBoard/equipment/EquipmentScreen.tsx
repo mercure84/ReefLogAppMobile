@@ -17,15 +17,14 @@ import { GoBackButton } from "../../../../components/GoBackButton";
 
 export const EquipmentScreen = observer(() => {
   const navigation = useNavigation();
-  const [rootStore] = useState(RootStore);
 
-  if (rootStore.equipmentStore.equipmentState === "pending") {
-    rootStore.equipmentStore.fetchEquipments();
+  if (RootStore.equipmentStore.equipmentState === "pending") {
+    RootStore.equipmentStore.fetchEquipments();
   }
 
   const isEquipmentsLoading =
-    rootStore.equipmentStore.equipmentState === "pending";
-  const dataEquipments = rootStore.equipmentStore.equipmentsData;
+    RootStore.equipmentStore.equipmentState === "pending";
+  const dataEquipments = RootStore.equipmentStore.equipmentsData;
 
   return (
     <View style={styles.page}>

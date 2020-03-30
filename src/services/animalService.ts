@@ -157,22 +157,3 @@ export const getAnimalSpecies = async (): Promise<AnimalSpecies | any> => {
     console.log(error);
   }
 };
-
-export const deleteEquipment = async (pId: number, token: string) => {
-  const urlService = urlServer + "api/deleteEquipment/" + pId;
-  try {
-    console.log("Demande de suppression de l'équipement n° " + pId);
-    const response = await fetch(urlService, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: token
-      }
-    });
-    const dataResponse = response.json();
-    return dataResponse;
-  } catch (error) {
-    console.log(error);
-  }
-};

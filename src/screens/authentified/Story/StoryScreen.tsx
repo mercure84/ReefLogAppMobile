@@ -16,13 +16,11 @@ import { WaterTestItem } from "./waterTest/WaterTestItem";
 
 const StoryScreen = observer(() => {
   const navigation = useNavigation();
-  const [rootStore, setRootStore] = useState(RootStore);
-
-  if (rootStore.waterTestStore.waterTestState === "pending") {
-    rootStore.waterTestStore.fetchWaterTestList();
+  if (RootStore.waterTestStore.waterTestState === "pending") {
+    RootStore.waterTestStore.fetchWaterTestList();
   }
-  const isTestsLoading = rootStore.waterTestStore.waterTestState === "pending";
-  const dataWaterTestList = rootStore.waterTestStore.waterTestListData;
+  const isTestsLoading = RootStore.waterTestStore.waterTestState === "pending";
+  const dataWaterTestList = RootStore.waterTestStore.waterTestListData;
 
   return (
     <View style={styles.page}>

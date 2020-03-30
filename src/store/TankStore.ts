@@ -1,28 +1,32 @@
-import { observable, action, runInAction } from "mobx";
+import { observable, action, runInAction, computed } from "mobx";
 import { Tank, getTankList } from "../services/tankService";
 import { RootStore as RootStoreType } from "./RootStore";
+import { ImageSourcePropType } from "react-native";
+import { saveAquariumPicture } from "../services/imageTransfertService";
 
 class TankStore {
-  rootStore: RootStoreType;
+  RootStore: RootStoreType;
 
-  constructor(rootStore) {
-    this.rootStore = rootStore;
+  constructor(RootStore) {
+    this.RootStore = RootStore;
   }
 
   @observable tankList: Tank[] = [];
   @observable tankState = "pending"; // "pending" / "done" / "error"
+  @observable tankImageState = "pending";
+  @observable tankPicture: ArrayBuffer = null;
 
   // récupération de la liste des aquariums du membre
 
   @action
   async fetchTankList(): Promise<Tank[]> {
     this.tankState = "pending";
-    if (this.rootStore.memberStore.memberState === "done") {
-      const memberId = this.rootStore.memberStore.member.id;
+    if (this.RootStore.memberStore.memberState === "done") {
+      const memberId = this.RootStore.memberStore.member.id;
       if (memberId !== null) {
         try {
           console.log("Store is Fetching tankList");
-          const memberToken = this.rootStore.memberStore.token;
+          const memberToken = this.RootStore.memberStore.token;
           const tankList = await getTankList(memberId, memberToken);
           runInAction(() => {
             console.log("tankListSuccess");
@@ -35,6 +39,22 @@ class TankStore {
           this.tankState = "error";
         }
       }
+    }
+  }
+
+  @action
+  async storeUploadImageTank(photo: ImageSourcePropType) {
+    this.tankState = "pending";
+
+    try {
+      console.log("Store is uploading an image to DB");
+      await saveAquariumPicture(photo, this.tankList[0].id);
+      runInAction(() => {
+        this.tankState = "done";
+      });
+    } catch (error) {
+      console.log(error);
+      this.tankState = "error";
     }
   }
 }

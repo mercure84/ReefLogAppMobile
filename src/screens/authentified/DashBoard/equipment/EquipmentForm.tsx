@@ -33,7 +33,6 @@ export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
     "Saisissez les données de votre matériel !"
   );
   const isUpdating = equipmentToUpdate !== null;
-  const [rootStore] = useState(RootStore);
 
   const [isLoading, setLoading] = useState(false);
 
@@ -51,13 +50,12 @@ export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
     if (checkForm) {
       setInfoMessage("Le formulaire est valide ! Enregistrement en cours...");
       const response = await saveEquipment(
-        rootStore.tankStore.tankList[0].id,
+        RootStore.tankStore.tankList[0].id,
         equipment,
         isUpdating
       );
       if (response != null) {
         setInfoMessage("L'équipement a été enregistré !");
-        rootStore.equipmentStore.fetchEquipments();
         setLoading(false);
         navigation.navigate("handleEquipment");
       } else {
@@ -65,6 +63,7 @@ export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
       }
       setLoading(false);
     }
+    RootStore.equipmentStore.fetchEquipments();
   };
 
   const setDate = date => {

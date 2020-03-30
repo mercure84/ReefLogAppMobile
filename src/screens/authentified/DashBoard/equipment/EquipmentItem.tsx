@@ -23,7 +23,6 @@ import { CustomModal } from "../../../../components/ModalDeleteConfirmation";
 
 export const EquipmentItem = ({ equipment }: Props) => {
   const navigation = useNavigation();
-  const [rootStore] = useState(RootStore);
   const handlePress = () => {
     navigation.navigate("saveEquipment", { equipment: equipment });
   };
@@ -34,8 +33,8 @@ export const EquipmentItem = ({ equipment }: Props) => {
   };
 
   const confirmDelete = (pEquipment: Equipment) => {
-    rootStore.equipmentStore.storeDeleteEquipment(pEquipment.id);
-    rootStore.equipmentStore.fetchEquipments();
+    RootStore.equipmentStore.storeDeleteEquipment(pEquipment.id);
+    RootStore.equipmentStore.fetchEquipments();
     handlePressDelete();
   };
 
