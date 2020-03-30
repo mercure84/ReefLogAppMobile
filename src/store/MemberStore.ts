@@ -4,10 +4,10 @@ import { getMemberDetail, Member } from "../services/memberService";
 import { RootStore as RootStoreType } from "./RootStore";
 
 class MemberStore {
-  rootStore: RootStoreType;
+  RootStore: RootStoreType;
 
-  constructor(rootStore) {
-    this.rootStore = rootStore;
+  constructor(RootStore) {
+    this.RootStore = RootStore;
   }
   @observable member: Member;
   @observable token: string;

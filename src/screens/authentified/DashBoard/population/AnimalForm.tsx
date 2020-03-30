@@ -34,15 +34,14 @@ export const AnimalForm = observer(
       "Saisissez les données pour un nouveau " + animalTypeForm
     );
     const navigation = useNavigation();
-    const [rootStore] = useState(RootStore);
     const [speciesInPicker, setSpeciesInPicker] = useState("");
     let animalSpecies: string[] = [];
 
     if (
-      rootStore.animalStore.animalSpeciesState === "pending" ||
+      RootStore.animalStore.animalSpeciesState === "pending" ||
       animalSpecies === []
     ) {
-      rootStore.animalStore.fetchAnimalSpecies();
+      RootStore.animalStore.fetchAnimalSpecies();
     }
 
     const setSpecies = (text: string) => {
@@ -53,64 +52,64 @@ export const AnimalForm = observer(
       });
     };
 
-    if (rootStore.animalStore.animalSpeciesState === "done") {
+    if (RootStore.animalStore.animalSpeciesState === "done") {
       switch (animalTypeForm) {
         case "fish":
-          animalSpecies = rootStore.animalStore.animalSpeciesData.fish;
+          animalSpecies = RootStore.animalStore.animalSpeciesData.fish;
           if (animal === null || animal.fishSpecies === undefined) {
             setSpecies(animalSpecies[0]);
           }
           break;
         case "soft":
-          animalSpecies = rootStore.animalStore.animalSpeciesData.soft;
+          animalSpecies = RootStore.animalStore.animalSpeciesData.soft;
           if (animal === null || animal.softSpecies === undefined) {
             setSpecies(animalSpecies[0]);
           }
           break;
         case "lps":
-          animalSpecies = rootStore.animalStore.animalSpeciesData.lps;
+          animalSpecies = RootStore.animalStore.animalSpeciesData.lps;
           if (animal === null || animal.lpsSpecies === undefined) {
             setSpecies(animalSpecies[0]);
           }
           break;
         case "sps":
-          animalSpecies = rootStore.animalStore.animalSpeciesData.sps;
+          animalSpecies = RootStore.animalStore.animalSpeciesData.sps;
           if (animal === null || animal.spsSpecies === undefined) {
             setSpecies(animalSpecies[0]);
           }
           break;
         case "anemone":
-          animalSpecies = rootStore.animalStore.animalSpeciesData.anemone;
+          animalSpecies = RootStore.animalStore.animalSpeciesData.anemone;
           if (animal === null || animal.anemoneSpecies === undefined) {
             setSpecies(animalSpecies[0]);
           }
           break;
         case "urchin":
-          animalSpecies = rootStore.animalStore.animalSpeciesData.urchin;
+          animalSpecies = RootStore.animalStore.animalSpeciesData.urchin;
           if (animal === null || animal.urchinSpecies === undefined) {
             setSpecies(animalSpecies[0]);
           }
           break;
         case "star":
-          animalSpecies = rootStore.animalStore.animalSpeciesData.star;
+          animalSpecies = RootStore.animalStore.animalSpeciesData.star;
           if (animal === null || animal.starSpecies === undefined) {
             setSpecies(animalSpecies[0]);
           }
           break;
         case "mollusk":
-          animalSpecies = rootStore.animalStore.animalSpeciesData.mollusk;
+          animalSpecies = RootStore.animalStore.animalSpeciesData.mollusk;
           if (animal === null || animal.molluskSpecies === undefined) {
             setSpecies(animalSpecies[0]);
           }
           break;
         case "cucumber":
-          animalSpecies = rootStore.animalStore.animalSpeciesData.cucumber;
+          animalSpecies = RootStore.animalStore.animalSpeciesData.cucumber;
           if (animal === null || animal.cucumberSpecies === undefined) {
             setSpecies(animalSpecies[0]);
           }
           break;
         case "crustacean":
-          animalSpecies = rootStore.animalStore.animalSpeciesData.crustacean;
+          animalSpecies = RootStore.animalStore.animalSpeciesData.crustacean;
           if (animal === null || animal.crustaceanSpecies === undefined) {
             setSpecies(animalSpecies[0]);
           }
@@ -119,7 +118,7 @@ export const AnimalForm = observer(
     }
 
     const isAnimalSpeciesLoading =
-      rootStore.animalStore.animalSpeciesState === "pending";
+      RootStore.animalStore.animalSpeciesState === "pending";
 
     const checkForm = () => {
       if (animal.name !== null) {
@@ -148,14 +147,13 @@ export const AnimalForm = observer(
           "Votre formulaire est correct, nous allons l'enregistrer... "
         );
         const response = await saveAnimal(
-          rootStore.tankStore.tankList[0].id,
+          RootStore.tankStore.tankList[0].id,
           animal,
           isUpdating
         );
 
         if (response != null) {
           setInfoMessage("L'animal a bien été enregistré !");
-          rootStore.animalStore.fetchAnimals();
           setLoading(false);
           navigation.navigate("handlePopulation");
         } else {
@@ -166,6 +164,8 @@ export const AnimalForm = observer(
           "Votre formulaire est incorrect, merci de le vérifier !"
         );
       }
+      RootStore.animalStore.fetchAnimals();
+
       setLoading(false);
     };
 

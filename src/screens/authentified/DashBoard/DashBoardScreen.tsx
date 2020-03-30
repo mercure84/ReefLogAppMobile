@@ -13,25 +13,25 @@ import { observer } from "mobx-react";
 import RootStore from "../../../store/RootStore";
 import { MainTankItem } from "./aquarium/MainTankItem";
 import { useNavigation } from "@react-navigation/native";
+import { TankPicture } from "./aquarium/TankPicture";
 
 const DashboardScreen = observer(() => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);
   const [isTankItemVisible, setTankItemVisible] = useState(true);
   const [messageInfo, setMessageInfo] = useState("");
-  const [rootStore] = useState(RootStore);
   const navigation = useNavigation();
 
-  if (rootStore.memberStore.memberState === "pending") {
-    rootStore.memberStore.fetchMember();
+  if (RootStore.memberStore.memberState === "pending") {
+    RootStore.memberStore.fetchMember();
   }
-  if (rootStore.tankStore.tankState === "pending") {
-    rootStore.tankStore.fetchTankList();
+  if (RootStore.tankStore.tankState === "pending") {
+    RootStore.tankStore.fetchTankList();
   }
 
-  const isMemberLoading = rootStore.memberStore.memberState === "pending";
-  const isTankLoading = rootStore.tankStore.tankState === "pending";
-  const member = rootStore.memberStore.member;
-  const tankList = rootStore.tankStore.tankList.slice();
+  const isMemberLoading = RootStore.memberStore.memberState === "pending";
+  const isTankLoading = RootStore.tankStore.tankState === "pending";
+  const member = RootStore.memberStore.member;
+  const tankList = RootStore.tankStore.tankList.slice();
   const newTankPress = () => setNewTankFormVisible(true);
   const populationPress = () => navigation.navigate("handlePopulation");
   const equipmentPress = () => navigation.navigate("handleEquipment");
@@ -60,7 +60,10 @@ const DashboardScreen = observer(() => {
         <ActivityIndicator />
       ) : (
         isTankItemVisible && (
-          <MainTankItem editFunction={toggleTankForm} tankList={tankList} />
+          <>
+            <MainTankItem editFunction={toggleTankForm} tankList={tankList} />
+            <TankPicture />
+          </>
         )
       )}
 

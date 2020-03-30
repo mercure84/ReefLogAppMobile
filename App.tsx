@@ -35,7 +35,7 @@ export default function App() {
   }
 
   return (
-    <Provider rootStore={RootStore}>
+    <Provider RootStore={RootStore}>
       <MainNavigator isTokenOK={isAuthentified} />
     </Provider>
   );

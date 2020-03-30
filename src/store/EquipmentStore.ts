@@ -5,10 +5,10 @@ import { Equipment } from "../services/equipmentService";
 import { deleteItem } from "../services/rootService";
 
 class EquipmentStore {
-  rootStore: RootStoreType;
+  RootStore: RootStoreType;
 
-  constructor(rootStore) {
-    this.rootStore = rootStore;
+  constructor(RootStore) {
+    this.RootStore = RootStore;
   }
 
   @observable equipments: Equipment[] = [];
@@ -21,12 +21,12 @@ class EquipmentStore {
   @action
   async fetchEquipments(): Promise<Equipment[]> {
     this.equipmentState = "pending";
-    if (this.rootStore.tankStore.tankState === "done") {
-      const tankId = this.rootStore.tankStore.tankList[0].id;
+    if (this.RootStore.tankStore.tankState === "done") {
+      const tankId = this.RootStore.tankStore.tankList[0].id;
       if (tankId !== null) {
         try {
           console.log("Store is fetching  Equipments");
-          const memberToken = this.rootStore.memberStore.token;
+          const memberToken = this.RootStore.memberStore.token;
           const equipments = await getEquipments(tankId, memberToken);
           runInAction(() => {
             console.log("equipments Success");
@@ -47,7 +47,7 @@ class EquipmentStore {
     this.equipmentState = "pending";
     try {
       console.log("Store is deleting the equipment n° " + id);
-      const memberToken = this.rootStore.memberStore.token;
+      const memberToken = this.RootStore.memberStore.token;
       await deleteItem(id, "equipment", memberToken);
       runInAction(() => {
         this.equipmentState = "done";

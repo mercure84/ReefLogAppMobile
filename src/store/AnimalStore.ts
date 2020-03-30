@@ -9,10 +9,10 @@ import { RootStore as RootStoreType } from "./RootStore";
 import { deleteItem } from "../services/rootService";
 
 class AnimalStore {
-  rootStore: RootStoreType;
+  RootStore: RootStoreType;
 
-  constructor(rootStore) {
-    this.rootStore = rootStore;
+  constructor(RootStore) {
+    this.RootStore = RootStore;
   }
 
   @observable animals: Animal[] = [];
@@ -31,12 +31,12 @@ class AnimalStore {
   @action
   async fetchAnimals(): Promise<Animal[]> {
     this.animalState = "pending";
-    if (this.rootStore.tankStore.tankState === "done") {
-      const tankId = this.rootStore.tankStore.tankList[0].id;
+    if (this.RootStore.tankStore.tankState === "done") {
+      const tankId = this.RootStore.tankStore.tankList[0].id;
       if (tankId !== null) {
         try {
           console.log("Store is fetching  Animals");
-          const memberToken = this.rootStore.memberStore.token;
+          const memberToken = this.RootStore.memberStore.token;
           const animals = await getAnimals(tankId, memberToken);
           runInAction(() => {
             console.log("animals Success");
@@ -75,7 +75,7 @@ class AnimalStore {
     this.animalState = "pending";
     try {
       console.log("Store is deleting the equipment n° " + id);
-      const memberToken = this.rootStore.memberStore.token;
+      const memberToken = this.RootStore.memberStore.token;
       await deleteItem(id, "animal", memberToken);
       runInAction(() => {
         this.animalState = "done";

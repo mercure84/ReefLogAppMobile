@@ -4,10 +4,10 @@ import { RootStore as RootStoreType } from "./RootStore";
 import { deleteItem } from "../services/rootService";
 
 class WaterTestStore {
-  rootStore: RootStoreType;
+  RootStore: RootStoreType;
 
-  constructor(rootStore) {
-    this.rootStore = rootStore;
+  constructor(RootStore) {
+    this.RootStore = RootStore;
   }
 
   @observable waterTestList: WaterTest[] = [];
@@ -20,12 +20,12 @@ class WaterTestStore {
   @action
   async fetchWaterTestList(): Promise<WaterTest[]> {
     this.waterTestState = "pending";
-    if (this.rootStore.tankStore.tankState === "done") {
-      const tankId = this.rootStore.tankStore.tankList[0].id;
+    if (this.RootStore.tankStore.tankState === "done") {
+      const tankId = this.RootStore.tankStore.tankList[0].id;
       if (tankId !== null) {
         try {
           console.log("Store is fetching  WaterTestList");
-          const memberToken = this.rootStore.memberStore.token;
+          const memberToken = this.RootStore.memberStore.token;
           const waterTestList = await getWaterTestList(tankId, memberToken);
           runInAction(() => {
             console.log("waterTestList Success");
@@ -46,7 +46,7 @@ class WaterTestStore {
     this.waterTestState = "pending";
     try {
       console.log("Store is deleting the waterTest n° " + id);
-      const memberToken = this.rootStore.memberStore.token;
+      const memberToken = this.RootStore.memberStore.token;
       await deleteItem(id, "waterTest", memberToken);
       runInAction(() => {
         this.waterTestState = "done";

@@ -17,12 +17,11 @@ import { GoBackButton } from "../../../../components/GoBackButton";
 
 export const PopulationScreen = observer(() => {
   const navigation = useNavigation();
-  const [rootStore] = useState(RootStore);
-  if (rootStore.animalStore.animalState === "pending") {
-    rootStore.animalStore.fetchAnimals();
+  if (RootStore.animalStore.animalState === "pending") {
+    RootStore.animalStore.fetchAnimals();
   }
-  const isAnimalsLoading = rootStore.animalStore.animalState === "pending";
-  const dataAnimals = rootStore.animalStore.animalsData;
+  const isAnimalsLoading = RootStore.animalStore.animalState === "pending";
+  const dataAnimals = RootStore.animalStore.animalsData;
   return (
     <View style={styles.page}>
       <Header
