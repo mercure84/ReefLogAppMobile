@@ -6,8 +6,7 @@ import RootStore from "../../../../store/RootStore";
 import { GoBackButton } from "../../../../components/GoBackButton";
 
 export const MyProfilScreen = () => {
-  const [rootStore] = useState(RootStore);
-  const member = rootStore.memberStore.member;
+  const member = RootStore.memberStore.member;
 
   return (
     <View style={styles.page}>

@@ -19,14 +19,16 @@ export const TankPicture = observer(() => {
   };
 
   return (
-    <TouchableOpacity onPress={() => choosePicture()}>
-      <Image source={cameraIcon} style={styles.icon} />
+    <>
+      <TouchableOpacity onPress={() => choosePicture()}>
+        <Image source={cameraIcon} style={styles.icon} />
+      </TouchableOpacity>
 
       <Image
         source={getAquariumImageSource(RootStore.tankStore.tankList[0].id)}
         style={styles.photo}
       />
-    </TouchableOpacity>
+    </>
   );
 });
 

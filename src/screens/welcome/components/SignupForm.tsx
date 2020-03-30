@@ -33,7 +33,6 @@ export const SignupForm = ({
 }: Props) => {
   const [signUpForm, setSignUpForm] = useState<SignUp>(memberToUpdate);
   const [localInfo, setLocalInfo] = useState("");
-  const [rootStore] = useState(RootStore);
 
   const isUpdating = memberToUpdate !== null;
   const [isLoading, setLoading] = useState(false);
@@ -46,7 +45,7 @@ export const SignupForm = ({
       console.log("réponse status = " + response.role);
       if (response.role === "USER") {
         if (isUpdating) {
-          rootStore.memberStore.fetchMember();
+          RootStore.memberStore.fetchMember();
           homeInfoCallBack("Compte mis à jour");
         } else {
           homeInfoCallBack(

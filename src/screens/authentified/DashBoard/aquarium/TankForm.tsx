@@ -33,7 +33,6 @@ export const NewTankForm = ({
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [tank, setTank] = useState<Tank>(tankToSave);
   const [infoMessage, setInfoMessage] = useState("");
-  const [rootStore] = useState(RootStore);
 
   const isUpdating = tankToSave !== null;
 
@@ -74,7 +73,7 @@ export const NewTankForm = ({
         setInfoMessage("Un problème est survenu");
       }
     }
-    rootStore.tankStore.fetchTankList();
+    RootStore.tankStore.fetchTankList();
   };
 
   const setDate = date => {

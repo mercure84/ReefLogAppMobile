@@ -25,7 +25,6 @@ type Props = {
 
 export const AnimalItem = ({ animal }: Props) => {
   const navigation = useNavigation();
-  const [rootStore] = useState(RootStore);
 
   const handlePress = () => {
     navigation.navigate("updateAnimal", { animal: animal });
@@ -37,8 +36,8 @@ export const AnimalItem = ({ animal }: Props) => {
   };
 
   const confirmDelete = (pAnimal: Animal) => {
-    rootStore.animalStore.storeDeleteAnimal(pAnimal.id);
-    rootStore.animalStore.fetchAnimals();
+    RootStore.animalStore.storeDeleteAnimal(pAnimal.id);
+    RootStore.animalStore.fetchAnimals();
     handlePressDelete();
   };
   return (

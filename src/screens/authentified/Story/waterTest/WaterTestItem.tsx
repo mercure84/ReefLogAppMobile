@@ -25,7 +25,6 @@ type Props = {
 
 export const WaterTestItem = ({ waterTest }: Props) => {
   const [isModalVisible, setModalVisible] = useState(false);
-  const [rootStore] = useState(RootStore);
 
   const navigation = useNavigation();
   const handlePress = () =>
@@ -36,8 +35,8 @@ export const WaterTestItem = ({ waterTest }: Props) => {
   };
 
   const confirmDelete = (pWaterTest: WaterTest) => {
-    rootStore.waterTestStore.storeDeleteWaterTest(pWaterTest.id);
-    rootStore.waterTestStore.fetchWaterTestList();
+    RootStore.waterTestStore.storeDeleteWaterTest(pWaterTest.id);
+    RootStore.waterTestStore.fetchWaterTestList();
     handlePressDelete();
   };
 

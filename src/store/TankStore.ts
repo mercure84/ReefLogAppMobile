@@ -5,10 +5,10 @@ import { ImageSourcePropType } from "react-native";
 import { saveAquariumPicture } from "../services/imageTransfertService";
 
 class TankStore {
-  rootStore: RootStoreType;
+  RootStore: RootStoreType;
 
-  constructor(rootStore) {
-    this.rootStore = rootStore;
+  constructor(RootStore) {
+    this.RootStore = RootStore;
   }
 
   @observable tankList: Tank[] = [];
@@ -21,12 +21,12 @@ class TankStore {
   @action
   async fetchTankList(): Promise<Tank[]> {
     this.tankState = "pending";
-    if (this.rootStore.memberStore.memberState === "done") {
-      const memberId = this.rootStore.memberStore.member.id;
+    if (this.RootStore.memberStore.memberState === "done") {
+      const memberId = this.RootStore.memberStore.member.id;
       if (memberId !== null) {
         try {
           console.log("Store is Fetching tankList");
-          const memberToken = this.rootStore.memberStore.token;
+          const memberToken = this.RootStore.memberStore.token;
           const tankList = await getTankList(memberId, memberToken);
           runInAction(() => {
             console.log("tankListSuccess");
@@ -39,24 +39,6 @@ class TankStore {
           this.tankState = "error";
         }
       }
-    }
-  }
-
-  @action
-  async storeGetImageTank() {
-    this.tankImageState = "pending";
-    try {
-      console.log("Store is fetching TankImage fro mthe DB");
-      const id = "171";
-      const picture = await getAquariumPicture(id);
-      runInAction(() => {
-        this.tankPicture = picture;
-        this.tankImageState = "done";
-        console.log("On a réussi apparemment à fetch l'image");
-      });
-    } catch (error) {
-      console.error(error);
-      this.tankState = "error";
     }
   }
 
