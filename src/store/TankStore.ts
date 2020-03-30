@@ -2,10 +2,7 @@ import { observable, action, runInAction, computed } from "mobx";
 import { Tank, getTankList } from "../services/tankService";
 import { RootStore as RootStoreType } from "./RootStore";
 import { ImageSourcePropType } from "react-native";
-import {
-  saveAquariumPicture,
-  getAquariumPicture
-} from "../services/imageTransfertService";
+import { saveAquariumPicture } from "../services/imageTransfertService";
 
 class TankStore {
   rootStore: RootStoreType;
@@ -17,7 +14,7 @@ class TankStore {
   @observable tankList: Tank[] = [];
   @observable tankState = "pending"; // "pending" / "done" / "error"
   @observable tankImageState = "pending";
-  @observable tankPicture: ImageSourcePropType = null;
+  @observable tankPicture: ArrayBuffer = null;
 
   // récupération de la liste des aquariums du membre
 

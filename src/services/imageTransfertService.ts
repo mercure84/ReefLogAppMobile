@@ -1,6 +1,7 @@
-import { ImageSourcePropType } from "react-native";
 import { urlServer } from "./../constants/constants";
 import { getData } from "./storageDevice";
+import RootStore from "../store/RootStore";
+import { ImageSourcePropType } from "react-native";
 
 export const saveAquariumPicture = async (photo: any, aquariumId: string) => {
   const suffixUrl = "api/uploadAquariumPicture/";
@@ -26,22 +27,14 @@ export const saveAquariumPicture = async (photo: any, aquariumId: string) => {
   }
 };
 
-export const getAquariumPicture = async (
-  aquariumId: string
-): Promise<ImageSourcePropType | any> => {
-  const suffixUrl = "api/downloadAquariumPicture/";
-  const urlService = urlServer + suffixUrl + aquariumId;
-  try {
-    const token = await getData("token");
-    const response = await fetch(urlService, {
-      method: "GET",
-      headers: {
-        Authorization: token
-      }
-    });
-    console.log("service a retourné une réponse : " + response);
-    return response;
-  } catch (error) {
-    console.error(error);
-  }
+export const getAquariumImageSource = (id: string): ImageSourcePropType => {
+  return {
+    uri: `${urlServer}api/downloadAquariumPicture/${id}?${Math.random()}`,
+    method: "GET",
+    headers: {
+      Pragma: "no-cache",
+      Authorization: RootStore.memberStore.token
+    },
+    cache: "reload"
+  };
 };

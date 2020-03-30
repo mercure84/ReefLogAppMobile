@@ -61,7 +61,10 @@ const DashboardScreen = observer(() => {
         <ActivityIndicator />
       ) : (
         isTankItemVisible && (
-          <MainTankItem editFunction={toggleTankForm} tankList={tankList} />
+          <>
+            <MainTankItem editFunction={toggleTankForm} tankList={tankList} />
+            <TankPicture />
+          </>
         )
       )}
 
@@ -77,8 +80,6 @@ const DashboardScreen = observer(() => {
           tankToSave={tankList[0] ?? null}
         />
       )}
-
-      <TankPicture />
 
       {tankList[0] !== null && (
         <Button title="Mes pensionnaires" onPress={populationPress} />
