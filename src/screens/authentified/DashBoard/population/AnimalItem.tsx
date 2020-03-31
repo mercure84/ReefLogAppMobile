@@ -37,7 +37,7 @@ export const AnimalItem = ({ animal }: Props) => {
 
   const confirmDelete = (pAnimal: Animal) => {
     RootStore.animalStore.storeDeleteAnimal(pAnimal.id);
-    RootStore.animalStore.fetchAnimals();
+    RootStore.animalStore.animalState = "pending";
     handlePressDelete();
   };
   return (

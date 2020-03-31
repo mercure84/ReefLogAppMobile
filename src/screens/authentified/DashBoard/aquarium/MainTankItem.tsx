@@ -10,13 +10,14 @@ import {
   Image,
   ImageStyle
 } from "react-native";
+import Moment from "moment";
+import "moment/locale/fr";
+import createIcon from "../../../../assets/icons/createIcon.png";
 
 type Props = {
   tankList: Tank[];
   editFunction: () => void;
 };
-
-import createIcon from "../../../../assets/icons/createIcon.png";
 
 export const MainTankItem = ({ tankList, editFunction }: Props) => {
   return tankList.length > 0 ? (
@@ -27,6 +28,9 @@ export const MainTankItem = ({ tankList, editFunction }: Props) => {
           <Image source={createIcon} style={styles.icon} />
         </TouchableOpacity>
       </View>
+      <Text style={styles.detailText}>
+        Mis en eau : {Moment(tankList[0].startDate).format("ll")}
+      </Text>
       <Text style={styles.detailText}>
         Volume brut : {tankList[0].rawVolume} litres
       </Text>
@@ -52,9 +56,13 @@ type Style = {
   detailText: TextStyle;
   icon: ImageStyle;
   header: ViewStyle;
+  date: TextStyle;
 };
 
 const styles = StyleSheet.create<Style>({
+  date: {
+    fontWeight: "bold"
+  },
   container: {
     backgroundColor: "grey",
     padding: 8,
@@ -78,6 +86,6 @@ const styles = StyleSheet.create<Style>({
 
   header: {
     flexDirection: "row",
-    justifyContent: "space-around"
+    justifyContent: "center"
   }
 });

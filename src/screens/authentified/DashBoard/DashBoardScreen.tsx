@@ -56,19 +56,22 @@ const DashboardScreen = observer(() => {
       )}
       <MessageInfo message={messageInfo} />
 
-      {isTankLoading ? (
-        <ActivityIndicator />
-      ) : (
-        isTankItemVisible && (
-          <>
-            <MainTankItem editFunction={toggleTankForm} tankList={tankList} />
-            <TankPicture />
-          </>
-        )
+      {isTankLoading && <ActivityIndicator />}
+
+      {tankList.length > 0 && !isNewTankFormVisible && (
+        <>
+          <MainTankItem editFunction={toggleTankForm} tankList={tankList} />
+          <TankPicture />
+          <Button title="Mes pensionnaires" onPress={populationPress} />
+          <Button title="Mon équipement" onPress={equipmentPress} />
+        </>
       )}
 
       {tankList.length === 0 && (
-        <Button title="Créer un Aquarium" onPress={newTankPress} />
+        <>
+          <Text>Vous n'avez pas d'aquarium : créez en un !</Text>
+          <Button title="Créer un Aquarium" onPress={newTankPress} />
+        </>
       )}
 
       {isNewTankFormVisible && (
@@ -78,13 +81,6 @@ const DashboardScreen = observer(() => {
           showFormCallback={toggleTankForm}
           tankToSave={tankList[0] ?? null}
         />
-      )}
-
-      {tankList[0] !== null && (
-        <Button title="Mes pensionnaires" onPress={populationPress} />
-      )}
-      {tankList[0] !== null && (
-        <Button title="Mon équipement" onPress={equipmentPress} />
       )}
     </View>
   );

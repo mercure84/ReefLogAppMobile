@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { TouchableOpacity, ImageStyle, StyleSheet } from "react-native";
 import { Image } from "react-native-elements";
 import cameraIcon from "../../../../assets/icons/camera.png";
@@ -6,6 +6,7 @@ import ImagePicker from "react-native-image-picker";
 import { observer } from "mobx-react";
 import RootStore from "../../../../store/RootStore";
 import { getAquariumImageSource } from "../../../../services/imageTransfertService";
+import { Dimensions } from "react-native";
 
 export const TankPicture = observer(() => {
   const choosePicture = () => {
@@ -39,8 +40,8 @@ type Style = {
 
 const styles = StyleSheet.create<Style>({
   photo: {
-    height: 200,
-    width: 200
+    height: Dimensions.get("window").width * 0.5,
+    width: Dimensions.get("window").width * 0.95
   },
   icon: {
     height: 32,

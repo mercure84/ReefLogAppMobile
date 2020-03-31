@@ -224,7 +224,7 @@ export const NewTankForm = ({
             style={{ height: 50, width: 150 }}
             mode="dropdown"
             selectedValue={
-              tank === null
+              tank == null || tank.typeOfMaintenance == undefined
                 ? setTank({ ...tank, typeOfMaintenance: "BERLINOIS" })
                 : tank.typeOfMaintenance
             }
