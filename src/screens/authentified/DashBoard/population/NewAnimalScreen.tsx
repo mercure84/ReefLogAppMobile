@@ -4,10 +4,11 @@ import {
   View,
   ViewStyle,
   StyleSheet,
-  Button,
   Image,
   ImageStyle
 } from "react-native";
+import { ReefButton } from "../../../../components/ReefButton";
+
 import { Header } from "react-native-elements";
 import { observer } from "mobx-react";
 import { AnimalForm } from "./AnimalForm";
@@ -75,10 +76,10 @@ export const NewAnimalScreen = observer(() => {
           </View>
           {isCoralSelection && (
             <View>
-              <Button title="Soft" onPress={() => showAnimalForm("soft")} />
-              <Button title="LPS" onPress={() => showAnimalForm("lps")} />
-              <Button title="SPS" onPress={() => showAnimalForm("sps")} />
-              <Button
+              <ReefButton title="Soft" onPress={() => showAnimalForm("soft")} />
+              <ReefButton title="LPS" onPress={() => showAnimalForm("lps")} />
+              <ReefButton title="SPS" onPress={() => showAnimalForm("sps")} />
+              <ReefButton
                 title="Anémone"
                 onPress={() => showAnimalForm("anemone")}
               />
@@ -87,18 +88,24 @@ export const NewAnimalScreen = observer(() => {
 
           {isReefCleanerSelection && (
             <View>
-              <Button title="Oursin" onPress={() => showAnimalForm("urchin")} />
-              <Button title="Etoile" onPress={() => showAnimalForm("star")} />
-              <Button
+              <ReefButton
+                title="Oursin"
+                onPress={() => showAnimalForm("urchin")}
+              />
+              <ReefButton
+                title="Etoile"
+                onPress={() => showAnimalForm("star")}
+              />
+              <ReefButton
                 title="Concombre"
                 onPress={() => showAnimalForm("cucumber")}
               />
-              <Button
+              <ReefButton
                 title="Crustacé"
                 onPress={() => showAnimalForm("crustacean")}
               />
 
-              <Button
+              <ReefButton
                 title="Mollusque"
                 onPress={() => showAnimalForm("mollusk")}
               />

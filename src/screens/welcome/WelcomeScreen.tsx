@@ -8,7 +8,6 @@ import {
   View,
   Text,
   Image,
-  Button,
   ViewStyle,
   TextStyle,
   ImageStyle,
@@ -16,6 +15,7 @@ import {
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { About } from "./components/About";
+import { ReefButton } from "../../components/ReefButton";
 
 interface Props {
   displayLoginForm: boolean;
@@ -50,7 +50,7 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
       </View>
       <View style={styles.homeButton}>
         <View style={{ margin: 5 }}>
-          <Button
+          <ReefButton
             title="Créer un compte"
             onPress={() => {
               toggleDisplaySignup(true);
@@ -60,7 +60,7 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
           />
         </View>
         <View style={{ margin: 5 }}>
-          <Button
+          <ReefButton
             title="Se connecter"
             onPress={() => {
               toggleDisplaySignup(false);

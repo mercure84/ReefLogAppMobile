@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, Button } from "react-native";
 import Modal from "react-native-modal";
 import { Card } from "react-native-elements";
+import { ReefButton } from "./ReefButton";
 
 type Props = {
   message: string;
@@ -22,8 +23,8 @@ export const CustomModal = ({
         <Card>
           <Text>{message}</Text>
         </Card>
-        <Button title="Oui" onPress={buttonYesFonction} />
-        <Button title="Non" onPress={buttonNoFonction} />
+        <ReefButton title="Oui" onPress={buttonYesFonction} />
+        <ReefButton title="Non" onPress={buttonNoFonction} />
       </View>
     </Modal>
   );

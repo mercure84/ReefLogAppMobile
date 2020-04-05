@@ -7,14 +7,14 @@ import {
   TextInput,
   StyleSheet,
   Picker,
-  ActivityIndicator,
-  Button
+  ActivityIndicator
 } from "react-native";
 import { Card } from "react-native-elements";
 import { saveReefTank, Tank } from "../../../../services/tankService";
 import RootStore from "../../../../store/RootStore";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Moment from "moment";
+import { ReefButton } from "../../../../components/ReefButton";
 
 type Props = {
   infoCallBack: (string: string) => void;
@@ -94,7 +94,7 @@ export const NewTankForm = ({
         <View style={styles.input}>
           <Text>Mise en eau</Text>
 
-          <Button
+          <ReefButton
             title={
               tank !== null
                 ? Moment(tank.startDate)
@@ -258,8 +258,8 @@ export const NewTankForm = ({
             <Picker.Item label="SPS" value="SPS" />
           </Picker>
         </View>
-        <Button title="Enregistrer" onPress={() => saveTank()} />
-        <Button
+        <ReefButton title="Enregistrer" onPress={() => saveTank()} />
+        <ReefButton
           title="Annuler"
           onPress={() => {
             showFormCallback(false);

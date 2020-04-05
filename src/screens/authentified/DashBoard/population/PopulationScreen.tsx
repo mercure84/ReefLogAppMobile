@@ -5,9 +5,10 @@ import {
   ViewStyle,
   StyleSheet,
   ActivityIndicator,
-  Button,
   FlatList
 } from "react-native";
+import { ReefButton } from "../../../../components/ReefButton";
+
 import { Header } from "react-native-elements";
 import RootStore from "../../../../store/RootStore";
 import { useNavigation } from "@react-navigation/native";
@@ -31,7 +32,7 @@ export const PopulationScreen = observer(() => {
         }
         backgroundColor="red"
       />
-      <Button
+      <ReefButton
         onPress={() => navigation.navigate("newAnimal")}
         title="Ajouter un pensionnaire"
       />

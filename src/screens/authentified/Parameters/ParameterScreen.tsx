@@ -1,8 +1,9 @@
 import React from "react";
-import { View, Text, Button, StyleSheet, ViewStyle } from "react-native";
+import { View, Text, StyleSheet, ViewStyle } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { removeData } from "../../../services/storageDevice";
 import { Header } from "react-native-elements";
+import { ReefButton } from "../../../components/ReefButton";
 
 export const disconnect = () => {
   removeData("token");
@@ -18,14 +19,19 @@ const ParameterScreen = () => {
         backgroundColor="pink"
       />
 
-      <Button
+      <ReefButton
         title="Mon profil"
         onPress={() => navigation.navigate("myProfil")}
       />
-      <Button title="Alertes" onPress={() => navigation.navigate("myAlerts")} />
-      <Button title="Outils" onPress={() => navigation.navigate("myTools")} />
-      <Button
-        color="orange"
+      <ReefButton
+        title="Alertes"
+        onPress={() => navigation.navigate("myAlerts")}
+      />
+      <ReefButton
+        title="Outils"
+        onPress={() => navigation.navigate("myTools")}
+      />
+      <ReefButton
         title="Se déconnecter"
         onPress={() => (disconnect(), navigation.navigate("Signout"))}
       />

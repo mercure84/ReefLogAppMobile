@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  Button,
   ActivityIndicator,
   ViewStyle,
   TextStyle,
   StyleSheet
 } from "react-native";
+import { ReefButton } from "../../../components/ReefButton";
+
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { loginService } from "../../../services/memberService";
 import { storeData } from "../../../services/storageDevice";
@@ -65,7 +66,7 @@ export const LoginForm = ({ homeInfoCallBack, showLoginForm }) => {
             onChangeText={text => setPassword(text)}
           />
         </View>
-        <Button
+        <ReefButton
           title="Connexion"
           onPress={() => submitLogin(email, password)}
         />

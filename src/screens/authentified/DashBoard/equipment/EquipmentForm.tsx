@@ -7,7 +7,6 @@ import RootStore from "../../../../store/RootStore";
 import {
   ActivityIndicator,
   View,
-  Button,
   ViewStyle,
   TextStyle,
   StyleSheet,
@@ -20,6 +19,7 @@ import { useNavigation } from "@react-navigation/native";
 import { TextInput } from "react-native-gesture-handler";
 import Moment from "moment";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { ReefButton } from "../../../../components/ReefButton";
 
 type Props = {
   equipmentToUpdate: Equipment;
@@ -83,7 +83,7 @@ export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
       <Card>
         <View style={styles.input}>
           <Text>Date d'installation</Text>
-          <Button
+          <ReefButton
             title={
               equipment !== null
                 ? Moment(equipment.dateInstallation)
@@ -219,8 +219,8 @@ export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
         </View>
 
         <View style={styles.buttonContainer}>
-          <Button title="Enregistrer" onPress={() => submitEquipment()} />
-          <Button
+          <ReefButton title="Enregistrer" onPress={() => submitEquipment()} />
+          <ReefButton
             title="Annuler"
             onPress={() => navigation.navigate("handleEquipment")}
           />

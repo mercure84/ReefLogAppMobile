@@ -6,7 +6,7 @@ import {
   Text,
   ActivityIndicator
 } from "react-native";
-import { Header, Button } from "react-native-elements";
+import { Header } from "react-native-elements";
 import { MessageInfo } from "../../../components/MessageInfo";
 import { NewTankForm } from "./aquarium/TankForm";
 import { observer } from "mobx-react";
@@ -14,6 +14,7 @@ import RootStore from "../../../store/RootStore";
 import { MainTankItem } from "./aquarium/MainTankItem";
 import { useNavigation } from "@react-navigation/native";
 import { TankPicture } from "./aquarium/TankPicture";
+import { ReefButton } from "../../../components/ReefButton";
 
 const DashboardScreen = observer(() => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);
@@ -62,15 +63,15 @@ const DashboardScreen = observer(() => {
         <>
           <MainTankItem editFunction={toggleTankForm} tankList={tankList} />
           <TankPicture />
-          <Button title="Mes pensionnaires" onPress={populationPress} />
-          <Button title="Mon équipement" onPress={equipmentPress} />
+          <ReefButton title="Mes pensionnaires" onPress={populationPress} />
+          <ReefButton title="Mon équipement" onPress={equipmentPress} />
         </>
       )}
 
       {tankList.length === 0 && (
         <>
           <Text>Vous n'avez pas d'aquarium : créez en un !</Text>
-          <Button title="Créer un Aquarium" onPress={newTankPress} />
+          <ReefButton title="Créer un Aquarium" onPress={newTankPress} />
         </>
       )}
 

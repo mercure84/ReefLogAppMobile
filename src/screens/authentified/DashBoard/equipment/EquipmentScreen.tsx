@@ -4,7 +4,6 @@ import {
   StyleSheet,
   View,
   ViewStyle,
-  Button,
   ActivityIndicator,
   FlatList
 } from "react-native";
@@ -14,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import RootStore from "../../../../store/RootStore";
 import { EquipmentItem } from "./EquipmentItem";
 import { GoBackButton } from "../../../../components/GoBackButton";
+import { ReefButton } from "../../../../components/ReefButton";
 
 export const EquipmentScreen = observer(() => {
   const navigation = useNavigation();
@@ -34,7 +34,7 @@ export const EquipmentScreen = observer(() => {
         backgroundColor="yellow"
       />
 
-      <Button
+      <ReefButton
         onPress={() => navigation.navigate("saveEquipment")}
         title="Ajouter un équipement"
       />
