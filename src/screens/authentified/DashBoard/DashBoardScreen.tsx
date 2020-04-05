@@ -4,9 +4,9 @@ import {
   StyleSheet,
   ViewStyle,
   Text,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
-import { Header, Button } from "react-native-elements";
+import { Header } from "react-native-elements";
 import { MessageInfo } from "../../../components/MessageInfo";
 import { NewTankForm } from "./aquarium/TankForm";
 import { observer } from "mobx-react";
@@ -14,6 +14,8 @@ import RootStore from "../../../store/RootStore";
 import { MainTankItem } from "./aquarium/MainTankItem";
 import { useNavigation } from "@react-navigation/native";
 import { TankPicture } from "./aquarium/TankPicture";
+import { ReefButton } from "../../../components/ReefButton";
+import { ReefHeaderTitle } from "../../../components/ReefHeaderTitle";
 
 const DashboardScreen = observer(() => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);
@@ -42,35 +44,42 @@ const DashboardScreen = observer(() => {
 
   return (
     <View style={styles.page}>
-      {isMemberLoading ? (
-        <ActivityIndicator />
-      ) : (
-        <Header
-          centerComponent={
-            <Text style={{ fontSize: 16 }}>
-              Bienvenue {member.userName.toLocaleUpperCase()} !
-            </Text>
-          }
-          backgroundColor="green"
-        />
-      )}
+      <Header
+        centerComponent={<ReefHeaderTitle title="TABLEAU DE BORD" />}
+        backgroundColor="white"
+        backgroundImage={require("../../../assets/dashboard.png")}
+        backgroundImageStyle={{ opacity: 0.8 }}
+      />
+
       <MessageInfo message={messageInfo} />
 
       {isTankLoading && <ActivityIndicator />}
 
       {tankList.length > 0 && !isNewTankFormVisible && (
         <>
+          {isMemberLoading ? (
+            <ActivityIndicator />
+          ) : (
+            <Text style={{ fontSize: 16 }}>
+              Bienvenue {member.userName.toLocaleUpperCase()} !
+            </Text>
+          )}
+
           <MainTankItem editFunction={toggleTankForm} tankList={tankList} />
           <TankPicture />
-          <Button title="Mes pensionnaires" onPress={populationPress} />
-          <Button title="Mon équipement" onPress={equipmentPress} />
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-around" }}
+          >
+            <ReefButton title="Mes pensionnaires" onPress={populationPress} />
+            <ReefButton title="Mon équipement" onPress={equipmentPress} />
+          </View>
         </>
       )}
 
       {tankList.length === 0 && (
         <>
           <Text>Vous n'avez pas d'aquarium : créez en un !</Text>
-          <Button title="Créer un Aquarium" onPress={newTankPress} />
+          <ReefButton title="Créer un Aquarium" onPress={newTankPress} />
         </>
       )}
 
@@ -92,8 +101,8 @@ type Style = {
 
 const styles = StyleSheet.create<Style>({
   page: {
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 });
 
 export default DashboardScreen;

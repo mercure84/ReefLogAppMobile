@@ -5,21 +5,22 @@ import { WaterTestForm } from "./WaterTestForm";
 import Moment from "moment";
 import "moment/locale/fr";
 import { GoBackButton } from "../../../../components/GoBackButton";
+import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
 
 export const NewTestScreen = ({ route }) => {
   const { waterTest } = route.params;
 
   const title =
-    waterTest !== null
-      ? "Modification de votre test du " + Moment(waterTest.date).format("lll")
-      : "Ajout d'un nouveau test";
+    waterTest !== null ? "Modification de votre test" : "Nouveau test";
 
   return (
     <View>
       <Header
         leftComponent={<GoBackButton />}
-        centerComponent={<Text style={{ fontSize: 16 }}>{title}</Text>}
-        backgroundColor="green"
+        centerComponent={<ReefHeaderTitle title={title} />}
+        backgroundColor="white"
+        backgroundImage={require("../../../../assets/story.png")}
+        backgroundImageStyle={{ opacity: 0.8 }}
       />
 
       <WaterTestForm waterTestToUpdate={waterTest} />

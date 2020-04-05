@@ -1,8 +1,10 @@
 import React from "react";
-import { View, Text, Button, StyleSheet, ViewStyle } from "react-native";
+import { View, Text, StyleSheet, ViewStyle } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { removeData } from "../../../services/storageDevice";
 import { Header } from "react-native-elements";
+import { ReefButton } from "../../../components/ReefButton";
+import { ReefHeaderTitle } from "../../../components/ReefHeaderTitle";
 
 export const disconnect = () => {
   removeData("token");
@@ -14,18 +16,25 @@ const ParameterScreen = () => {
   return (
     <View style={style.page}>
       <Header
-        centerComponent={<Text style={{ fontSize: 16 }}>Mes paramètres</Text>}
-        backgroundColor="pink"
+        centerComponent={<ReefHeaderTitle title="MES PARAMETRES" />}
+        backgroundColor="white"
+        backgroundImage={require("../../../assets/parameters.png")}
+        backgroundImageStyle={{ opacity: 0.8 }}
       />
 
-      <Button
+      <ReefButton
         title="Mon profil"
         onPress={() => navigation.navigate("myProfil")}
       />
-      <Button title="Alertes" onPress={() => navigation.navigate("myAlerts")} />
-      <Button title="Outils" onPress={() => navigation.navigate("myTools")} />
-      <Button
-        color="orange"
+      <ReefButton
+        title="Alertes"
+        onPress={() => navigation.navigate("myAlerts")}
+      />
+      <ReefButton
+        title="Outils"
+        onPress={() => navigation.navigate("myTools")}
+      />
+      <ReefButton
         title="Se déconnecter"
         onPress={() => (disconnect(), navigation.navigate("Signout"))}
       />
@@ -38,8 +47,8 @@ type Style = {
 
 const style = StyleSheet.create<Style>({
   page: {
-    alignItems: "stretch"
-  }
+    alignItems: "stretch",
+  },
 });
 
 export default ParameterScreen;
