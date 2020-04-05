@@ -6,39 +6,52 @@ import {
 } from "../../../../package.json";
 
 import aboutImage from "../../../assets/about.png";
-import springImage from "../../../assets/spring.png";
+import mailIcon from "../../../assets/icons/mail.png";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import email from "react-native-email";
 
-import reactImage from "../../../assets/react.png";
+export const handleEmail = () => {
+  const recipient = ["julien.marcesse@gmail.com"];
+  email(recipient, {
+    subject: "Une suggestion sur votre appli ReefLog"
+  }).catch(console.error);
+};
 
 export const About = () => {
   return (
     <View
       style={{ paddingBottom: 32, paddingHorizontal: 16, alignItems: "center" }}
     >
+      <Image
+        source={aboutImage}
+        style={{
+          width: 64,
+          height: 64,
+          borderRadius: 16,
+          margin: 8
+        }}
+      />
       <Text style={{ textAlign: "center" }}>
         Application développée par Julien Marcesse
       </Text>
 
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-around"
-        }}
-      >
-        <Image
-          source={aboutImage}
+      <TouchableOpacity onPress={handleEmail}>
+        <View
           style={{
-            width: 64,
-            height: 64,
-            borderRadius: 16,
-            margin: 8
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-around"
           }}
-        />
-        <Text style={{ textAlign: "center", color: "blue" }}>
-          Pour toute question / suggestion :{"\n"}julien.marcesse@gmail.com
-        </Text>
-      </View>
+        >
+          <Image
+            source={mailIcon}
+            style={{ height: 32, width: 32, margin: 8 }}
+          />
+          <Text style={{ textAlign: "center", color: "blue" }}>
+            Pour toute question / suggestion :{"\n"}julien.marcesse@gmail.com
+          </Text>
+        </View>
+      </TouchableOpacity>
 
       <Text style={{ textAlign: "center" }}>Technologies utilisées</Text>
       <Text>Front End : React Native</Text>
