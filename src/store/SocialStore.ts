@@ -13,7 +13,7 @@ class SocialStore {
   @observable socialTanks: Tank[];
   @observable socialState = "pending";
 
-  @computed get waterTestListData() {
+  @computed get socialTanksData() {
     return toJS(this.socialTanks);
   }
 

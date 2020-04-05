@@ -65,7 +65,7 @@ const DashboardScreen = observer(() => {
             </Text>
           )}
 
-          <MainTankItem editFunction={toggleTankForm} tankList={tankList} />
+          <MainTankItem editFunction={toggleTankForm} tank={tankList[0]} />
           <TankPicture />
           <View
             style={{ flexDirection: "row", justifyContent: "space-around" }}

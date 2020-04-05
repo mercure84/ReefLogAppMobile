@@ -1,6 +1,6 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import StoryScreen from "./StoryScreen";
+import { StoryScreen } from "./StoryScreen";
 import { NewTestScreen } from "./waterTest/NewTestScreen";
 
 const Stack = createStackNavigator();

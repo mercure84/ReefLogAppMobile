@@ -15,7 +15,7 @@ import { WaterTestItem } from "./waterTest/WaterTestItem";
 import { ReefButton } from "../../../components/ReefButton";
 import { ReefHeaderTitle } from "../../../components/ReefHeaderTitle";
 
-const StoryScreen = observer(() => {
+export const StoryScreen = observer(() => {
   const navigation = useNavigation();
   if (RootStore.waterTestStore.waterTestState === "pending") {
     RootStore.waterTestStore.fetchWaterTestList();
@@ -62,5 +62,3 @@ const styles = StyleSheet.create<Style>({
     alignItems: "stretch",
   },
 });
-
-export default StoryScreen;

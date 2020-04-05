@@ -8,43 +8,41 @@ import {
   TextStyle,
   TouchableOpacity,
   Image,
-  ImageStyle
+  ImageStyle,
 } from "react-native";
 import Moment from "moment";
 import "moment/locale/fr";
 import createIcon from "../../../../assets/icons/createIcon.png";
 
 type Props = {
-  tankList: Tank[];
+  tank: Tank;
   editFunction: () => void;
 };
 
-export const MainTankItem = ({ tankList, editFunction }: Props) => {
-  return tankList.length > 0 ? (
+export const MainTankItem = ({ tank, editFunction }: Props) => {
+  return tank !== null ? (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.mainTitle}>{tankList[0].name}</Text>
+        <Text style={styles.mainTitle}>{tank.name}</Text>
         <TouchableOpacity onPress={editFunction}>
           <Image source={createIcon} style={styles.icon} />
         </TouchableOpacity>
       </View>
       <Text style={styles.detailText}>
-        Mis en eau : {Moment(tankList[0].startDate).format("ll")}
+        Mis en eau : {Moment(tank.startDate).format("ll")}
       </Text>
       <Text style={styles.detailText}>
-        Volume brut : {tankList[0].rawVolume} litres
-      </Text>
-
-      <Text style={styles.detailText}>
-        Maintenance : {tankList[0].typeOfMaintenance}
+        Volume brut : {tank.rawVolume} litres
       </Text>
 
       <Text style={styles.detailText}>
-        Population : {tankList[0].mainPopulation}
+        Maintenance : {tank.typeOfMaintenance}
       </Text>
 
+      <Text style={styles.detailText}>Population : {tank.mainPopulation}</Text>
+
       <Text style={styles.detailText}>
-        Décantation : {tankList[0].sumpVolume} litres
+        Décantation : {tank.sumpVolume} litres
       </Text>
     </View>
   ) : null;
@@ -61,31 +59,31 @@ type Style = {
 
 const styles = StyleSheet.create<Style>({
   date: {
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   container: {
     backgroundColor: "grey",
     padding: 8,
     margin: 16,
     borderRadius: 15,
-    width: "96%"
+    width: "96%",
   },
   mainTitle: {
     fontSize: 24,
     margin: 8,
-    textAlign: "center"
+    textAlign: "center",
   },
   detailText: {
     fontSize: 16,
-    textAlign: "center"
+    textAlign: "center",
   },
   icon: {
     height: 32,
-    width: 32
+    width: 32,
   },
 
   header: {
     flexDirection: "row",
-    justifyContent: "center"
-  }
+    justifyContent: "center",
+  },
 });
