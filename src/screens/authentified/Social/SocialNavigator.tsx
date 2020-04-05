@@ -1,6 +1,6 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import StoryScreen from "../Story/StoryScreen";
+import { SocialScreen } from "./SocialScreen";
 
 const Stack = createStackNavigator();
 
@@ -9,7 +9,7 @@ export const SocialNavigator = () => {
     <Stack.Navigator>
       <Stack.Screen
         name="main"
-        component={StoryScreen}
+        component={SocialScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
