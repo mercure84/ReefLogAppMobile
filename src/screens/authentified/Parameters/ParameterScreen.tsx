@@ -5,6 +5,8 @@ import { removeData } from "../../../services/storageDevice";
 import { Header } from "react-native-elements";
 import { ReefButton } from "../../../components/ReefButton";
 import { ReefHeaderTitle } from "../../../components/ReefHeaderTitle";
+import { handleEmail } from "../../../screens/welcome/components/About";
+import mailIcon from "../../../assets/icons/mail.png";
 
 export const disconnect = () => {
   removeData("token");
@@ -37,6 +39,12 @@ const ParameterScreen = () => {
         <ReefButton
           title="Se déconnecter"
           onPress={() => (disconnect(), navigation.navigate("Signout"))}
+        />
+
+        <ReefButton
+          icon={mailIcon}
+          title="Mail à l'admin"
+          onPress={() => handleEmail()}
         />
       </View>
     </>
