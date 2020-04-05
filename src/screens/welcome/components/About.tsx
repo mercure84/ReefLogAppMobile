@@ -2,7 +2,7 @@ import React from "react";
 import { Text, View, Image } from "react-native";
 import {
   version as app_version,
-  name as app_name
+  name as app_name,
 } from "../../../../package.json";
 
 import aboutImage from "../../../assets/about.png";
@@ -13,22 +13,25 @@ import email from "react-native-email";
 export const handleEmail = () => {
   const recipient = ["julien.marcesse@gmail.com"];
   email(recipient, {
-    subject: "Une suggestion sur votre appli ReefLog"
+    subject: "Une suggestion sur votre appli ReefLog",
   }).catch(console.error);
 };
 
 export const About = () => {
   return (
     <View
-      style={{ paddingBottom: 32, paddingHorizontal: 16, alignItems: "center" }}
+      style={{
+        paddingHorizontal: 16,
+        alignItems: "center",
+      }}
     >
       <Image
         source={aboutImage}
         style={{
-          width: 64,
-          height: 64,
+          width: 256,
+          height: 128,
           borderRadius: 16,
-          margin: 8
+          margin: 8,
         }}
       />
       <Text style={{ textAlign: "center" }}>
@@ -40,7 +43,7 @@ export const About = () => {
           style={{
             flexDirection: "row",
             alignItems: "center",
-            justifyContent: "space-around"
+            justifyContent: "space-around",
           }}
         >
           <Image

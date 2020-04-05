@@ -11,27 +11,38 @@ import {
   ViewStyle,
   TextStyle,
   ImageStyle,
-  StyleSheet
+  StyleSheet,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { About } from "./components/About";
 import { ReefButton } from "../../components/ReefButton";
 
-interface Props {
-  displayLoginForm: boolean;
-  displaySignupForm: boolean;
-}
-
-const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
-  const [displayLoginFormState, toggleDisplayLogin] = useState(
-    displayLoginForm
-  );
-  const [displaySignupFormState, toggleDisplaySignup] = useState(
-    displaySignupForm
-  );
+const HomeScreen = () => {
+  const [isLoginVisible, setLoginVisible] = useState(false);
+  const [isSignupVisible, setSignupVisible] = useState(false);
 
   const [messageInfo, setMessageInfo] = useState("");
   const [isAboutVisible, setAboutVisible] = useState(false);
+
+  const toggleWelcomeCompoents = (element: string) => {
+    switch (element) {
+      case "about":
+        setAboutVisible(!isAboutVisible);
+        setLoginVisible(false);
+        setSignupVisible(false);
+        return;
+      case "login":
+        setAboutVisible(false);
+        setLoginVisible(!isLoginVisible);
+        setSignupVisible(false);
+        return;
+      case "signup":
+        setAboutVisible(false);
+        setLoginVisible(false);
+        setSignupVisible(!isSignupVisible);
+        return;
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -53,9 +64,7 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
           <ReefButton
             title="Créer un compte"
             onPress={() => {
-              toggleDisplaySignup(true);
-              toggleDisplayLogin(false);
-              setMessageInfo("A vous de remplir :)");
+              toggleWelcomeCompoents("signup");
             }}
           />
         </View>
@@ -63,9 +72,7 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
           <ReefButton
             title="Se connecter"
             onPress={() => {
-              toggleDisplaySignup(false);
-              toggleDisplayLogin(true);
-              setMessageInfo("Saisissez email / mdp");
+              toggleWelcomeCompoents("login");
             }}
           />
         </View>
@@ -73,16 +80,16 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
       <View style={styles.homeForms}>
         <MessageInfo message={messageInfo} />
 
-        {displayLoginFormState && (
+        {isLoginVisible && (
           <LoginForm
             homeInfoCallBack={setMessageInfo}
-            showLoginForm={toggleDisplayLogin}
+            showLoginForm={setLoginVisible}
           />
         )}
-        {displaySignupFormState && (
+        {isSignupVisible && (
           <SignupForm
             homeInfoCallBack={setMessageInfo}
-            showSignupForm={toggleDisplaySignup}
+            showSignupForm={setSignupVisible}
             memberToUpdate={null}
           />
         )}
@@ -90,7 +97,7 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
         <TouchableOpacity
           style={styles.about}
           onPress={() => {
-            setAboutVisible(!isAboutVisible);
+            toggleWelcomeCompoents("about");
           }}
         >
           <Text> A propos / Contact </Text>
@@ -117,39 +124,39 @@ const styles = StyleSheet.create<Style>({
   about: {
     flex: 0.3,
     justifyContent: "flex-end",
-    margin: 8
+    margin: 8,
   },
   container: {
-    flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "center"
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 64,
   },
   button: {
-    margin: 20
+    margin: 20,
   },
   title1: {
     fontSize: 24,
     fontWeight: "800",
-    textAlign: "center"
+    textAlign: "center",
   },
   header: {
     padding: 16,
     flex: 1,
-    alignItems: "center"
+    alignItems: "center",
   },
   homeButton: {
     flexDirection: "row",
-    alignSelf: "center"
+    alignSelf: "center",
   },
   homeImage: {
     borderRadius: 100,
     width: 250,
-    height: 150
+    height: 150,
   },
   homeForms: {
     flex: 2,
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 });
 
 export default HomeScreen;

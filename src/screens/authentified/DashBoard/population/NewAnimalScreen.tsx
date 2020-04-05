@@ -5,7 +5,7 @@ import {
   ViewStyle,
   StyleSheet,
   Image,
-  ImageStyle
+  ImageStyle,
 } from "react-native";
 import { ReefButton } from "../../../../components/ReefButton";
 
@@ -17,6 +17,7 @@ import fishIcon from "../../../../assets/icons/fish.png";
 import coralIcon from "../../../../assets/icons/coral.png";
 import reefCleanerIcon from "../../../../assets/icons/reefcleaner.png";
 import { GoBackButton } from "../../../../components/GoBackButton";
+import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
 
 export const NewAnimalScreen = observer(() => {
   const [showForm, setShowForm] = useState(false);
@@ -45,10 +46,10 @@ export const NewAnimalScreen = observer(() => {
     <View style={styles.page}>
       <Header
         leftComponent={<GoBackButton />}
-        centerComponent={
-          <Text style={{ fontSize: 16 }}>Ajouter un pensionnaire</Text>
-        }
-        backgroundColor="red"
+        centerComponent={<ReefHeaderTitle title="Nouveau pensionnaire" />}
+        backgroundColor="white"
+        backgroundImage={require("../../../../assets/animals.png")}
+        backgroundImageStyle={{ opacity: 0.8 }}
       />
       {!showForm && (
         <View>
@@ -129,19 +130,19 @@ type Style = {
 
 const styles = StyleSheet.create<Style>({
   page: {
-    alignItems: "stretch"
+    alignItems: "stretch",
   },
   iconsChoiceContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 8
+    paddingHorizontal: 8,
   },
   icon: {
     width: 96,
-    height: 96
+    height: 96,
   },
   iconContainer: {
-    padding: 8
-  }
+    padding: 8,
+  },
 });

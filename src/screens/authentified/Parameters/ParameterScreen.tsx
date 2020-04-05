@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { removeData } from "../../../services/storageDevice";
 import { Header } from "react-native-elements";
 import { ReefButton } from "../../../components/ReefButton";
+import { ReefHeaderTitle } from "../../../components/ReefHeaderTitle";
 
 export const disconnect = () => {
   removeData("token");
@@ -15,8 +16,10 @@ const ParameterScreen = () => {
   return (
     <View style={style.page}>
       <Header
-        centerComponent={<Text style={{ fontSize: 16 }}>Mes paramètres</Text>}
-        backgroundColor="pink"
+        centerComponent={<ReefHeaderTitle title="MES PARAMETRES" />}
+        backgroundColor="white"
+        backgroundImage={require("../../../assets/parameters.png")}
+        backgroundImageStyle={{ opacity: 0.8 }}
       />
 
       <ReefButton
@@ -44,8 +47,8 @@ type Style = {
 
 const style = StyleSheet.create<Style>({
   page: {
-    alignItems: "stretch"
-  }
+    alignItems: "stretch",
+  },
 });
 
 export default ParameterScreen;

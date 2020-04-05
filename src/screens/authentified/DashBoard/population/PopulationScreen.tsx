@@ -5,7 +5,7 @@ import {
   ViewStyle,
   StyleSheet,
   ActivityIndicator,
-  FlatList
+  FlatList,
 } from "react-native";
 import { ReefButton } from "../../../../components/ReefButton";
 
@@ -15,6 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import { observer } from "mobx-react";
 import { AnimalItem } from "./AnimalItem";
 import { GoBackButton } from "../../../../components/GoBackButton";
+import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
 
 export const PopulationScreen = observer(() => {
   const navigation = useNavigation();
@@ -27,10 +28,10 @@ export const PopulationScreen = observer(() => {
     <View style={styles.page}>
       <Header
         leftComponent={<GoBackButton />}
-        centerComponent={
-          <Text style={{ fontSize: 16 }}>Mes pensionnaires</Text>
-        }
-        backgroundColor="red"
+        centerComponent={<ReefHeaderTitle title="Mes pensionnaires" />}
+        backgroundColor="white"
+        backgroundImage={require("../../../../assets/animals.png")}
+        backgroundImageStyle={{ opacity: 0.8 }}
       />
       <ReefButton
         onPress={() => navigation.navigate("newAnimal")}
@@ -44,7 +45,7 @@ export const PopulationScreen = observer(() => {
           style={{ marginBottom: 64 }}
           data={dataAnimals}
           renderItem={({ item }) => <AnimalItem animal={item} />}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={(item) => item.id.toString()}
           ListEmptyComponent={<Text>Aucun enregistrement</Text>}
           scrollEnabled={true}
         />
@@ -59,6 +60,6 @@ type Style = {
 
 const styles = StyleSheet.create<Style>({
   page: {
-    alignItems: "stretch"
-  }
+    alignItems: "stretch",
+  },
 });

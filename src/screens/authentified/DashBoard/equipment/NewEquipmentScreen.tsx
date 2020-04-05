@@ -3,6 +3,7 @@ import { Header, Text } from "react-native-elements";
 import { View } from "react-native";
 import { EquipmentForm } from "./EquipmentForm";
 import { GoBackButton } from "../../../../components/GoBackButton";
+import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
 
 export const NewEquipmentScreen = ({ route }) => {
   const { equipment } = route.params;
@@ -11,9 +12,17 @@ export const NewEquipmentScreen = ({ route }) => {
       <Header
         leftComponent={<GoBackButton />}
         centerComponent={
-          <Text style={{ fontSize: 16 }}>Ajouter un matériel</Text>
+          <ReefHeaderTitle
+            title={
+              equipment === null
+                ? "Nouvel équipement"
+                : "Modifier un équipement"
+            }
+          />
         }
-        backgroundColor="yellow"
+        backgroundColor="white"
+        backgroundImage={require("../../../../assets/equipment.png")}
+        backgroundImageStyle={{ opacity: 0.8 }}
       />
 
       <EquipmentForm equipmentToUpdate={equipment} />

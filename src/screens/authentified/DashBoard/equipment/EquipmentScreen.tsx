@@ -5,7 +5,7 @@ import {
   View,
   ViewStyle,
   ActivityIndicator,
-  FlatList
+  FlatList,
 } from "react-native";
 import { observer } from "mobx-react";
 import { Header } from "react-native-elements";
@@ -14,6 +14,7 @@ import RootStore from "../../../../store/RootStore";
 import { EquipmentItem } from "./EquipmentItem";
 import { GoBackButton } from "../../../../components/GoBackButton";
 import { ReefButton } from "../../../../components/ReefButton";
+import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
 
 export const EquipmentScreen = observer(() => {
   const navigation = useNavigation();
@@ -30,8 +31,10 @@ export const EquipmentScreen = observer(() => {
     <View style={styles.page}>
       <Header
         leftComponent={<GoBackButton />}
-        centerComponent={<Text style={{ fontSize: 16 }}>Mes équipements</Text>}
-        backgroundColor="yellow"
+        centerComponent={<ReefHeaderTitle title="Mon équipement" />}
+        backgroundColor="white"
+        backgroundImage={require("../../../../assets/equipment.png")}
+        backgroundImageStyle={{ opacity: 0.8 }}
       />
 
       <ReefButton
@@ -46,7 +49,7 @@ export const EquipmentScreen = observer(() => {
           style={{ marginBottom: 64 }}
           data={dataEquipments}
           renderItem={({ item }) => <EquipmentItem equipment={item} />}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={(item) => item.id.toString()}
           ListEmptyComponent={<Text>Aucun enregistrement</Text>}
           scrollEnabled={true}
         />
@@ -61,6 +64,6 @@ type Style = {
 
 const styles = StyleSheet.create<Style>({
   page: {
-    alignItems: "stretch"
-  }
+    alignItems: "stretch",
+  },
 });
