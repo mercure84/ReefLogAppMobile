@@ -10,8 +10,8 @@ import {
   StyleSheet,
 } from "react-native";
 import { observer } from "mobx-react";
-import { MainTankItem } from "../DashBoard/aquarium/MainTankItem";
 import RootStore from "../../../store/RootStore";
+import { SocialTankItem } from "./components/SocialTankItem";
 
 export const SocialScreen = observer(() => {
   if (RootStore.socialStore.socialState === "pending") {
@@ -29,23 +29,21 @@ export const SocialScreen = observer(() => {
         backgroundImage={require("../../../assets/social.png")}
         backgroundImageStyle={{ opacity: 0.8 }}
       />
-      <View>
-        <View style={styles.page}>
-          {isSocialTanksLoading ? (
-            <ActivityIndicator />
-          ) : (
-            <FlatList
-              style={{ marginBottom: 64 }}
-              data={dataSocialsTanks}
-              renderItem={({ item }) => (
-                <MainTankItem tank={item} editFunction={null} />
-              )}
-              keyExtractor={(item) => item.id.toString()}
-              ListEmptyComponent={<Text>Aucun enregistrement :(</Text>}
-              scrollEnabled={true}
-            />
-          )}
-        </View>
+      <View style={styles.page}>
+        {isSocialTanksLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <FlatList
+            style={{ marginBottom: 64 }}
+            data={dataSocialsTanks}
+            renderItem={({ item }) => (
+              <SocialTankItem tank={item} editFunction={null} />
+            )}
+            keyExtractor={(item) => item.id.toString()}
+            ListEmptyComponent={<Text>Aucun enregistrement :(</Text>}
+            scrollEnabled={true}
+          />
+        )}
       </View>
     </>
   );
