@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { LoginForm } from "./components/LoginForm";
 import { SignupForm } from "./components/SignupForm";
 import { MessageInfo } from "../../components/MessageInfo";
-import { getData } from "../../services/storageDevice";
 import {
   KeyboardAvoidingView,
   View,
@@ -33,12 +32,6 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
 
   const [messageInfo, setMessageInfo] = useState("");
   const [isAboutVisible, setAboutVisible] = useState(false);
-
-  const token = getData("token");
-  const emailUser = getData("emailUser");
-
-  console.log("Token = " + token);
-  console.log("Email actuellement stocké = " + emailUser);
 
   return (
     <KeyboardAvoidingView
@@ -96,7 +89,9 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
 
         <TouchableOpacity
           style={styles.about}
-          onPress={() => setAboutVisible(!isAboutVisible)}
+          onPress={() => {
+            setAboutVisible(!isAboutVisible);
+          }}
         >
           <Text> A propos / Contact </Text>
         </TouchableOpacity>
