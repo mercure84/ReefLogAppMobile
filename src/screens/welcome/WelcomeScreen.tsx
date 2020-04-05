@@ -16,6 +16,7 @@ import {
   StyleSheet
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { About } from "./components/About";
 
 interface Props {
   displayLoginForm: boolean;
@@ -31,6 +32,7 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
   );
 
   const [messageInfo, setMessageInfo] = useState("");
+  const [isAboutVisible, setAboutVisible] = useState(false);
 
   const token = getData("token");
   const emailUser = getData("emailUser");
@@ -92,9 +94,14 @@ const HomeScreen = ({ displayLoginForm, displaySignupForm }: Props) => {
           />
         )}
 
-        <TouchableOpacity style={styles.about}>
-          <Text> A propos </Text>
+        <TouchableOpacity
+          style={styles.about}
+          onPress={() => setAboutVisible(!isAboutVisible)}
+        >
+          <Text> A propos / Contact </Text>
         </TouchableOpacity>
+
+        {isAboutVisible && <About />}
       </View>
     </KeyboardAvoidingView>
   );
