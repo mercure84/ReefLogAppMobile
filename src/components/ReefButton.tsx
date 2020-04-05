@@ -4,7 +4,7 @@ import {
   ViewStyle,
   Text,
   TouchableOpacityProps,
-  TextStyle
+  TextStyle,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -14,9 +14,11 @@ type Props = {
 
 export const ReefButton = ({ title, ...props }: Props) => {
   return (
-    <TouchableOpacity style={styles.button} {...props}>
-      <Text style={styles.label}>{title}</Text>
-    </TouchableOpacity>
+    <>
+      <TouchableOpacity style={styles.button} {...props}>
+        <Text style={styles.label}>{title}</Text>
+      </TouchableOpacity>
+    </>
   );
 };
 
@@ -32,12 +34,12 @@ const styles = StyleSheet.create<Style>({
     backgroundColor: "grey",
     width: 160,
     margin: 4,
-    alignSelf: "center"
+    alignSelf: "center",
   },
   label: {
     fontFamily: "verdana",
     fontSize: 16,
     color: "orange",
-    textAlign: "center"
-  }
+    textAlign: "center",
+  },
 });

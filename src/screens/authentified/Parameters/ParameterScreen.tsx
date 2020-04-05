@@ -14,40 +14,44 @@ const ParameterScreen = () => {
   const navigation = useNavigation();
 
   return (
-    <View style={style.page}>
+    <>
       <Header
         centerComponent={<ReefHeaderTitle title="MES PARAMETRES" />}
         backgroundColor="white"
         backgroundImage={require("../../../assets/parameters.png")}
         backgroundImageStyle={{ opacity: 0.8 }}
       />
-
-      <ReefButton
-        title="Mon profil"
-        onPress={() => navigation.navigate("myProfil")}
-      />
-      <ReefButton
-        title="Alertes"
-        onPress={() => navigation.navigate("myAlerts")}
-      />
-      <ReefButton
-        title="Outils"
-        onPress={() => navigation.navigate("myTools")}
-      />
-      <ReefButton
-        title="Se déconnecter"
-        onPress={() => (disconnect(), navigation.navigate("Signout"))}
-      />
-    </View>
+      <View style={styles.buttonContainer}>
+        <ReefButton
+          title="Mon profil"
+          onPress={() => navigation.navigate("myProfil")}
+        />
+        <ReefButton
+          title="Alertes"
+          onPress={() => navigation.navigate("myAlerts")}
+        />
+        <ReefButton
+          title="Outils"
+          onPress={() => navigation.navigate("myTools")}
+        />
+        <ReefButton
+          title="Se déconnecter"
+          onPress={() => (disconnect(), navigation.navigate("Signout"))}
+        />
+      </View>
+    </>
   );
 };
 type Style = {
-  page: ViewStyle;
+  buttonContainer: ViewStyle;
 };
 
-const style = StyleSheet.create<Style>({
-  page: {
-    alignItems: "stretch",
+const styles = StyleSheet.create<Style>({
+  buttonContainer: {
+    padding: 32,
+    height: "60%",
+    flexDirection: "column",
+    justifyContent: "space-around",
   },
 });
 

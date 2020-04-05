@@ -1,4 +1,3 @@
-import { RootStore } from "./../store/RootStore";
 import { urlServer } from "../constants/constants";
 import { getData } from "./storageDevice";
 
@@ -36,11 +35,8 @@ export const signUpService = async (
     userName: signUpForm.userName.toLowerCase(),
     email: signUpForm.email.toLowerCase(),
     password: signUpForm.password.toLowerCase(),
-    repassword: signUpForm.repassword.toLowerCase()
+    repassword: signUpForm.repassword.toLowerCase(),
   };
-  console.log(
-    "url du service = " + urlService + "idToUpdate = " + newMember.idToUpdate
-  );
   try {
     const token = await getData("token");
 
@@ -49,9 +45,9 @@ export const signUpService = async (
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: token
+        Authorization: token,
       },
-      body: JSON.stringify(newMember)
+      body: JSON.stringify(newMember),
     });
     return response.json();
   } catch (error) {
@@ -64,7 +60,7 @@ export const loginService = async (pEmail: string, pPassword: string) => {
   const urlService = urlServer + "api/login";
   const credentials = {
     username: pEmail.toLowerCase(),
-    password: pPassword.toLowerCase()
+    password: pPassword.toLowerCase(),
   };
 
   try {
@@ -75,9 +71,9 @@ export const loginService = async (pEmail: string, pPassword: string) => {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(credentials)
+      body: JSON.stringify(credentials),
     });
     return response.json();
   } catch (error) {
@@ -90,7 +86,7 @@ export const checkToken = async (pEmail: string, pToken) => {
   const urlService = urlServer + "api/checkToken";
   const dataToValidate = {
     email: pEmail.toLowerCase(),
-    token: pToken
+    token: pToken,
   };
   try {
     console.log(
@@ -101,9 +97,9 @@ export const checkToken = async (pEmail: string, pToken) => {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(dataToValidate)
+      body: JSON.stringify(dataToValidate),
     });
     const dataResponse = response.json();
     return dataResponse;
@@ -127,8 +123,8 @@ export const getMemberDetail = async (
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: token
-      }
+        Authorization: token,
+      },
     });
     const dataResponse = response.json();
     console.log("Requête getMemberDetail OK");
