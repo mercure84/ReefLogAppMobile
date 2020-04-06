@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  Button,
   ViewStyle,
   TextStyle,
   StyleSheet,
@@ -19,6 +18,7 @@ import { useNavigation } from "@react-navigation/native";
 import RootStore from "../../../../store/RootStore";
 import Moment from "moment";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { ReefButton } from "../../../../components/ReefButton";
 
 type Props = {
   waterTestToUpdate: WaterTest;
@@ -93,7 +93,7 @@ export const WaterTestForm = ({ waterTestToUpdate }: Props) => {
       <Card>
         <View style={styles.input}>
           <Text>Date d'arrivée</Text>
-          <Button
+          <ReefButton
             title={
               waterTest !== null
                 ? Moment(waterTest.date)
@@ -348,8 +348,8 @@ export const WaterTestForm = ({ waterTestToUpdate }: Props) => {
           </View>
         </View>
         <View style={styles.buttonContainer}>
-          <Button title="Enregistrer" onPress={() => submitWaterTest()} />
-          <Button
+          <ReefButton title="Enregistrer" onPress={() => submitWaterTest()} />
+          <ReefButton
             title="Annuler"
             onPress={() => navigation.navigate("mainStory")}
           />

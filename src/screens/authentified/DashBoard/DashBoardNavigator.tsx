@@ -40,6 +40,7 @@ export const DashBoardNavigator = () => {
       <Stack.Screen
         name="saveEquipment"
         component={NewEquipmentScreen}
+        options={{ headerShown: false }}
         initialParams={{ equipment: null }}
       />
     </Stack.Navigator>

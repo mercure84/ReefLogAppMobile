@@ -4,10 +4,11 @@ import {
   View,
   ViewStyle,
   StyleSheet,
-  Button,
   Image,
-  ImageStyle
+  ImageStyle,
 } from "react-native";
+import { ReefButton } from "../../../../components/ReefButton";
+
 import { Header } from "react-native-elements";
 import { observer } from "mobx-react";
 import { AnimalForm } from "./AnimalForm";
@@ -16,6 +17,7 @@ import fishIcon from "../../../../assets/icons/fish.png";
 import coralIcon from "../../../../assets/icons/coral.png";
 import reefCleanerIcon from "../../../../assets/icons/reefcleaner.png";
 import { GoBackButton } from "../../../../components/GoBackButton";
+import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
 
 export const NewAnimalScreen = observer(() => {
   const [showForm, setShowForm] = useState(false);
@@ -44,10 +46,10 @@ export const NewAnimalScreen = observer(() => {
     <View style={styles.page}>
       <Header
         leftComponent={<GoBackButton />}
-        centerComponent={
-          <Text style={{ fontSize: 16 }}>Ajouter un pensionnaire</Text>
-        }
-        backgroundColor="red"
+        centerComponent={<ReefHeaderTitle title="Nouveau pensionnaire" />}
+        backgroundColor="white"
+        backgroundImage={require("../../../../assets/animals.png")}
+        backgroundImageStyle={{ opacity: 0.8 }}
       />
       {!showForm && (
         <View>
@@ -75,10 +77,10 @@ export const NewAnimalScreen = observer(() => {
           </View>
           {isCoralSelection && (
             <View>
-              <Button title="Soft" onPress={() => showAnimalForm("soft")} />
-              <Button title="LPS" onPress={() => showAnimalForm("lps")} />
-              <Button title="SPS" onPress={() => showAnimalForm("sps")} />
-              <Button
+              <ReefButton title="Soft" onPress={() => showAnimalForm("soft")} />
+              <ReefButton title="LPS" onPress={() => showAnimalForm("lps")} />
+              <ReefButton title="SPS" onPress={() => showAnimalForm("sps")} />
+              <ReefButton
                 title="Anémone"
                 onPress={() => showAnimalForm("anemone")}
               />
@@ -87,18 +89,24 @@ export const NewAnimalScreen = observer(() => {
 
           {isReefCleanerSelection && (
             <View>
-              <Button title="Oursin" onPress={() => showAnimalForm("urchin")} />
-              <Button title="Etoile" onPress={() => showAnimalForm("star")} />
-              <Button
+              <ReefButton
+                title="Oursin"
+                onPress={() => showAnimalForm("urchin")}
+              />
+              <ReefButton
+                title="Etoile"
+                onPress={() => showAnimalForm("star")}
+              />
+              <ReefButton
                 title="Concombre"
                 onPress={() => showAnimalForm("cucumber")}
               />
-              <Button
+              <ReefButton
                 title="Crustacé"
                 onPress={() => showAnimalForm("crustacean")}
               />
 
-              <Button
+              <ReefButton
                 title="Mollusque"
                 onPress={() => showAnimalForm("mollusk")}
               />
@@ -122,19 +130,19 @@ type Style = {
 
 const styles = StyleSheet.create<Style>({
   page: {
-    alignItems: "stretch"
+    alignItems: "stretch",
   },
   iconsChoiceContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 8
+    paddingHorizontal: 8,
   },
   icon: {
     width: 96,
-    height: 96
+    height: 96,
   },
   iconContainer: {
-    padding: 8
-  }
+    padding: 8,
+  },
 });

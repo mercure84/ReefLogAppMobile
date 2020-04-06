@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  Button,
   ActivityIndicator,
   StyleSheet,
   ViewStyle,
   TextStyle
 } from "react-native";
 import { signUpService, SignUp } from "../../../services/memberService";
+import { ReefButton } from "../../../components/ReefButton";
+
 import { MessageInfo } from "../../../components/MessageInfo";
 import { TextInput } from "react-native-gesture-handler";
 import { Card } from "react-native-elements";
@@ -134,7 +135,7 @@ export const SignupForm = ({
           />
         </View>
 
-        <Button
+        <ReefButton
           title="Créer mon compte"
           onPress={() => submitNewMember(signUpForm)}
         />

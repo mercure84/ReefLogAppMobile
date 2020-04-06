@@ -5,6 +5,7 @@ import { Header } from "react-native-elements";
 import { AnimalForm } from "./AnimalForm";
 import { getSpecies } from "../../../../services/animalService";
 import { GoBackButton } from "../../../../components/GoBackButton";
+import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
 
 export const UpdateAnimalScreen = observer(({ route }) => {
   const { animal } = route.params;
@@ -13,10 +14,10 @@ export const UpdateAnimalScreen = observer(({ route }) => {
     <View style={styles.page}>
       <Header
         leftComponent={<GoBackButton />}
-        centerComponent={
-          <Text style={{ fontSize: 16 }}>Ajouter un pensionnaire</Text>
-        }
-        backgroundColor="red"
+        centerComponent={<ReefHeaderTitle title="Modifier un pensionnaire" />}
+        backgroundColor="white"
+        backgroundImage={require("../../../../assets/coral.png")}
+        backgroundImageStyle={{ opacity: 0.8 }}
       />
 
       <AnimalForm animalToSave={animal} animalTypeForm={getSpecies(animal)} />
@@ -30,6 +31,6 @@ type Style = {
 
 const styles = StyleSheet.create<Style>({
   page: {
-    alignItems: "stretch"
-  }
+    alignItems: "stretch",
+  },
 });

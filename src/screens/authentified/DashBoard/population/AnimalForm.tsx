@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  Button,
   ViewStyle,
   TextStyle,
   StyleSheet,
@@ -12,6 +11,7 @@ import {
 import { Card } from "react-native-elements";
 import { TextInput } from "react-native-gesture-handler";
 import { MessageInfo } from "../../../../components/MessageInfo";
+import { ReefButton } from "../../../../components/ReefButton";
 import { useNavigation } from "@react-navigation/native";
 import RootStore from "../../../../store/RootStore";
 import { Animal, saveAnimal } from "../../../../services/animalService";
@@ -186,7 +186,7 @@ export const AnimalForm = observer(
         <Card>
           <View style={styles.input}>
             <Text>Date d'arrivée</Text>
-            <Button
+            <ReefButton
               title={
                 animal !== null
                   ? Moment(animal.incomingDate)
@@ -310,8 +310,8 @@ export const AnimalForm = observer(
             </View>
           </View>
           <View style={styles.buttonContainer}>
-            <Button title="Enregistrer" onPress={() => submitAnimal()} />
-            <Button
+            <ReefButton title="Enregistrer" onPress={() => submitAnimal()} />
+            <ReefButton
               title="Annuler"
               onPress={() => navigation.navigate("handlePopulation")}
             />
