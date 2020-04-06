@@ -4,25 +4,35 @@ import {
   ViewStyle,
   Text,
   TouchableOpacityProps,
-  TextStyle
+  TextStyle,
+  ImageSourcePropType,
+  Image,
+  ImageStyle,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 type Props = {
   title: ReactNode | string;
+  icon?: ImageSourcePropType;
 } & TouchableOpacityProps;
 
-export const ReefButton = ({ title, ...props }: Props) => {
+export const ReefButton = ({ title, icon, ...props }: Props) => {
   return (
-    <TouchableOpacity style={styles.button} {...props}>
-      <Text style={styles.label}>{title}</Text>
-    </TouchableOpacity>
+    <>
+      <TouchableOpacity style={styles.button} {...props}>
+        <Text style={styles.label}>{title}</Text>
+        {icon !== undefined ? (
+          <Image style={styles.icon} source={icon} />
+        ) : null}
+      </TouchableOpacity>
+    </>
   );
 };
 
 type Style = {
   button: ViewStyle;
   label: TextStyle;
+  icon: ImageStyle;
 };
 
 const styles = StyleSheet.create<Style>({
@@ -32,12 +42,18 @@ const styles = StyleSheet.create<Style>({
     backgroundColor: "grey",
     width: 160,
     margin: 4,
-    alignSelf: "center"
+    alignSelf: "center",
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
   label: {
     fontFamily: "verdana",
     fontSize: 16,
     color: "orange",
-    textAlign: "center"
-  }
+    textAlign: "center",
+  },
+  icon: {
+    width: 26,
+    height: 26,
+  },
 });

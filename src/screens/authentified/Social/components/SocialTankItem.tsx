@@ -6,27 +6,25 @@ import {
   StyleSheet,
   ViewStyle,
   TextStyle,
-  TouchableOpacity,
   Image,
   ImageStyle,
 } from "react-native";
 import Moment from "moment";
 import "moment/locale/fr";
-import createIcon from "../../../../assets/icons/createIcon.png";
+import memberIcon from "../../../../assets/icons/social.png";
 
 type Props = {
   tank: Tank;
   editFunction: () => void;
 };
 
-export const MainTankItem = ({ tank, editFunction }: Props) => {
+export const SocialTankItem = ({ tank, editFunction }: Props) => {
   return tank !== null ? (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.mainTitle}>{tank.name}</Text>
-        <TouchableOpacity onPress={editFunction}>
-          <Image source={createIcon} style={styles.icon} />
-        </TouchableOpacity>
+        <Image source={memberIcon} style={styles.icon} />
+        <Text style={styles.mainTitle}>{tank.member.userName}</Text>
       </View>
       <Text style={styles.detailText}>
         Mis en eau : {Moment(tank.startDate).format("ll")}
@@ -62,14 +60,14 @@ const styles = StyleSheet.create<Style>({
     fontWeight: "bold",
   },
   container: {
-    backgroundColor: "grey",
     padding: 8,
-    margin: 16,
-    borderRadius: 15,
-    width: "96%",
+    margin: 8,
+    borderRadius: 4,
+    borderWidth: 1,
+    width: "90%",
   },
   mainTitle: {
-    fontSize: 24,
+    fontSize: 16,
     margin: 8,
     textAlign: "center",
   },
@@ -78,12 +76,14 @@ const styles = StyleSheet.create<Style>({
     textAlign: "center",
   },
   icon: {
-    height: 32,
-    width: 32,
+    height: 24,
+    width: 24,
   },
 
   header: {
+    backgroundColor: "#C8FFAE",
     flexDirection: "row",
     justifyContent: "center",
+    alignItems: "center",
   },
 });
