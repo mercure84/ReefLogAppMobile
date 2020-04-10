@@ -49,41 +49,8 @@ export enum AnimalType {
   urchin = "Oursin",
   mollusk = "Mollusque",
   lps = "LPS",
-  soft = "Mou"
+  soft = "Corail Mou"
 }
-
-export const getAnimalType = (animal: Animal) => {
-  if (animal.crustaceanSpecies !== undefined) {
-    return "crustacean";
-  }
-  if (animal.softSpecies !== undefined) {
-    return "soft";
-  }
-  if (animal.lpsSpecies !== undefined) {
-    return "lps";
-  }
-  if (animal.spsSpecies !== undefined) {
-    return "sps";
-  }
-  if (animal.fishSpecies !== undefined) {
-    return "fish";
-  }
-  if (animal.anemoneSpecies !== undefined) {
-    return "anemone";
-  }
-  if (animal.molluskSpecies !== undefined) {
-    return "mollusk";
-  }
-  if (animal.cucumberSpecies !== undefined) {
-    return "cucumber";
-  }
-  if (animal.urchinSpecies !== undefined) {
-    return "urchin";
-  }
-  if (animal.starSpecies !== undefined) {
-    return "star";
-  }
-};
 
 export const saveAnimal = async (
   pAquariumId: string,
