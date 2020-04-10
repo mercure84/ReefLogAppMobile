@@ -15,7 +15,7 @@ import Moment from "moment";
 import "moment/locale/fr";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
-import { Animal, getSpecies } from "../../../../services/animalService";
+import { Animal } from "../../../../services/animalService";
 import RootStore from "../../../../store/RootStore";
 import { CustomModal } from "../../../../components/ModalDeleteConfirmation";
 
@@ -87,7 +87,7 @@ export const AnimalItem = ({ animal }: Props) => {
             </Text>
           ) : null}
           {animal.starSpecies !== undefined ? (
-            <Text>Etoile {animal.starSpecies} </Text>
+            <Text style={styles.animalType}>Etoile :{animal.starSpecies} </Text>
           ) : null}
 
           <Text>{animal.name}</Text>

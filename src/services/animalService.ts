@@ -39,7 +39,20 @@ export interface AnimalSpecies {
   soft?: string[];
 }
 
-export const getSpecies = (animal: Animal) => {
+export enum AnimalType {
+  star = "Etoile",
+  crustacean = "Crustacé",
+  anemone = "Anémone",
+  cucumber = "Concombre",
+  fish = "Poisson",
+  sps = "SPS",
+  urchin = "Oursin",
+  mollusk = "Mollusque",
+  lps = "LPS",
+  soft = "Mou"
+}
+
+export const getAnimalType = (animal: Animal) => {
   if (animal.crustaceanSpecies !== undefined) {
     return "crustacean";
   }

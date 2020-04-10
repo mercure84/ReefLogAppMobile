@@ -2,7 +2,6 @@ import React from "react";
 import { View, Text, Button, ViewStyle, StyleSheet } from "react-native";
 import Modal from "react-native-modal";
 import { Card } from "react-native-elements";
-import { ReefButton } from "./ReefButton";
 
 type Props = {
   message: string;
