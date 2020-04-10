@@ -18,13 +18,13 @@ export const CustomModal = ({
   isModaleVisible
 }: Props) => {
   return (
-    <Modal isVisible={isModaleVisible} backdropOpacity={0.5}>
-      <View style={{ flex: 0.5, justifyContent: "center" }}>
+    <Modal isVisible={isModaleVisible}>
+      <View style={{ justifyContent: "center" }}>
         <Card>
           <Text>{message}</Text>
         </Card>
-        <ReefButton title="Oui" onPress={buttonYesFonction} />
-        <ReefButton title="Non" onPress={buttonNoFonction} />
+        <Button title="Oui" onPress={buttonYesFonction} />
+        <Button title="Non" onPress={buttonNoFonction} />
       </View>
     </Modal>
   );

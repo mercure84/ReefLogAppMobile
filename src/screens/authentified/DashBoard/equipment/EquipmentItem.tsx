@@ -29,7 +29,7 @@ export const EquipmentItem = ({ equipment }: Props) => {
   const [isModalVisible, setModalVisible] = useState(false);
 
   const handlePressDelete = () => {
-    isModalVisible ? setModalVisible(false) : setModalVisible(true);
+    setModalVisible(!isModalVisible);
   };
 
   const confirmDelete = (pEquipment: Equipment) => {
