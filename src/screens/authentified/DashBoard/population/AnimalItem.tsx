@@ -15,7 +15,11 @@ import Moment from "moment";
 import "moment/locale/fr";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
-import { Animal } from "../../../../services/animalService";
+import {
+  Animal,
+  AnimalType,
+  getAnimalType
+} from "../../../../services/animalService";
 import RootStore from "../../../../store/RootStore";
 import { CustomModal } from "../../../../components/ModalDeleteConfirmation";
 
@@ -47,49 +51,12 @@ export const AnimalItem = ({ animal }: Props) => {
           <Text style={styles.date}>
             Date d'arrivée : {Moment(animal.incomingDate).format("ll")}
           </Text>
-          {animal.anemoneSpecies !== undefined ? (
-            <Text style={styles.animalType}>
-              Anémone : {animal.anemoneSpecies}
-            </Text>
-          ) : null}
-          {animal.crustaceanSpecies !== undefined ? (
-            <Text style={styles.animalType}>
-              Crustacé : {animal.crustaceanSpecies}
-            </Text>
-          ) : null}
-          {animal.cucumberSpecies !== undefined ? (
-            <Text style={styles.animalType}>
-              Concombre : {animal.cucumberSpecies}
-            </Text>
-          ) : null}
-          {animal.fishSpecies !== undefined ? (
-            <Text style={styles.animalType}>
-              Poisson : {animal.fishSpecies}
-            </Text>
-          ) : null}
-          {animal.lpsSpecies !== undefined ? (
-            <Text style={styles.animalType}>LPS : {animal.lpsSpecies} </Text>
-          ) : null}
-          {animal.spsSpecies !== undefined ? (
-            <Text style={styles.animalType}>SPS : {animal.spsSpecies} </Text>
-          ) : null}
-          {animal.softSpecies !== undefined ? (
-            <Text style={styles.animalType}>Mou : {animal.softSpecies} </Text>
-          ) : null}
-          {animal.molluskSpecies !== undefined ? (
-            <Text style={styles.animalType}>
-              Mollusque : {animal.molluskSpecies}
-            </Text>
-          ) : null}
-          {animal.urchinSpecies !== undefined ? (
-            <Text style={styles.animalType}>
-              Oursin : {animal.urchinSpecies}
-            </Text>
-          ) : null}
-          {animal.starSpecies !== undefined ? (
-            <Text style={styles.animalType}>Etoile :{animal.starSpecies} </Text>
-          ) : null}
 
+          <Text style={styles.animalType}>
+            {`${AnimalType[getAnimalType(animal)]} : ${
+              animal[getAnimalType(animal) + "Species"]
+            }`}
+          </Text>
           <Text>{animal.name}</Text>
         </View>
         <TouchableOpacity onPress={handlePress}>

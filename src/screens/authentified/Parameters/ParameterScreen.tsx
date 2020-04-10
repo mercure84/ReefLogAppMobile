@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, ViewStyle } from "react-native";
+import { View, StyleSheet, ViewStyle } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { removeData } from "../../../services/storageDevice";
 import { Header } from "react-native-elements";
@@ -59,8 +59,8 @@ const styles = StyleSheet.create<Style>({
     padding: 32,
     height: "60%",
     flexDirection: "column",
-    justifyContent: "space-around",
-  },
+    justifyContent: "space-around"
+  }
 });
 
 export default ParameterScreen;

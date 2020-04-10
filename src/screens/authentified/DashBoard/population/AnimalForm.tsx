@@ -14,7 +14,11 @@ import { MessageInfo } from "../../../../components/MessageInfo";
 import { ReefButton } from "../../../../components/ReefButton";
 import { useNavigation } from "@react-navigation/native";
 import RootStore from "../../../../store/RootStore";
-import { Animal, saveAnimal } from "../../../../services/animalService";
+import {
+  Animal,
+  saveAnimal,
+  AnimalType
+} from "../../../../services/animalService";
 import { observer } from "mobx-react";
 import Moment from "moment";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -31,7 +35,7 @@ export const AnimalForm = observer(
     const [isDatePickerVisible, setDatePickerVisible] = useState(false);
 
     const [infoMessage, setInfoMessage] = useState(
-      "Saisissez les données pour un nouveau " + animalTypeForm
+      "Saisissez les données pour un nouveau " + AnimalType[animalTypeForm]
     );
     const navigation = useNavigation();
     const [speciesInPicker, setSpeciesInPicker] = useState("");
