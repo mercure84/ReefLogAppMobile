@@ -67,7 +67,7 @@ export const EquipmentItem = ({ equipment }: Props) => {
 
       <CustomModal
         isModaleVisible={isModalVisible}
-        message={`Confirmez vous la suppression de l'équipement :"
+        message={`Confirmez vous la suppression de l'équipement :
         ${equipment.typeOfEquipment} ${equipment.mark} ?`}
         buttonYesFonction={() => confirmDelete(equipment)}
         buttonNoFonction={handlePressDelete}

@@ -15,7 +15,7 @@ import Moment from "moment";
 import "moment/locale/fr";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
-import { Animal } from "../../../../services/animalService";
+import { Animal, getSpecies } from "../../../../services/animalService";
 import RootStore from "../../../../store/RootStore";
 import { CustomModal } from "../../../../components/ModalDeleteConfirmation";
 
@@ -106,8 +106,8 @@ export const AnimalItem = ({ animal }: Props) => {
 
       <CustomModal
         isModaleVisible={isModalVisible}
-        message={`Confirmez vous la suppression de l'animal :"
-        ${animal.name} arrivé le ${animal.incomingDate} ?`}
+        message={`Confirmez vous la suppression de l'animal :
+        ${animal.name} arrivé le ${Moment(animal.incomingDate).format("ll")} ?`}
         buttonYesFonction={() => confirmDelete(animal)}
         buttonNoFonction={handlePressDelete}
       />
