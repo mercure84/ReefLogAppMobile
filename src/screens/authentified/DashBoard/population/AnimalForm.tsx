@@ -60,7 +60,9 @@ export const AnimalForm = observer(
       RootStore.animalStore.animalSpeciesState === "done" &&
       animalSpecies.length === 0
     ) {
-      setAnimalSpecies(RootStore.animalStore.animalSpeciesData[animalTypeForm]);
+      setAnimalSpecies(
+        RootStore.animalStore.animalSpeciesData[animalTypeForm].sort()
+      );
       isUpdating
         ? setSpecies(animal[animalTypeForm + "Species"])
         : setSpecies(animalSpecies[0]);
