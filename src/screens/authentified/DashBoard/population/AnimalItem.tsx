@@ -51,7 +51,6 @@ export const AnimalItem = ({ animal }: Props) => {
           <Text style={styles.date}>
             Date d'arrivée : {Moment(animal.incomingDate).format("ll")}
           </Text>
-
           <Text style={styles.animalType}>
             {`${AnimalType[getAnimalType(animal)]} : ${
               animal[getAnimalType(animal) + "Species"]
@@ -66,7 +65,6 @@ export const AnimalItem = ({ animal }: Props) => {
           <Image source={deleteIcon} style={styles.icon} />
         </TouchableOpacity>
       </View>
-
       <Text>Taille : {animal.currentSize}</Text>
       <Text>Quantité : {animal.quantity}</Text>
       <Text>Notes : {animal.notes}</Text>
