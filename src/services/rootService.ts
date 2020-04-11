@@ -1,4 +1,5 @@
 import { urlServer } from "./../constants/constants";
+import { removeData } from "./storageDevice";
 
 const getUrlService = (item: string) => {
   switch (item) {
@@ -33,4 +34,10 @@ export const deleteItem = async (
   } catch (error) {
     console.log(error);
   }
+};
+
+//TO BE IMPLEMENTED : améliorer cette fonctionnalité !!!
+
+export const disconnect = () => {
+  removeData("token");
 };
