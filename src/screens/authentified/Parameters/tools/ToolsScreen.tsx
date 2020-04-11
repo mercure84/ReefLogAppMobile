@@ -45,7 +45,7 @@ export const ToolsScreen = () => {
           onChangeText={text => setTemperature(parseFloat(text))}
         />
 
-        <Text>Equivalent masse volumique (aéromètre JBL) :</Text>
+        <Text>Equivalent masse volumique (g/L aéromètre JBL) :</Text>
         <Text style={styles.result}>{resultat}</Text>
       </View>
     </View>
@@ -65,11 +65,12 @@ const styles = StyleSheet.create<Style>({
     alignItems: "stretch"
   },
   container: {
-    padding: 16
+    padding: 8
   },
   textInput: {
-    borderBottomWidth: 1,
-    marginBottom: 16,
+    backgroundColor: "#DADBDD",
+    borderRadius: 4,
+    marginBottom: 8,
     width: "30%",
     textAlign: "center"
   },
