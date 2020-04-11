@@ -1,8 +1,7 @@
 import React from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, ViewStyle, StyleSheet } from "react-native";
 import Modal from "react-native-modal";
 import { Card } from "react-native-elements";
-import { ReefButton } from "./ReefButton";
 
 type Props = {
   message: string;
@@ -18,14 +17,26 @@ export const CustomModal = ({
   isModaleVisible
 }: Props) => {
   return (
-    <Modal isVisible={isModaleVisible} backdropOpacity={0.5}>
-      <View style={{ flex: 0.5, justifyContent: "center" }}>
+    <Modal isVisible={isModaleVisible}>
+      <View style={{ justifyContent: "center" }}>
         <Card>
           <Text>{message}</Text>
         </Card>
-        <ReefButton title="Oui" onPress={buttonYesFonction} />
-        <ReefButton title="Non" onPress={buttonNoFonction} />
+        <View style={styles.button}>
+          <Button title="Oui" onPress={buttonYesFonction} />
+        </View>
+        <View style={styles.button}>
+          <Button title="Non" onPress={buttonNoFonction} />
+        </View>
       </View>
     </Modal>
   );
 };
+
+type Style = { button: ViewStyle };
+
+const styles = StyleSheet.create<Style>({
+  button: {
+    margin: 8
+  }
+});

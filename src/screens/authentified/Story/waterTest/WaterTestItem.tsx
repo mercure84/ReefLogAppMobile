@@ -87,8 +87,8 @@ export const WaterTestItem = ({ waterTest }: Props) => {
 
       <CustomModal
         isModaleVisible={isModalVisible}
-        message={`Confirmez vous la suppression du test du "
-        ${waterTest.date} ?`}
+        message={`Confirmez vous la suppression du test du 
+        ${Moment(waterTest.date).format("lll")} ?`}
         buttonYesFonction={() => confirmDelete(waterTest)}
         buttonNoFonction={handlePressDelete}
       />

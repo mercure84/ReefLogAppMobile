@@ -1,16 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, ViewStyle } from "react-native";
+import { View, StyleSheet, ViewStyle } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { removeData } from "../../../services/storageDevice";
 import { Header } from "react-native-elements";
 import { ReefButton } from "../../../components/ReefButton";
 import { ReefHeaderTitle } from "../../../components/ReefHeaderTitle";
 import { handleEmail } from "../../../screens/welcome/components/About";
 import mailIcon from "../../../assets/icons/mail.png";
-
-export const disconnect = () => {
-  removeData("token");
-};
+import { disconnect } from "../../../services/rootService";
 
 const ParameterScreen = () => {
   const navigation = useNavigation();
@@ -59,8 +55,8 @@ const styles = StyleSheet.create<Style>({
     padding: 32,
     height: "60%",
     flexDirection: "column",
-    justifyContent: "space-around",
-  },
+    justifyContent: "space-around"
+  }
 });
 
 export default ParameterScreen;

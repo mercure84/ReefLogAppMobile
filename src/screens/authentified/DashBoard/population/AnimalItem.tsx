@@ -15,9 +15,10 @@ import Moment from "moment";
 import "moment/locale/fr";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
-import { Animal } from "../../../../services/animalService";
+import { Animal, AnimalType } from "../../../../services/animalService";
 import RootStore from "../../../../store/RootStore";
 import { CustomModal } from "../../../../components/ModalDeleteConfirmation";
+import { getAnimalType, getIconForAnimal } from "../../../../utils/helpers";
 
 type Props = {
   animal: Animal;
@@ -42,72 +43,46 @@ export const AnimalItem = ({ animal }: Props) => {
   };
   return (
     <View style={styles.testContainer}>
-      <View style={styles.header}>
-        <View style={styles.item}>
+      <View style={styles.horizontalWrapper}>
+        <View >
+          <View style={styles.leftWrapper}>
+            <Image style={styles.icon} source={getIconForAnimal(animal)} />
+            <View style={styles.animalTitle}>
+              <Text style={styles.animalType}>
+                {AnimalType[getAnimalType(animal)]}
+              </Text>
+
+              <Text>{`${animal[getAnimalType(animal) + "Species"]} ${
+                animal.name ?? ""
+              }`}</Text>
+            </View>
+     
+          </View>
           <Text style={styles.date}>
-            Date d'arrivée : {Moment(animal.incomingDate).format("ll")}
-          </Text>
-          {animal.anemoneSpecies !== undefined ? (
-            <Text style={styles.animalType}>
-              Anémone : {animal.anemoneSpecies}
+              Date d'arrivée : {Moment(animal.incomingDate).format("ll")}
             </Text>
-          ) : null}
-          {animal.crustaceanSpecies !== undefined ? (
-            <Text style={styles.animalType}>
-              Crustacé : {animal.crustaceanSpecies}
-            </Text>
-          ) : null}
-          {animal.cucumberSpecies !== undefined ? (
-            <Text style={styles.animalType}>
-              Concombre : {animal.cucumberSpecies}
-            </Text>
-          ) : null}
-          {animal.fishSpecies !== undefined ? (
-            <Text style={styles.animalType}>
-              Poisson : {animal.fishSpecies}
-            </Text>
-          ) : null}
-          {animal.lpsSpecies !== undefined ? (
-            <Text style={styles.animalType}>LPS : {animal.lpsSpecies} </Text>
-          ) : null}
-          {animal.spsSpecies !== undefined ? (
-            <Text style={styles.animalType}>SPS : {animal.spsSpecies} </Text>
-          ) : null}
-          {animal.softSpecies !== undefined ? (
-            <Text style={styles.animalType}>Mou : {animal.softSpecies} </Text>
-          ) : null}
-          {animal.molluskSpecies !== undefined ? (
-            <Text style={styles.animalType}>
-              Mollusque : {animal.molluskSpecies}
-            </Text>
-          ) : null}
-          {animal.urchinSpecies !== undefined ? (
-            <Text style={styles.animalType}>
-              Oursin : {animal.urchinSpecies}
-            </Text>
-          ) : null}
-          {animal.starSpecies !== undefined ? (
-            <Text>Etoile {animal.starSpecies} </Text>
-          ) : null}
-
-          <Text>{animal.name}</Text>
+          <View style={styles.horizontalWrapper}>
+            <Text>Taille : {animal.currentSize}</Text>
+            <Text>Quantité : {animal.quantity}</Text>
+          </View>
+ 
+          <Text>Notes : {animal.notes}</Text>
         </View>
-        <TouchableOpacity onPress={handlePress}>
-          <Image source={createIcon} style={styles.icon} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handlePressDelete}>
-          <Image source={deleteIcon} style={styles.icon} />
-        </TouchableOpacity>
-      </View>
 
-      <Text>Taille : {animal.currentSize}</Text>
-      <Text>Quantité : {animal.quantity}</Text>
-      <Text>Notes : {animal.notes}</Text>
+        <View style={styles.groupIcon}>
+          <TouchableOpacity onPress={handlePress}>
+            <Image source={createIcon} style={styles.icon} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handlePressDelete}>
+            <Image source={deleteIcon} style={styles.icon} />
+          </TouchableOpacity>
+        </View>
+      </View>
 
       <CustomModal
         isModaleVisible={isModalVisible}
-        message={`Confirmez vous la suppression de l'animal :"
-        ${animal.name} arrivé le ${animal.incomingDate} ?`}
+        message={`Confirmez vous la suppression de l'animal :
+        ${animal.name} arrivé le ${Moment(animal.incomingDate).format("ll")} ?`}
         buttonYesFonction={() => confirmDelete(animal)}
         buttonNoFonction={handlePressDelete}
       />
@@ -117,14 +92,19 @@ export const AnimalItem = ({ animal }: Props) => {
 
 type Style = {
   testContainer: ViewStyle;
+  groupIcon: ViewStyle;
+  horizontalWrapper: ViewStyle;
   animalType: TextStyle;
-  header: ViewStyle;
   icon: ImageStyle;
-  item: ViewStyle;
   date: TextStyle;
+  animalTitle: ViewStyle;
+  leftWrapper : ViewStyle;
 };
 
 const styles = StyleSheet.create<Style>({
+  leftWrapper : {
+ flexDirection : "row"
+  },
   testContainer: {
     borderColor: "grey",
     borderRadius: 4,
@@ -132,21 +112,26 @@ const styles = StyleSheet.create<Style>({
     padding: 8,
     margin: 8
   },
-  item: {
-    flex: 3
+  animalTitle: {
+    marginLeft : 16,
+    justifyContent : "flex-start"
   },
-  header: {
+  groupIcon: {
     flexDirection: "row",
-    justifyContent: "space-around"
+    justifyContent: "center"
   },
   icon: {
     height: 32,
-    width: 32
+    width: 32,
   },
   date: {
     fontWeight: "bold"
   },
   animalType: {
     color: "blue"
+  },
+  horizontalWrapper: {
+    flexDirection: "row",
+    justifyContent: "space-between"
   }
 });

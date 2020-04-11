@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { observer } from "mobx-react";
-import { View, ViewStyle, StyleSheet, Text } from "react-native";
+import { View, ViewStyle, StyleSheet } from "react-native";
 import { Header } from "react-native-elements";
 import { AnimalForm } from "./AnimalForm";
-import { getSpecies } from "../../../../services/animalService";
 import { GoBackButton } from "../../../../components/GoBackButton";
 import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
+import { getAnimalType } from "../../../../utils/helpers";
 
 export const UpdateAnimalScreen = observer(({ route }) => {
   const { animal } = route.params;
@@ -20,7 +20,10 @@ export const UpdateAnimalScreen = observer(({ route }) => {
         backgroundImageStyle={{ opacity: 0.8 }}
       />
 
-      <AnimalForm animalToSave={animal} animalTypeForm={getSpecies(animal)} />
+      <AnimalForm
+        animalToSave={animal}
+        animalTypeForm={getAnimalType(animal)}
+      />
     </View>
   );
 });
@@ -31,6 +34,6 @@ type Style = {
 
 const styles = StyleSheet.create<Style>({
   page: {
-    alignItems: "stretch",
-  },
+    alignItems: "stretch"
+  }
 });

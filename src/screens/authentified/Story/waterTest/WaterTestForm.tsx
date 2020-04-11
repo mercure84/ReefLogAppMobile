@@ -19,6 +19,10 @@ import RootStore from "../../../../store/RootStore";
 import Moment from "moment";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { ReefButton } from "../../../../components/ReefButton";
+import {
+  formatStringToFloat,
+  formatStringToInteger
+} from "../../../../utils/helpers";
 
 type Props = {
   waterTestToUpdate: WaterTest;
@@ -130,7 +134,7 @@ export const WaterTestForm = ({ waterTestToUpdate }: Props) => {
               onChangeText={text =>
                 setWaterTest({
                   ...waterTest,
-                  temperature: parseFloat(text)
+                  temperature: formatStringToFloat(text)
                 })
               }
               defaultValue={
@@ -150,7 +154,7 @@ export const WaterTestForm = ({ waterTestToUpdate }: Props) => {
               onChangeText={text =>
                 setWaterTest({
                   ...waterTest,
-                  salinity: parseFloat(text)
+                  salinity: formatStringToInteger(text)
                 })
               }
               defaultValue={
@@ -170,7 +174,7 @@ export const WaterTestForm = ({ waterTestToUpdate }: Props) => {
               onChangeText={text =>
                 setWaterTest({
                   ...waterTest,
-                  alcalinity: parseFloat(text)
+                  alcalinity: formatStringToFloat(text)
                 })
               }
               defaultValue={
@@ -192,7 +196,7 @@ export const WaterTestForm = ({ waterTestToUpdate }: Props) => {
               onChangeText={text =>
                 setWaterTest({
                   ...waterTest,
-                  ph: parseFloat(text)
+                  ph: formatStringToFloat(text)
                 })
               }
               defaultValue={
@@ -212,7 +216,7 @@ export const WaterTestForm = ({ waterTestToUpdate }: Props) => {
               onChangeText={text =>
                 setWaterTest({
                   ...waterTest,
-                  calcium: parseFloat(text)
+                  calcium: formatStringToInteger(text)
                 })
               }
               defaultValue={
@@ -232,7 +236,7 @@ export const WaterTestForm = ({ waterTestToUpdate }: Props) => {
               onChangeText={text =>
                 setWaterTest({
                   ...waterTest,
-                  magnesium: parseFloat(text)
+                  magnesium: formatStringToInteger(text)
                 })
               }
               defaultValue={
@@ -254,7 +258,7 @@ export const WaterTestForm = ({ waterTestToUpdate }: Props) => {
               onChangeText={text =>
                 setWaterTest({
                   ...waterTest,
-                  ammoniac: parseFloat(text)
+                  ammoniac: formatStringToFloat(text)
                 })
               }
               defaultValue={
@@ -274,7 +278,7 @@ export const WaterTestForm = ({ waterTestToUpdate }: Props) => {
               onChangeText={text =>
                 setWaterTest({
                   ...waterTest,
-                  nitrates: parseFloat(text)
+                  nitrates: formatStringToFloat(text)
                 })
               }
               defaultValue={
@@ -294,7 +298,7 @@ export const WaterTestForm = ({ waterTestToUpdate }: Props) => {
               onChangeText={text =>
                 setWaterTest({
                   ...waterTest,
-                  nitrites: parseFloat(text)
+                  nitrites: formatStringToFloat(text)
                 })
               }
               defaultValue={
@@ -316,7 +320,7 @@ export const WaterTestForm = ({ waterTestToUpdate }: Props) => {
               onChangeText={text =>
                 setWaterTest({
                   ...waterTest,
-                  phosphates: parseFloat(text)
+                  phosphates: formatStringToFloat(text)
                 })
               }
               defaultValue={
@@ -336,7 +340,7 @@ export const WaterTestForm = ({ waterTestToUpdate }: Props) => {
               onChangeText={text =>
                 setWaterTest({
                   ...waterTest,
-                  silicates: parseFloat(text)
+                  silicates: formatStringToFloat(text)
                 })
               }
               defaultValue={

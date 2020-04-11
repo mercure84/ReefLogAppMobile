@@ -15,6 +15,7 @@ import RootStore from "../../../../store/RootStore";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Moment from "moment";
 import { ReefButton } from "../../../../components/ReefButton";
+import { formatStringToInteger } from "../../../../utils/helpers";
 
 type Props = {
   infoCallBack: (string: string) => void;
@@ -148,7 +149,7 @@ export const NewTankForm = ({
               onChangeText={text =>
                 setTank({
                   ...tank,
-                  length: parseFloat(text)
+                  length: formatStringToInteger(text)
                 })
               }
               defaultValue={
@@ -168,7 +169,7 @@ export const NewTankForm = ({
               onChangeText={text =>
                 setTank({
                   ...tank,
-                  width: parseFloat(text)
+                  width: formatStringToInteger(text)
                 })
               }
               defaultValue={
@@ -186,7 +187,7 @@ export const NewTankForm = ({
               onChangeText={text =>
                 setTank({
                   ...tank,
-                  height: parseFloat(text)
+                  height: formatStringToInteger(text)
                 })
               }
               defaultValue={
@@ -207,7 +208,7 @@ export const NewTankForm = ({
               onChangeText={text =>
                 setTank({
                   ...tank,
-                  sumpVolume: parseFloat(text)
+                  sumpVolume: formatStringToInteger(text)
                 })
               }
               defaultValue={

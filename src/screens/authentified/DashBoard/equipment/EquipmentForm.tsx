@@ -20,6 +20,7 @@ import { TextInput } from "react-native-gesture-handler";
 import Moment from "moment";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { ReefButton } from "../../../../components/ReefButton";
+import { formatStringToInteger } from "../../../../utils/helpers";
 
 type Props = {
   equipmentToUpdate: Equipment;
@@ -173,7 +174,10 @@ export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
             maxLength={4}
             placeholder={"0-9999"}
             onChangeText={text =>
-              setEquipment({ ...equipment, quantity: parseFloat(text) })
+              setEquipment({
+                ...equipment,
+                quantity: formatStringToInteger(text)
+              })
             }
             defaultValue={
               isUpdating && equipment.quantity !== null
@@ -191,7 +195,7 @@ export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
             maxLength={4}
             placeholder={"0-9999"}
             onChangeText={text =>
-              setEquipment({ ...equipment, power: parseFloat(text) })
+              setEquipment({ ...equipment, power: formatStringToInteger(text) })
             }
             defaultValue={
               isUpdating && equipment.power !== null
