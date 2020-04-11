@@ -3,9 +3,9 @@ import { observer } from "mobx-react";
 import { View, ViewStyle, StyleSheet } from "react-native";
 import { Header } from "react-native-elements";
 import { AnimalForm } from "./AnimalForm";
-import { getAnimalType } from "../../../../services/animalService";
 import { GoBackButton } from "../../../../components/GoBackButton";
 import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
+import { getAnimalType } from "../../../../utils/helpers";
 
 export const UpdateAnimalScreen = observer(({ route }) => {
   const { animal } = route.params;
