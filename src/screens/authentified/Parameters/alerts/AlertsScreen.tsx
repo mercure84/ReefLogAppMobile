@@ -12,6 +12,8 @@ export const AlertsScreen = observer(() => {
   }
   const isAlertsLoading = RootStore.alertStore.alertState !== "done";
   const alerts = RootStore.alertStore.alertsData;
+  const aquariumId = RootStore.tankStore.tankList[0].id;
+  const token = RootStore.memberStore.token;
 
   return (
     <View style={styles.page}>
@@ -24,7 +26,11 @@ export const AlertsScreen = observer(() => {
       {isAlertsLoading && alerts !== undefined ? (
         <ActivityIndicator />
       ) : (
-        <AlertsForm existingAlerts={alerts} />
+        <AlertsForm
+          existingAlerts={alerts}
+          aquariumId={aquariumId}
+          token={token}
+        />
       )}
     </View>
   );

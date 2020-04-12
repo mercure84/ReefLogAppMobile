@@ -1,16 +1,25 @@
 import React, { useState } from "react";
-import { View, Text, Switch, ViewStyle, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Switch,
+  ViewStyle,
+  StyleSheet,
+  ActivityIndicator
+} from "react-native";
 import { ReefButton } from "../../../../components/ReefButton";
 import { NumericStepper } from "../../../../components/NumericStepper";
-import { Alert } from "../../../../services/alertsService";
-import RootStore from "../../../../store/RootStore";
+import { Alert, saveAlerts } from "../../../../services/alertsService";
 
 type Props = {
   existingAlerts: Alert[];
+  aquariumId: string;
+  token: string;
 };
 
-export const AlertsForm = ({ existingAlerts }: Props) => {
+export const AlertsForm = ({ existingAlerts, aquariumId, token }: Props) => {
   const [alerts, setAlerts] = useState<Alert[]>(existingAlerts);
+  const [isSubmitting, setSubmitting] = useState(false);
 
   const changeIsActive = (isActive: boolean, pAlert: Alert) => {
     const index = alerts.findIndex(alert => alert === pAlert);
@@ -28,14 +37,21 @@ export const AlertsForm = ({ existingAlerts }: Props) => {
     setAlerts(updatedAlerts);
   };
 
-  const submitAlert = () => {
-    //RootStore.alertStore.;
+  const submitAlert = async () => {
+    setSubmitting(true);
+    const response = await saveAlerts(aquariumId, alerts, token);
+    if (response != null) {
+      console.log("Réponse reçue");
+    } else {
+      console.log("Pas de réponse du service");
+    }
+    setSubmitting(false);
   };
 
   return (
     <>
       <ReefButton title="Sauver" onPress={() => submitAlert()} />
-
+      {isSubmitting && <ActivityIndicator />}
       {Object.entries(alerts).map(([key, value]) => (
         <View style={styles.switchContainer} key={key}>
           <View style={styles.leftContainer}>

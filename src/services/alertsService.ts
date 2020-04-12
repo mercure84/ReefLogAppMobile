@@ -38,7 +38,7 @@ export enum TypeTest {
   
 
 export const saveAlerts = async (aquariumId : string, alerts : Alert[], token : string) => {
-    const urlService = urlServer + "api/saveAlerts"
+    const urlService = urlServer + "api/addAlertsCollection"
     const alertsForm = {
         aquariumId : aquariumId,
         alerts : alerts
