@@ -1,14 +1,14 @@
 import { urlServer } from "../constants/constants";
-import { getData } from "./storageDevice";
 
 export interface Alert {
   id?: string;
   typeTest : TypeTest;
   targetValue : number;
-  dayInterval : 8
+  dayInterval : number;
+  isActive : boolean
 }
 
-export enum TypeTest {
+export enum TypeTestWithoutLabel {
   TEMPERATURE,
   SALINITY,
   ALCALINITY,
@@ -21,6 +21,21 @@ export enum TypeTest {
   PHOSPHATES,
   SILICATES
 }
+
+export enum TypeTest {
+    TEMPERATURE = "Température",
+    SALINITY = "Salinité",
+    ALCALINITY = "KH",
+    PH = "pH",
+    CALCIUM = "Calcium",
+    MAGNESIUM = "Magnésium",
+    AMMONIAC ="Ammoniac",
+    NITRATES = "Nitrates",
+    NITRITES = "Nitrites",
+    PHOSPHATES = "Phosphates",
+    SILICATES = "Silicates"
+  }
+  
 
 export const saveAlerts = async (aquariumId : string, alerts : Alert[], token : string) => {
     const urlService = urlServer + "api/saveAlerts"
