@@ -5,7 +5,7 @@ export interface Alert {
   typeTest : TypeTest;
   targetValue : number;
   dayInterval : number;
-  isActive : boolean
+  active : boolean
 }
 
 export enum TypeTestWithoutLabel {
@@ -73,6 +73,7 @@ try {
     });
     const dataResponse = response.json();
     console?.log("Alertes fétechées : " + dataResponse);
+    return dataResponse;
 } catch(error){
     console.log(error)
 }
