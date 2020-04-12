@@ -5,6 +5,7 @@ import { GoBackButton } from "../../../../components/GoBackButton";
 import { TypeTest, Alert } from "../../../../services/alertsService";
 import { observer } from "mobx-react";
 import { ReefButton } from "../../../../components/ReefButton";
+import { NumericStepper } from "../../../../components/NumericStepper";
 
 export const AlertsScreen = observer(() => {
   const listeTypeTest = TypeTest;
@@ -30,6 +31,20 @@ export const AlertsScreen = observer(() => {
     newAlerts[index] = alertToUpdate;
     setAlerts(newAlerts);
   };
+
+  const changeDayInterval = (newInterval: number, pAlert: Alert) => {
+    const alertToUpdate = alerts.filter(alert => alert === pAlert)[0];
+    const index = alerts.findIndex(alert => alert === pAlert);
+    alertToUpdate.dayInterval = newInterval;
+    let newAlerts = [...alerts];
+    newAlerts[index] = alertToUpdate;
+    setAlerts(newAlerts);
+  };
+
+  const submitAlert = () => {
+    console.log(alerts);
+  };
+
   return (
     <View style={styles.page}>
       <Header
@@ -37,11 +52,21 @@ export const AlertsScreen = observer(() => {
         centerComponent={<Text style={{ fontSize: 16 }}>Mes alertes</Text>}
         backgroundColor="pink"
       />
-      <ReefButton title="Sauver" onPress={() => null} />
+      <ReefButton title="Sauver" onPress={() => submitAlert()} />
 
       {Object.entries(alerts).map(([key, value]) => (
         <View style={styles.switchContainer} key={key}>
-          <Text>{value.typeTest}</Text>
+          <View style={styles.leftContainer}>
+            <Text>{value.typeTest}</Text>
+            <NumericStepper
+              value={value.dayInterval}
+              minValue={0}
+              maxValue={60}
+              onChange={change => changeDayInterval(change, value)}
+            />
+          </View>
+          <Text> jours </Text>
+
           <Switch
             trackColor={{ false: "#767577", true: "#81b0ff" }}
             thumbColor={true ? "#f5dd4b" : "#f4f3f4"}
@@ -57,6 +82,7 @@ export const AlertsScreen = observer(() => {
 type Style = {
   page: ViewStyle;
   switchContainer: ViewStyle;
+  leftContainer: ViewStyle;
 };
 
 const styles = StyleSheet.create<Style>({
@@ -69,5 +95,10 @@ const styles = StyleSheet.create<Style>({
   },
   page: {
     alignItems: "stretch"
+  },
+  leftContainer: {
+    justifyContent: "space-between",
+    flexDirection: "row",
+    flex: 2
   }
 });
