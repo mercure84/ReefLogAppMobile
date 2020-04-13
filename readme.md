@@ -25,6 +25,7 @@ A noter que l'on peut remplacer npm par yarn (en particulier sous iOS)
 ## Construire une release (fichier APK):
 
 commande gradlew assembleRelease
+(penser à changer la version dans le fichier : package.json)
 
 à lancer dans le dossier android/
 

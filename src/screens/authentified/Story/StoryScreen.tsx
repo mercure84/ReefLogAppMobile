@@ -23,6 +23,8 @@ export const StoryScreen = observer(() => {
   const isTestsLoading = RootStore.waterTestStore.waterTestState === "pending";
   const dataWaterTestList = RootStore.waterTestStore.waterTestListData;
 
+  const hasATank = RootStore.tankStore.tankList.length > 0;
+
   return (
     <>
       <Header
@@ -31,24 +33,24 @@ export const StoryScreen = observer(() => {
         backgroundImage={require("../../../assets/story.png")}
         backgroundImageStyle={{ opacity: 0.8 }}
       />
-      <ReefButton
+      {hasATank ? <><ReefButton
         title="Nouveau test"
         onPress={() => navigation.navigate("addTests")}
       />
-      <View style={styles.page}>
-        {isTestsLoading ? (
-          <ActivityIndicator />
-        ) : (
-          <FlatList
-            style={{ marginBottom: 64 }}
-            data={dataWaterTestList}
-            renderItem={({ item }) => <WaterTestItem waterTest={item} />}
-            keyExtractor={(item) => item.id.toString()}
-            ListEmptyComponent={<Text>Aucun enregistrement :(</Text>}
-            scrollEnabled={true}
-          />
-        )}
-      </View>
+        <View style={styles.page}>
+          {isTestsLoading ? (
+            <ActivityIndicator />
+          ) : (
+              <FlatList
+                style={{ marginBottom: 64 }}
+                data={dataWaterTestList}
+                renderItem={({ item }) => <WaterTestItem waterTest={item} />}
+                keyExtractor={(item) => item.id.toString()}
+                ListEmptyComponent={<Text>Aucun enregistrement :(</Text>}
+                scrollEnabled={true}
+              />
+            )}
+        </View></> : <Text>Créer d'abord un Aquarium avant de consulter cette page !</Text>}
     </>
   );
 });

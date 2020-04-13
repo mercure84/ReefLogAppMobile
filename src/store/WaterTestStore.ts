@@ -20,7 +20,10 @@ class WaterTestStore {
   @action
   async fetchWaterTestList(): Promise<WaterTest[]> {
     this.waterTestState = "pending";
-    if (this.RootStore.tankStore.tankState === "done") {
+    if (
+      this.RootStore.tankStore.tankState === "done" &&
+      this.RootStore.tankStore.tankList.length > 0
+    ) {
       const tankId = this.RootStore.tankStore.tankList[0].id;
       if (tankId !== null) {
         try {
@@ -38,6 +41,9 @@ class WaterTestStore {
           this.waterTestState = "error";
         }
       }
+    } else {
+      // pas d'aquariums ?
+      return null;
     }
   }
 

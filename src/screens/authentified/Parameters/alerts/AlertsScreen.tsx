@@ -1,9 +1,20 @@
 import React from "react";
 import { Header, Text } from "react-native-elements";
-import { View, ViewStyle, StyleSheet } from "react-native";
+import { View, ViewStyle, StyleSheet, ActivityIndicator } from "react-native";
 import { GoBackButton } from "../../../../components/GoBackButton";
+import { observer } from "mobx-react";
+import RootStore from "../../../../store/RootStore";
+import { AlertsForm } from "./AlertsForm";
 
-export const AlertsScreen = () => {
+export const AlertsScreen = observer(() => {
+  if (RootStore.alertStore.alertState === "pending") {
+    RootStore.alertStore.fetchAlerts();
+  }
+  const isAlertsLoading = RootStore.alertStore.alertState !== "done";
+  const alerts = RootStore.alertStore.alertsData;
+  const aquariumId = RootStore.tankStore.tankList[0].id;
+  const token = RootStore.memberStore.token;
+
   return (
     <View style={styles.page}>
       <Header
@@ -11,9 +22,19 @@ export const AlertsScreen = () => {
         centerComponent={<Text style={{ fontSize: 16 }}>Mes alertes</Text>}
         backgroundColor="pink"
       />
+
+      {isAlertsLoading && alerts !== undefined ? (
+        <ActivityIndicator />
+      ) : (
+        <AlertsForm
+          existingAlerts={alerts}
+          aquariumId={aquariumId}
+          token={token}
+        />
+      )}
     </View>
   );
-};
+});
 
 type Style = {
   page: ViewStyle;
