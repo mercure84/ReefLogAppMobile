@@ -16,6 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 import { TankPicture } from "./aquarium/TankPicture";
 import { ReefButton } from "../../../components/ReefButton";
 import { ReefHeaderTitle } from "../../../components/ReefHeaderTitle";
+import { PositiveAlerts } from "./alerts/PositiveAlerts";
 
 const DashboardScreen = observer(() => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);
@@ -30,10 +31,19 @@ const DashboardScreen = observer(() => {
     RootStore.tankStore.fetchTankList();
   }
 
+  if (RootStore.alertStore.positiveAlertsState === "pending") {
+
+    RootStore.alertStore.fetchPositiveAlerts();
+
+  }
+
   const isMemberLoading = RootStore.memberStore.memberState === "pending";
   const isTankLoading = RootStore.tankStore.tankState === "pending";
+  const isPositiveAlertsLoading = RootStore.alertStore.positiveAlertsState === "pending";
+
   const member = RootStore.memberStore.member;
   const tankList = RootStore.tankStore.tankList.slice();
+  const positiveAlerts = RootStore.alertStore.positiveAlertsData;
   const newTankPress = () => setNewTankFormVisible(true);
   const populationPress = () => navigation.navigate("handlePopulation");
   const equipmentPress = () => navigation.navigate("handleEquipment");
@@ -60,10 +70,11 @@ const DashboardScreen = observer(() => {
           {isMemberLoading ? (
             <ActivityIndicator />
           ) : (
-            <Text style={{ fontSize: 16 }}>
-              Bienvenue {member.userName.toLocaleUpperCase()} !
-            </Text>
-          )}
+              <Text style={{ fontSize: 16 }}>
+                Bienvenue {member.userName.toLocaleUpperCase()} !
+              </Text>
+            )}
+          {isPositiveAlertsLoading ? (<ActivityIndicator />) : <PositiveAlerts positiveAlerts={positiveAlerts} />}
 
           <MainTankItem editFunction={toggleTankForm} tank={tankList[0]} />
           <TankPicture />
