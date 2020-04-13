@@ -22,6 +22,7 @@ import {
 import { observer } from "mobx-react";
 import Moment from "moment";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { formatStringToInteger } from "../../../../utils/helpers";
 
 type Props = {
   animalToSave: Animal;
@@ -56,6 +57,7 @@ export const AnimalForm = observer(
       });
     };
 
+    // si la liste des espèces dispo a été fetchée ==> on initialise la valeur dans notre "animal"
     if (
       RootStore.animalStore.animalSpeciesState === "done" &&
       animalSpecies.length === 0
@@ -64,8 +66,8 @@ export const AnimalForm = observer(
         RootStore.animalStore.animalSpeciesData[animalTypeForm].sort()
       );
       isUpdating
-        ? setSpecies(animal[animalTypeForm + "Species"])
-        : setSpecies(animalSpecies[0]);
+        ? setSpecies(animal[animalTypeForm + "Species"]) :
+        setSpecies(RootStore.animalStore.animalSpeciesData[animalTypeForm][0])
     }
 
     const isAnimalSpeciesLoading =
@@ -105,7 +107,6 @@ export const AnimalForm = observer(
         );
       }
       RootStore.animalStore.fetchAnimals();
-
       setLoading(false);
     };
 
@@ -119,6 +120,8 @@ export const AnimalForm = observer(
       setDatePickerVisible(false);
     };
 
+    //console.log("Quantité = ", animal.quantity);
+
     return (
       <View>
         {isLoading && <ActivityIndicator />}
@@ -130,11 +133,11 @@ export const AnimalForm = observer(
               title={
                 animal !== null
                   ? Moment(animal.incomingDate)
-                      .format("ll")
-                      .toString()
+                    .format("ll")
+                    .toString()
                   : Moment(new Date())
-                      .format("ll")
-                      .toString()
+                    .format("ll")
+                    .toString()
               }
               onPress={() => setDatePickerVisible(true)}
             />
@@ -157,26 +160,26 @@ export const AnimalForm = observer(
             {isAnimalSpeciesLoading ? (
               <ActivityIndicator />
             ) : (
-              <View style={styles.input}>
-                <Text>Espèce :</Text>
-                <Picker
-                  style={{ height: 50, width: 200 }}
-                  mode="dialog"
-                  selectedValue={speciesInPicker}
-                  onValueChange={itemValue => setSpecies(itemValue)}
-                >
-                  {animalSpecies.map((item, index) => {
-                    return (
-                      <Picker.Item
-                        label={item}
-                        value={item.toString()}
-                        key={index}
-                      />
-                    );
-                  })}
-                </Picker>
-              </View>
-            )}
+                <View style={styles.input}>
+                  <Text>Espèce :</Text>
+                  <Picker
+                    style={{ height: 50, width: 200 }}
+                    mode="dialog"
+                    selectedValue={speciesInPicker}
+                    onValueChange={itemValue => setSpecies(itemValue)}
+                  >
+                    {animalSpecies.map((item, index) => {
+                      return (
+                        <Picker.Item
+                          label={item}
+                          value={item.toString()}
+                          key={index}
+                        />
+                      );
+                    })}
+                  </Picker>
+                </View>
+              )}
 
             <View style={styles.input}>
               <Text>Nom</Text>
@@ -216,10 +219,11 @@ export const AnimalForm = observer(
               <TextInput
                 style={styles.textInput}
                 maxLength={2}
+                keyboardType={"number-pad"}
                 onChangeText={text =>
                   setAnimal({
                     ...animal,
-                    quantity: parseInt(text)
+                    quantity: formatStringToInteger(text)
                   })
                 }
                 defaultValue={
