@@ -30,11 +30,8 @@ const DashboardScreen = observer(() => {
   if (RootStore.tankStore.tankState === "pending") {
     RootStore.tankStore.fetchTankList();
   }
-
   if (RootStore.alertStore.positiveAlertsState === "pending") {
-
     RootStore.alertStore.fetchPositiveAlerts();
-
   }
 
   const isMemberLoading = RootStore.memberStore.memberState === "pending";
@@ -62,18 +59,19 @@ const DashboardScreen = observer(() => {
       />
 
       <MessageInfo message={messageInfo} />
+      {isMemberLoading ? (
+        <ActivityIndicator />
+      ) : (
+          <Text style={{ fontSize: 16 }}>
+            Bienvenue {member.userName.toLocaleUpperCase()} !
+          </Text>
+        )}
 
       {isTankLoading && <ActivityIndicator />}
 
       {tankList.length > 0 && !isNewTankFormVisible && (
         <>
-          {isMemberLoading ? (
-            <ActivityIndicator />
-          ) : (
-              <Text style={{ fontSize: 16 }}>
-                Bienvenue {member.userName.toLocaleUpperCase()} !
-              </Text>
-            )}
+
           {isPositiveAlertsLoading ? (<ActivityIndicator />) : <PositiveAlerts positiveAlerts={positiveAlerts} />}
 
           <MainTankItem editFunction={toggleTankForm} tank={tankList[0]} />

@@ -30,6 +30,7 @@ export const NewTankForm = ({
   memberId,
   tankToSave
 }: Props) => {
+  const today = new Date()
   const [isLoading, setLoading] = useState(false);
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [tank, setTank] = useState<Tank>(tankToSave);
@@ -41,12 +42,14 @@ export const NewTankForm = ({
 
   const checkForm = () => {
     let isValide = false;
+    if (tank.startDate == undefined) {
+      setTank({ ...tank, startDate: today })
+    }
     if (
-      tank.name !== "" &&
-      tank.length !== null &&
-      tank.height !== null &&
-      tank.width !== null &&
-      tank.sumpVolume !== null
+      tank.name !== null &&
+      tank.length > 0 &&
+      tank.height > 0 &&
+      tank.width > 0
     ) {
       isValide = true;
     } else {
@@ -69,6 +72,7 @@ export const NewTankForm = ({
         setLoading(false);
         setInfoMessage("");
         showFormCallback(false);
+        RootStore.tankStore.fetchTankList();
       } else {
         setLoading(false);
         setInfoMessage("Un problème est survenu");
@@ -99,11 +103,11 @@ export const NewTankForm = ({
             title={
               tank !== null
                 ? Moment(tank.startDate)
-                    .format("ll")
-                    .toString()
+                  .format("ll")
+                  .toString()
                 : Moment(new Date())
-                    .format("ll")
-                    .toString()
+                  .format("ll")
+                  .toString()
             }
             onPress={() => setDatePickerVisible(true)}
           />
