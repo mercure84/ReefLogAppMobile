@@ -7,9 +7,12 @@ import { ReefHeaderTitle } from "../../../components/ReefHeaderTitle";
 import { handleEmail } from "../../../screens/welcome/components/About";
 import mailIcon from "../../../assets/icons/mail.png";
 import { disconnect } from "../../../services/rootService";
+import RootStore from "../../../store/RootStore";
 
 const ParameterScreen = () => {
   const navigation = useNavigation();
+  const hasATank = RootStore.tankStore.tankList.length > 0;
+
 
   return (
     <>
@@ -24,10 +27,10 @@ const ParameterScreen = () => {
           title="Mon profil"
           onPress={() => navigation.navigate("myProfil")}
         />
-        <ReefButton
+        {hasATank && <ReefButton
           title="Alertes"
           onPress={() => navigation.navigate("myAlerts")}
-        />
+        />}
         <ReefButton
           title="Outils"
           onPress={() => navigation.navigate("myTools")}

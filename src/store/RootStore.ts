@@ -4,6 +4,7 @@ import WaterTestStore from "./WaterTestStore";
 import AnimalStore from "./AnimalStore";
 import EquipmentStore from "./EquipmentStore";
 import SocialStore from "./SocialStore";
+import AlertStore from "./AlertStore";
 
 export class RootStore {
   memberStore: MemberStore;
@@ -12,6 +13,7 @@ export class RootStore {
   animalStore: AnimalStore;
   equipmentStore: EquipmentStore;
   socialStore: SocialStore;
+  alertStore: AlertStore;
 
   constructor() {
     this.memberStore = new MemberStore(this);
@@ -20,6 +22,7 @@ export class RootStore {
     this.animalStore = new AnimalStore(this);
     this.equipmentStore = new EquipmentStore(this);
     this.socialStore = new SocialStore(this);
+    this.alertStore = new AlertStore(this);
   }
 }
 
