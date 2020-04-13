@@ -13,7 +13,9 @@ class AlertStore {
   @observable alertState = "pending";
 
   @computed get alertsData() {
-    return toJS(this.alerts);
+    return toJS(this.alerts).sort((a, b) =>
+      a.typeTest > b.typeTest ? 1 : b.typeTest > a.typeTest ? -1 : 0
+    );
   }
 
   @action
