@@ -44,7 +44,7 @@ const styles = StyleSheet.create<Style>({
     margin: 4,
     alignSelf: "center",
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-around"
   },
   label: {
     fontFamily: "verdana",

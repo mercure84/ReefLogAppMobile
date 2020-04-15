@@ -1,7 +1,28 @@
 import { observable, action, runInAction, computed, toJS } from "mobx";
 import { RootStore as RootStoreType } from "./RootStore";
-import { Alert } from "../services/alertsService";
 import { urlServer } from "../constants/constants";
+
+export interface Alert {
+  id?: string;
+  typeTest: TypeTest;
+  targetValue: number;
+  dayInterval: number;
+  active: boolean;
+}
+
+export enum TypeTest {
+  TEMPERATURE = "Température",
+  SALINITY = "Salinité",
+  ALCALINITY = "KH",
+  PH = "pH",
+  CALCIUM = "Calcium",
+  MAGNESIUM = "Magnésium",
+  AMMONIAC = "Ammoniac",
+  NITRATES = "Nitrates",
+  NITRITES = "Nitrites",
+  PHOSPHATES = "Phosphates",
+  SILICATES = "Silicates",
+}
 
 class AlertStore {
   RootStore: RootStoreType;
@@ -97,6 +118,33 @@ class AlertStore {
       }
     }
   }
+
+  @action
+  saveAlerts = async (alerts: Alert[]) => {
+    const urlService = urlServer + "api/addAlertsCollection";
+    const alertsForm = {
+      aquariumId: this.RootStore.tankStore.tankList[0].id,
+      alerts: alerts,
+    };
+    try {
+      const memberToken = this.RootStore.memberStore.token;
+
+      const response = await fetch(urlService, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: memberToken,
+        },
+        body: JSON.stringify(alertsForm),
+      });
+      const dataResponse = response.json();
+      console.log("Alerts envoyées");
+      return dataResponse;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
 
 export default AlertStore;
