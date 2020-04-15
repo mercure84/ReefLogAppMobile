@@ -1,9 +1,20 @@
 import { observable, action, runInAction, computed, toJS } from "mobx";
 import { RootStore as RootStoreType } from "./RootStore";
-import { Equipment } from "../services/equipmentService";
 import { deleteItem } from "../services/rootService";
 import { urlServer } from "../constants/constants";
+import { Tank } from "../services/tankService";
 
+export interface Equipment {
+  dateInstallation?: Date;
+  id?: number;
+  typeOfEquipment: string;
+  mark?: string;
+  model?: string;
+  description?: string;
+  power?: number;
+  quantity?: number;
+  aquarium?: Tank;
+}
 class EquipmentStore {
   RootStore: RootStoreType;
 
@@ -66,6 +77,35 @@ class EquipmentStore {
       console.log(error);
     }
   }
+
+  @action
+  saveEquipment = async (newEquipment: Equipment, update: boolean) => {
+    const suffixUrl = update ? "api/updateEquipment" : "api/addEquipment";
+    newEquipment.aquarium = null;
+    const urlService = urlServer + suffixUrl;
+    const newEquipmentForm = {
+      aquariumId: this.RootStore.tankStore.tankList[0].id,
+      equipment: newEquipment,
+    };
+    try {
+      const memberToken = this.RootStore.memberStore.token;
+
+      const response = await fetch(urlService, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: memberToken,
+        },
+        body: JSON.stringify(newEquipmentForm),
+      });
+      const dataResponse = response.json;
+      console.log("Nouvel équipement saved");
+      return dataResponse;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
 
 export default EquipmentStore;

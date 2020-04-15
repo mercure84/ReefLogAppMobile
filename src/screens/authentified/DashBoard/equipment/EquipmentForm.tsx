@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import {
-  Equipment,
-  saveEquipment
-} from "../../../../services/equipmentService";
+
 import RootStore from "../../../../store/RootStore";
 import {
   ActivityIndicator,
@@ -21,6 +18,7 @@ import Moment from "moment";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { ReefButton } from "../../../../components/ReefButton";
 import { formatStringToInteger } from "../../../../utils/helpers";
+import { Equipment } from "../../../../store/EquipmentStore";
 
 type Props = {
   equipmentToUpdate: Equipment;
@@ -50,8 +48,7 @@ export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
     setLoading(true);
     if (checkForm) {
       setInfoMessage("Le formulaire est valide ! Enregistrement en cours...");
-      const response = await saveEquipment(
-        RootStore.tankStore.tankList[0].id,
+      const response = RootStore.equipmentStore.saveEquipment(
         equipment,
         isUpdating
       );
@@ -88,11 +85,11 @@ export const EquipmentForm = ({ equipmentToUpdate }: Props) => {
             title={
               equipment !== null
                 ? Moment(equipment.dateInstallation)
-                    .format("ll")
-                    .toString()
+                  .format("ll")
+                  .toString()
                 : Moment(new Date())
-                    .format("ll")
-                    .toString()
+                  .format("ll")
+                  .toString()
             }
             onPress={() => setDatePickerVisible(true)}
           />
