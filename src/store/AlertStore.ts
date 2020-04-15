@@ -1,7 +1,7 @@
-import { getAlerts, showAlerts } from "./../services/alertsService";
 import { observable, action, runInAction, computed, toJS } from "mobx";
 import { RootStore as RootStoreType } from "./RootStore";
 import { Alert } from "../services/alertsService";
+import { urlServer } from "../constants/constants";
 
 class AlertStore {
   RootStore: RootStoreType;
@@ -39,10 +39,20 @@ class AlertStore {
         console.log("Store is fetching Alerts");
         const memberToken = this.RootStore.memberStore.token;
         const tankId = this.RootStore.tankStore.tankList[0].id;
-        const alerts = await getAlerts(tankId, memberToken);
-        runInAction(() => {
+        const urlService = urlServer + "api/getAlerts/" + tankId;
+
+        const response = await fetch(urlService, {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: memberToken,
+          },
+        });
+        const alerts: Promise<Alert[]> = response.json();
+        runInAction(async () => {
           console.log("alerts success");
-          this.alerts = alerts;
+          this.alerts = await alerts;
           this.alertState = "done";
         });
         return alerts;
@@ -64,10 +74,20 @@ class AlertStore {
         console.log("Store is fetching positive Alerts");
         const memberToken = this.RootStore.memberStore.token;
         const tankId = this.RootStore.tankStore.tankList[0].id;
-        const positiveAlerts = await showAlerts(tankId, memberToken);
-        runInAction(() => {
+        const urlService = urlServer + "api/showAlerts/" + tankId;
+        const response = await fetch(urlService, {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: memberToken,
+          },
+        });
+
+        const positiveAlerts: Promise<Alert[]> = response.json();
+        runInAction(async () => {
           console.log("alerts success");
-          this.positiveAlerts = positiveAlerts;
+          this.positiveAlerts = await positiveAlerts;
           this.positiveAlertsState = "done";
         });
         return positiveAlerts;

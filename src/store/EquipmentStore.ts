@@ -1,8 +1,8 @@
-import { getEquipments } from "./../services/equipmentService";
 import { observable, action, runInAction, computed, toJS } from "mobx";
 import { RootStore as RootStoreType } from "./RootStore";
 import { Equipment } from "../services/equipmentService";
 import { deleteItem } from "../services/rootService";
+import { urlServer } from "../constants/constants";
 
 class EquipmentStore {
   RootStore: RootStoreType;
@@ -27,10 +27,20 @@ class EquipmentStore {
         try {
           console.log("Store is fetching  Equipments");
           const memberToken = this.RootStore.memberStore.token;
-          const equipments = await getEquipments(tankId, memberToken);
-          runInAction(() => {
+          const urlService = urlServer + "api/getEquipmentList/" + tankId;
+          const response = await fetch(urlService, {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              Authorization: memberToken,
+            },
+          });
+          const equipments: Promise<Equipment[]> = response.json();
+
+          runInAction(async () => {
             console.log("equipments Success");
-            this.equipments = equipments;
+            this.equipments = await equipments;
             this.equipmentState = "done";
           });
           return equipments;

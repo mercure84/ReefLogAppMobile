@@ -24,7 +24,7 @@ export const saveEquipment = async (
   const urlService = urlServer + suffixUrl;
   const newEquipmentForm = {
     aquariumId: pAquariumId,
-    equipment: newEquipment
+    equipment: newEquipment,
   };
   try {
     const token = await getData("token");
@@ -34,35 +34,12 @@ export const saveEquipment = async (
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: token
+        Authorization: token,
       },
-      body: JSON.stringify(newEquipmentForm)
+      body: JSON.stringify(newEquipmentForm),
     });
     const dataResponse = response.json;
     console.log("Nouvel équipement saved");
-    return dataResponse;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getEquipments = async (
-  pTankId: string,
-  token: string
-): Promise<Equipment[] | any> => {
-  const urlService = urlServer + "api/getEquipmentList/" + pTankId;
-  try {
-    console.log("Service is fetching Equipments for tank n° " + pTankId);
-    const response = await fetch(urlService, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: token
-      }
-    });
-    const dataResponse = response.json();
-    console.log("equipments fetchés = " + dataResponse);
     return dataResponse;
   } catch (error) {
     console.log(error);

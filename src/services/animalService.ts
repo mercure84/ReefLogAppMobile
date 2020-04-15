@@ -49,7 +49,7 @@ export enum AnimalType {
   urchin = "Oursin",
   mollusk = "Mollusque",
   lps = "LPS",
-  soft = "Corail Mou"
+  soft = "Corail Mou",
 }
 
 export const saveAnimal = async (
@@ -72,7 +72,7 @@ export const saveAnimal = async (
     star: newAnimal.starSpecies !== undefined ? newAnimal : null,
     mollusk: newAnimal.molluskSpecies !== undefined ? newAnimal : null,
     crustacean: newAnimal.crustaceanSpecies !== undefined ? newAnimal : null,
-    cucumber: newAnimal.cucumberSpecies !== undefined ? newAnimal : null
+    cucumber: newAnimal.cucumberSpecies !== undefined ? newAnimal : null,
   };
 
   try {
@@ -82,56 +82,12 @@ export const saveAnimal = async (
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: token
+        Authorization: token,
       },
-      body: JSON.stringify(newAnimalForm)
+      body: JSON.stringify(newAnimalForm),
     });
     const dataResponse = response.json;
     console.log("Nouvel animal saved");
-    return dataResponse;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getAnimals = async (
-  pTankId: string,
-  token: string
-): Promise<Animal[] | any> => {
-  const urlService = urlServer + "api/getAnimals/" + pTankId;
-  try {
-    console.log("Service is fetching Animals for tank n° " + pTankId);
-    const response = await fetch(urlService, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: token
-      }
-    });
-
-    const dataResponse = response.json();
-    console.log("animals fetchés = " + dataResponse);
-    return dataResponse;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getAnimalSpecies = async (): Promise<AnimalSpecies | any> => {
-  const urlService = urlServer + "api/getAnimalSpecies";
-  try {
-    console.log("Service is fetching AnimalsSpecies");
-
-    const response = await fetch(urlService, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    });
-    const dataResponse = response.json();
-    console.log("animalsSpecies fetchés = " + dataResponse);
     return dataResponse;
   } catch (error) {
     console.log(error);

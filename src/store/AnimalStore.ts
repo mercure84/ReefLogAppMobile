@@ -1,12 +1,8 @@
-import {
-  getAnimals,
-  Animal,
-  AnimalSpecies,
-  getAnimalSpecies
-} from "./../services/animalService";
+import { Animal, AnimalSpecies } from "./../services/animalService";
 import { observable, action, runInAction, computed, toJS } from "mobx";
 import { RootStore as RootStoreType } from "./RootStore";
 import { deleteItem } from "../services/rootService";
+import { urlServer } from "../constants/constants";
 
 class AnimalStore {
   RootStore: RootStoreType;
@@ -15,7 +11,9 @@ class AnimalStore {
     this.RootStore = RootStore;
   }
 
-  @observable animals: Animal[] = [];
+  //TODO : fixer les any ic
+
+  @observable animals: Animal[];
   @observable animalState = "pending";
   @observable animalSpecies: AnimalSpecies;
   @observable animalSpeciesState = "pending";
@@ -36,11 +34,20 @@ class AnimalStore {
       if (tankId !== null) {
         try {
           console.log("Store is fetching  Animals");
-          const memberToken = this.RootStore.memberStore.token;
-          const animals = await getAnimals(tankId, memberToken);
-          runInAction(() => {
+          const token = this.RootStore.memberStore.token;
+          const urlService = urlServer + "api/getAnimals/" + tankId;
+          const response = await fetch(urlService, {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              Authorization: token,
+            },
+          });
+          const animals: Promise<Animal[]> = response.json();
+          runInAction(async () => {
             console.log("animals Success");
-            this.animals = animals;
+            this.animals = await animals;
             this.animalState = "done";
           });
           return animals;
@@ -57,10 +64,18 @@ class AnimalStore {
     this.animalSpeciesState = "pending";
     try {
       console.log("Store is fetching Animals SPECIES");
-      const animalSpecies = await getAnimalSpecies();
-      runInAction(() => {
+      const urlService = urlServer + "api/getAnimalSpecies";
+      const response = await fetch(urlService, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      const animalSpecies: Promise<AnimalSpecies> = response.json();
+      runInAction(async () => {
         console.log("animalsSpecies success");
-        this.animalSpecies = animalSpecies;
+        this.animalSpecies = await animalSpecies;
         this.animalSpeciesState = "done";
       });
       return animalSpecies;
