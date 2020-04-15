@@ -11,8 +11,7 @@ import { Card } from "react-native-elements";
 import { TextInput } from "react-native-gesture-handler";
 import {
   WaterTest,
-  saveWaterTest
-} from "../../../../services/waterTestService";
+} from "../../../../store/WaterTestStore";
 import { MessageInfo } from "../../../../components/MessageInfo";
 import { useNavigation } from "@react-navigation/native";
 import RootStore from "../../../../store/RootStore";
@@ -40,7 +39,7 @@ export const WaterTestForm = ({ waterTestToUpdate }: Props) => {
 
   const checkForm = () => {
     let goodValues = 0;
-    Object.keys(waterTest).forEach(function(key) {
+    Object.keys(waterTest).forEach(function (key) {
       let value = waterTest[key];
       isNaN(value) ? (value = null) : null;
       if (value !== undefined && value !== null && typeof value === "number") {
@@ -60,8 +59,7 @@ export const WaterTestForm = ({ waterTestToUpdate }: Props) => {
       setInfoMessage(
         "Votre formulaire est correct, nous allons l'enregistrer... "
       );
-      const response = await saveWaterTest(
-        RootStore.tankStore.tankList[0].id,
+      const response = RootStore.waterTestStore.saveWaterTest(
         waterTest,
         toUpdate
       );
@@ -101,11 +99,11 @@ export const WaterTestForm = ({ waterTestToUpdate }: Props) => {
             title={
               waterTest !== null
                 ? Moment(waterTest.date)
-                    .format("lll")
-                    .toString()
+                  .format("lll")
+                  .toString()
                 : Moment(new Date())
-                    .format("lll")
-                    .toString()
+                  .format("lll")
+                  .toString()
             }
             onPress={() => setDatePickerVisible(true)}
           />

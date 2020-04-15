@@ -10,7 +10,7 @@ import {
   ActivityIndicator
 } from "react-native";
 import { Card } from "react-native-elements";
-import { saveReefTank, Tank } from "../../../../services/tankService";
+import { Tank } from "../../../../store/TankStore";
 import RootStore from "../../../../store/RootStore";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Moment from "moment";
@@ -67,7 +67,7 @@ export const NewTankForm = ({
     setLoading(true);
     if (checkForm()) {
       setInfoMessage("Le formulaire est valide ! Enregistrement en cours...");
-      const response = await saveReefTank(memberId, tank, isUpdating);
+      const response = RootStore.tankStore.saveReefTank(tank, isUpdating);
       if (response != null) {
         setLoading(false);
         setInfoMessage("");

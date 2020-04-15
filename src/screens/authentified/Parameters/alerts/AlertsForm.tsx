@@ -5,19 +5,19 @@ import {
   Switch,
   ViewStyle,
   StyleSheet,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import { ReefButton } from "../../../../components/ReefButton";
 import { NumericStepper } from "../../../../components/NumericStepper";
-import { Alert, saveAlerts } from "../../../../services/alertsService";
+import RootStore from "../../../../store/RootStore";
+import { Alert } from "../../../../store/AlertStore";
 
 type Props = {
   existingAlerts: Alert[];
   aquariumId: string;
-  token: string;
 };
 
-export const AlertsForm = ({ existingAlerts, aquariumId, token }: Props) => {
+export const AlertsForm = ({ existingAlerts, aquariumId }: Props) => {
   const [alerts, setAlerts] = useState<Alert[]>(existingAlerts);
   const [isSubmitting, setSubmitting] = useState(false);
 
@@ -39,9 +39,10 @@ export const AlertsForm = ({ existingAlerts, aquariumId, token }: Props) => {
 
   const submitAlert = async () => {
     setSubmitting(true);
-    const response = await saveAlerts(aquariumId, alerts, token);
+    const response = RootStore.alertStore.saveAlerts(alerts);
     if (response != null) {
       console.log("Réponse reçue");
+      RootStore.alertStore.fetchPositiveAlerts();
     } else {
       console.log("Pas de réponse du service");
     }

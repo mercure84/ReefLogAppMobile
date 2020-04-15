@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Equipment } from "../../../../services/equipmentService";
+import { Equipment } from "../../../../store/EquipmentStore";
 import { useNavigation } from "@react-navigation/native";
 import {
   ViewStyle,
