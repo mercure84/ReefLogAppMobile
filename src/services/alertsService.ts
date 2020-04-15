@@ -8,20 +8,6 @@ export interface Alert {
   active: boolean;
 }
 
-export enum TypeTestWithoutLabel {
-  TEMPERATURE,
-  SALINITY,
-  ALCALINITY,
-  PH,
-  CALCIUM,
-  MAGNESIUM,
-  AMMONIAC,
-  NITRATES,
-  NITRITES,
-  PHOSPHATES,
-  SILICATES,
-}
-
 export enum TypeTest {
   TEMPERATURE = "Température",
   SALINITY = "Salinité",

@@ -1,8 +1,8 @@
-import { observable, action, runInAction, computed } from "mobx";
-import { Tank, getTankList } from "../services/tankService";
+import { observable, action, runInAction } from "mobx";
+import { Tank } from "../services/tankService";
 import { RootStore as RootStoreType } from "./RootStore";
 import { ImageSourcePropType } from "react-native";
-import { saveAquariumPicture } from "../services/imageTransfertService";
+import { urlServer } from "../constants/constants";
 
 class TankStore {
   RootStore: RootStoreType;
@@ -27,10 +27,19 @@ class TankStore {
         try {
           console.log("Store is Fetching tankList");
           const memberToken = this.RootStore.memberStore.token;
-          const tankList = await getTankList(memberId, memberToken);
-          runInAction(() => {
+          const urlService = urlServer + "api/getAquariumList/" + memberId;
+          const response = await fetch(urlService, {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              Authorization: memberToken,
+            },
+          });
+          const tankList: Promise<Tank[]> = response.json();
+          runInAction(async () => {
             console.log("tankListSuccess");
-            this.tankList = tankList;
+            this.tankList = await tankList;
             this.tankState = "done";
           });
           return tankList;
@@ -43,12 +52,28 @@ class TankStore {
   }
 
   @action
-  async storeUploadImageTank(photo: ImageSourcePropType) {
+  async storeUploadImageTank(photo: ImageSourcePropType | any) {
     this.tankState = "pending";
 
     try {
       console.log("Store is uploading an image to DB");
-      await saveAquariumPicture(photo, this.tankList[0].id);
+      const suffixUrl = "api/uploadAquariumPicture/" + this.tankList[0].id;
+      const urlService = urlServer + suffixUrl;
+      const data = new FormData();
+      data.append("file", {
+        uri: photo.uri,
+        name: "photo.png",
+        filename: "imageName.png",
+        type: "image/png",
+      });
+      const memberToken = this.RootStore.memberStore.token;
+      await fetch(urlService, {
+        method: "POST",
+        headers: {
+          Authorization: memberToken,
+        },
+        body: data,
+      });
       runInAction(() => {
         this.tankState = "done";
       });

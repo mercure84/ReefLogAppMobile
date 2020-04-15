@@ -1,7 +1,8 @@
-import { WaterTest, getWaterTestList } from "../services/waterTestService";
+import { WaterTest } from "../services/waterTestService";
 import { observable, action, runInAction, computed, toJS } from "mobx";
 import { RootStore as RootStoreType } from "./RootStore";
 import { deleteItem } from "../services/rootService";
+import { urlServer } from "../constants/constants";
 
 class WaterTestStore {
   RootStore: RootStoreType;
@@ -29,10 +30,21 @@ class WaterTestStore {
         try {
           console.log("Store is fetching  WaterTestList");
           const memberToken = this.RootStore.memberStore.token;
-          const waterTestList = await getWaterTestList(tankId, memberToken);
-          runInAction(() => {
+          const urlService = urlServer + "api/getWaterTestList/" + tankId;
+
+          const response = await fetch(urlService, {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              Authorization: memberToken,
+            },
+          });
+
+          const waterTestList: Promise<WaterTest[]> = response.json();
+          runInAction(async () => {
             console.log("waterTestList Success");
-            this.waterTestList = waterTestList;
+            this.waterTestList = await waterTestList;
             this.waterTestState = "done";
           });
           return waterTestList;
@@ -54,9 +66,7 @@ class WaterTestStore {
       console.log("Store is deleting the waterTest n° " + id);
       const memberToken = this.RootStore.memberStore.token;
       await deleteItem(id, "waterTest", memberToken);
-      runInAction(() => {
-        this.waterTestState = "done";
-      });
+      this.fetchWaterTestList();
     } catch (error) {
       console.log(error);
     }
