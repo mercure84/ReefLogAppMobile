@@ -1,8 +1,58 @@
-import { Animal, AnimalSpecies } from "./../services/animalService";
 import { observable, action, runInAction, computed, toJS } from "mobx";
 import { RootStore as RootStoreType } from "./RootStore";
 import { deleteItem } from "../services/rootService";
 import { urlServer } from "../constants/constants";
+import { Tank } from "../services/tankService";
+
+export interface Animal {
+  id: number;
+  quantity: number;
+  name: string;
+  incomingDate: string;
+  exitDate?: any;
+  birthDay?: any;
+  deathDay?: any;
+  notes: string;
+  currentSize: string;
+  aquarium: Tank;
+  sex?: string;
+  anemoneSpecies?: string;
+  softSpecies?: string;
+  spsSpecies?: string;
+  lpsSpecies?: string;
+  fishSpecies?: string;
+  urchinSpecies?: string;
+  starSpecies?: string;
+  molluskSpecies?: string;
+  crustaceanSpecies?: string;
+  cucumberSpecies?: string;
+}
+
+export interface AnimalSpecies {
+  star?: string[];
+  crustacean?: string[];
+  anemone?: string[];
+  cucumber?: string[];
+  fish?: string[];
+  sps?: string[];
+  urchin?: string[];
+  mollusk?: string[];
+  lps?: string[];
+  soft?: string[];
+}
+
+export enum AnimalType {
+  star = "Etoile",
+  crustacean = "Crustacé",
+  anemone = "Anémone",
+  cucumber = "Concombre",
+  fish = "Poisson",
+  sps = "SPS",
+  urchin = "Oursin",
+  mollusk = "Mollusque",
+  lps = "LPS",
+  soft = "Corail Mou",
+}
 
 class AnimalStore {
   RootStore: RootStoreType;
@@ -99,6 +149,45 @@ class AnimalStore {
       console.log(error);
     }
   }
+
+  @action
+  saveAnimal = async (newAnimal: Animal, update: boolean) => {
+    const suffixUrl = update ? "api/updateAnimal" : "api/addAnimal";
+    newAnimal.aquarium = null;
+    const urlService = urlServer + suffixUrl;
+
+    const newAnimalForm = {
+      aquariumId: this.RootStore.tankStore.tankList[0].id,
+      anemone: newAnimal.anemoneSpecies !== undefined ? newAnimal : null,
+      soft: newAnimal.softSpecies !== undefined ? newAnimal : null,
+      sps: newAnimal.spsSpecies !== undefined ? newAnimal : null,
+      lps: newAnimal.lpsSpecies !== undefined ? newAnimal : null,
+      fish: newAnimal.fishSpecies !== undefined ? newAnimal : null,
+      urchin: newAnimal.urchinSpecies !== undefined ? newAnimal : null,
+      star: newAnimal.starSpecies !== undefined ? newAnimal : null,
+      mollusk: newAnimal.molluskSpecies !== undefined ? newAnimal : null,
+      crustacean: newAnimal.crustaceanSpecies !== undefined ? newAnimal : null,
+      cucumber: newAnimal.cucumberSpecies !== undefined ? newAnimal : null,
+    };
+
+    try {
+      const memberToken = this.RootStore.memberStore.token;
+      const response = await fetch(urlService, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: memberToken,
+        },
+        body: JSON.stringify(newAnimalForm),
+      });
+      const dataResponse = response.json;
+      console.log("Nouvel animal saved");
+      return dataResponse;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
 
 export default AnimalStore;
