@@ -10,6 +10,7 @@ import {
 import { ReefButton } from "../../../../components/ReefButton";
 import { NumericStepper } from "../../../../components/NumericStepper";
 import { Alert, saveAlerts } from "../../../../services/alertsService";
+import RootStore from "../../../../store/RootStore";
 
 type Props = {
   existingAlerts: Alert[];
@@ -42,6 +43,7 @@ export const AlertsForm = ({ existingAlerts, aquariumId, token }: Props) => {
     const response = await saveAlerts(aquariumId, alerts, token);
     if (response != null) {
       console.log("Réponse reçue");
+      RootStore.alertStore.fetchPositiveAlerts();
     } else {
       console.log("Pas de réponse du service");
     }
