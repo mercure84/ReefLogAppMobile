@@ -1,8 +1,26 @@
 import { observable, action, runInAction } from "mobx";
-import { Tank } from "../services/tankService";
 import { RootStore as RootStoreType } from "./RootStore";
 import { ImageSourcePropType } from "react-native";
 import { urlServer } from "../constants/constants";
+import { Member } from "../services/memberService";
+
+// typage aquarium
+export interface Tank {
+  id: string;
+  name: string;
+  length: number;
+  width: number;
+  height: number;
+  startDate: Date;
+  member?: Member;
+  sumpVolume: number;
+  typeOfMaintenance: string;
+  mainPopulation: string;
+  ballingDescription?: any;
+  liveRocksWeigth?: number;
+  othersRocksWeight?: number;
+  rawVolume?: number;
+}
 
 class TankStore {
   RootStore: RootStoreType;
@@ -82,6 +100,35 @@ class TankStore {
       this.tankState = "error";
     }
   }
+
+  @action // ajout d'un aquarium
+  saveReefTank = async (newTank: Tank, update: boolean) => {
+    const urlService = update
+      ? urlServer + "api/updateReefAquarium"
+      : urlServer + "api/addNewReefAquarium";
+    const newReefTank = {
+      memberId: this.RootStore.memberStore.member.id,
+      reefAquarium: newTank,
+    };
+    try {
+      const memberToken = this.RootStore.memberStore.token;
+
+      const response = await fetch(urlService, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: memberToken,
+        },
+        body: JSON.stringify(newReefTank),
+      });
+      const dataResponse = response.json();
+      console.log("Aquarium registered");
+      return dataResponse;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
 
 export default TankStore;

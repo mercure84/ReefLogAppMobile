@@ -1,5 +1,5 @@
 import React from "react";
-import { Tank } from "../../../../services/tankService";
+import { Tank } from "../../../../store/TankStore";
 import {
   View,
   Text,
