@@ -1,9 +1,25 @@
-import { WaterTest } from "../services/waterTestService";
 import { observable, action, runInAction, computed, toJS } from "mobx";
 import { RootStore as RootStoreType } from "./RootStore";
 import { deleteItem } from "../services/rootService";
 import { urlServer } from "../constants/constants";
+import { Tank } from "../services/tankService";
 
+export interface WaterTest {
+  id?: string;
+  date?: Date;
+  temperature?: number;
+  salinity?: number;
+  alcalinity?: number;
+  ph?: number;
+  calcium?: number;
+  magnesium?: number;
+  ammoniac?: number;
+  nitrates?: number;
+  nitrites?: number;
+  phosphates?: number;
+  silicates?: number;
+  aquarium?: Tank;
+}
 class WaterTestStore {
   RootStore: RootStoreType;
 
@@ -71,6 +87,36 @@ class WaterTestStore {
       console.log(error);
     }
   }
+
+  @action
+  saveWaterTest = async (newWaterTest: WaterTest, update: boolean) => {
+    const suffixUrl = update ? "api/updateWaterTest" : "api/addNewWaterTest";
+    //purge du champ de l'aquarium si on est dans le cas d'un update
+    newWaterTest.aquarium = null;
+    const urlService = urlServer + suffixUrl;
+    const newWaterTestForm = {
+      aquariumId: this.RootStore.tankStore.tankList[0].id,
+      waterTest: newWaterTest,
+    };
+    try {
+      const memberToken = this.RootStore.memberStore.token;
+
+      const response = await fetch(urlService, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: memberToken,
+        },
+        body: JSON.stringify(newWaterTestForm),
+      });
+      const dataResponse = response.json();
+      console.log("Tests enregistrés");
+      return dataResponse;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
 
 export default WaterTestStore;
