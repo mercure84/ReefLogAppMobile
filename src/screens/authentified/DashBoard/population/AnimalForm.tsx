@@ -14,15 +14,11 @@ import { MessageInfo } from "../../../../components/MessageInfo";
 import { ReefButton } from "../../../../components/ReefButton";
 import { useNavigation } from "@react-navigation/native";
 import RootStore from "../../../../store/RootStore";
-import {
-  Animal,
-  saveAnimal,
-  AnimalType
-} from "../../../../services/animalService";
 import { observer } from "mobx-react";
 import Moment from "moment";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { formatStringToInteger } from "../../../../utils/helpers";
+import { Animal, AnimalType } from "../../../../store/AnimalStore";
 
 type Props = {
   animalToSave: Animal;
@@ -88,8 +84,7 @@ export const AnimalForm = observer(
         setInfoMessage(
           "Votre formulaire est correct, nous allons l'enregistrer... "
         );
-        const response = await saveAnimal(
-          RootStore.tankStore.tankList[0].id,
+        const response = RootStore.animalStore.saveAnimal(
           animal,
           isUpdating
         );

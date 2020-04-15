@@ -15,7 +15,7 @@ import Moment from "moment";
 import "moment/locale/fr";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
-import { Animal, AnimalType } from "../../../../services/animalService";
+import { Animal, AnimalType } from "../../../../store/AnimalStore";
 import RootStore from "../../../../store/RootStore";
 import { CustomModal } from "../../../../components/ModalDeleteConfirmation";
 import { getAnimalType, getIconForAnimal } from "../../../../utils/helpers";
@@ -54,18 +54,18 @@ export const AnimalItem = ({ animal }: Props) => {
 
               <Text>{`${animal[getAnimalType(animal) + "Species"]} ${
                 animal.name ?? ""
-              }`}</Text>
+                }`}</Text>
             </View>
-     
+
           </View>
           <Text style={styles.date}>
-              Date d'arrivée : {Moment(animal.incomingDate).format("ll")}
-            </Text>
+            Date d'arrivée : {Moment(animal.incomingDate).format("ll")}
+          </Text>
           <View style={styles.horizontalWrapper}>
             <Text>Taille : {animal.currentSize}</Text>
             <Text>Quantité : {animal.quantity}</Text>
           </View>
- 
+
           <Text>Notes : {animal.notes}</Text>
         </View>
 
@@ -98,12 +98,12 @@ type Style = {
   icon: ImageStyle;
   date: TextStyle;
   animalTitle: ViewStyle;
-  leftWrapper : ViewStyle;
+  leftWrapper: ViewStyle;
 };
 
 const styles = StyleSheet.create<Style>({
-  leftWrapper : {
- flexDirection : "row"
+  leftWrapper: {
+    flexDirection: "row"
   },
   testContainer: {
     borderColor: "grey",
@@ -113,8 +113,8 @@ const styles = StyleSheet.create<Style>({
     margin: 8
   },
   animalTitle: {
-    marginLeft : 16,
-    justifyContent : "flex-start"
+    marginLeft: 16,
+    justifyContent: "flex-start"
   },
   groupIcon: {
     flexDirection: "row",
