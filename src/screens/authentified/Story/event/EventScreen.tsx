@@ -3,7 +3,7 @@ import { observer } from "mobx-react"
 import { View } from "react-native"
 import { GoBackButton } from "../../../../components/GoBackButton"
 import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle"
-import { Header } from "react-native/Libraries/NewAppScreen"
+import { Header } from "react-native-elements"
 
 
 

@@ -1,9 +1,9 @@
 import React from "react"
 import { observer } from "mobx-react"
 import { View } from "react-native"
-import { Header } from "react-native/Libraries/NewAppScreen"
 import { GoBackButton } from "../../../../components/GoBackButton"
 import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle"
+import { Header } from "react-native-elements"
 
 export const CountScreen = observer(() => {
 
