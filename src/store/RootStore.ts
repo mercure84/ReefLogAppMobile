@@ -5,6 +5,7 @@ import AnimalStore from "./AnimalStore";
 import EquipmentStore from "./EquipmentStore";
 import SocialStore from "./SocialStore";
 import AlertStore from "./AlertStore";
+import EventStore from "./EventStore";
 
 export class RootStore {
   memberStore: MemberStore;
@@ -14,6 +15,7 @@ export class RootStore {
   equipmentStore: EquipmentStore;
   socialStore: SocialStore;
   alertStore: AlertStore;
+  eventStore: EventStore;
 
   constructor() {
     this.memberStore = new MemberStore(this);
@@ -23,6 +25,7 @@ export class RootStore {
     this.equipmentStore = new EquipmentStore(this);
     this.socialStore = new SocialStore(this);
     this.alertStore = new AlertStore(this);
+    this.eventStore = new EventStore(this);
   }
 }
 

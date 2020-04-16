@@ -1,5 +1,5 @@
 import { RootStore as RootStoreType } from "./RootStore";
-import { observable, computed, toJS, action, runInAction } from "mobx";
+import { observable, computed, toJS, action } from "mobx";
 import { urlServer } from "./../constants/constants";
 import { Tank } from "./TankStore";
 
@@ -34,10 +34,7 @@ class SocialStore {
       });
       this.socialState = "done";
       const socialTanks: Promise<Tank[]> = response.json();
-      runInAction(async () => {
-        console.log("SocialTanks Success");
-        this.socialTanks = await socialTanks;
-      });
+      this.socialTanks = await socialTanks;
       return socialTanks;
     } catch (error) {
       console.log(error);

@@ -34,9 +34,17 @@ export const StoryScreen = observer(() => {
         backgroundImageStyle={{ opacity: 0.8 }}
       />
       {hasATank ? <><ReefButton
-        title="Nouveau test"
-        onPress={() => navigation.navigate("addTests")}
+        title="Mes Tests"
+        onPress={() => navigation.navigate("waterTests")}
       />
+        <ReefButton
+          title="Mes évènements"
+          onPress={() => navigation.navigate("events")}
+        />
+        <ReefButton
+          title="Recensement"
+          onPress={() => navigation.navigate("counting")}
+        />
         <View style={styles.page}>
           {isTestsLoading ? (
             <ActivityIndicator />
