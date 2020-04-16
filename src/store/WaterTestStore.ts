@@ -2,7 +2,7 @@ import { observable, action, runInAction, computed, toJS } from "mobx";
 import { RootStore as RootStoreType } from "./RootStore";
 import { deleteItem } from "../services/rootService";
 import { urlServer } from "../constants/constants";
-import { Tank } from "../services/tankService";
+import { Tank } from "./TankStore";
 
 export interface WaterTest {
   id?: string;
@@ -56,13 +56,14 @@ class WaterTestStore {
               Authorization: memberToken,
             },
           });
+          this.waterTestState = "done";
 
           const waterTestList: Promise<WaterTest[]> = response.json();
           runInAction(async () => {
             console.log("waterTestList Success");
             this.waterTestList = await waterTestList;
-            this.waterTestState = "done";
           });
+          this.RootStore.alertStore.positiveAlertsState = "pending";
           return waterTestList;
         } catch (error) {
           console.log(error);

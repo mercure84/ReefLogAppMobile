@@ -51,11 +51,11 @@ class AlertStore {
 
   @action
   async fetchAlerts(): Promise<Alert[]> {
+    this.alertState = "pending";
     if (
       this.RootStore.tankStore.tankState === "done" &&
       this.RootStore.tankStore.tankList.length > 0
     ) {
-      this.alertState = "pending";
       try {
         console.log("Store is fetching Alerts");
         const memberToken = this.RootStore.memberStore.token;
@@ -71,11 +71,10 @@ class AlertStore {
           },
         });
         const alerts: Promise<Alert[]> = response.json();
-        runInAction(async () => {
-          console.log("alerts success");
-          this.alerts = await alerts;
-          this.alertState = "done";
-        });
+
+        this.alerts = await alerts;
+        this.alertState = "done";
+
         return alerts;
       } catch (error) {
         console.log(error);
@@ -104,13 +103,10 @@ class AlertStore {
             Authorization: memberToken,
           },
         });
-
+        this.positiveAlertsState = "done";
         const positiveAlerts: Promise<Alert[]> = response.json();
-        runInAction(async () => {
-          console.log("alerts success");
-          this.positiveAlerts = await positiveAlerts;
-          this.positiveAlertsState = "done";
-        });
+        console.log("positive alerts success");
+        this.positiveAlerts = await positiveAlerts;
         return positiveAlerts;
       } catch (error) {
         console.log(error);
@@ -128,7 +124,6 @@ class AlertStore {
     };
     try {
       const memberToken = this.RootStore.memberStore.token;
-
       const response = await fetch(urlService, {
         method: "POST",
         headers: {
@@ -140,6 +135,7 @@ class AlertStore {
       });
       const dataResponse = response.json();
       console.log("Alerts envoyées");
+      this.positiveAlertsState = "pending";
       return dataResponse;
     } catch (error) {
       console.log(error);

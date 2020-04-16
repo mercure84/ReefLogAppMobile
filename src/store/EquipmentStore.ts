@@ -2,7 +2,7 @@ import { observable, action, runInAction, computed, toJS } from "mobx";
 import { RootStore as RootStoreType } from "./RootStore";
 import { deleteItem } from "../services/rootService";
 import { urlServer } from "../constants/constants";
-import { Tank } from "../services/tankService";
+import { Tank } from "./TankStore";
 
 export interface Equipment {
   dateInstallation?: Date;
@@ -48,12 +48,8 @@ class EquipmentStore {
             },
           });
           const equipments: Promise<Equipment[]> = response.json();
-
-          runInAction(async () => {
-            console.log("equipments Success");
-            this.equipments = await equipments;
-            this.equipmentState = "done";
-          });
+          this.equipmentState = "done";
+          this.equipments = await equipments;
           return equipments;
         } catch (error) {
           console.log(error);

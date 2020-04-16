@@ -11,14 +11,14 @@ import { ReefButton } from "../../../../components/ReefButton";
 import { NumericStepper } from "../../../../components/NumericStepper";
 import RootStore from "../../../../store/RootStore";
 import { Alert } from "../../../../store/AlertStore";
+import { observer } from "mobx-react";
 
 type Props = {
   existingAlerts: Alert[];
-  aquariumId: string;
 };
 
-export const AlertsForm = ({ existingAlerts, aquariumId }: Props) => {
-  const [alerts, setAlerts] = useState<Alert[]>(existingAlerts);
+export const AlertsForm = observer(({ existingAlerts }: Props) => {
+  const [alerts, setAlerts] = useState(existingAlerts);
   const [isSubmitting, setSubmitting] = useState(false);
 
   const changeIsActive = (isActive: boolean, pAlert: Alert) => {
@@ -42,7 +42,6 @@ export const AlertsForm = ({ existingAlerts, aquariumId }: Props) => {
     const response = RootStore.alertStore.saveAlerts(alerts);
     if (response != null) {
       console.log("Réponse reçue");
-      RootStore.alertStore.fetchPositiveAlerts();
     } else {
       console.log("Pas de réponse du service");
     }
@@ -76,7 +75,7 @@ export const AlertsForm = ({ existingAlerts, aquariumId }: Props) => {
       ))}
     </>
   );
-};
+});
 
 type Style = {
   switchContainer: ViewStyle;

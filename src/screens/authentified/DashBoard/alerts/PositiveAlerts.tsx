@@ -1,6 +1,6 @@
 import React from "react";
-import { Alert } from "../../../../services/alertsService";
 import { View, Text } from "react-native";
+import { Alert } from "../../../../store/AlertStore";
 
 type Props = {
     positiveAlerts: Alert[];
