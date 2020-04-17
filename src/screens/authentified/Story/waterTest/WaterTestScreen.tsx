@@ -31,7 +31,7 @@ export const WaterTestScreen = observer(() => {
 
         <ReefButton
             title="Nouveau Test"
-            onPress={() => navigation.navigate("waterTests")}
+            onPress={() => navigation.navigate("addTests")}
         />
         <View style={styles.page}>
             {isTestsLoading ? (
