@@ -56,6 +56,8 @@ export const EventForm = ({ eventToUpdate, hideCallBack }: Props) => {
             if (response != null) {
                 setInfoMessage("L'évènement a été enregistré !");
                 setLoading(false);
+                hideCallBack()
+
             } else {
                 setInfoMessage("Un problème est survenu");
             }
@@ -82,13 +84,13 @@ export const EventForm = ({ eventToUpdate, hideCallBack }: Props) => {
                 <View style={styles.input}>
                     <Text>Date de l'évènement</Text>
                     <ReefButton
-                        title={"test"
-                            /*                             Moment(event.date)
-                                                            .format("ll")
-                                                            .toString()
-                                                        ?? Moment(new Date())
-                                                            .format("ll")
-                                                            .toString() */
+                        title={
+                            event !== null ? Moment(event.date)
+                                .format("ll")
+                                .toString()
+                                : Moment(new Date())
+                                    .format("ll")
+                                    .toString()
                         }
                         onPress={() => setDatePickerVisible(true)}
                     />
@@ -118,7 +120,7 @@ export const EventForm = ({ eventToUpdate, hideCallBack }: Props) => {
                             setEvent({ ...event, description: text })
                         }
                         defaultValue={
-                 /*            event.description ?? event.description */ "test"
+                            event !== null ? event.description : ""
                         }
                     />
                 </View>

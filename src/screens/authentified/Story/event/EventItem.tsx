@@ -15,16 +15,16 @@ import Moment from "moment";
 
 type Props = {
   event: EventType;
+  updateItemCallBack: () => void
 };
 import createIcon from "../../../../assets/icons/createIcon.png";
 import deleteIcon from "../../../../assets/icons/deleteIcon.png";
 import RootStore from "../../../../store/RootStore";
 import { CustomModal } from "../../../../components/ModalDeleteConfirmation";
 
-export const EventItem = ({ event }: Props) => {
-  const navigation = useNavigation();
+export const EventItem = ({ event, updateItemCallBack }: Props) => {
   const handlePress = () => {
-    null
+    updateItemCallBack()
   };
   const [isModalVisible, setModalVisible] = useState(false);
 

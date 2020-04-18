@@ -58,7 +58,7 @@ export const EventScreen = observer(() => {
                         <FlatList
                             style={{ marginBottom: 64 }}
                             data={events}
-                            renderItem={({ item }) => <EventItem event={item} />}
+                            renderItem={({ item }) => <EventItem event={item} updateItemCallBack={() => handleEventForm(item)} />}
                             keyExtractor={(item) => item.id.toString()}
                             ListEmptyComponent={<Text>Aucun enregistrement :(</Text>}
                             scrollEnabled={true}
