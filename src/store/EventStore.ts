@@ -4,11 +4,11 @@ import { urlServer } from "./../constants/constants";
 import { deleteItem } from "../services/rootService";
 import { Tank } from "./TankStore";
 
-export interface Event {
+export interface EventType {
   date?: Date;
   id?: number;
-  title?: String;
-  description?: String;
+  title?: string;
+  description?: string;
   aquarium?: Tank;
 }
 
@@ -19,7 +19,7 @@ class EventStore {
     this.RootStore = RootStore;
   }
 
-  @observable events: Event[] = [];
+  @observable events: EventType[] = [];
   @observable eventState = "pending";
 
   @computed get eventsData() {
@@ -27,7 +27,7 @@ class EventStore {
   }
 
   @action
-  async fetchEvents(): Promise<Event[]> {
+  async fetchEvents(): Promise<EventType[]> {
     this.eventState = "pending";
     if (this.RootStore.tankStore.tankState === "done") {
       const tankId = this.RootStore.tankStore.tankList[0].id;
@@ -44,7 +44,7 @@ class EventStore {
               Authorization: memberToken,
             },
           });
-          const events: Promise<Event[]> = response.json();
+          const events: Promise<EventType[]> = response.json();
           this.eventState = "done";
           this.events = await events;
           return events;
@@ -72,7 +72,7 @@ class EventStore {
   }
 
   @action
-  saveEvent = async (newEvent: Event, update: boolean) => {
+  saveEvent = async (newEvent: EventType, update: boolean) => {
     const suffixUrl = update ? "api/updateEvent" : "api/addEvent";
     newEvent.aquarium = null;
     const urlService = urlServer + suffixUrl;

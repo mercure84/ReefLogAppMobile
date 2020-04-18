@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Event } from "../../../../store/EventStore";
+import { EventType } from "../../../../store/EventStore";
 import { useNavigation } from "@react-navigation/native";
 import {
   ViewStyle,
@@ -14,7 +14,7 @@ import {
 import Moment from "moment";
 
 type Props = {
-  event: Event;
+  event: EventType;
 };
 import createIcon from "../../../../assets/icons/createIcon.png";
 import deleteIcon from "../../../../assets/icons/deleteIcon.png";
@@ -32,7 +32,7 @@ export const EventItem = ({ event }: Props) => {
     setModalVisible(!isModalVisible);
   };
 
-  const confirmDelete = (pEvent: Event) => {
+  const confirmDelete = (pEvent: EventType) => {
     RootStore.eventStore.storeDeleteEvent(pEvent.id);
     RootStore.eventStore.fetchEvents();
     handlePressDelete();
