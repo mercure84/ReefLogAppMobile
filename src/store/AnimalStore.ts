@@ -2,7 +2,7 @@ import { observable, action, runInAction, computed, toJS } from "mobx";
 import { RootStore as RootStoreType } from "./RootStore";
 import { deleteItem } from "../services/rootService";
 import { urlServer } from "../constants/constants";
-import { Tank } from "../services/tankService";
+import { Tank } from "./TankStore";
 
 export interface Animal {
   id: number;
@@ -95,11 +95,8 @@ class AnimalStore {
             },
           });
           const animals: Promise<Animal[]> = response.json();
-          runInAction(async () => {
-            console.log("animals Success");
-            this.animals = await animals;
-            this.animalState = "done";
-          });
+          this.animalState = "done";
+          this.animals = await animals;
           return animals;
         } catch (error) {
           console.log(error);

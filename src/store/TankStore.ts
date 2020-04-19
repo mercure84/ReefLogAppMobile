@@ -54,11 +54,11 @@ class TankStore {
               Authorization: memberToken,
             },
           });
+          this.tankState = "done";
           const tankList: Promise<Tank[]> = response.json();
           runInAction(async () => {
             console.log("tankListSuccess");
             this.tankList = await tankList;
-            this.tankState = "done";
           });
           return tankList;
         } catch (error) {
@@ -92,9 +92,7 @@ class TankStore {
         },
         body: data,
       });
-      runInAction(() => {
-        this.tankState = "done";
-      });
+      this.tankState = "done";
     } catch (error) {
       console.log(error);
       this.tankState = "error";
@@ -112,7 +110,6 @@ class TankStore {
     };
     try {
       const memberToken = this.RootStore.memberStore.token;
-
       const response = await fetch(urlService, {
         method: "POST",
         headers: {

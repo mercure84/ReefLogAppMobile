@@ -9,10 +9,12 @@ const getUrlService = (item: string) => {
       return "api/deleteAnimal/";
     case "waterTest":
       return "api/deleteWaterTest/";
+    case "event":
+      return "api/deleteEvent/";
   }
 };
 
-//FONCTION QUI PERMET D'APPELER LE SERVICE DE SUPPRESSION DE ANIMAL, EQUIPMENT, WATERTEST
+//FONCTION QUI PERMET D'APPELER LE SERVICE DE SUPPRESSION DE ANIMAL, EQUIPMENT, WATERTEST, EVENT
 export const deleteItem = async (
   pId: number | string,
   kindItem: string,
@@ -26,8 +28,8 @@ export const deleteItem = async (
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: token
-      }
+        Authorization: token,
+      },
     });
     const dataResponse = response.json();
     return dataResponse;

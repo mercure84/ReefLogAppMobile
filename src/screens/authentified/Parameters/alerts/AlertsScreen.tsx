@@ -7,13 +7,12 @@ import RootStore from "../../../../store/RootStore";
 import { AlertsForm } from "./AlertsForm";
 
 export const AlertsScreen = observer(() => {
+  console.log("Etat de mon store des alertes = ", RootStore.alertStore.alertState)
   if (RootStore.alertStore.alertState === "pending") {
     RootStore.alertStore.fetchAlerts();
   }
-  const isAlertsLoading = RootStore.alertStore.alertState !== "done";
-  const alerts = RootStore.alertStore.alertsData;
-  const aquariumId = RootStore.tankStore.tankList[0].id;
-  const token = RootStore.memberStore.token;
+  const isAlertsLoading = RootStore.alertStore.alertState === "pending";
+  const alerts = RootStore.alertStore.alertsData
 
   return (
     <View style={styles.page}>
@@ -23,15 +22,13 @@ export const AlertsScreen = observer(() => {
         backgroundColor="pink"
       />
 
-      {isAlertsLoading && alerts !== undefined ? (
+      {isAlertsLoading ? (
         <ActivityIndicator />
       ) : (
-        <AlertsForm
-          existingAlerts={alerts}
-          aquariumId={aquariumId}
-          token={token}
-        />
-      )}
+          <AlertsForm
+            existingAlerts={alerts}
+          />
+        )}
     </View>
   );
 });

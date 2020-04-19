@@ -1,44 +1,41 @@
-import { observable, action, runInAction, computed, toJS } from "mobx";
 import { RootStore as RootStoreType } from "./RootStore";
+import { observable, computed, toJS, action, runInAction } from "mobx";
+import { urlServer } from "./../constants/constants";
 import { deleteItem } from "../services/rootService";
-import { urlServer } from "../constants/constants";
 import { Tank } from "./TankStore";
 
-export interface Equipment {
-  dateInstallation?: Date;
+export interface EventType {
+  date?: Date;
   id?: number;
-  typeOfEquipment: string;
-  mark?: string;
-  model?: string;
+  title?: string;
   description?: string;
-  power?: number;
-  quantity?: number;
   aquarium?: Tank;
 }
-class EquipmentStore {
+
+class EventStore {
   RootStore: RootStoreType;
 
   constructor(RootStore) {
     this.RootStore = RootStore;
   }
 
-  @observable equipments: Equipment[] = [];
-  @observable equipmentState = "pending";
+  @observable events: EventType[] = [];
+  @observable eventState = "pending";
 
-  @computed get equipmentsData() {
-    return toJS(this.equipments);
+  @computed get eventsData() {
+    return toJS(this.events);
   }
 
   @action
-  async fetchEquipments(): Promise<Equipment[]> {
-    this.equipmentState = "pending";
+  async fetchEvents(): Promise<EventType[]> {
+    this.eventState = "pending";
     if (this.RootStore.tankStore.tankState === "done") {
       const tankId = this.RootStore.tankStore.tankList[0].id;
       if (tankId !== null) {
         try {
-          console.log("Store is fetching  Equipments");
+          console.log("Store is fetching  Events");
           const memberToken = this.RootStore.memberStore.token;
-          const urlService = urlServer + "api/getEquipmentList/" + tankId;
+          const urlService = urlServer + "api/getEventList/" + tankId;
           const response = await fetch(urlService, {
             method: "GET",
             headers: {
@@ -47,41 +44,42 @@ class EquipmentStore {
               Authorization: memberToken,
             },
           });
-          const equipments: Promise<Equipment[]> = response.json();
-          this.equipmentState = "done";
-          this.equipments = await equipments;
-          return equipments;
+          const events: Promise<EventType[]> = response.json();
+          this.eventState = "done";
+          this.events = await events;
+          return events;
         } catch (error) {
           console.log(error);
-          this.equipmentState = "error";
+          this.eventState = "error";
         }
       }
     }
   }
 
   @action
-  async storeDeleteEquipment(id: number | string) {
-    this.equipmentState = "pending";
+  async storeDeleteEvent(id: number | string) {
+    this.eventState = "pending";
     try {
-      console.log("Store is deleting the equipment n° " + id);
+      console.log("Store is deleting the event n° " + id);
       const memberToken = this.RootStore.memberStore.token;
-      await deleteItem(id, "equipment", memberToken);
+      await deleteItem(id, "event", memberToken);
       runInAction(() => {
-        this.equipmentState = "done";
+        this.eventState = "done";
       });
+      this.fetchEvents();
     } catch (error) {
       console.log(error);
     }
   }
 
   @action
-  saveEquipment = async (newEquipment: Equipment, update: boolean) => {
-    const suffixUrl = update ? "api/updateEquipment" : "api/addEquipment";
-    newEquipment.aquarium = null;
+  saveEvent = async (newEvent: EventType, update: boolean) => {
+    const suffixUrl = update ? "api/updateEvent" : "api/addEvent";
+    newEvent.aquarium = null;
     const urlService = urlServer + suffixUrl;
-    const newEquipmentForm = {
+    const newEventForm = {
       aquariumId: this.RootStore.tankStore.tankList[0].id,
-      equipment: newEquipment,
+      event: newEvent,
     };
     try {
       const memberToken = this.RootStore.memberStore.token;
@@ -93,10 +91,11 @@ class EquipmentStore {
           "Content-Type": "application/json",
           Authorization: memberToken,
         },
-        body: JSON.stringify(newEquipmentForm),
+        body: JSON.stringify(newEventForm),
       });
       const dataResponse = response.json;
-      console.log("Nouvel équipement saved");
+      console.log("Nouvel évènement saved");
+      this.fetchEvents();
       return dataResponse;
     } catch (error) {
       console.log(error);
@@ -104,4 +103,4 @@ class EquipmentStore {
   };
 }
 
-export default EquipmentStore;
+export default EventStore;

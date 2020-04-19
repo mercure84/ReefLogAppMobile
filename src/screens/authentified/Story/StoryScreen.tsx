@@ -5,23 +5,24 @@ import {
   StyleSheet,
   ViewStyle,
   ActivityIndicator,
-  FlatList,
+
 } from "react-native";
 import { Header } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import RootStore from "../../../store/RootStore";
 import { observer } from "mobx-react";
-import { WaterTestItem } from "./waterTest/WaterTestItem";
 import { ReefButton } from "../../../components/ReefButton";
 import { ReefHeaderTitle } from "../../../components/ReefHeaderTitle";
+import { WaterTestItem } from "./waterTest/WaterTestItem";
 
 export const StoryScreen = observer(() => {
   const navigation = useNavigation();
   if (RootStore.waterTestStore.waterTestState === "pending") {
     RootStore.waterTestStore.fetchWaterTestList();
+
   }
-  const isTestsLoading = RootStore.waterTestStore.waterTestState === "pending";
-  const dataWaterTestList = RootStore.waterTestStore.waterTestListData;
+
+  const isWaterTestLoading = RootStore.waterTestStore.waterTestState === "pending"
 
   const hasATank = RootStore.tankStore.tankList.length > 0;
 
@@ -33,24 +34,31 @@ export const StoryScreen = observer(() => {
         backgroundImage={require("../../../assets/story.png")}
         backgroundImageStyle={{ opacity: 0.8 }}
       />
-      {hasATank ? <><ReefButton
-        title="Nouveau test"
-        onPress={() => navigation.navigate("addTests")}
-      />
-        <View style={styles.page}>
-          {isTestsLoading ? (
-            <ActivityIndicator />
-          ) : (
-              <FlatList
-                style={{ marginBottom: 64 }}
-                data={dataWaterTestList}
-                renderItem={({ item }) => <WaterTestItem waterTest={item} />}
-                keyExtractor={(item) => item.id.toString()}
-                ListEmptyComponent={<Text>Aucun enregistrement :(</Text>}
-                scrollEnabled={true}
-              />
-            )}
-        </View></> : <Text>Créer d'abord un Aquarium avant de consulter cette page !</Text>}
+      <View style={styles.page}>
+
+        {hasATank ? <><ReefButton
+          title="Mes Tests"
+          onPress={() => navigation.navigate("waterTests")}
+        />
+          <ReefButton
+            title="Mes évènements"
+            onPress={() => navigation.navigate("events")}
+          />
+          <ReefButton
+            title="Recensement"
+            onPress={() => navigation.navigate("counting")}
+          />
+        </> : <Text>Créer d'abord un Aquarium avant de consulter cette page !</Text>}
+
+        {isWaterTestLoading ? <ActivityIndicator /> : RootStore.waterTestStore.waterTestList.length > 0 && <>
+          <Text>
+            Mon dernier test enregistré :
+        </Text>
+
+          <WaterTestItem waterTest={RootStore.waterTestStore.waterTestList[0]} />
+        </>}
+
+      </View>
     </>
   );
 });
