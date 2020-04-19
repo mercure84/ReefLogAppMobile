@@ -66,6 +66,7 @@ class EventStore {
       runInAction(() => {
         this.eventState = "done";
       });
+      this.fetchEvents();
     } catch (error) {
       console.log(error);
     }
@@ -94,6 +95,7 @@ class EventStore {
       });
       const dataResponse = response.json;
       console.log("Nouvel évènement saved");
+      this.fetchEvents();
       return dataResponse;
     } catch (error) {
       console.log(error);

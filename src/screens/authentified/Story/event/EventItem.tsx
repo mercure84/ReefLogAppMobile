@@ -34,7 +34,6 @@ export const EventItem = ({ event, updateItemCallBack }: Props) => {
 
   const confirmDelete = (pEvent: EventType) => {
     RootStore.eventStore.storeDeleteEvent(pEvent.id);
-    RootStore.eventStore.fetchEvents();
     handlePressDelete();
   };
 

@@ -24,7 +24,6 @@ type Props = {
 };
 
 export const EventForm = ({ eventToUpdate, hideCallBack }: Props) => {
-    const navigation = useNavigation();
     const [event, setEvent] = useState<EventType>(eventToUpdate);
     const [isDatePickerVisible, setDatePickerVisible] = useState(false);
     const [infoMessage, setInfoMessage] = useState(
@@ -63,7 +62,6 @@ export const EventForm = ({ eventToUpdate, hideCallBack }: Props) => {
             }
             setLoading(false);
         }
-        RootStore.eventStore.fetchEvents();
     };
 
     const setDate = date => {
@@ -111,17 +109,33 @@ export const EventForm = ({ eventToUpdate, hideCallBack }: Props) => {
                 </View>
 
                 <View style={styles.input}>
-                    <Text>Notes</Text>
+                    <Text>Titre</Text>
                     <TextInput
                         style={styles.textInput}
                         maxLength={250}
                         placeholder={"250 caractères maxi"}
+                        onChangeText={text =>
+                            setEvent({ ...event, title: text })
+                        }
+                        defaultValue={
+                            event !== null ? event.title : ""
+                        }
+                    />
+                </View>
+
+                <View style={styles.input}>
+                    <Text>Notes</Text>
+                    <TextInput
+                        style={styles.textInput}
+                        maxLength={250}
+                        placeholder={"100 caractères maxi"}
                         onChangeText={text =>
                             setEvent({ ...event, description: text })
                         }
                         defaultValue={
                             event !== null ? event.description : ""
                         }
+                        multiline={true}
                     />
                 </View>
 

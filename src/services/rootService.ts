@@ -9,6 +9,8 @@ const getUrlService = (item: string) => {
       return "api/deleteAnimal/";
     case "waterTest":
       return "api/deleteWaterTest/";
+    case "event":
+      return "api/deleteEvent/";
   }
 };
 
