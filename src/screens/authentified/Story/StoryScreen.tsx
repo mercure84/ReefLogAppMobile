@@ -14,6 +14,7 @@ import { observer } from "mobx-react";
 import { ReefButton } from "../../../components/ReefButton";
 import { ReefHeaderTitle } from "../../../components/ReefHeaderTitle";
 import { WaterTestItem } from "./waterTest/WaterTestItem";
+import { EventItem } from "./event/EventItem";
 
 export const StoryScreen = observer(() => {
   const navigation = useNavigation();
@@ -21,8 +22,13 @@ export const StoryScreen = observer(() => {
     RootStore.waterTestStore.fetchWaterTestList();
 
   }
+  if (RootStore.eventStore.eventState === "pending") {
+    RootStore.eventStore.fetchEvents();
+  }
 
   const isWaterTestLoading = RootStore.waterTestStore.waterTestState === "pending"
+  const isEventLoading = RootStore.eventStore.eventState === "pending"
+
 
   const hasATank = RootStore.tankStore.tankList.length > 0;
 
@@ -56,6 +62,13 @@ export const StoryScreen = observer(() => {
         </Text>
 
           <WaterTestItem waterTest={RootStore.waterTestStore.waterTestList[0]} />
+        </>}
+        {isEventLoading ? <ActivityIndicator /> : RootStore.eventStore.events.length > 0 && <>
+          <Text>
+            Mon dernier évènement enregistré :
+        </Text>
+
+          <EventItem event={RootStore.eventStore.events[0]} updateItemCallBack={null} />
         </>}
 
       </View>
