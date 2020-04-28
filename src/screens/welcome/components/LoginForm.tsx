@@ -5,7 +5,7 @@ import {
   ActivityIndicator,
   ViewStyle,
   TextStyle,
-  StyleSheet
+  StyleSheet,
 } from "react-native";
 import { ReefButton } from "../../../components/ReefButton";
 
@@ -15,7 +15,15 @@ import { storeData } from "../../../services/storageDevice";
 import { useNavigation } from "@react-navigation/native";
 import { Card } from "react-native-elements";
 
-export const LoginForm = ({ homeInfoCallBack, showLoginForm }) => {
+type Props = {
+  homeInfoCallBack: (string: string) => void;
+  toggleWelcomeCompoents: (string: string) => void;
+};
+
+export const LoginForm = ({
+  homeInfoCallBack,
+  toggleWelcomeCompoents,
+}: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setLoading] = useState(false);
@@ -28,7 +36,7 @@ export const LoginForm = ({ homeInfoCallBack, showLoginForm }) => {
 
     if (response.token != null) {
       homeInfoCallBack("Vous êtes connecté !");
-      showLoginForm(false);
+      toggleWelcomeCompoents("login");
       storeData("token", "Bearer " + response.token);
       storeData("emailUser", email);
       navigation.navigate("AuthentOk");
@@ -37,6 +45,7 @@ export const LoginForm = ({ homeInfoCallBack, showLoginForm }) => {
       homeInfoCallBack("Un problème est survenu : " + response.message);
     }
   };
+  const handlePassWordRecover = () => toggleWelcomeCompoents("passRecover");
 
   return (
     <View style={{ padding: 8 }}>
@@ -51,7 +60,7 @@ export const LoginForm = ({ homeInfoCallBack, showLoginForm }) => {
             maxLength={30}
             autoCompleteType="email"
             placeholder="email@email.fr"
-            onChangeText={text => setEmail(text)}
+            onChangeText={(text) => setEmail(text)}
           />
         </View>
         <View style={styles.input}>
@@ -63,14 +72,14 @@ export const LoginForm = ({ homeInfoCallBack, showLoginForm }) => {
             maxLength={12}
             autoCompleteType="off"
             placeholder="mot de passe"
-            onChangeText={text => setPassword(text)}
+            onChangeText={(text) => setPassword(text)}
           />
         </View>
         <ReefButton
           title="Connexion"
           onPress={() => submitLogin(email, password)}
         />
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handlePassWordRecover}>
           <Text>Mot de passe oublié ?</Text>
         </TouchableOpacity>
       </Card>
@@ -87,13 +96,13 @@ const styles = StyleSheet.create<Style>({
   input: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: 2
+    paddingVertical: 2,
   },
   textInput: {
     backgroundColor: "lightgrey",
     textAlign: "center",
     height: 40,
     width: "65%",
-    borderRadius: 5
-  }
+    borderRadius: 5,
+  },
 });

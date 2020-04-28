@@ -5,7 +5,7 @@ import {
   ActivityIndicator,
   StyleSheet,
   ViewStyle,
-  TextStyle
+  TextStyle,
 } from "react-native";
 import { signUpService, SignUp } from "../../../services/memberService";
 import { ReefButton } from "../../../components/ReefButton";
@@ -30,7 +30,7 @@ type Props = {
 export const SignupForm = ({
   showSignupForm,
   memberToUpdate,
-  homeInfoCallBack
+  homeInfoCallBack,
 }: Props) => {
   const [signUpForm, setSignUpForm] = useState<SignUp>(memberToUpdate);
   const [localInfo, setLocalInfo] = useState("");
@@ -84,7 +84,9 @@ export const SignupForm = ({
             maxLength={30}
             autoCompleteType="email"
             placeholder="email@email.fr"
-            onChangeText={text => setSignUpForm({ ...signUpForm, email: text })}
+            onChangeText={(text) =>
+              setSignUpForm({ ...signUpForm, email: text })
+            }
             defaultValue={
               isUpdating && signUpForm.email !== null ? signUpForm.email : null
             }
@@ -98,7 +100,7 @@ export const SignupForm = ({
             maxLength={12}
             autoCompleteType="off"
             placeholder="pseudo"
-            onChangeText={text =>
+            onChangeText={(text) =>
               setSignUpForm({ ...signUpForm, userName: text })
             }
             defaultValue={
@@ -115,7 +117,7 @@ export const SignupForm = ({
             maxLength={12}
             autoCompleteType="off"
             placeholder="mot de passe"
-            onChangeText={text => {
+            onChangeText={(text) => {
               setSignUpForm({ ...signUpForm, password: text });
             }}
           />
@@ -129,7 +131,7 @@ export const SignupForm = ({
             maxLength={12}
             autoCompleteType="off"
             placeholder="mot de passe"
-            onChangeText={text =>
+            onChangeText={(text) =>
               setSignUpForm({ ...signUpForm, repassword: text })
             }
           />
@@ -153,13 +155,13 @@ const styles = StyleSheet.create<Style>({
   input: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: 2
+    paddingVertical: 2,
   },
   textInput: {
     backgroundColor: "lightgrey",
     textAlign: "center",
     height: 40,
     width: "65%",
-    borderRadius: 5
-  }
+    borderRadius: 5,
+  },
 });

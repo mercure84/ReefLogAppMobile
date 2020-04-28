@@ -16,13 +16,14 @@ import {
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { About } from "./components/About";
 import { ReefButton } from "../../components/ReefButton";
+import { PassWordRecoverForm } from "./components/PassWordRecoverForm";
 
 const HomeScreen = () => {
   const [isLoginVisible, setLoginVisible] = useState(false);
   const [isSignupVisible, setSignupVisible] = useState(false);
-
   const [messageInfo, setMessageInfo] = useState("");
   const [isAboutVisible, setAboutVisible] = useState(false);
+  const [isRecoverVisible, setRecoverVisible] = useState(false);
 
   const toggleWelcomeCompoents = (element: string) => {
     switch (element) {
@@ -30,16 +31,25 @@ const HomeScreen = () => {
         setAboutVisible(!isAboutVisible);
         setLoginVisible(false);
         setSignupVisible(false);
+        setRecoverVisible(false);
         return;
       case "login":
         setAboutVisible(false);
         setLoginVisible(!isLoginVisible);
         setSignupVisible(false);
+        setRecoverVisible(false);
         return;
       case "signup":
         setAboutVisible(false);
         setLoginVisible(false);
         setSignupVisible(!isSignupVisible);
+        setRecoverVisible(false);
+        return;
+      case "passRecover":
+        setAboutVisible(false);
+        setLoginVisible(false);
+        setSignupVisible(false);
+        setRecoverVisible(!isRecoverVisible);
         return;
     }
   };
@@ -83,7 +93,7 @@ const HomeScreen = () => {
         {isLoginVisible && (
           <LoginForm
             homeInfoCallBack={setMessageInfo}
-            showLoginForm={setLoginVisible}
+            toggleWelcomeCompoents={toggleWelcomeCompoents}
           />
         )}
         {isSignupVisible && (
@@ -93,6 +103,7 @@ const HomeScreen = () => {
             memberToUpdate={null}
           />
         )}
+        {isRecoverVisible && <PassWordRecoverForm />}
 
         <TouchableOpacity
           style={styles.about}
