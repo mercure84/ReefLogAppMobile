@@ -133,3 +133,25 @@ export const getMemberDetail = async (
     console.log(error);
   }
 };
+
+
+export const getPasswordRecover = async (pEmail: string) => {
+  const email = pEmail.toLocaleLowerCase();
+  const urlService = urlServer+"api/recoverPassword/" + email
+  try {
+    console.log("on demande le recover pour le membre : ", email)
+    const response = await fetch(urlService, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        
+      }
+    });
+    const dataResponse = response.json();
+    console.log("Requête recoverPassword finie");
+    return dataResponse;
+  } catch (error) {
+    console.log(error)
+  }
+}
