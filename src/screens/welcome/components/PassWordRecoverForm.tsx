@@ -6,21 +6,28 @@ import { ReefButton } from "../../../components/ReefButton";
 import { getPasswordRecover } from "../../../services/memberService";
 import { MessageInfo } from "../../../components/MessageInfo";
 
-export const PassWordRecoverForm = () => {
+type Props = {
+  showRecoverForm: (boolean: boolean) => void;
+  homeInfoCallBack: (text: string) => void;
+};
+
+export const PassWordRecoverForm = ({
+  homeInfoCallBack,
+  showRecoverForm,
+}: Props) => {
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
 
   const handleOnPress = () => {
     getPasswordRecover(email);
-    setMessage(
-      "Nous allons vérifier qu votre email est enresgitré dans notre base et vous renvoyer un lien pour réinitialiser votre mot de passe :)"
+    homeInfoCallBack(
+      "Nous allons vérifier que votre email est enresgitré dans notre base et vous renvoyer un lien pour réinitialiser votre mot de passe :)"
     );
+    showRecoverForm(false);
   };
 
   return (
     <Card>
       <View>
-        <MessageInfo message={message} />
         <Text>Saisissez votre email </Text>
         <TextInput
           textContentType="emailAddress"

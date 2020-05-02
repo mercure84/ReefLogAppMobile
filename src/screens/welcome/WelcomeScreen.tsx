@@ -103,7 +103,12 @@ const HomeScreen = () => {
             memberToUpdate={null}
           />
         )}
-        {isRecoverVisible && <PassWordRecoverForm />}
+        {isRecoverVisible && (
+          <PassWordRecoverForm
+            showRecoverForm={setRecoverVisible}
+            homeInfoCallBack={setMessageInfo}
+          />
+        )}
 
         <TouchableOpacity
           style={styles.about}
