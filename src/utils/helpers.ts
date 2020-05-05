@@ -1,8 +1,13 @@
-import { Animal } from "src/services/animalService";
-
 import fishIcon from "../assets/icons/fish.png";
 import coralIcon from "../assets/icons/coral.png";
-import reefcleanerIcon from "../assets/icons/reefcleaner.png";
+import crustaceanIcon from "../assets/icons/crustacean.png";
+import starIcon from "../assets/icons/star.png";
+import urchinIcon from "../assets/icons/urchin.png";
+import molluskIcon from "../assets/icons/mollusk.png";
+import cucumberIcon from "../assets/icons/cucumber.png";
+import anemoneIcon from "../assets/icons/anemone.png";
+
+import { Animal } from "../store/AnimalStore";
 
 export const formatStringToFloat = (text: string) => {
   return isNaN(parseFloat(text.replace(",", ".")))
@@ -54,16 +59,21 @@ export const getIconForAnimal = (animal: Animal) => {
     case "fish":
       return fishIcon;
     case "urchin":
+      return urchinIcon;
     case "crustacean":
+      return crustaceanIcon;
     case "cucumber":
+      return cucumberIcon;
     case "star":
+      return starIcon;
     case "mollusk":
-      return reefcleanerIcon;
+      return molluskIcon;
     case "lps":
     case "soft":
     case "sps":
-    case "anemone":
       return coralIcon;
+    case "anemone":
+      return anemoneIcon;
   }
 };
 
