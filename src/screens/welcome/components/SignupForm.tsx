@@ -11,7 +11,6 @@ import { ReefButton } from "../../../components/ReefButton";
 
 import { MessageInfo } from "../../../components/MessageInfo";
 import { TextInput } from "react-native-gesture-handler";
-import { Card, Text } from "react-native-elements";
 import RootStore from "../../../store/RootStore";
 
 const checkPassword = (password, repassword): boolean => {
@@ -22,14 +21,15 @@ const checkPassword = (password, repassword): boolean => {
 
 type Props = {
   showSignupForm?: (boolean: boolean) => void;
-  homeInfoCallBack?: (string: string) => void;
   memberToUpdate?: SignUp;
+  toggleWelcomeComponents?: (string: string) => void;
+
 };
 
 export const SignupForm = ({
   showSignupForm,
   memberToUpdate,
-  homeInfoCallBack,
+  toggleWelcomeComponents
 }: Props) => {
   const [signUpForm, setSignUpForm] = useState<SignUp>(memberToUpdate);
   const [localInfo, setLocalInfo] = useState("");
@@ -46,9 +46,8 @@ export const SignupForm = ({
       if (response.role === "USER") {
         if (isUpdating) {
           RootStore.memberStore.fetchMember();
-          homeInfoCallBack("Compte mis à jour");
         } else {
-          homeInfoCallBack(
+          console.log(
             "Votre compte a bien été créé ! un email de confirmation a été envoyé à " +
             response.email
           );
@@ -68,18 +67,14 @@ export const SignupForm = ({
     <View style={{ padding: 8 }}>
       {isLoading && <ActivityIndicator />}
       <MessageInfo message={localInfo} />
-      <Text h4>
-        {isUpdating ? "Modification de votre compte " : "Création d'un compte"}
-      </Text>
       <View style={styles.input}>
-        <Text>Mon email</Text>
         <TextInput
           style={styles.textInput}
           textContentType="emailAddress"
           keyboardType="email-address"
           maxLength={30}
           autoCompleteType="email"
-          placeholder="email@email.fr"
+          placeholder="E-mail"
           onChangeText={(text) =>
             setSignUpForm({ ...signUpForm, email: text })
           }
@@ -89,13 +84,12 @@ export const SignupForm = ({
         />
       </View>
       <View style={styles.input}>
-        <Text>Mon pseudo</Text>
         <TextInput
           style={styles.textInput}
           textContentType="nickname"
           maxLength={12}
           autoCompleteType="off"
-          placeholder="pseudo"
+          placeholder="Pseudo"
           onChangeText={(text) =>
             setSignUpForm({ ...signUpForm, userName: text })
           }
@@ -105,38 +99,42 @@ export const SignupForm = ({
         />
       </View>
       <View style={styles.input}>
-        <Text>Mon password</Text>
         <TextInput
           style={styles.textInput}
           textContentType="newPassword"
           secureTextEntry={true}
           maxLength={12}
           autoCompleteType="off"
-          placeholder="mot de passe"
+          placeholder="Mot de passe"
           onChangeText={(text) => {
             setSignUpForm({ ...signUpForm, password: text });
           }}
         />
       </View>
       <View style={styles.input}>
-        <Text>Confirmer le mdp </Text>
         <TextInput
           style={styles.textInput}
           textContentType="newPassword"
           secureTextEntry={true}
           maxLength={12}
           autoCompleteType="off"
-          placeholder="mot de passe"
+          placeholder="Confirmation du mot de passe"
           onChangeText={(text) =>
             setSignUpForm({ ...signUpForm, repassword: text })
           }
         />
       </View>
-
-      <ReefButton
-        title="Créer mon compte"
-        onPress={() => submitNewMember(signUpForm)}
-      />
+      <View style={{ alignSelf: "center", flexDirection: "row", margin: 8 }}>
+        <ReefButton
+          size="medium"
+          title="Créer mon compte"
+          onPress={() => submitNewMember(signUpForm)}
+        />
+        <ReefButton
+          size="medium"
+          title="Déjà enregistré ?"
+          onPress={() => toggleWelcomeComponents("login")}
+        /></View>
     </View >
   );
 };
@@ -151,12 +149,14 @@ const styles = StyleSheet.create<Style>({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingVertical: 2,
+    borderBottomWidth: 1,
+    borderBottomColor: "grey",
+    marginBottom: 8,
+    alignSelf: "center"
   },
   textInput: {
-    backgroundColor: "lightgrey",
     textAlign: "center",
     height: 40,
-    width: "65%",
-    borderRadius: 5,
+    width: 320
   },
 });

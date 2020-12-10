@@ -13,16 +13,13 @@ import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { loginService } from "../../../services/memberService";
 import { storeData } from "../../../services/storageDevice";
 import { useNavigation } from "@react-navigation/native";
-import { Card } from "react-native-elements";
 
 type Props = {
-  homeInfoCallBack: (string: string) => void;
-  toggleWelcomeCompoents: (string: string) => void;
+  toggleWelcomeComponents: (string: string) => void;
 };
 
 export const LoginForm = ({
-  homeInfoCallBack,
-  toggleWelcomeCompoents,
+  toggleWelcomeComponents,
 }: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,17 +32,16 @@ export const LoginForm = ({
     setLoading(false);
 
     if (response.token != null) {
-      homeInfoCallBack("Vous êtes connecté !");
-      toggleWelcomeCompoents("login");
+      toggleWelcomeComponents("defaultButtons");
       storeData("token", "Bearer " + response.token);
       storeData("emailUser", email);
       navigation.navigate("AuthentOk");
-      homeInfoCallBack(null);
     } else {
-      homeInfoCallBack("Un problème est survenu : " + response.message);
+      console.error("Un problème est survenu : " + response.message);
     }
   };
-  const handlePassWordRecover = () => toggleWelcomeCompoents("passRecover");
+  const handlePassWordRecover = () => toggleWelcomeComponents("passRecover");
+  const handleSignup = () => toggleWelcomeComponents("signup")
 
   return (
     <View style={{ padding: 8 }}>
@@ -72,13 +68,21 @@ export const LoginForm = ({
           onChangeText={(text) => setPassword(text)}
         />
       </View>
-      <ReefButton
-        title="Connexion"
-        onPress={() => submitLogin(email, password)}
-      />
-      <TouchableOpacity onPress={handlePassWordRecover}>
+      <TouchableOpacity onPress={handlePassWordRecover} style={{ alignSelf: "center", margin: 8 }}>
         <Text>Mot de passe oublié ?</Text>
       </TouchableOpacity>
+      <View style={{ alignSelf: "center", flexDirection: "row", margin: 8 }}>
+        <ReefButton
+          size="medium"
+          title="Connexion"
+          onPress={() => submitLogin(email, password)}
+        />
+        <ReefButton
+          size="medium"
+          title="Pas de compte ?"
+          onPress={handleSignup}
+        />
+      </View>
     </View>
   );
 };
@@ -95,7 +99,8 @@ const styles = StyleSheet.create<Style>({
     paddingVertical: 2,
     borderBottomWidth: 1,
     borderBottomColor: "grey",
-    marginBottom: 8
+    marginBottom: 8,
+    alignSelf: "center"
   },
   textInput: {
     textAlign: "center",

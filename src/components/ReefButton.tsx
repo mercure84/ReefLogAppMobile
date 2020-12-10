@@ -21,7 +21,7 @@ export const ReefButton = ({ title, onPress, size }: Props) => {
       case "small":
         return 80;
       default:
-        return 80
+        return 320
     }
   }
 

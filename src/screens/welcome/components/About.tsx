@@ -19,8 +19,7 @@ export const About = () => {
   return (
     <View
       style={{
-        paddingHorizontal: 16,
-        alignItems: "center",
+        alignSelf: "center"
       }}
     >
       <Text style={{ textAlign: "center" }}>
