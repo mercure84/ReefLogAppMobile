@@ -6,8 +6,6 @@ import { MessageInfo } from "../../components/MessageInfo";
 import {
   KeyboardAvoidingView,
   View,
-  Text,
-  Image,
   ViewStyle,
   TextStyle,
   ImageStyle,
@@ -17,6 +15,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { About } from "./components/About";
 import { ReefButton } from "../../components/ReefButton";
 import { PassWordRecoverForm } from "./components/PassWordRecoverForm";
+import { Button, Text } from "react-native-elements";
 
 const HomeScreen = () => {
   const [isLoginVisible, setLoginVisible] = useState(false);
@@ -26,6 +25,7 @@ const HomeScreen = () => {
   const [isRecoverVisible, setRecoverVisible] = useState(false);
 
   const toggleWelcomeCompoents = (element: string) => {
+    setMessageInfo("");
     switch (element) {
       case "about":
         setAboutVisible(!isAboutVisible);
@@ -62,30 +62,23 @@ const HomeScreen = () => {
       keyboardVerticalOffset={-56}
     >
       <View style={styles.header}>
-        <Text style={styles.title1}>Bienvenue sur REEFLOG !</Text>
-        <Image
-          resizeMode="contain"
-          style={styles.homeImage}
-          source={require("../../assets/home.png")}
-        />
+        <Text h2>Log4Reef</Text>
       </View>
       <View style={styles.homeButton}>
-        <View style={{ margin: 5 }}>
-          <ReefButton
-            title="Créer un compte"
-            onPress={() => {
-              toggleWelcomeCompoents("signup");
-            }}
-          />
-        </View>
-        <View style={{ margin: 5 }}>
-          <ReefButton
-            title="Se connecter"
-            onPress={() => {
-              toggleWelcomeCompoents("login");
-            }}
-          />
-        </View>
+        <ReefButton
+          size="large"
+          title="Créer un compte"
+          onPress={() => {
+            toggleWelcomeCompoents("signup");
+          }}
+        />
+        <ReefButton
+          size="large"
+          title="Se connecter"
+          onPress={() => {
+            toggleWelcomeCompoents("login");
+          }}
+        />
       </View>
       <View style={styles.homeForms}>
         <MessageInfo message={messageInfo} />
@@ -129,10 +122,8 @@ type Style = {
   about: ViewStyle;
   container: ViewStyle;
   button: ViewStyle;
-  title1: TextStyle;
   header: ViewStyle;
   homeButton: ViewStyle;
-  homeImage: ImageStyle;
   homeForms: ViewStyle;
 };
 
@@ -150,24 +141,13 @@ const styles = StyleSheet.create<Style>({
   button: {
     margin: 20,
   },
-  title1: {
-    fontSize: 24,
-    fontWeight: "800",
-    textAlign: "center",
-  },
   header: {
     padding: 16,
     flex: 1,
     alignItems: "center",
   },
   homeButton: {
-    flexDirection: "row",
     alignSelf: "center",
-  },
-  homeImage: {
-    borderRadius: 100,
-    width: 250,
-    height: 150,
   },
   homeForms: {
     flex: 2,

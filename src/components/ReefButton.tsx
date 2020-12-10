@@ -1,59 +1,36 @@
 import React, { ReactNode } from "react";
 import {
-  StyleSheet,
-  ViewStyle,
-  Text,
-  TouchableOpacityProps,
-  TextStyle,
   ImageSourcePropType,
-  Image,
-  ImageStyle,
+  View,
 } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { Button, ButtonProps } from "react-native-elements";
 
 type Props = {
   title: ReactNode | string;
-  icon?: ImageSourcePropType;
-} & TouchableOpacityProps;
+  size?: "large" | "medium" | "small"
+} & ButtonProps;
 
-export const ReefButton = ({ title, icon, ...props }: Props) => {
+export const ReefButton = ({ title, onPress, size }: Props) => {
+
+  const sizeWidth = (): number => {
+    switch (size) {
+      case "large":
+        return 320;
+      case "medium":
+        return 160;
+      case "small":
+        return 80;
+      default:
+        return 80
+    }
+  }
+
   return (
-    <>
-      <TouchableOpacity style={styles.button} {...props}>
-        <Text style={styles.label}>{title}</Text>
-        {icon !== undefined ? (
-          <Image style={styles.icon} source={icon} />
-        ) : null}
-      </TouchableOpacity>
-    </>
+    <View style={{ margin: 4, width: sizeWidth() }}>
+      <Button
+        title={title}
+        onPress={onPress}
+      />
+    </View>
   );
 };
-
-type Style = {
-  button: ViewStyle;
-  label: TextStyle;
-  icon: ImageStyle;
-};
-
-const styles = StyleSheet.create<Style>({
-  button: {
-    borderRadius: 8,
-    padding: 8,
-    backgroundColor: "grey",
-    width: 160,
-    margin: 4,
-    alignSelf: "center",
-    flexDirection: "row",
-    justifyContent: "space-around"
-  },
-  label: {
-    fontFamily: "verdana",
-    fontSize: 16,
-    color: "orange",
-    textAlign: "center",
-  },
-  icon: {
-    width: 26,
-    height: 26,
-  },
-});

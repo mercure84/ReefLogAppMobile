@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   View,
-  Text,
   ActivityIndicator,
   StyleSheet,
   ViewStyle,
@@ -12,7 +11,7 @@ import { ReefButton } from "../../../components/ReefButton";
 
 import { MessageInfo } from "../../../components/MessageInfo";
 import { TextInput } from "react-native-gesture-handler";
-import { Card } from "react-native-elements";
+import { Card, Text } from "react-native-elements";
 import RootStore from "../../../store/RootStore";
 
 const checkPassword = (password, repassword): boolean => {
@@ -51,7 +50,7 @@ export const SignupForm = ({
         } else {
           homeInfoCallBack(
             "Votre compte a bien été créé ! un email de confirmation a été envoyé à " +
-              response.email
+            response.email
           );
           showSignupForm(false);
         }
@@ -69,80 +68,76 @@ export const SignupForm = ({
     <View style={{ padding: 8 }}>
       {isLoading && <ActivityIndicator />}
       <MessageInfo message={localInfo} />
-
-      <Card
-        title={
-          isUpdating ? "Modification de votre compte " : "Création d'un compte"
-        }
-      >
-        <View style={styles.input}>
-          <Text>Mon email</Text>
-          <TextInput
-            style={styles.textInput}
-            textContentType="emailAddress"
-            keyboardType="email-address"
-            maxLength={30}
-            autoCompleteType="email"
-            placeholder="email@email.fr"
-            onChangeText={(text) =>
-              setSignUpForm({ ...signUpForm, email: text })
-            }
-            defaultValue={
-              isUpdating && signUpForm.email !== null ? signUpForm.email : null
-            }
-          />
-        </View>
-        <View style={styles.input}>
-          <Text>Mon pseudo</Text>
-          <TextInput
-            style={styles.textInput}
-            textContentType="nickname"
-            maxLength={12}
-            autoCompleteType="off"
-            placeholder="pseudo"
-            onChangeText={(text) =>
-              setSignUpForm({ ...signUpForm, userName: text })
-            }
-            defaultValue={
-              isUpdating && signUpForm.userName ? signUpForm.userName : null
-            }
-          />
-        </View>
-        <View style={styles.input}>
-          <Text>Mon password</Text>
-          <TextInput
-            style={styles.textInput}
-            textContentType="newPassword"
-            secureTextEntry={true}
-            maxLength={12}
-            autoCompleteType="off"
-            placeholder="mot de passe"
-            onChangeText={(text) => {
-              setSignUpForm({ ...signUpForm, password: text });
-            }}
-          />
-        </View>
-        <View style={styles.input}>
-          <Text>Confirmer le mdp </Text>
-          <TextInput
-            style={styles.textInput}
-            textContentType="newPassword"
-            secureTextEntry={true}
-            maxLength={12}
-            autoCompleteType="off"
-            placeholder="mot de passe"
-            onChangeText={(text) =>
-              setSignUpForm({ ...signUpForm, repassword: text })
-            }
-          />
-        </View>
-
-        <ReefButton
-          title="Créer mon compte"
-          onPress={() => submitNewMember(signUpForm)}
+      <Text h4>
+        {isUpdating ? "Modification de votre compte " : "Création d'un compte"}
+      </Text>
+      <View style={styles.input}>
+        <Text>Mon email</Text>
+        <TextInput
+          style={styles.textInput}
+          textContentType="emailAddress"
+          keyboardType="email-address"
+          maxLength={30}
+          autoCompleteType="email"
+          placeholder="email@email.fr"
+          onChangeText={(text) =>
+            setSignUpForm({ ...signUpForm, email: text })
+          }
+          defaultValue={
+            isUpdating && signUpForm.email !== null ? signUpForm.email : null
+          }
         />
-      </Card>
-    </View>
+      </View>
+      <View style={styles.input}>
+        <Text>Mon pseudo</Text>
+        <TextInput
+          style={styles.textInput}
+          textContentType="nickname"
+          maxLength={12}
+          autoCompleteType="off"
+          placeholder="pseudo"
+          onChangeText={(text) =>
+            setSignUpForm({ ...signUpForm, userName: text })
+          }
+          defaultValue={
+            isUpdating && signUpForm.userName ? signUpForm.userName : null
+          }
+        />
+      </View>
+      <View style={styles.input}>
+        <Text>Mon password</Text>
+        <TextInput
+          style={styles.textInput}
+          textContentType="newPassword"
+          secureTextEntry={true}
+          maxLength={12}
+          autoCompleteType="off"
+          placeholder="mot de passe"
+          onChangeText={(text) => {
+            setSignUpForm({ ...signUpForm, password: text });
+          }}
+        />
+      </View>
+      <View style={styles.input}>
+        <Text>Confirmer le mdp </Text>
+        <TextInput
+          style={styles.textInput}
+          textContentType="newPassword"
+          secureTextEntry={true}
+          maxLength={12}
+          autoCompleteType="off"
+          placeholder="mot de passe"
+          onChangeText={(text) =>
+            setSignUpForm({ ...signUpForm, repassword: text })
+          }
+        />
+      </View>
+
+      <ReefButton
+        title="Créer mon compte"
+        onPress={() => submitNewMember(signUpForm)}
+      />
+    </View >
   );
 };
 

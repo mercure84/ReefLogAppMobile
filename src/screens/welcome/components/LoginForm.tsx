@@ -50,39 +50,35 @@ export const LoginForm = ({
   return (
     <View style={{ padding: 8 }}>
       {isLoading && <ActivityIndicator />}
-      <Card>
-        <View style={styles.input}>
-          <Text>Mon email : </Text>
-          <TextInput
-            style={styles.textInput}
-            textContentType="emailAddress"
-            keyboardType="email-address"
-            maxLength={30}
-            autoCompleteType="email"
-            placeholder="email@email.fr"
-            onChangeText={(text) => setEmail(text)}
-          />
-        </View>
-        <View style={styles.input}>
-          <Text>Mon mot de passe</Text>
-          <TextInput
-            style={styles.textInput}
-            textContentType="newPassword"
-            secureTextEntry={true}
-            maxLength={12}
-            autoCompleteType="off"
-            placeholder="mot de passe"
-            onChangeText={(text) => setPassword(text)}
-          />
-        </View>
-        <ReefButton
-          title="Connexion"
-          onPress={() => submitLogin(email, password)}
+      <View style={styles.input}>
+        <TextInput
+          style={styles.textInput}
+          textContentType="emailAddress"
+          keyboardType="email-address"
+          maxLength={30}
+          autoCompleteType="email"
+          placeholder="E-mail"
+          onChangeText={(text) => setEmail(text)}
         />
-        <TouchableOpacity onPress={handlePassWordRecover}>
-          <Text>Mot de passe oublié ?</Text>
-        </TouchableOpacity>
-      </Card>
+      </View>
+      <View style={styles.input}>
+        <TextInput
+          style={styles.textInput}
+          textContentType="newPassword"
+          secureTextEntry={true}
+          maxLength={12}
+          autoCompleteType="off"
+          placeholder="Mot de passe"
+          onChangeText={(text) => setPassword(text)}
+        />
+      </View>
+      <ReefButton
+        title="Connexion"
+        onPress={() => submitLogin(email, password)}
+      />
+      <TouchableOpacity onPress={handlePassWordRecover}>
+        <Text>Mot de passe oublié ?</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -97,12 +93,13 @@ const styles = StyleSheet.create<Style>({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingVertical: 2,
+    borderBottomWidth: 1,
+    borderBottomColor: "grey",
+    marginBottom: 8
   },
   textInput: {
-    backgroundColor: "lightgrey",
     textAlign: "center",
     height: 40,
-    width: "65%",
-    borderRadius: 5,
+    width: 320
   },
 });
