@@ -6,6 +6,7 @@ import {
   ViewStyle,
   TextStyle,
   StyleSheet,
+  KeyboardAvoidingView,
 } from "react-native";
 import { ReefButton } from "../../../components/ReefButton";
 
@@ -13,26 +14,25 @@ import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { loginService } from "../../../services/memberService";
 import { storeData } from "../../../services/storageDevice";
 import { useNavigation } from "@react-navigation/native";
+import { WelcomeElement } from "../WelcomeScreen";
 
 type Props = {
-  toggleWelcomeComponents: (string: string) => void;
+  toggleWelcomeComponents: (welcomeElement: WelcomeElement) => void;
 };
 
-export const LoginForm = ({
-  toggleWelcomeComponents,
-}: Props) => {
+export const LoginForm = ({ toggleWelcomeComponents }: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setLoading] = useState(false);
   const navigation = useNavigation();
 
-  const submitLogin = async (pEmail : string, pPassword : string) => {
+  const submitLogin = async (pEmail: string, pPassword: string) => {
     setLoading(true);
     const response = await loginService(pEmail, pPassword);
     setLoading(false);
 
     if (response.token != null) {
-      toggleWelcomeComponents("defaultButtons");
+      toggleWelcomeComponents(WelcomeElement.DEFAULT);
       storeData("token", "Bearer " + response.token);
       storeData("emailUser", email);
       navigation.navigate("AuthentOk");
@@ -40,11 +40,12 @@ export const LoginForm = ({
       console.error("Un problème est survenu : " + response.message);
     }
   };
-  const handlePassWordRecover = () => toggleWelcomeComponents("passRecover");
-  const handleSignup = () => toggleWelcomeComponents("signup")
+  const handlePassWordRecover = () =>
+    toggleWelcomeComponents(WelcomeElement.PASSRECOVER);
+  const handleSignup = () => toggleWelcomeComponents(WelcomeElement.SIGNUP);
 
   return (
-    <View style={{ padding: 8 }}>
+    <View>
       {isLoading && <ActivityIndicator />}
       <View style={styles.input}>
         <TextInput
@@ -68,7 +69,10 @@ export const LoginForm = ({
           onChangeText={(text) => setPassword(text)}
         />
       </View>
-      <TouchableOpacity onPress={handlePassWordRecover} style={{ alignSelf: "center", margin: 8 }}>
+      <TouchableOpacity
+        onPress={handlePassWordRecover}
+        style={{ alignSelf: "center", margin: 8 }}
+      >
         <Text>Mot de passe oublié ?</Text>
       </TouchableOpacity>
       <View style={{ alignSelf: "center", flexDirection: "row", margin: 8 }}>
@@ -100,11 +104,11 @@ const styles = StyleSheet.create<Style>({
     borderBottomWidth: 1,
     borderBottomColor: "grey",
     marginBottom: 8,
-    alignSelf: "center"
+    alignSelf: "center",
   },
   textInput: {
     textAlign: "center",
     height: 40,
-    width: 320
+    width: 320,
   },
 });

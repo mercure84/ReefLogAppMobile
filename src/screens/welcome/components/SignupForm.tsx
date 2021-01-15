@@ -12,8 +12,9 @@ import { ReefButton } from "../../../components/ReefButton";
 import { MessageInfo } from "../../../components/MessageInfo";
 import { TextInput } from "react-native-gesture-handler";
 import RootStore from "../../../store/RootStore";
+import { WelcomeElement } from "../WelcomeScreen";
 
-const checkPassword = (password, repassword): boolean => {
+const checkPassword = (password: string, repassword: string): boolean => {
   if (password !== null && repassword !== null) {
     return password === repassword && password.length > 5;
   } else return false;
@@ -22,16 +23,25 @@ const checkPassword = (password, repassword): boolean => {
 type Props = {
   showSignupForm?: (boolean: boolean) => void;
   memberToUpdate?: SignUp;
-  toggleWelcomeComponents?: (string: string) => void;
+  toggleWelcomeComponents?: (element: WelcomeElement) => void;
+};
 
+const initNewSignUp: SignUp = {
+  idToUpdate: undefined,
+  email: "",
+  password: "",
+  repassword: "",
+  userName: "",
 };
 
 export const SignupForm = ({
   showSignupForm,
   memberToUpdate,
-  toggleWelcomeComponents
+  toggleWelcomeComponents,
 }: Props) => {
-  const [signUpForm, setSignUpForm] = useState<SignUp>(memberToUpdate);
+  const [signUpForm, setSignUpForm] = useState<SignUp>(
+    memberToUpdate ?? initNewSignUp
+  );
   const [localInfo, setLocalInfo] = useState("");
 
   const isUpdating = memberToUpdate !== null;
@@ -49,9 +59,11 @@ export const SignupForm = ({
         } else {
           console.log(
             "Votre compte a bien été créé ! un email de confirmation a été envoyé à " +
-            response.email
+              response.email
           );
-          showSignupForm(false);
+          if (showSignupForm) {
+            showSignupForm(false);
+          }
         }
       } else {
         setLocalInfo("Un problème est survenu : " + response.message);
@@ -64,9 +76,8 @@ export const SignupForm = ({
   };
 
   return (
-    <View style={{ padding: 8 }}>
+    <View>
       {isLoading && <ActivityIndicator />}
-      <MessageInfo message={localInfo} />
       <View style={styles.input}>
         <TextInput
           style={styles.textInput}
@@ -75,11 +86,9 @@ export const SignupForm = ({
           maxLength={30}
           autoCompleteType="email"
           placeholder="E-mail"
-          onChangeText={(text) =>
-            setSignUpForm({ ...signUpForm, email: text })
-          }
+          onChangeText={(text) => setSignUpForm({ ...signUpForm, email: text })}
           defaultValue={
-            isUpdating && signUpForm.email !== null ? signUpForm.email : null
+            isUpdating && signUpForm.email !== null ? signUpForm.email : ""
           }
         />
       </View>
@@ -94,7 +103,7 @@ export const SignupForm = ({
             setSignUpForm({ ...signUpForm, userName: text })
           }
           defaultValue={
-            isUpdating && signUpForm.userName ? signUpForm.userName : null
+            isUpdating && signUpForm.userName ? signUpForm.userName : ""
           }
         />
       </View>
@@ -124,7 +133,13 @@ export const SignupForm = ({
           }
         />
       </View>
-      <View style={{ alignSelf: "center", flexDirection: "row", margin: 8 }}>
+      <View
+        style={{
+          alignSelf: "center",
+          flexDirection: "row",
+          margin: 8,
+        }}
+      >
         <ReefButton
           size="medium"
           title="Créer mon compte"
@@ -133,9 +148,14 @@ export const SignupForm = ({
         <ReefButton
           size="medium"
           title="Déjà enregistré ?"
-          onPress={() => toggleWelcomeComponents("login")}
-        /></View>
-    </View >
+          onPress={() =>
+            toggleWelcomeComponents
+              ? toggleWelcomeComponents(WelcomeElement.LOGIN)
+              : undefined
+          }
+        />
+      </View>
+    </View>
   );
 };
 
@@ -152,11 +172,11 @@ const styles = StyleSheet.create<Style>({
     borderBottomWidth: 1,
     borderBottomColor: "grey",
     marginBottom: 8,
-    alignSelf: "center"
+    alignSelf: "center",
   },
   textInput: {
     textAlign: "center",
     height: 40,
-    width: 320
+    width: 320,
   },
 });

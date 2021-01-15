@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import { LoginForm } from "./components/LoginForm";
 import { SignupForm } from "./components/SignupForm";
 import {
-  KeyboardAvoidingView,
   View,
   ViewStyle,
   StyleSheet,
+  KeyboardAvoidingView,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { About } from "./components/About";
@@ -18,101 +18,98 @@ export const componentStatusDefault = {
   showSignup: false,
   showLogin: false,
   showPassRecover: false,
-  showButtons: true
+  showButtons: true,
+};
+
+export enum WelcomeElement {
+  LOGIN,
+  SIGNUP,
+  PASSRECOVER,
+  DEFAULT,
 }
 
 const HomeScreen = () => {
-  const [componentStatus, setComponentStatus] = useState(componentStatusDefault);
+  const [componentStatus, setComponentStatus] = useState(
+    componentStatusDefault
+  );
   const [isAboutVisible, setAboutVisible] = useState(false);
 
-
-  const toggleWelcomeComponents = (element: "login" | "signup" | "passRecover" | "defaultButtons") => {
+  const toggleWelcomeComponents = (element: WelcomeElement) => {
     switch (element) {
-      case "login":
+      case WelcomeElement.LOGIN:
         setComponentStatus({
           showSignup: false,
           showLogin: true,
           showPassRecover: false,
-          showButtons: false
-        })
+          showButtons: false,
+        });
         return;
-      case "signup":
+      case WelcomeElement.SIGNUP:
         setComponentStatus({
           showSignup: true,
           showLogin: false,
           showPassRecover: false,
-          showButtons: false
-        })
+          showButtons: false,
+        });
         return;
-      case "passRecover":
+      case WelcomeElement.PASSRECOVER:
         setComponentStatus({
           showSignup: false,
           showLogin: false,
           showPassRecover: true,
-          showButtons: false
-        })
+          showButtons: false,
+        });
         return;
-      case "defaultButtons":
-        setComponentStatus(componentStatusDefault)
+      case WelcomeElement.DEFAULT:
+        setComponentStatus(componentStatusDefault);
         return;
     }
   };
 
-  const handlePressAbout = () => setAboutVisible(!isAboutVisible)
+  const handlePressAbout = () => setAboutVisible(!isAboutVisible);
 
   return (
-    <KeyboardAvoidingView
-      style={styles.page}
-      keyboardVerticalOffset={-64}
-    >
-             <View style={styles.header}>
+    <KeyboardAvoidingView style={styles.page} behavior="height">
+      <View style={styles.header}>
         <Text h2>Log4Reef</Text>
       </View>
       <View style={styles.mainContainer}>
-        {componentStatus.showButtons && <><ReefButton
-          size="large"
-          title="Créer un compte"
-          onPress={() => {
-            toggleWelcomeComponents("signup");
-          }}
-        />
-          <ReefButton
-            size="large"
-            title="Se connecter"
-            onPress={() => {
-              toggleWelcomeComponents("login");
-            }}
-          /></>}
+        {componentStatus.showButtons && (
+          <View style={{ padding: 8, flex: 1 }}>
+            <ReefButton
+              size="large"
+              title="Créer un compte"
+              onPress={() => {
+                toggleWelcomeComponents(WelcomeElement.SIGNUP);
+              }}
+            />
+            <ReefButton
+              size="large"
+              title="Se connecter"
+              onPress={() => {
+                toggleWelcomeComponents(WelcomeElement.LOGIN);
+              }}
+            />
+          </View>
+        )}
         {componentStatus.showLogin && (
-          <LoginForm
-            toggleWelcomeComponents={toggleWelcomeComponents}
-          />
+          <LoginForm toggleWelcomeComponents={toggleWelcomeComponents} />
         )}
         {componentStatus.showSignup && (
-          <SignupForm
-            toggleWelcomeComponents={toggleWelcomeComponents}
-            showSignupForm={null}
-            memberToUpdate={null}
-          />
+          <SignupForm toggleWelcomeComponents={toggleWelcomeComponents} />
         )}
         {componentStatus.showPassRecover && (
           <PassWordRecoverForm
-            showRecoverForm={null}
             toggleWelcomeComponents={toggleWelcomeComponents}
           />
         )}
       </View>
-      <TouchableOpacity
-        style={styles.about}
-        onPress={handlePressAbout}
-      >
-        <Text> A propos / Contact </Text>
+      <TouchableOpacity style={styles.about} onPress={handlePressAbout}>
+        <Text>A propos</Text>
       </TouchableOpacity>
 
       {isAboutVisible && <About />}
-
     </KeyboardAvoidingView>
-
   );
 };
 
@@ -120,7 +117,6 @@ type Style = {
   about: ViewStyle;
   page: ViewStyle;
   header: ViewStyle;
-  homeButton: ViewStyle;
   mainContainer: ViewStyle;
 };
 
@@ -128,20 +124,20 @@ const styles = StyleSheet.create<Style>({
   about: {
     justifyContent: "flex-end",
     margin: 8,
-  },
-  page: {
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
-  header: {
-    paddingVertical: 64,
-    alignItems: "center",
-  },
-  homeButton: {
     alignSelf: "center",
   },
+  page: {
+    alignItems: "center",
+    flex: 1,
+  },
+  header: {
+    marginBottom: 64,
+    alignItems: "center",
+  },
   mainContainer: {
-    marginVertical: 64,
+    padding: 24,
+    flex: 1,
+    justifyContent: "space-around",
   },
 });
 

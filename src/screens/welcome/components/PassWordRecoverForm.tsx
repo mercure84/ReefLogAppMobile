@@ -1,48 +1,63 @@
 import React, { useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet, TextStyle, ViewStyle } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { ReefButton } from "../../../components/ReefButton";
 import { getPasswordRecover } from "../../../services/memberService";
+import { WelcomeElement } from "../WelcomeScreen";
 
 type Props = {
-  showRecoverForm: (boolean: boolean) => void;
-  toggleWelcomeComponents: (string: string) => void;
-
+  toggleWelcomeComponents: (element: WelcomeElement) => void;
 };
 
-export const PassWordRecoverForm = ({
-  showRecoverForm,
-  toggleWelcomeComponents
-}: Props) => {
+export const PassWordRecoverForm = ({ toggleWelcomeComponents }: Props) => {
   const [email, setEmail] = useState("");
 
   const handleOnPress = () => {
     getPasswordRecover(email);
-    showRecoverForm(false);
   };
 
-  const handleCancel = () => toggleWelcomeComponents("defaultButtons");
+  const handleCancel = () => toggleWelcomeComponents(WelcomeElement.DEFAULT);
   return (
     <View>
       <View>
         <Text>Saisissez votre email </Text>
-        <TextInput
-          textContentType="emailAddress"
-          keyboardType="email-address"
-          maxLength={30}
-          autoCompleteType="email"
-          placeholder="E-mail"
-          onChangeText={(text) => setEmail(text)}
-        />
+        <View style={styles.input}>
+          <TextInput
+            style={styles.textInput}
+            textContentType="emailAddress"
+            keyboardType="email-address"
+            maxLength={30}
+            autoCompleteType="email"
+            placeholder="E-mail"
+            onChangeText={(text) => setEmail(text)}
+          />
+        </View>
       </View>
       <ReefButton
         title="Réinitialiser mon mot de passe"
         onPress={handleOnPress}
       />
-      <ReefButton
-        title="Annuler"
-        onPress={handleCancel}
-      />
+      <ReefButton title="Retour" onPress={handleCancel} />
     </View>
   );
 };
+
+type Style = {
+  input: ViewStyle;
+  textInput: TextStyle;
+};
+
+const styles = StyleSheet.create<Style>({
+  input: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 2,
+    borderBottomWidth: 1,
+    borderBottomColor: "grey",
+    marginBottom: 8,
+  },
+  textInput: {
+    height: 40,
+    width: 320,
+  },
+});
