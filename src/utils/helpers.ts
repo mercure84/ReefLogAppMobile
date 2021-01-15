@@ -6,6 +6,7 @@ import urchinIcon from "../assets/icons/urchin.png";
 import molluskIcon from "../assets/icons/mollusk.png";
 import cucumberIcon from "../assets/icons/cucumber.png";
 import anemoneIcon from "../assets/icons/anemone.png";
+import email from "react-native-email";
 
 import { Animal } from "../store/AnimalStore";
 
@@ -134,4 +135,12 @@ export const getMasseVolumique = (S: number, T: number, P: number) => {
     9.1697e-10 * T2 * P2 * S;
 
   return Math.round((rho / (1 - P / K)) * 100) / 100;
+};
+
+
+export const handleSuggestEmail = () => {
+  const recipient = ["julien.marcesse@gmail.com"];
+  email(recipient, {
+    subject: "Une suggestion sur votre appli ReefLog",
+  }).catch(console.error);
 };

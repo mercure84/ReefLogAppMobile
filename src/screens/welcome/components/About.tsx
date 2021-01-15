@@ -1,19 +1,12 @@
 import React from "react";
 import { Text, View } from "react-native";
-import {
-  version as app_version,
-  name as app_name,
-} from "../../../../package.json";
-
 import { TouchableOpacity } from "react-native-gesture-handler";
-import email from "react-native-email";
+import { handleSuggestEmail } from "../../../utils/helpers";
 
-export const handleEmail = () => {
-  const recipient = ["julien.marcesse@gmail.com"];
-  email(recipient, {
-    subject: "Une suggestion sur votre appli ReefLog",
-  }).catch(console.error);
-};
+
+
+const application = require("../../../../package.json");
+
 
 export const About = () => {
   return (
@@ -25,13 +18,13 @@ export const About = () => {
       <Text style={{ textAlign: "center" }}>
         Application développée par Julien Marcesse
       </Text>
-      <TouchableOpacity onPress={handleEmail}>
+      <TouchableOpacity onPress={handleSuggestEmail}>
         <Text style={{ textAlign: "center", color: "blue" }}>
           Pour toute question / suggestion :{"\n"}julien.marcesse@gmail.com
           </Text>
       </TouchableOpacity>
       <Text style={{ color: "orange" }}>
-        Version de l'appli : {app_name} {app_version}
+        Version de l'appli : {application.name} {application.version}
       </Text>
     </View>
   );
