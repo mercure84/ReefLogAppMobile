@@ -75,7 +75,7 @@ const HomeScreen = () => {
       </View>
       <View style={styles.mainContainer}>
         {componentStatus.showButtons && (
-          <View style={{ padding: 8, flex: 1 }}>
+          <View style={{ padding: 8 }}>
             <ReefButton
               size="large"
               title="Créer un compte"
