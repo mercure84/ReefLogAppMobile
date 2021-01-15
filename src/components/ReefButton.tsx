@@ -1,6 +1,5 @@
 import React, { ReactNode } from "react";
 import {
-  ImageSourcePropType,
   View,
 } from "react-native";
 import { Button, ButtonProps } from "react-native-elements";
@@ -26,11 +25,12 @@ export const ReefButton = ({ title, onPress, size }: Props) => {
   }
 
   return (
-    <View style={{ margin: 4, width: sizeWidth() }}>
-      <Button
-        title={title}
-        onPress={onPress}
-      />
-    </View>
+    <View style= {{ margin: 4, width: sizeWidth() }
+}>
+  <Button
+        title={ title }
+onPress = { onPress }
+  />
+  </View>
   );
 };

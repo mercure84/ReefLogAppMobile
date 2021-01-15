@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import { LoginForm } from "./components/LoginForm";
 import { SignupForm } from "./components/SignupForm";
-import { MessageInfo } from "../../components/MessageInfo";
 import {
   KeyboardAvoidingView,
   View,
@@ -66,7 +65,7 @@ const HomeScreen = () => {
       style={styles.page}
       keyboardVerticalOffset={-64}
     >
-      <View style={styles.header}>
+             <View style={styles.header}>
         <Text h2>Log4Reef</Text>
       </View>
       <View style={styles.mainContainer}>

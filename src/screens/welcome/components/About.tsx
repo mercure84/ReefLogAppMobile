@@ -23,7 +23,7 @@ export const About = () => {
           Pour toute question / suggestion :{"\n"}julien.marcesse@gmail.com
           </Text>
       </TouchableOpacity>
-      <Text style={{ color: "orange" }}>
+      <Text style={{ color: "orange", alignSelf:"center" }}>
         Version de l'appli : {application.name} {application.version}
       </Text>
     </View>

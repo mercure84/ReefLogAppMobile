@@ -26,7 +26,7 @@ export const LoginForm = ({
   const [isLoading, setLoading] = useState(false);
   const navigation = useNavigation();
 
-  const submitLogin = async (pEmail, pPassword) => {
+  const submitLogin = async (pEmail : string, pPassword : string) => {
     setLoading(true);
     const response = await loginService(pEmail, pPassword);
     setLoading(false);
