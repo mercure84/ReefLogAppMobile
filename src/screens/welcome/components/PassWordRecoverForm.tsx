@@ -20,7 +20,7 @@ export const PassWordRecoverForm = ({ toggleWelcomeComponents }: Props) => {
   return (
     <View>
       <View>
-        <Text>Saisissez votre email </Text>
+        <Text style={{ fontWeight: "bold" }}>Saisissez votre email </Text>
         <View style={styles.input}>
           <TextInput
             style={styles.textInput}

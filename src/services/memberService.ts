@@ -39,7 +39,6 @@ export const signUpService = async (
   };
   try {
     const token = await getData("token");
-
     const response = await fetch(urlService, {
       method: "POST",
       headers: {
@@ -91,7 +90,7 @@ export const checkToken = async (pEmail: string, pToken: string) => {
   try {
     console.log(
       "On demande la validation du jeton trouvé avec l'email : " +
-      dataToValidate.email
+        dataToValidate.email
     );
     const response = await fetch(urlService, {
       method: "POST",
@@ -134,24 +133,22 @@ export const getMemberDetail = async (
   }
 };
 
-
 export const getPasswordRecover = async (pEmail: string) => {
   const email = pEmail.toLocaleLowerCase();
-  const urlService = urlServer + "api/recoverPassword/" + email
+  const urlService = urlServer + "api/recoverPassword/" + email;
   try {
-    console.log("on demande le recover pour le membre : ", email)
+    console.log("on demande le recover pour le membre : ", email);
     const response = await fetch(urlService, {
       method: "GET",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-
-      }
+      },
     });
     const dataResponse = response.json();
     console.log("Requête recoverPassword finie");
     return dataResponse;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};

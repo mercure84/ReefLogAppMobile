@@ -14,7 +14,7 @@ export const CustomModal = ({
   message,
   buttonYesFonction,
   buttonNoFonction,
-  isModaleVisible
+  isModaleVisible,
 }: Props) => {
   return (
     <Modal isVisible={isModaleVisible}>
@@ -37,6 +37,6 @@ type Style = { button: ViewStyle };
 
 const styles = StyleSheet.create<Style>({
   button: {
-    margin: 8
-  }
+    margin: 8,
+  },
 });

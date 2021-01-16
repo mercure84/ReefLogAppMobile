@@ -6,7 +6,6 @@ import {
   ViewStyle,
   TextStyle,
   StyleSheet,
-  KeyboardAvoidingView,
 } from "react-native";
 import { ReefButton } from "../../../components/ReefButton";
 

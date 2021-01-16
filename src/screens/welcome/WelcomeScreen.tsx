@@ -105,7 +105,7 @@ const HomeScreen = () => {
         )}
       </View>
       <TouchableOpacity style={styles.about} onPress={handlePressAbout}>
-        <Text>A propos</Text>
+        <Text>A propos ©</Text>
       </TouchableOpacity>
 
       {isAboutVisible && <About />}
