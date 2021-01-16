@@ -49,7 +49,7 @@ export const SignupForm = ({
     } else return false;
   };
 
-  const { password, repassword, email, userName, idToUpdate } = signUpForm;
+  const { password, repassword, email, userName } = signUpForm;
 
   const showInfo = (message: string): void => {
     setMessage(message);

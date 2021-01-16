@@ -145,9 +145,8 @@ export const getPasswordRecover = async (pEmail: string) => {
         "Content-Type": "application/json",
       },
     });
-    const dataResponse = response.json();
     console.log("Requête recoverPassword finie");
-    return dataResponse;
+    return response;
   } catch (error) {
     console.log(error);
   }
