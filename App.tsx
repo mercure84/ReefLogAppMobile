@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Provider } from "mobx-react";
 import { MainNavigator } from "./src/navigation/AppNavigator";
 import { getData } from "./src/services/storageDevice";
@@ -20,13 +20,11 @@ export default function App() {
         setAuthentified(data.credentialValide === true);
       }
       setLoading(false);
-      console.log("UserTk = ", storedToken, " Email = ", storedEmail)
-
+      console.log("UserTk = ", storedToken, " Email = ", storedEmail);
     } catch (error) {
       console.log("Erreur dans la recherche du token");
     }
   };
-
 
   if (isLoading) {
     validateToken();
