@@ -108,10 +108,7 @@ export const checkToken = async (pEmail: string, pToken: string) => {
 };
 
 // service détail d'un membre
-export const getMemberDetail = async (
-  pEmail: string,
-  token: string
-): Promise<Member> => {
+export const getMemberDetail = async (pEmail: string, token: string) => {
   const email = pEmail.toLocaleLowerCase();
   const urlService = urlServer + "api/getMemberDetail/" + email;
 

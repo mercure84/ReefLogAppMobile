@@ -14,6 +14,7 @@ import { loginService } from "../../../services/memberService";
 import { storeData } from "../../../services/storageDevice";
 import { useNavigation } from "@react-navigation/native";
 import { WelcomeElement } from "../WelcomeScreen";
+import { InfoModal } from "../../../components/InfoModal";
 
 type Props = {
   toggleWelcomeComponents: (welcomeElement: WelcomeElement) => void;
@@ -24,25 +25,29 @@ export const LoginForm = ({ toggleWelcomeComponents }: Props) => {
   const [password, setPassword] = useState("");
   const [isLoading, setLoading] = useState(false);
   const navigation = useNavigation();
+  const [isModalInfoVisible, showModalInfo] = useState(false);
+  const [message, setMessage] = useState("");
 
   const submitLogin = async (pEmail: string, pPassword: string) => {
     setLoading(true);
     const response = await loginService(pEmail, pPassword);
     setLoading(false);
-
-    if (response.token != null) {
-      toggleWelcomeComponents(WelcomeElement.DEFAULT);
+    if (response.token) {
+      console.log("Authentification réussie !");
       storeData("token", "Bearer " + response.token);
       storeData("emailUser", email);
       navigation.navigate("AuthentOk");
     } else {
-      console.error("Un problème est survenu : " + response.message);
+      setMessage("Un problème est survenu : " + response.message);
+      showModalInfo(true);
     }
   };
   const handlePassWordRecover = () =>
     toggleWelcomeComponents(WelcomeElement.PASSRECOVER);
   const handleSignup = () => toggleWelcomeComponents(WelcomeElement.SIGNUP);
-
+  const handlePressOK = () => {
+    showModalInfo(false);
+  };
   return (
     <View>
       {isLoading && <ActivityIndicator />}
@@ -86,6 +91,12 @@ export const LoginForm = ({ toggleWelcomeComponents }: Props) => {
           onPress={handleSignup}
         />
       </View>
+      <InfoModal
+        isModaleVisible={isModalInfoVisible}
+        message={message}
+        OKButtonFunction={handlePressOK}
+        onHide={handlePressOK}
+      />
     </View>
   );
 };
