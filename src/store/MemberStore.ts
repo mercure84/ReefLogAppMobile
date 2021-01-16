@@ -6,7 +6,7 @@ import { RootStore as RootStoreType } from "./RootStore";
 class MemberStore {
   RootStore: RootStoreType;
 
-  constructor(RootStore) {
+  constructor(RootStore: RootStoreType) {
     this.RootStore = RootStore;
   }
   @observable member: Member;
@@ -16,7 +16,7 @@ class MemberStore {
 
   // récupération des détails du membre pour alimenter notre store
   @action
-  async fetchMember(): Promise<Member> {
+  async fetchMember() {
     this.memberState = "pending";
 
     try {
