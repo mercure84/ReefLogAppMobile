@@ -59,7 +59,7 @@ class AlertStore {
       try {
         console.log("Store is fetching Alerts");
         const memberToken = this.RootStore.memberStore.token;
-        const tankId = this.RootStore.tankStore.tankList[0].id;
+        const tankId = this.RootStore.tankStore.tankList[0]?.id;
         const urlService = urlServer + "api/getAlerts/" + tankId;
 
         const response = await fetch(urlService, {
@@ -67,7 +67,7 @@ class AlertStore {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            Authorization: memberToken,
+            Authorization: memberToken ?? "",
           },
         });
         const alerts: Promise<Alert[]> = response.json();
@@ -81,6 +81,7 @@ class AlertStore {
         this.alertState = "error";
       }
     }
+    return [];
   }
 
   @action
@@ -93,14 +94,14 @@ class AlertStore {
       try {
         console.log("Store is fetching Notifications");
         const memberToken = this.RootStore.memberStore.token;
-        const tankId = this.RootStore.tankStore.tankList[0].id;
+        const tankId = this.RootStore.tankStore.tankList[0]?.id;
         const urlService = urlServer + "api/showAlerts/" + tankId;
         const response = await fetch(urlService, {
           method: "GET",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            Authorization: memberToken,
+            Authorization: memberToken ?? "",
           },
         });
         this.notificationsState = "done";
@@ -113,6 +114,7 @@ class AlertStore {
         this.notificationsState = "error";
       }
     }
+    return [];
   }
 
   @action
@@ -129,7 +131,7 @@ class AlertStore {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: memberToken,
+          Authorization: memberToken ?? "",
         },
         body: JSON.stringify(alertsForm),
       });

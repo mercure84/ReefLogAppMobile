@@ -1,6 +1,5 @@
 import React from "react";
-import { View, ViewStyle, StyleSheet, ModalProps } from "react-native";
-import Modal from "react-native-modal";
+import { View, ViewStyle, StyleSheet, Modal } from "react-native";
 import { Card, Text } from "react-native-elements";
 import { ReefButton } from "./ReefButton";
 
@@ -18,22 +17,42 @@ export const InfoModal = ({
   onHide,
 }: Props) => {
   return (
-    <Modal isVisible={isModaleVisible} onDismiss={onHide}>
-      <Card>
+    <Modal visible={isModaleVisible} onDismiss={onHide} transparent>
+      <View style={styles.modalView}>
         <Text>{message}</Text>
         <View style={styles.button}>
           <ReefButton title="OK" onPress={OKButtonFunction} size={"medium"} />
         </View>
-      </Card>
+      </View>
     </Modal>
   );
 };
 
-type Style = { button: ViewStyle };
+type Style = {
+  button: ViewStyle;
+  modalView: ViewStyle;
+};
 
 const styles = StyleSheet.create<Style>({
   button: {
     marginTop: 16,
     alignItems: "center",
+  },
+
+  modalView: {
+    marginVertical: "65%",
+    alignItems: "center",
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });
