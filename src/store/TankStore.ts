@@ -1,5 +1,5 @@
 import { observable, action, runInAction } from "mobx";
-import { RootStore as RootStoreType } from "./RootStore";
+import { RootStore as RootStoreType, WebServiceState } from "./RootStore";
 import { ImageSourcePropType } from "react-native";
 import { urlServer } from "../constants/constants";
 import { Member } from "../services/memberService";
@@ -16,7 +16,7 @@ export interface Tank {
   sumpVolume: number;
   typeOfMaintenance: string;
   mainPopulation: string;
-  ballingDescription?: any;
+  ballingDescription?: string;
   liveRocksWeigth?: number;
   othersRocksWeight?: number;
   rawVolume?: number;
@@ -25,21 +25,24 @@ export interface Tank {
 class TankStore {
   RootStore: RootStoreType;
 
-  constructor(RootStore) {
+  constructor(RootStore: RootStoreType) {
     this.RootStore = RootStore;
   }
 
   @observable tankList: Tank[] = [];
-  @observable tankState = "pending"; // "pending" / "done" / "error"
+  @observable tankState: WebServiceState = "pending";
   @observable tankImageState = "pending";
-  @observable tankPicture: ArrayBuffer = null;
+  @observable tankPicture: ArrayBuffer | null = null;
 
   // récupération de la liste des aquariums du membre
 
   @action
   async fetchTankList(): Promise<Tank[]> {
     this.tankState = "pending";
-    if (this.RootStore.memberStore.memberState === "done") {
+    if (
+      this.RootStore.memberStore.memberState === "done" &&
+      this.RootStore.memberStore.member !== undefined
+    ) {
       const memberId = this.RootStore.memberStore.member.id;
       if (memberId !== null) {
         try {

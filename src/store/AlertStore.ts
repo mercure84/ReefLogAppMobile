@@ -1,5 +1,5 @@
 import { observable, action, runInAction, computed, toJS } from "mobx";
-import { RootStore as RootStoreType } from "./RootStore";
+import { RootStore as RootStoreType, WebServiceState } from "./RootStore";
 import { urlServer } from "../constants/constants";
 
 export interface Alert {
@@ -26,16 +26,16 @@ export enum TypeTest {
 
 class AlertStore {
   RootStore: RootStoreType;
-  constructor(RootStore) {
+  constructor(RootStore: RootStoreType) {
     this.RootStore = RootStore;
   }
 
   @observable alerts: Alert[] = [];
-  @observable alertState = "pending";
+  @observable alertState: WebServiceState = "pending";
 
-  //alerte positive = une alerte qui indique qu'un test est en retard
-  @observable positiveAlerts: Alert[] = [];
-  @observable positiveAlertsState = "pending";
+  //notifications = une alerte qui indique qu'un test est en retard
+  @observable notifications: Alert[] = [];
+  @observable notificationsState = "pending";
 
   @computed get alertsData() {
     return toJS(this.alerts).sort((a, b) =>
@@ -43,8 +43,8 @@ class AlertStore {
     );
   }
 
-  @computed get positiveAlertsData() {
-    return toJS(this.positiveAlerts).sort((a, b) =>
+  @computed get notificationsData() {
+    return toJS(this.notifications).sort((a, b) =>
       a.typeTest > b.typeTest ? 1 : b.typeTest > a.typeTest ? -1 : 0
     );
   }
@@ -84,14 +84,14 @@ class AlertStore {
   }
 
   @action
-  async fetchPositiveAlerts(): Promise<Alert[]> {
+  async fetchNotifications(): Promise<Alert[]> {
     if (
       this.RootStore.tankStore.tankState === "done" &&
       this.RootStore.tankStore.tankList.length > 0
     ) {
-      this.positiveAlertsState = "pending";
+      this.notificationsState = "pending";
       try {
-        console.log("Store is fetching positive Alerts");
+        console.log("Store is fetching Notifications");
         const memberToken = this.RootStore.memberStore.token;
         const tankId = this.RootStore.tankStore.tankList[0].id;
         const urlService = urlServer + "api/showAlerts/" + tankId;
@@ -103,14 +103,14 @@ class AlertStore {
             Authorization: memberToken,
           },
         });
-        this.positiveAlertsState = "done";
-        const positiveAlerts: Promise<Alert[]> = response.json();
-        console.log("positive alerts success");
-        this.positiveAlerts = await positiveAlerts;
-        return positiveAlerts;
+        this.notificationsState = "done";
+        const notifications: Promise<Alert[]> = response.json();
+        console.log("notifications success");
+        this.notifications = await this.notifications;
+        return notifications;
       } catch (error) {
         console.log(error);
-        this.positiveAlertsState = "error";
+        this.notificationsState = "error";
       }
     }
   }
@@ -135,7 +135,7 @@ class AlertStore {
       });
       const dataResponse = response.json();
       console.log("Alerts envoyées");
-      this.positiveAlertsState = "pending";
+      this.notificationsState = "pending";
       return dataResponse;
     } catch (error) {
       console.log(error);

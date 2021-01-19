@@ -7,9 +7,8 @@ import {
   TextInput,
   StyleSheet,
   Picker,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
-import { Card } from "react-native-elements";
 import { Tank } from "../../../../store/TankStore";
 import RootStore from "../../../../store/RootStore";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -28,9 +27,9 @@ export const NewTankForm = ({
   infoCallBack,
   showFormCallback,
   memberId,
-  tankToSave
+  tankToSave,
 }: Props) => {
-  const today = new Date()
+  const today = new Date();
   const [isLoading, setLoading] = useState(false);
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [tank, setTank] = useState<Tank>(tankToSave);
@@ -43,7 +42,7 @@ export const NewTankForm = ({
   const checkForm = () => {
     let isValide = false;
     if (tank.startDate == undefined) {
-      setTank({ ...tank, startDate: today })
+      setTank({ ...tank, startDate: today });
     }
     if (
       tank.name !== null &&
@@ -81,12 +80,12 @@ export const NewTankForm = ({
     RootStore.tankStore.fetchTankList();
   };
 
-  const setDate = date => {
+  const setDate = (date: Date) => {
     setDatePickerVisible(false);
 
     setTank({
       ...tank,
-      startDate: date
+      startDate: date,
     });
     setDatePickerVisible(false);
   };
@@ -95,182 +94,172 @@ export const NewTankForm = ({
     <View>
       {isLoading && <ActivityIndicator />}
 
-      <Card title="Création d'un aquarium !">
-        <View style={styles.input}>
-          <Text>Mise en eau</Text>
+      <View style={styles.input}>
+        <Text>Mise en eau</Text>
 
-          <ReefButton
-            title={
-              tank !== null
-                ? Moment(tank.startDate)
-                  .format("ll")
-                  .toString()
-                : Moment(new Date())
-                  .format("ll")
-                  .toString()
-            }
-            onPress={() => setDatePickerVisible(true)}
-          />
+        <ReefButton
+          title={
+            tank !== null
+              ? Moment(tank.startDate).format("ll").toString()
+              : Moment(new Date()).format("ll").toString()
+          }
+          onPress={() => setDatePickerVisible(true)}
+        />
 
-          <DateTimePickerModal
-            isVisible={isDatePickerVisible}
-            date={
-              tank !== null
-                ? new Date(Moment(tank.startDate).toString())
-                : new Date()
-            }
-            locale="fr-FR"
-            mode="date"
-            display="calendar"
-            onConfirm={setDate}
-            onCancel={() => setDatePickerVisible(false)}
-          />
-        </View>
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          date={
+            tank !== null
+              ? new Date(Moment(tank.startDate).toString())
+              : new Date()
+          }
+          locale="fr-FR"
+          mode="date"
+          display="calendar"
+          onConfirm={setDate}
+          onCancel={() => setDatePickerVisible(false)}
+        />
+      </View>
 
-        <View style={styles.input}>
-          <Text>Nom</Text>
+      <View style={styles.input}>
+        <Text>Nom</Text>
+        <TextInput
+          style={styles.textInput}
+          maxLength={30}
+          placeholder="30 caractères maxi"
+          onChangeText={(text) =>
+            setTank({
+              ...tank,
+              name: text,
+            })
+          }
+          defaultValue={isUpdating && tank.name !== null ? tank.name : null}
+        />
+      </View>
+      <View style={styles.inputInlineContainer}>
+        <View style={styles.inputInline}>
+          <Text>Longueur</Text>
           <TextInput
-            style={styles.textInput}
-            maxLength={30}
-            placeholder="30 caractères maxi"
-            onChangeText={text =>
+            style={styles.textInputSmall}
+            maxLength={3}
+            placeholder="0-999cm"
+            keyboardType="numeric"
+            onChangeText={(text) =>
               setTank({
                 ...tank,
-                name: text
+                length: formatStringToInteger(text),
               })
             }
-            defaultValue={isUpdating && tank.name !== null ? tank.name : null}
+            defaultValue={
+              isUpdating && tank.length !== null ? tank.length.toString() : null
+            }
           />
         </View>
-        <View style={styles.inputInlineContainer}>
-          <View style={styles.inputInline}>
-            <Text>Longueur</Text>
-            <TextInput
-              style={styles.textInputSmall}
-              maxLength={3}
-              placeholder="0-999cm"
-              keyboardType="numeric"
-              onChangeText={text =>
-                setTank({
-                  ...tank,
-                  length: formatStringToInteger(text)
-                })
-              }
-              defaultValue={
-                isUpdating && tank.length !== null
-                  ? tank.length.toString()
-                  : null
-              }
-            />
-          </View>
-          <View style={styles.inputInline}>
-            <Text>Largeur</Text>
-            <TextInput
-              style={styles.textInputSmall}
-              maxLength={3}
-              placeholder="0-999cm"
-              keyboardType="numeric"
-              onChangeText={text =>
-                setTank({
-                  ...tank,
-                  width: formatStringToInteger(text)
-                })
-              }
-              defaultValue={
-                isUpdating && tank.width !== null ? tank.width.toString() : null
-              }
-            />
-          </View>
-          <View style={styles.inputInline}>
-            <Text>Hauteur</Text>
-            <TextInput
-              style={styles.textInputSmall}
-              maxLength={3}
-              placeholder="0-999cm"
-              keyboardType="numeric"
-              onChangeText={text =>
-                setTank({
-                  ...tank,
-                  height: formatStringToInteger(text)
-                })
-              }
-              defaultValue={
-                isUpdating && tank.height !== null
-                  ? tank.height.toString()
-                  : null
-              }
-            />
-          </View>
+        <View style={styles.inputInline}>
+          <Text>Largeur</Text>
+          <TextInput
+            style={styles.textInputSmall}
+            maxLength={3}
+            placeholder="0-999cm"
+            keyboardType="numeric"
+            onChangeText={(text) =>
+              setTank({
+                ...tank,
+                width: formatStringToInteger(text),
+              })
+            }
+            defaultValue={
+              isUpdating && tank.width !== null ? tank.width.toString() : null
+            }
+          />
+        </View>
+        <View style={styles.inputInline}>
+          <Text>Hauteur</Text>
+          <TextInput
+            style={styles.textInputSmall}
+            maxLength={3}
+            placeholder="0-999cm"
+            keyboardType="numeric"
+            onChangeText={(text) =>
+              setTank({
+                ...tank,
+                height: formatStringToInteger(text),
+              })
+            }
+            defaultValue={
+              isUpdating && tank.height !== null ? tank.height.toString() : null
+            }
+          />
+        </View>
 
-          <View style={styles.inputInline}>
-            <Text>Décantation</Text>
-            <TextInput
-              style={styles.textInputSmall}
-              maxLength={4}
-              placeholder="0-9999 L"
-              keyboardType="numeric"
-              onChangeText={text =>
-                setTank({
-                  ...tank,
-                  sumpVolume: formatStringToInteger(text)
-                })
-              }
-              defaultValue={
-                isUpdating && tank.sumpVolume !== null
-                  ? tank.sumpVolume.toString()
-                  : null
-              }
-            />
-          </View>
+        <View style={styles.inputInline}>
+          <Text>Décantation</Text>
+          <TextInput
+            style={styles.textInputSmall}
+            maxLength={4}
+            placeholder="0-9999 L"
+            keyboardType="numeric"
+            onChangeText={(text) =>
+              setTank({
+                ...tank,
+                sumpVolume: formatStringToInteger(text),
+              })
+            }
+            defaultValue={
+              isUpdating && tank.sumpVolume !== null
+                ? tank.sumpVolume.toString()
+                : null
+            }
+          />
         </View>
-        <View style={styles.input}>
-          <Text>Maintenance</Text>
-          <Picker
-            style={{ height: 50, width: 150 }}
-            mode="dropdown"
-            selectedValue={
-              tank == null || tank.typeOfMaintenance == undefined
-                ? setTank({ ...tank, typeOfMaintenance: "BERLINOIS" })
-                : tank.typeOfMaintenance
-            }
-            onValueChange={itemValue =>
-              setTank({ ...tank, typeOfMaintenance: itemValue })
-            }
-          >
-            <Picker.Item label="Berlinois" value="BERLINOIS" />
-            <Picker.Item label="Jaubert" value="JAUBERT" />
-            <Picker.Item label="Autre" value="AUTRE" />
-          </Picker>
-        </View>
-        <View style={styles.input}>
-          <Text>Population principale</Text>
-          <Picker
-            style={{ height: 50, width: 150 }}
-            mode="dropdown"
-            selectedValue={
-              tank === null
-                ? setTank({ ...tank, mainPopulation: "MIX" })
-                : tank.mainPopulation
-            }
-            onValueChange={itemValue =>
-              setTank({ ...tank, mainPopulation: itemValue })
-            }
-          >
-            <Picker.Item label="Fish-Only" value="FISH_ONLY" />
-            <Picker.Item label="Mixte" value="MIX" />
-            <Picker.Item label="Mous" value="SOFT" />
-            <Picker.Item label="LPS" value="LPS" />
-            <Picker.Item label="SPS" value="SPS" />
-          </Picker>
-        </View>
-        <ReefButton title="Enregistrer" onPress={() => saveTank()} />
-        <ReefButton
-          title="Annuler"
-          onPress={() => {
-            showFormCallback(false);
-          }}
-        />
-      </Card>
+      </View>
+      <View style={styles.input}>
+        <Text>Maintenance</Text>
+        <Picker
+          style={{ height: 50, width: 150 }}
+          mode="dropdown"
+          selectedValue={
+            tank == null || tank.typeOfMaintenance == undefined
+              ? setTank({ ...tank, typeOfMaintenance: "BERLINOIS" })
+              : tank.typeOfMaintenance
+          }
+          onValueChange={(itemValue) =>
+            setTank({ ...tank, typeOfMaintenance: itemValue })
+          }
+        >
+          <Picker.Item label="Berlinois" value="BERLINOIS" />
+          <Picker.Item label="Jaubert" value="JAUBERT" />
+          <Picker.Item label="Autre" value="AUTRE" />
+        </Picker>
+      </View>
+      <View style={styles.input}>
+        <Text>Population principale</Text>
+        <Picker
+          style={{ height: 50, width: 150 }}
+          mode="dropdown"
+          selectedValue={
+            tank === null
+              ? setTank({ ...tank, mainPopulation: "MIX" })
+              : tank.mainPopulation
+          }
+          onValueChange={(itemValue) =>
+            setTank({ ...tank, mainPopulation: itemValue })
+          }
+        >
+          <Picker.Item label="Fish-Only" value="FISH_ONLY" />
+          <Picker.Item label="Mixte" value="MIX" />
+          <Picker.Item label="Mous" value="SOFT" />
+          <Picker.Item label="LPS" value="LPS" />
+          <Picker.Item label="SPS" value="SPS" />
+        </Picker>
+      </View>
+      <ReefButton title="Enregistrer" onPress={() => saveTank()} />
+      <ReefButton
+        title="Annuler"
+        onPress={() => {
+          showFormCallback(false);
+        }}
+      />
     </View>
   );
 };
@@ -288,21 +277,21 @@ const styles = StyleSheet.create<Style>({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: 4
+    paddingVertical: 4,
   },
   inputInlineContainer: {
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   inputInline: {
-    alignItems: "center"
+    alignItems: "center",
   },
   textInput: {
     backgroundColor: "lightgrey",
     textAlign: "center",
     height: 40,
     width: "65%",
-    borderRadius: 5
+    borderRadius: 5,
   },
 
   textInputSmall: {
@@ -310,6 +299,6 @@ const styles = StyleSheet.create<Style>({
     textAlign: "center",
     height: 40,
     width: "100%",
-    borderRadius: 10
-  }
+    borderRadius: 10,
+  },
 });

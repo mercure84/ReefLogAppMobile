@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -16,31 +16,51 @@ import { useNavigation } from "@react-navigation/native";
 import { TankPicture } from "./aquarium/TankPicture";
 import { ReefButton } from "../../../components/ReefButton";
 import { ReefHeaderTitle } from "../../../components/ReefHeaderTitle";
-import { PositiveAlerts } from "./alerts/PositiveAlerts";
+import { Notifications } from "./notifications/Notifications";
+import { Member } from "../../../services/memberService";
+import { Tank } from "../../../store/TankStore";
+import { Alert } from "../../../store/AlertStore";
 
 const DashboardScreen = observer(() => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);
   const [isTankItemVisible, setTankItemVisible] = useState(true);
   const [messageInfo, setMessageInfo] = useState("");
+  const [isMemberLoading, setMemberLoading] = useState(true);
+  const [isTankLoading, setTankLoading] = useState(true);
+  const [isNotificationsLoading, setNotificationsLoading] = useState(true);
+  const [member, setMember] = useState<Member>(undefined);
+  const [tankList, setTankList] = useState<Tank[]>([]);
+  const [notifications, setNotifications] = useState<Alert[]>([]);
+
   const navigation = useNavigation();
 
-  if (RootStore.memberStore.memberState === "pending") {
-    RootStore.memberStore.fetchMember();
-  }
-  if (RootStore.tankStore.tankState === "pending") {
-    RootStore.tankStore.fetchTankList();
-  }
-  if (RootStore.alertStore.positiveAlertsState === "pending") {
-    RootStore.alertStore.fetchPositiveAlerts();
-  }
+  const { memberStore, tankStore, alertStore } = RootStore;
 
-  const isMemberLoading = RootStore.memberStore.memberState === "pending";
-  const isTankLoading = RootStore.tankStore.tankState === "pending";
-  const isPositiveAlertsLoading = RootStore.alertStore.positiveAlertsState === "pending";
+  useEffect(() => {
+    if (memberStore.memberState === "done") {
+      setMember(memberStore.member);
+      setMemberLoading(false);
+      if (tankStore.tankState !== "done") {
+        tankStore.fetchTankList();
+      } else {
+        setTankList(tankStore.tankList);
+        setTankLoading(false);
+      }
+      if (alertStore.notificationsState !== "done") {
+        alertStore.fetchNotifications();
+      } else {
+        setNotifications(alertStore.notifications);
+        setNotificationsLoading(false);
+      }
+    } else {
+      memberStore.fetchMember();
+    }
+  }, [
+    memberStore.memberState,
+    tankStore.tankState,
+    alertStore.notificationsState,
+  ]);
 
-  const member = RootStore.memberStore.member;
-  const tankList = RootStore.tankStore.tankList.slice();
-  const positiveAlerts = RootStore.alertStore.positiveAlertsData;
   const newTankPress = () => setNewTankFormVisible(true);
   const populationPress = () => navigation.navigate("handlePopulation");
   const equipmentPress = () => navigation.navigate("handleEquipment");
@@ -51,28 +71,25 @@ const DashboardScreen = observer(() => {
 
   return (
     <View style={styles.page}>
-      <Header
-        centerComponent={<ReefHeaderTitle title="TABLEAU DE BORD" />}
-        backgroundColor="white"
-        backgroundImage={require("../../../assets/dashboard.png")}
-        backgroundImageStyle={{ opacity: 0.8 }}
-      />
-
+      <Header centerComponent={<ReefHeaderTitle title="TABLEAU DE BORD" />} />
       <MessageInfo message={messageInfo} />
       {isMemberLoading ? (
         <ActivityIndicator />
       ) : (
-          <Text style={{ fontSize: 16 }}>
-            Bienvenue {member.userName.toLocaleUpperCase()} !
-          </Text>
-        )}
+        <Text style={{ fontSize: 16 }}>
+          Bienvenue {member?.userName.toLocaleUpperCase()} !
+        </Text>
+      )}
 
       {isTankLoading && <ActivityIndicator />}
 
       {tankList.length > 0 && !isNewTankFormVisible && (
         <>
-
-          {isPositiveAlertsLoading ? (<ActivityIndicator />) : <PositiveAlerts positiveAlerts={positiveAlerts} />}
+          {isNotificationsLoading ? (
+            <ActivityIndicator />
+          ) : (
+            <Notifications notifications={notifications} />
+          )}
 
           <MainTankItem editFunction={toggleTankForm} tank={tankList[0]} />
           <TankPicture />
@@ -92,7 +109,7 @@ const DashboardScreen = observer(() => {
         </>
       )}
 
-      {isNewTankFormVisible && (
+      {isNewTankFormVisible && member && (
         <NewTankForm
           memberId={member.id}
           infoCallBack={setMessageInfo}

@@ -64,7 +64,11 @@ const TabNavigator = () => {
   );
 };
 
-export const MainNavigator = ({ isTokenOK }) => {
+type Props = {
+  isTokenOK: boolean;
+};
+
+export const MainNavigator = ({ isTokenOK }: Props) => {
   return (
     <NavigationContainer>
       <Stack.Navigator headerMode="none">

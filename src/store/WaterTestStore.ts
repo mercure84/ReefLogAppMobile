@@ -23,7 +23,7 @@ export interface WaterTest {
 class WaterTestStore {
   RootStore: RootStoreType;
 
-  constructor(RootStore) {
+  constructor(RootStore: RootStoreType) {
     this.RootStore = RootStore;
   }
 
@@ -63,7 +63,7 @@ class WaterTestStore {
             console.log("waterTestList Success");
             this.waterTestList = await waterTestList;
           });
-          this.RootStore.alertStore.positiveAlertsState = "pending";
+          this.RootStore.alertStore.notificationsState = "pending";
           return waterTestList;
         } catch (error) {
           console.log(error);
@@ -72,7 +72,7 @@ class WaterTestStore {
       }
     } else {
       // pas d'aquariums ?
-      return null;
+      return [];
     }
   }
 

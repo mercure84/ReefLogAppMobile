@@ -1,7 +1,7 @@
 import { observable, action, runInAction } from "mobx";
 import { getData } from "../services/storageDevice";
 import { getMemberDetail, Member } from "../services/memberService";
-import { RootStore as RootStoreType } from "./RootStore";
+import { RootStore as RootStoreType, WebServiceState } from "./RootStore";
 
 class MemberStore {
   RootStore: RootStoreType;
@@ -9,10 +9,10 @@ class MemberStore {
   constructor(RootStore: RootStoreType) {
     this.RootStore = RootStore;
   }
-  @observable member: Member;
-  @observable token: string;
+  @observable member: Member | undefined = undefined;
+  @observable token: string | undefined = undefined;
 
-  @observable memberState = "pending"; // "pending" / "done" / "error"
+  @observable memberState: WebServiceState = "pending"; // "pending" / "done" / "error"
 
   // récupération des détails du membre pour alimenter notre store
   @action
