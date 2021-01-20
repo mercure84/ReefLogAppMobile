@@ -9,6 +9,8 @@ import anemoneIcon from "../assets/icons/anemone.png";
 import email from "react-native-email";
 
 import { Animal } from "../store/AnimalStore";
+import { Tank } from "../store/TankStore";
+import { TankFormModal } from "../screens/authentified/DashBoard/aquarium/TankFormModal";
 
 export const formatStringToFloat = (text: string) => {
   return isNaN(parseFloat(text.replace(",", ".")))
@@ -53,6 +55,27 @@ export const getAnimalType = (animal: Animal) => {
   if (animal.starSpecies !== undefined) {
     return "star";
   }
+};
+
+export const getPopulation = (
+  mainPopulation: Tank["mainPopulation"]
+): string => {
+  if (mainPopulation === "FISH_ONLY") {
+    return "Fish only";
+  }
+  if (mainPopulation === "LPS") {
+    return "Coraux Lps";
+  }
+  if (mainPopulation === "MIX") {
+    return "mixte";
+  }
+  if (mainPopulation === "SOFT") {
+    return "Coraux mous";
+  }
+  if (mainPopulation === "SPS") {
+    return "Coraux Sps";
+  }
+  return "";
 };
 
 export const getIconForAnimal = (animal: Animal) => {
@@ -136,7 +159,6 @@ export const getMasseVolumique = (S: number, T: number, P: number) => {
 
   return Math.round((rho / (1 - P / K)) * 100) / 100;
 };
-
 
 export const handleSuggestEmail = () => {
   const recipient = ["julien.marcesse@gmail.com"];

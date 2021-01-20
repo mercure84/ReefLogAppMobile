@@ -13,6 +13,7 @@ import {
 import Moment from "moment";
 import "moment/locale/fr";
 import createIcon from "../../../../assets/icons/createIcon.png";
+import { getPopulation } from "../../../../utils/helpers";
 
 type Props = {
   tank: Tank;
@@ -39,7 +40,9 @@ export const MainTankItem = ({ tank, editFunction }: Props) => {
         Maintenance : {tank.typeOfMaintenance}
       </Text>
 
-      <Text style={styles.detailText}>Population : {tank.mainPopulation}</Text>
+      <Text style={styles.detailText}>
+        Population : {getPopulation(tank.mainPopulation)}
+      </Text>
 
       <Text style={styles.detailText}>
         Décantation : {tank.sumpVolume} litres

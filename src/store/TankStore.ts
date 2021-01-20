@@ -15,8 +15,8 @@ export interface Tank {
   startDate: Date;
   member?: Member;
   sumpVolume: number;
-  typeOfMaintenance: string;
-  mainPopulation: string;
+  typeOfMaintenance: "BERLINOIS" | "JAUBERT" | "AUTRE";
+  mainPopulation: "FISH_ONLY" | "SOFT" | "MIX" | "LPS" | "SPS";
   ballingDescription?: string;
   liveRocksWeigth?: number;
   othersRocksWeight?: number;
