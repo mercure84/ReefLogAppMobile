@@ -31,6 +31,7 @@ class TankStore {
   }
 
   @observable tankList: Tank[] = [];
+  @observable fetchState: WebServiceState = "pending";
   @observable tankState: WebServiceState = "pending";
   @observable tankImageState: WebServiceState = "pending";
   @observable tankPicture: ArrayBuffer | null = null;
@@ -39,7 +40,7 @@ class TankStore {
 
   @action
   async fetchTankList(): Promise<Tank[]> {
-    this.tankState = "pending";
+    this.fetchState = "pending";
     if (this.RootStore.memberStore.member) {
       const memberId = this.RootStore.memberStore.member.id;
       try {
@@ -54,20 +55,55 @@ class TankStore {
             Authorization: memberToken ?? "",
           },
         });
-        this.tankState = "done";
         const tankList: Promise<Tank[]> = response.json();
         runInAction(async () => {
           this.tankList = await tankList;
         });
         console.log("tankListSuccess");
+        this.fetchState = "done";
         return tankList;
       } catch (error) {
         console.log(error);
-        this.tankState = "error";
+        this.fetchState = "error";
       }
     }
     return [];
   }
+
+  @action // ajout d'un aquarium
+  saveReefTank = async (newTank: Tank, update: boolean) => {
+    const urlService = update
+      ? urlServer + "api/updateReefAquarium"
+      : urlServer + "api/addNewReefAquarium";
+    const newReefTank = {
+      memberId: this.RootStore.memberStore.member?.id,
+      reefAquarium: newTank,
+    };
+    try {
+      const memberToken = this.RootStore.memberStore.token;
+      const response = await fetch(urlService, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: memberToken ?? "",
+        },
+        body: JSON.stringify(newReefTank),
+      });
+      const dataResponse = response.json();
+      console.log("Aquarium registered");
+      this.refresh();
+      return dataResponse;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  @action
+  refresh = () => {
+    this.tankList = [];
+    this.fetchState = "pending";
+  };
 
   @action
   async storeUploadImageTank(photo: ImageSourcePropType | any) {
@@ -98,40 +134,6 @@ class TankStore {
       this.tankState = "error";
     }
   }
-
-  @action // ajout d'un aquarium
-  saveReefTank = async (newTank: Tank, update: boolean) => {
-    const urlService = update
-      ? urlServer + "api/updateReefAquarium"
-      : urlServer + "api/addNewReefAquarium";
-    const newReefTank = {
-      memberId: this.RootStore.memberStore.member?.id,
-      reefAquarium: newTank,
-    };
-    try {
-      const memberToken = this.RootStore.memberStore.token;
-      const response = await fetch(urlService, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: memberToken ?? "",
-        },
-        body: JSON.stringify(newReefTank),
-      });
-      const dataResponse = response.json();
-      console.log("Aquarium registered");
-      return dataResponse;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  @action
-  reset = () => {
-    this.tankList = [];
-    this.tankState = "pending";
-  };
 }
 
 export default TankStore;

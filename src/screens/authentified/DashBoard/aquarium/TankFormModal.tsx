@@ -73,11 +73,10 @@ export const TankFormModal = ({
         setLoading(false);
         setInfoMessage("");
         showFormCallback(false);
-        tankStore.reset();
       } else {
         setLoading(false);
         setInfoMessage("Un problème est survenu");
-        tankStore.reset();
+        tankStore.refresh();
       }
     }
   };

@@ -14,7 +14,6 @@ import { ReefButton } from "../../../components/ReefButton";
 import { ReefHeaderTitle } from "../../../components/ReefHeaderTitle";
 import { Member } from "../../../services/memberService";
 import { Tank } from "../../../store/TankStore";
-import { Alert } from "../../../store/AlertStore";
 import { TankFormModal } from "./aquarium/TankFormModal";
 
 const DashboardScreen = observer(() => {
@@ -31,7 +30,7 @@ const DashboardScreen = observer(() => {
     if (memberStore.memberState === "done") {
       setMember(memberStore.member);
       setMemberLoading(false);
-      if (tankStore.tankState === "done") {
+      if (tankStore.fetchState === "done") {
         setTankList(tankStore.tankList);
         setTankLoading(false);
       } else {
@@ -40,7 +39,7 @@ const DashboardScreen = observer(() => {
     } else {
       memberStore.fetchMember();
     }
-  }, [memberStore.member, tankStore.tankList]);
+  }, [memberStore.member, tankStore.fetchState]);
 
   const newTankPress = () => setNewTankFormVisible(true);
   const toggleTankForm = () => {
@@ -53,7 +52,7 @@ const DashboardScreen = observer(() => {
       <Header centerComponent={<ReefHeaderTitle title="TABLEAU DE BORD" />} />
 
       {isMemberLoading ? (
-        <ActivityIndicator />
+        <ActivityIndicator size="large" />
       ) : (
         <Text style={{ fontSize: 16 }}>
           Bienvenue {member?.userName.toLocaleUpperCase()} !
@@ -61,14 +60,14 @@ const DashboardScreen = observer(() => {
       )}
 
       {isTankLoading ? (
-        <ActivityIndicator />
+        <ActivityIndicator size="large" />
       ) : (
         tankList?.length > 0 && (
           <MainTankItem editFunction={toggleTankForm} tank={tankList[0]} />
         )
       )}
 
-      {tankList?.length === 0 && (
+      {!isTankLoading && tankList?.length === 0 && (
         <>
           <Text>Vous n'avez pas d'aquarium : créez en un !</Text>
           <ReefButton title="Créer un Aquarium" onPress={newTankPress} />
