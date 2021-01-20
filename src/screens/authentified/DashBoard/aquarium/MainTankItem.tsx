@@ -20,7 +20,7 @@ type Props = {
 };
 
 export const MainTankItem = ({ tank, editFunction }: Props) => {
-  return tank !== null ? (
+  return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.mainTitle}>{tank.name}</Text>
@@ -29,7 +29,7 @@ export const MainTankItem = ({ tank, editFunction }: Props) => {
         </TouchableOpacity>
       </View>
       <Text style={styles.detailText}>
-        Mis en eau : {Moment(tank.startDate).format("ll")}
+        Mise en eau : {Moment(tank.startDate).format("ll")}
       </Text>
       <Text style={styles.detailText}>
         Volume brut : {tank.rawVolume} litres
@@ -45,7 +45,7 @@ export const MainTankItem = ({ tank, editFunction }: Props) => {
         Décantation : {tank.sumpVolume} litres
       </Text>
     </View>
-  ) : null;
+  );
 };
 
 type Style = {
@@ -62,20 +62,21 @@ const styles = StyleSheet.create<Style>({
     fontWeight: "bold",
   },
   container: {
-    backgroundColor: "grey",
     padding: 8,
     margin: 16,
-    borderRadius: 15,
+    borderRadius: 4,
     width: "96%",
+
+    elevation: 2,
   },
   mainTitle: {
-    fontSize: 24,
+    fontSize: 20,
     margin: 8,
     textAlign: "center",
   },
   detailText: {
     fontSize: 16,
-    textAlign: "center",
+    marginLeft: 32,
   },
   icon: {
     height: 32,
@@ -84,6 +85,6 @@ const styles = StyleSheet.create<Style>({
 
   header: {
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-between",
   },
 });
