@@ -19,28 +19,29 @@ import { TankFormModal } from "./aquarium/TankFormModal";
 const DashboardScreen = observer(() => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);
   const [isTankItemVisible, setTankItemVisible] = useState(true);
-  const [isMemberLoading, setMemberLoading] = useState(true);
-  const [isTankLoading, setTankLoading] = useState(true);
   const [member, setMember] = useState<Member>(undefined);
   const [tankList, setTankList] = useState<Tank[]>([]);
 
   const { memberStore, tankStore } = RootStore;
 
   useEffect(() => {
-    if (memberStore.memberState === "done") {
-      setMember(memberStore.member);
-      setMemberLoading(false);
-      if (tankStore.fetchState === "done") {
-        setTankList(tankStore.tankList);
-        setTankLoading(false);
-      } else {
-        tankStore.fetchTankList();
-      }
-    } else {
+    if (memberStore.memberState !== "done") {
       memberStore.fetchMember();
+    } else {
+      setMember(memberStore.member);
     }
-  }, [memberStore.member, tankStore.fetchState]);
+  }, [memberStore.memberState]);
 
+  useEffect(() => {
+    if (member && tankStore.fetchState !== "done") {
+      tankStore.fetchTankList();
+    } else {
+      setTankList(tankStore.tankList);
+    }
+  }, [member, tankStore.fetchState]);
+
+  const isLoading =
+    memberStore.memberState === "pending" && tankStore.fetchState === "pending";
   const newTankPress = () => setNewTankFormVisible(true);
   const toggleTankForm = () => {
     setTankItemVisible(!isTankItemVisible);
@@ -51,7 +52,7 @@ const DashboardScreen = observer(() => {
     <View style={styles.page}>
       <Header centerComponent={<ReefHeaderTitle title="TABLEAU DE BORD" />} />
 
-      {isMemberLoading ? (
+      {isLoading ? (
         <ActivityIndicator size="large" />
       ) : (
         <Text style={{ fontSize: 16 }}>
@@ -59,7 +60,7 @@ const DashboardScreen = observer(() => {
         </Text>
       )}
 
-      {isTankLoading ? (
+      {isLoading ? (
         <ActivityIndicator size="large" />
       ) : (
         tankList?.length > 0 && (
@@ -67,7 +68,7 @@ const DashboardScreen = observer(() => {
         )
       )}
 
-      {!isTankLoading && tankList?.length === 0 && (
+      {!isLoading && tankList?.length === 0 && (
         <>
           <Text>Vous n'avez pas d'aquarium : créez en un !</Text>
           <ReefButton title="Créer un Aquarium" onPress={newTankPress} />
