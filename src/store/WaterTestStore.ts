@@ -1,11 +1,11 @@
 import { observable, action, runInAction, computed, toJS } from "mobx";
-import { RootStore as RootStoreType } from "./RootStore";
+import { RootStore as RootStoreType, WebServiceState } from "./RootStore";
 import { deleteItem } from "../services/rootService";
 import { urlServer } from "../constants/constants";
 import { Tank } from "./TankStore";
 
 export interface WaterTest {
-  id?: string;
+  id: string;
   date?: Date;
   temperature?: number;
   salinity?: number;
@@ -28,23 +28,19 @@ class WaterTestStore {
   }
 
   @observable waterTestList: WaterTest[] = [];
-  @observable waterTestState = "pending";
-
+  @observable fetchState: WebServiceState = "pending";
   @computed get waterTestListData() {
     return toJS(this.waterTestList);
   }
 
   @action
   async fetchWaterTestList(): Promise<WaterTest[]> {
-    this.waterTestState = "pending";
-    if (
-      this.RootStore.tankStore.tankState === "done" &&
-      this.RootStore.tankStore.tankList.length > 0
-    ) {
+    this.fetchState = "pending";
+    if (this.RootStore.tankStore.tankList.length > 0) {
       const tankId = this.RootStore.tankStore.tankList[0].id;
-      if (tankId !== null) {
+      console.log("Store is fetching  WaterTestList for Tank n°  ", tankId);
+      if (tankId) {
         try {
-          console.log("Store is fetching  WaterTestList");
           const memberToken = this.RootStore.memberStore.token;
           const urlService = urlServer + "api/getWaterTestList/" + tankId;
 
@@ -53,10 +49,10 @@ class WaterTestStore {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
-              Authorization: memberToken,
+              Authorization: memberToken ?? "",
             },
           });
-          this.waterTestState = "done";
+          this.fetchState = "done";
 
           const waterTestList: Promise<WaterTest[]> = response.json();
           runInAction(async () => {
@@ -67,7 +63,8 @@ class WaterTestStore {
           return waterTestList;
         } catch (error) {
           console.log(error);
-          this.waterTestState = "error";
+          this.fetchState = "error";
+          return [];
         }
       }
     } else {
@@ -78,10 +75,10 @@ class WaterTestStore {
 
   @action
   async storeDeleteWaterTest(id: string) {
-    this.waterTestState = "pending";
+    this.fetchState = "pending";
     try {
       console.log("Store is deleting the waterTest n° " + id);
-      const memberToken = this.RootStore.memberStore.token;
+      const memberToken = this.RootStore.memberStore.token ?? "";
       await deleteItem(id, "waterTest", memberToken);
       this.fetchWaterTestList();
     } catch (error) {
@@ -93,7 +90,7 @@ class WaterTestStore {
   saveWaterTest = async (newWaterTest: WaterTest, update: boolean) => {
     const suffixUrl = update ? "api/updateWaterTest" : "api/addNewWaterTest";
     //purge du champ de l'aquarium si on est dans le cas d'un update
-    newWaterTest.aquarium = null;
+    newWaterTest.aquarium = undefined;
     const urlService = urlServer + suffixUrl;
     const newWaterTestForm = {
       aquariumId: this.RootStore.tankStore.tankList[0].id,
@@ -107,7 +104,7 @@ class WaterTestStore {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: memberToken,
+          Authorization: memberToken ?? "",
         },
         body: JSON.stringify(newWaterTestForm),
       });
@@ -117,6 +114,12 @@ class WaterTestStore {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  @action
+  refresh = () => {
+    this.waterTestList = [];
+    this.fetchState = "pending";
   };
 }
 

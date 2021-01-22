@@ -1,4 +1,4 @@
-import { RootStore as RootStoreType } from "./RootStore";
+import { RootStore as RootStoreType, WebServiceState } from "./RootStore";
 import { observable, computed, toJS, action, runInAction } from "mobx";
 import { urlServer } from "./../constants/constants";
 import { deleteItem } from "../services/rootService";
@@ -15,12 +15,12 @@ export interface EventType {
 class EventStore {
   RootStore: RootStoreType;
 
-  constructor(RootStore) {
+  constructor(RootStore: RootStoreType) {
     this.RootStore = RootStore;
   }
 
   @observable events: EventType[] = [];
-  @observable eventState = "pending";
+  @observable fetchState: WebServiceState = "pending";
 
   @computed get eventsData() {
     return toJS(this.events);
@@ -28,8 +28,8 @@ class EventStore {
 
   @action
   async fetchEvents(): Promise<EventType[]> {
-    this.eventState = "pending";
-    if (this.RootStore.tankStore.tankState === "done") {
+    this.fetchState = "pending";
+    if (this.RootStore.tankStore.fetchState === "done") {
       const tankId = this.RootStore.tankStore.tankList[0].id;
       if (tankId !== null) {
         try {
@@ -41,16 +41,16 @@ class EventStore {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
-              Authorization: memberToken,
+              Authorization: memberToken ?? "",
             },
           });
           const events: Promise<EventType[]> = response.json();
-          this.eventState = "done";
+          this.fetchState = "done";
           this.events = await events;
           return events;
         } catch (error) {
           console.log(error);
-          this.eventState = "error";
+          this.fetchState = "error";
         }
       }
     }
@@ -58,13 +58,13 @@ class EventStore {
 
   @action
   async storeDeleteEvent(id: number | string) {
-    this.eventState = "pending";
+    this.fetchState = "pending";
     try {
       console.log("Store is deleting the event n° " + id);
-      const memberToken = this.RootStore.memberStore.token;
+      const memberToken = this.RootStore.memberStore.token ?? "";
       await deleteItem(id, "event", memberToken);
       runInAction(() => {
-        this.eventState = "done";
+        this.fetchState = "done";
       });
       this.fetchEvents();
     } catch (error) {
@@ -75,7 +75,7 @@ class EventStore {
   @action
   saveEvent = async (newEvent: EventType, update: boolean) => {
     const suffixUrl = update ? "api/updateEvent" : "api/addEvent";
-    newEvent.aquarium = null;
+    newEvent.aquarium = undefined;
     const urlService = urlServer + suffixUrl;
     const newEventForm = {
       aquariumId: this.RootStore.tankStore.tankList[0].id,
@@ -89,7 +89,7 @@ class EventStore {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: memberToken,
+          Authorization: memberToken ?? "",
         },
         body: JSON.stringify(newEventForm),
       });
@@ -100,6 +100,12 @@ class EventStore {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  @action
+  refresh = () => {
+    this.events = [];
+    this.fetchState = "pending";
   };
 }
 

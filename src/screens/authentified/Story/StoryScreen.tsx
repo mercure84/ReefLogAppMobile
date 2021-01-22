@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
   StyleSheet,
   ViewStyle,
   ActivityIndicator,
-
 } from "react-native";
 import { Header } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
@@ -18,59 +17,70 @@ import { EventItem } from "./event/EventItem";
 
 export const StoryScreen = observer(() => {
   const navigation = useNavigation();
-  if (RootStore.waterTestStore.waterTestState === "pending") {
-    RootStore.waterTestStore.fetchWaterTestList();
+  const { eventStore, waterTestStore, tankStore } = RootStore;
 
-  }
-  if (RootStore.eventStore.eventState === "pending") {
-    RootStore.eventStore.fetchEvents();
-  }
+  useEffect(() => {
+    if (waterTestStore.fetchState === "pending") {
+      waterTestStore.fetchWaterTestList();
+    }
+  }, [waterTestStore.fetchState]);
 
-  const isWaterTestLoading = RootStore.waterTestStore.waterTestState === "pending"
-  const isEventLoading = RootStore.eventStore.eventState === "pending"
+  useEffect(() => {
+    if (eventStore.fetchState === "pending") {
+      eventStore.fetchEvents();
+    }
+  }, [eventStore.fetchState]);
 
-
-  const hasATank = RootStore.tankStore.tankList.length > 0;
+  const isWaterTestLoading = waterTestStore.fetchState === "pending";
+  const isEventLoading = eventStore.fetchState === "pending";
+  const hasATank = tankStore.tankList.length > 0;
 
   return (
     <>
-      <Header
-        centerComponent={<ReefHeaderTitle title="MON JOURNAL" />}
-        backgroundColor="white"
-        backgroundImage={require("../../../assets/story.png")}
-        backgroundImageStyle={{ opacity: 0.8 }}
-      />
+      <Header centerComponent={<ReefHeaderTitle title="MON JOURNAL" />} />
       <View style={styles.page}>
+        {hasATank ? (
+          <View style={styles.buttonContainer}>
+            <ReefButton
+              title="Tests d'eau"
+              onPress={() => navigation.navigate("waterTests")}
+            />
+            <ReefButton
+              title="Evènements de mon aquarium"
+              onPress={() => navigation.navigate("events")}
+            />
+          </View>
+        ) : (
+          <Text>Créer d'abord un Aquarium avant de consulter cette page !</Text>
+        )}
 
-        {hasATank ? <><ReefButton
-          title="Mes Tests"
-          onPress={() => navigation.navigate("waterTests")}
-        />
-          <ReefButton
-            title="Mes évènements"
-            onPress={() => navigation.navigate("events")}
-          />
-          <ReefButton
-            title="Recensement"
-            onPress={() => navigation.navigate("counting")}
-          />
-        </> : <Text>Créer d'abord un Aquarium avant de consulter cette page !</Text>}
+        {isWaterTestLoading ? (
+          <ActivityIndicator />
+        ) : (
+          RootStore.waterTestStore.waterTestList.length > 0 && (
+            <>
+              <Text>Mon dernier test enregistré :</Text>
 
-        {isWaterTestLoading ? <ActivityIndicator /> : RootStore.waterTestStore.waterTestList.length > 0 && <>
-          <Text>
-            Mon dernier test enregistré :
-        </Text>
+              <WaterTestItem
+                waterTest={RootStore.waterTestStore.waterTestList[0]}
+              />
+            </>
+          )
+        )}
+        {isEventLoading ? (
+          <ActivityIndicator />
+        ) : (
+          RootStore.eventStore.events.length > 0 && (
+            <>
+              <Text>Mon dernier évènement enregistré :</Text>
 
-          <WaterTestItem waterTest={RootStore.waterTestStore.waterTestList[0]} />
-        </>}
-        {isEventLoading ? <ActivityIndicator /> : RootStore.eventStore.events.length > 0 && <>
-          <Text>
-            Mon dernier évènement enregistré :
-        </Text>
-
-          <EventItem event={RootStore.eventStore.events[0]} updateItemCallBack={null} />
-        </>}
-
+              <EventItem
+                event={RootStore.eventStore.events[0]}
+                updateItemCallBack={() => null}
+              />
+            </>
+          )
+        )}
       </View>
     </>
   );
@@ -78,10 +88,17 @@ export const StoryScreen = observer(() => {
 
 type Style = {
   page: ViewStyle;
+  buttonContainer: ViewStyle;
 };
 
 const styles = StyleSheet.create<Style>({
   page: {
-    alignItems: "stretch",
+    alignContent: "center",
+    justifyContent: "center",
+    flex: 1,
+  },
+  buttonContainer: {
+    alignSelf: "center",
+    justifyContent: "center",
   },
 });

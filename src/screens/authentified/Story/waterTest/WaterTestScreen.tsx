@@ -1,64 +1,85 @@
-import React from "react"
-import { observer } from "mobx-react"
-import { View, ActivityIndicator, FlatList, Text, ViewStyle, StyleSheet } from "react-native"
-import { GoBackButton } from "../../../../components/GoBackButton"
-import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle"
-import { ReefButton } from "../../../../components/ReefButton"
-import { useNavigation } from "@react-navigation/native"
-import { Header } from "react-native-elements"
-import { WaterTestItem } from "./WaterTestItem"
-import RootStore from "../../../../store/RootStore"
-
+import React, { useState } from "react";
+import { observer } from "mobx-react";
+import {
+  View,
+  ActivityIndicator,
+  FlatList,
+  Text,
+  ViewStyle,
+  StyleSheet,
+} from "react-native";
+import { GoBackButton } from "../../../../components/GoBackButton";
+import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
+import { ReefButton } from "../../../../components/ReefButton";
+import { useNavigation } from "@react-navigation/native";
+import { Header } from "react-native-elements";
+import { WaterTestItem } from "./WaterTestItem";
+import RootStore from "../../../../store/RootStore";
+import { WaterTestFormModal } from "./WaterTestFormModal";
 
 export const WaterTestScreen = observer(() => {
+  const [isWaterTestFormVisible, setWaterTestFormVisible] = useState(false);
 
-    const navigation = useNavigation();
-    if (RootStore.waterTestStore.waterTestState === "pending") {
-        RootStore.waterTestStore.fetchWaterTestList();
-    }
+  const { waterTestStore } = RootStore;
 
-    const isTestsLoading = RootStore.waterTestStore.waterTestState === "pending";
-    const dataWaterTestList = RootStore.waterTestStore.waterTestListData
+  if (waterTestStore.fetchState === "pending") {
+    waterTestStore.fetchWaterTestList();
+  }
 
-    return (<View>
+  const isTestsLoading = RootStore.waterTestStore.fetchState === "pending";
+  const dataWaterTestList = RootStore.waterTestStore.waterTestListData;
+
+  const HeaderComponent = () => {
+    return (
+      <View>
         <Header
-            leftComponent={<GoBackButton />}
-            centerComponent={<ReefHeaderTitle title={"MES TESTS"} />}
-            backgroundColor="white"
-            backgroundImage={require("../../../../assets/story.png")}
-            backgroundImageStyle={{ opacity: 0.8 }}
+          leftComponent={<GoBackButton />}
+          centerComponent={<ReefHeaderTitle title="MES TESTS" />}
         />
 
-        <ReefButton
+        <View style={{ alignSelf: "center" }}>
+          <ReefButton
+            size="medium"
             title="Nouveau Test"
-            onPress={() => navigation.navigate("addTests")}
-        />
-        <View style={styles.page}>
-            {isTestsLoading ? (
-                <ActivityIndicator />
-            ) : (
-                    <FlatList
-                        style={{ marginBottom: 64 }}
-                        data={dataWaterTestList}
-                        renderItem={({ item }) => <WaterTestItem waterTest={item} />}
-                        keyExtractor={(item) => item.id.toString()}
-                        ListEmptyComponent={<Text>Aucun enregistrement :(</Text>}
-                        scrollEnabled={true}
-                    />
-                )}
+            onPress={() => setWaterTestFormVisible(true)}
+          />
         </View>
+      </View>
+    );
+  };
 
-    </View>)
+  return (
+    <View>
+      <View style={styles.page}>
+        {isTestsLoading && <ActivityIndicator />}
 
-})
+        <FlatList
+          ListHeaderComponent={<HeaderComponent />}
+          data={dataWaterTestList}
+          renderItem={({ item }) => <WaterTestItem waterTest={item} />}
+          keyExtractor={({ id }) => id.toString()}
+          ListEmptyComponent={<Text>Aucun enregistrement :(</Text>}
+          scrollEnabled={true}
+        />
+      </View>
 
+      {isWaterTestFormVisible && (
+        <WaterTestFormModal
+          toggleForm={setWaterTestFormVisible}
+          waterTestToSave={null}
+          visible={isWaterTestFormVisible}
+        />
+      )}
+    </View>
+  );
+});
 
 type Style = {
-    page: ViewStyle;
+  page: ViewStyle;
 };
 
 const styles = StyleSheet.create<Style>({
-    page: {
-        alignItems: "stretch",
-    },
+  page: {
+    alignItems: "stretch",
+  },
 });

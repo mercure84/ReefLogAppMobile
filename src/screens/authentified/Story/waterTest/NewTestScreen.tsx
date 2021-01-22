@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import { Header } from "react-native-elements";
-import { WaterTestForm } from "./WaterTestForm";
+import { WaterTestForm } from "./WaterTestFormModal";
 import "moment/locale/fr";
 import { GoBackButton } from "../../../../components/GoBackButton";
 import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
@@ -26,5 +26,3 @@ export const NewTestScreen = ({ route }) => {
     </View>
   );
 };
-
-

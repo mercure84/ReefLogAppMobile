@@ -29,9 +29,8 @@ class MemberStore {
       runInAction(() => {
         this.token = asyncStoredToken;
         this.member = memberDetail;
-        this.memberState = "done";
       });
-
+      this.memberState = "done";
       return memberDetail;
     } catch (error) {
       console.log(error);

@@ -9,13 +9,13 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image
+  Image,
 } from "react-native";
 import Moment from "moment";
 
 type Props = {
   event: EventType;
-  updateItemCallBack: () => void
+  updateItemCallBack: () => void;
 };
 import createIcon from "../../../../assets/icons/createIcon.png";
 import deleteIcon from "../../../../assets/icons/deleteIcon.png";
@@ -24,7 +24,7 @@ import { CustomModal } from "../../../../components/ModalDeleteConfirmation";
 
 export const EventItem = ({ event, updateItemCallBack }: Props) => {
   const handlePress = () => {
-    updateItemCallBack()
+    updateItemCallBack();
   };
   const [isModalVisible, setModalVisible] = useState(false);
 
@@ -42,13 +42,9 @@ export const EventItem = ({ event, updateItemCallBack }: Props) => {
       <View style={styles.header}>
         <View style={styles.item}>
           <Text style={styles.date}>
-            Date :
-            {Moment(event.date).format("ll")}
+            Date :{Moment(event.date).format("ll")}
           </Text>
-          {event.title !== undefined && (
-            <Text>{event.title}</Text>
-          )}
-
+          {event.title !== undefined && <Text>{event.title}</Text>}
         </View>
         <TouchableOpacity onPress={handlePress}>
           <Image source={createIcon} style={styles.icon} />
@@ -85,20 +81,20 @@ const styles = StyleSheet.create<Style>({
     borderRadius: 4,
     borderWidth: 1,
     padding: 8,
-    margin: 8
+    margin: 8,
   },
   item: {
-    flex: 3
+    flex: 3,
   },
   header: {
     flexDirection: "row",
-    justifyContent: "space-around"
+    justifyContent: "space-around",
   },
   icon: {
     height: 32,
-    width: 32
+    width: 32,
   },
   date: {
-    fontWeight: "bold"
-  }
+    fontWeight: "bold",
+  },
 });
