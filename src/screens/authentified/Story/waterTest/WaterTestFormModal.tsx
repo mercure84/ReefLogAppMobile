@@ -17,21 +17,17 @@ import RootStore from "../../../../store/RootStore";
 import Moment from "moment";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { ReefButton } from "../../../../components/ReefButton";
-import {
-  formatStringToFloat,
-  formatStringToInteger,
-} from "../../../../utils/helpers";
-import { InputContent, waterTestFormInputs } from "./constants";
-import { isCaughtException } from "mobx/lib/internal";
+import { formatStringToFloat } from "../../../../utils/helpers";
+import { waterTestFormInputs } from "./constants";
 
 type Props = {
   waterTestToSave: WaterTest | null;
-  toggleForm: React.Dispatch<React.SetStateAction<boolean>>;
+  showForm: React.Dispatch<React.SetStateAction<boolean>>;
 } & ModalProps;
 
 export const WaterTestFormModal = ({
   waterTestToSave,
-  toggleForm,
+  showForm,
   visible,
 }: Props) => {
   const newTest: WaterTest = waterTestToSave ?? { id: "" };
@@ -73,9 +69,9 @@ export const WaterTestFormModal = ({
 
       if (response != null) {
         setInfoMessage("Le test a bien été enregistré !");
-        RootStore.waterTestStore.fetchWaterTestList();
+        RootStore.waterTestStore.refresh();
         setLoading(false);
-        navigation.navigate("mainStory");
+        showForm(false);
       } else {
         setInfoMessage("Un problème est survenu");
         setLoading(true);
@@ -158,7 +154,7 @@ export const WaterTestFormModal = ({
           <ReefButton
             size="medium"
             title="Annuler"
-            onPress={() => navigation.navigate("mainStory")}
+            onPress={() => showForm(false)}
           />
         </View>
       </View>

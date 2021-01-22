@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text, Button, ViewStyle, StyleSheet, Modal } from "react-native";
-import { Card } from "react-native-elements";
 
 type Props = {
   message: string;
@@ -18,9 +17,7 @@ export const CustomModal = ({
   return (
     <Modal visible={isModaleVisible}>
       <View style={{ justifyContent: "center" }}>
-        <Card>
-          <Text>{message}</Text>
-        </Card>
+        <Text>{message}</Text>
         <View style={styles.button}>
           <Button title="Oui" onPress={buttonYesFonction} />
         </View>

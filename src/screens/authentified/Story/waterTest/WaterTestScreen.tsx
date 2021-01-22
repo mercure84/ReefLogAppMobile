@@ -65,7 +65,7 @@ export const WaterTestScreen = observer(() => {
 
       {isWaterTestFormVisible && (
         <WaterTestFormModal
-          toggleForm={setWaterTestFormVisible}
+          showForm={setWaterTestFormVisible}
           waterTestToSave={null}
           visible={isWaterTestFormVisible}
         />

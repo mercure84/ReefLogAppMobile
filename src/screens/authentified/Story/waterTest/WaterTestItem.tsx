@@ -7,7 +7,7 @@ import {
   View,
   ViewStyle,
   ImageStyle,
-  TextStyle
+  TextStyle,
 } from "react-native";
 import createIcon from "../../../../assets/icons/createIcon.png";
 import deleteIcon from "../../../../assets/icons/deleteIcon.png";
@@ -16,8 +16,8 @@ import RootStore from "../../../../store/RootStore";
 import Moment from "moment";
 import "moment/locale/fr";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { useNavigation } from "@react-navigation/native";
 import { CustomModal } from "../../../../components/ModalDeleteConfirmation";
+import { WaterTestFormModal } from "./WaterTestFormModal";
 
 type Props = {
   waterTest: WaterTest;
@@ -25,10 +25,11 @@ type Props = {
 
 export const WaterTestItem = ({ waterTest }: Props) => {
   const [isModalVisible, setModalVisible] = useState(false);
+  const [isModalUpdateVisible, setModalUpdateVisible] = useState(false);
 
-  const navigation = useNavigation();
-  const handlePress = () =>
-    navigation.navigate("addTests", { waterTest: waterTest });
+  const handlePress = () => {
+    setModalUpdateVisible(true);
+  };
 
   const handlePressDelete = () => {
     isModalVisible ? setModalVisible(false) : setModalVisible(true);
@@ -92,6 +93,14 @@ export const WaterTestItem = ({ waterTest }: Props) => {
         buttonYesFonction={() => confirmDelete(waterTest)}
         buttonNoFonction={handlePressDelete}
       />
+
+      {isModalUpdateVisible && (
+        <WaterTestFormModal
+          waterTestToSave={waterTest}
+          showForm={setModalUpdateVisible}
+          visible={isModalUpdateVisible}
+        />
+      )}
     </View>
   );
 };
@@ -110,20 +119,20 @@ const styles = StyleSheet.create<Style>({
     borderRadius: 4,
     borderWidth: 1,
     padding: 8,
-    margin: 8
+    margin: 8,
   },
   item: {
-    flex: 3
+    flex: 3,
   },
   header: {
     flexDirection: "row",
-    justifyContent: "space-around"
+    justifyContent: "space-around",
   },
   icon: {
     height: 32,
-    width: 32
+    width: 32,
   },
   date: {
-    fontWeight: "bold"
-  }
+    fontWeight: "bold",
+  },
 });
