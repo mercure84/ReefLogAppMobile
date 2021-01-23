@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { EventType } from "../../../../store/EventStore";
+import { Event } from "../../../../store/EventStore";
 import { useNavigation } from "@react-navigation/native";
 import {
   ViewStyle,
@@ -14,36 +14,35 @@ import {
 import Moment from "moment";
 
 type Props = {
-  event: EventType;
-  updateItemCallBack: () => void;
+  event: Event;
 };
 import createIcon from "../../../../assets/icons/createIcon.png";
 import deleteIcon from "../../../../assets/icons/deleteIcon.png";
 import RootStore from "../../../../store/RootStore";
 import { CustomModal } from "../../../../components/ModalDeleteConfirmation";
+import { EventFormModal } from "./EventFormModal";
 
-export const EventItem = ({ event, updateItemCallBack }: Props) => {
+export const EventItem = ({ event }: Props) => {
+  const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [isUpdateModalVisible, setUpdateModalVisible] = useState(false);
   const handlePress = () => {
-    updateItemCallBack();
+    setUpdateModalVisible(true);
   };
-  const [isModalVisible, setModalVisible] = useState(false);
 
   const handlePressDelete = () => {
-    setModalVisible(!isModalVisible);
+    setDeleteModalVisible(!isDeleteModalVisible);
   };
 
-  const confirmDelete = (pEvent: EventType) => {
+  const confirmDelete = (pEvent: Event) => {
     RootStore.eventStore.storeDeleteEvent(pEvent.id);
     handlePressDelete();
   };
 
   return (
-    <View style={styles.testContainer}>
+    <View style={styles.mainContainer}>
       <View style={styles.header}>
         <View style={styles.item}>
-          <Text style={styles.date}>
-            Date :{Moment(event.date).format("ll")}
-          </Text>
+          <Text style={styles.date}>{Moment(event.date).format("ll")}</Text>
           {event.title !== undefined && <Text>{event.title}</Text>}
         </View>
         <TouchableOpacity onPress={handlePress}>
@@ -54,21 +53,29 @@ export const EventItem = ({ event, updateItemCallBack }: Props) => {
         </TouchableOpacity>
       </View>
 
-      <Text>Notes : {event.description}</Text>
+      <Text>{event.description}</Text>
 
       <CustomModal
-        isModaleVisible={isModalVisible}
+        isModaleVisible={isDeleteModalVisible}
         message={`Confirmez vous la suppression de l'équipement :
         ${event.title}  ?`}
         buttonYesFonction={() => confirmDelete(event)}
         buttonNoFonction={handlePressDelete}
       />
+
+      {isUpdateModalVisible && (
+        <EventFormModal
+          eventToSave={event}
+          showForm={setUpdateModalVisible}
+          visible={isUpdateModalVisible}
+        />
+      )}
     </View>
   );
 };
 
 type Style = {
-  testContainer: ViewStyle;
+  mainContainer: ViewStyle;
   header: ViewStyle;
   icon: ImageStyle;
   item: ViewStyle;
@@ -76,7 +83,7 @@ type Style = {
 };
 
 const styles = StyleSheet.create<Style>({
-  testContainer: {
+  mainContainer: {
     borderColor: "grey",
     borderRadius: 4,
     borderWidth: 1,

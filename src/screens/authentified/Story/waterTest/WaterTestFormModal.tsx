@@ -12,7 +12,6 @@ import {
 import { TextInput } from "react-native-gesture-handler";
 import { WaterTest } from "../../../../store/WaterTestStore";
 import { MessageInfo } from "../../../../components/MessageInfo";
-import { useNavigation } from "@react-navigation/native";
 import RootStore from "../../../../store/RootStore";
 import Moment from "moment";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -30,18 +29,18 @@ export const WaterTestFormModal = ({
   showForm,
   visible,
 }: Props) => {
-  const newTest: WaterTest = waterTestToSave ?? { id: "" };
+  const myTest: WaterTest = waterTestToSave ?? { id: "" };
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const toUpdate = waterTestToSave !== null;
   const [isLoading, setLoading] = useState(false);
-  const [waterTest, setWaterTest] = useState<WaterTest>(newTest);
+  const [waterTest, setWaterTest] = useState<WaterTest>(myTest);
   const [infoMessage, setInfoMessage] = useState(
     "Saisissez les données de vos tests !"
   );
 
   const checkForm = () => {
     let goodValues = 0;
-    Object.keys(waterTest).forEach(function (key) {
+    Object.keys(waterTest).forEach(function (key: WaterTest["id"]) {
       let value = waterTest[key];
       isNaN(value) ? (value = null) : null;
       if (value !== undefined && value !== null && typeof value === "number") {

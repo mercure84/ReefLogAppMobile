@@ -4,9 +4,9 @@ import { urlServer } from "./../constants/constants";
 import { deleteItem } from "../services/rootService";
 import { Tank } from "./TankStore";
 
-export interface EventType {
+export interface Event {
+  id: string;
   date?: Date;
-  id?: number;
   title?: string;
   description?: string;
   aquarium?: Tank;
@@ -19,19 +19,20 @@ class EventStore {
     this.RootStore = RootStore;
   }
 
-  @observable events: EventType[] = [];
+  @observable events: Event[] = [];
   @observable fetchState: WebServiceState = "pending";
+  @observable updateState: WebServiceState = "done";
 
   @computed get eventsData() {
     return toJS(this.events);
   }
 
   @action
-  async fetchEvents(): Promise<EventType[]> {
+  async fetchEvents(): Promise<Event[]> {
     this.fetchState = "pending";
     if (this.RootStore.tankStore.fetchState === "done") {
       const tankId = this.RootStore.tankStore.tankList[0].id;
-      if (tankId !== null) {
+      if (tankId) {
         try {
           console.log("Store is fetching  Events");
           const memberToken = this.RootStore.memberStore.token;
@@ -44,9 +45,9 @@ class EventStore {
               Authorization: memberToken ?? "",
             },
           });
-          const events: Promise<EventType[]> = response.json();
-          this.fetchState = "done";
+          const events: Promise<Event[]> = response.json();
           this.events = await events;
+          this.fetchState = "done";
           return events;
         } catch (error) {
           console.log(error);
@@ -57,25 +58,28 @@ class EventStore {
   }
 
   @action
-  async storeDeleteEvent(id: number | string) {
-    this.fetchState = "pending";
+  async storeDeleteEvent(id: string) {
     try {
+      this.updateState = "pending";
       console.log("Store is deleting the event n° " + id);
       const memberToken = this.RootStore.memberStore.token ?? "";
       await deleteItem(id, "event", memberToken);
       runInAction(() => {
         this.fetchState = "done";
       });
-      this.fetchEvents();
+      this.refresh();
     } catch (error) {
       console.log(error);
+      this.updateState = "error";
     }
   }
 
   @action
-  saveEvent = async (newEvent: EventType, update: boolean) => {
+  saveEvent = async (newEvent: Event, update: boolean) => {
+    this.updateState = "pending";
     const suffixUrl = update ? "api/updateEvent" : "api/addEvent";
     newEvent.aquarium = undefined;
+    console.log("Store is starting to save an Event");
     const urlService = urlServer + suffixUrl;
     const newEventForm = {
       aquariumId: this.RootStore.tankStore.tankList[0].id,
@@ -95,10 +99,11 @@ class EventStore {
       });
       const dataResponse = response.json;
       console.log("Nouvel évènement saved");
-      this.fetchEvents();
+      this.refresh();
       return dataResponse;
     } catch (error) {
       console.log(error);
+      this.updateState = "error";
     }
   };
 
@@ -106,6 +111,7 @@ class EventStore {
   refresh = () => {
     this.events = [];
     this.fetchState = "pending";
+    this.updateState = "done";
   };
 }
 

@@ -56,7 +56,7 @@ export const StoryScreen = observer(() => {
               <ActivityIndicator />
             ) : (
               RootStore.waterTestStore.waterTestList.length > 0 && (
-                <View style={styles.lastEvent}>
+                <View style={styles.lastItem}>
                   <Text>Mon dernier test enregistré :</Text>
 
                   <WaterTestItem waterTest={waterTestStore.waterTestList[0]} />
@@ -74,14 +74,11 @@ export const StoryScreen = observer(() => {
               <ActivityIndicator />
             ) : (
               RootStore.eventStore.events.length > 0 && (
-                <>
+                <View style={styles.lastItem}>
                   <Text>Mon dernier évènement enregistré :</Text>
 
-                  <EventItem
-                    event={eventStore.events[0]}
-                    updateItemCallBack={() => null}
-                  />
-                </>
+                  <EventItem event={eventStore.events[0]} />
+                </View>
               )
             )}
           </View>
@@ -95,7 +92,7 @@ export const StoryScreen = observer(() => {
 
 type Style = {
   page: ViewStyle;
-  lastEvent: ViewStyle;
+  lastItem: ViewStyle;
   buttonContainer: ViewStyle;
 };
 
@@ -105,7 +102,7 @@ const styles = StyleSheet.create<Style>({
     justifyContent: "space-between",
     flex: 1,
   },
-  lastEvent: {
+  lastItem: {
     marginHorizontal: 8,
   },
   buttonContainer: {

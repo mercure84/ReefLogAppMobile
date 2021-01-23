@@ -24,15 +24,15 @@ type Props = {
 };
 
 export const WaterTestItem = ({ waterTest }: Props) => {
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [isModalUpdateVisible, setModalUpdateVisible] = useState(false);
+  const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [isUpdateModalVisible, setUpdateModalVisible] = useState(false);
 
   const handlePress = () => {
-    setModalUpdateVisible(true);
+    setUpdateModalVisible(true);
   };
 
   const handlePressDelete = () => {
-    isModalVisible ? setModalVisible(false) : setModalVisible(true);
+    setDeleteModalVisible(!isDeleteModalVisible);
   };
 
   const confirmDelete = (pWaterTest: WaterTest) => {
@@ -42,7 +42,7 @@ export const WaterTestItem = ({ waterTest }: Props) => {
   };
 
   return (
-    <View style={styles.testContainer}>
+    <View style={styles.mainContainer}>
       <View style={styles.header}>
         <View style={styles.item}>
           <Text style={styles.date}>
@@ -87,18 +87,18 @@ export const WaterTestItem = ({ waterTest }: Props) => {
       {waterTest.ph !== null ? <Text>pH : {waterTest.ph} </Text> : null}
 
       <CustomModal
-        isModaleVisible={isModalVisible}
+        isModaleVisible={isDeleteModalVisible}
         message={`Confirmez vous la suppression du test du 
         ${Moment(waterTest.date).format("lll")} ?`}
         buttonYesFonction={() => confirmDelete(waterTest)}
         buttonNoFonction={handlePressDelete}
       />
 
-      {isModalUpdateVisible && (
+      {isUpdateModalVisible && (
         <WaterTestFormModal
           waterTestToSave={waterTest}
-          showForm={setModalUpdateVisible}
-          visible={isModalUpdateVisible}
+          showForm={setUpdateModalVisible}
+          visible={isUpdateModalVisible}
         />
       )}
     </View>
@@ -106,7 +106,7 @@ export const WaterTestItem = ({ waterTest }: Props) => {
 };
 
 type Style = {
-  testContainer: ViewStyle;
+  mainContainer: ViewStyle;
   header: ViewStyle;
   icon: ImageStyle;
   item: ViewStyle;
@@ -114,7 +114,7 @@ type Style = {
 };
 
 const styles = StyleSheet.create<Style>({
-  testContainer: {
+  mainContainer: {
     borderColor: "grey",
     borderRadius: 4,
     borderWidth: 1,

@@ -9,7 +9,7 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image
+  Image,
 } from "react-native";
 import Moment from "moment";
 
@@ -39,7 +39,7 @@ export const EquipmentItem = ({ equipment }: Props) => {
   };
 
   return (
-    <View style={styles.testContainer}>
+    <View style={styles.mainContainer}>
       <View style={styles.header}>
         <View style={styles.item}>
           <Text style={styles.date}>
@@ -77,7 +77,7 @@ export const EquipmentItem = ({ equipment }: Props) => {
 };
 
 type Style = {
-  testContainer: ViewStyle;
+  mainContainer: ViewStyle;
   header: ViewStyle;
   icon: ImageStyle;
   item: ViewStyle;
@@ -85,25 +85,25 @@ type Style = {
 };
 
 const styles = StyleSheet.create<Style>({
-  testContainer: {
+  mainContainer: {
     borderColor: "grey",
     borderRadius: 4,
     borderWidth: 1,
     padding: 8,
-    margin: 8
+    margin: 8,
   },
   item: {
-    flex: 3
+    flex: 3,
   },
   header: {
     flexDirection: "row",
-    justifyContent: "space-around"
+    justifyContent: "space-around",
   },
   icon: {
     height: 32,
-    width: 32
+    width: 32,
   },
   date: {
-    fontWeight: "bold"
-  }
+    fontWeight: "bold",
+  },
 });

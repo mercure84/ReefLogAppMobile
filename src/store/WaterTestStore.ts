@@ -43,9 +43,9 @@ class WaterTestStore {
       console.log("Store is fetching  WaterTestList for Tank n°  ", tankId);
       if (tankId) {
         try {
+          console.log("Store is fetching  WaterTests");
           const memberToken = this.RootStore.memberStore.token;
           const urlService = urlServer + "api/getWaterTestList/" + tankId;
-
           const response = await fetch(urlService, {
             method: "GET",
             headers: {
