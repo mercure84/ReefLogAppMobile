@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import {
   View,
@@ -11,7 +11,6 @@ import {
 import { GoBackButton } from "../../../../components/GoBackButton";
 import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
 import { ReefButton } from "../../../../components/ReefButton";
-import { useNavigation } from "@react-navigation/native";
 import { Header } from "react-native-elements";
 import { WaterTestItem } from "./WaterTestItem";
 import RootStore from "../../../../store/RootStore";
@@ -22,9 +21,11 @@ export const WaterTestScreen = observer(() => {
 
   const { waterTestStore } = RootStore;
 
-  if (waterTestStore.fetchState === "pending") {
-    waterTestStore.fetchWaterTestList();
-  }
+  useEffect(() => {
+    if (waterTestStore.fetchState === "pending") {
+      waterTestStore.fetchWaterTestList();
+    }
+  }, [waterTestStore.fetchState]);
 
   const isTestsLoading = RootStore.waterTestStore.fetchState === "pending";
   const dataWaterTestList = RootStore.waterTestStore.waterTestListData;

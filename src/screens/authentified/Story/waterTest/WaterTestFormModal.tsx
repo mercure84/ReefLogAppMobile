@@ -68,8 +68,8 @@ export const WaterTestFormModal = ({
       );
 
       if (response != null) {
+        RootStore.waterTestStore.fetchWaterTestList();
         setInfoMessage("Le test a bien été enregistré !");
-        RootStore.waterTestStore.refresh();
         setLoading(false);
         showForm(false);
       } else {

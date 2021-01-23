@@ -70,7 +70,7 @@ export const waterTestFormInputs: WaterFormContent = {
       maxLength: 4,
       placeHolder: "0-9",
       keyBoard: "decimal-pad",
-      kind: "magnesium",
+      kind: "nitrites",
     },
   ],
   fourthLine: [

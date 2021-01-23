@@ -52,13 +52,12 @@ class WaterTestStore {
               Authorization: memberToken ?? "",
             },
           });
-          this.fetchState = "done";
-
           const waterTestList: Promise<WaterTest[]> = response.json();
           runInAction(async () => {
             console.log("waterTestList Success");
             this.waterTestList = await waterTestList;
           });
+          this.fetchState = "done";
           this.RootStore.alertStore.notificationsState = "pending";
           return waterTestList;
         } catch (error) {
@@ -75,12 +74,11 @@ class WaterTestStore {
 
   @action
   async storeDeleteWaterTest(id: string) {
-    this.fetchState = "pending";
     try {
       console.log("Store is deleting the waterTest n° " + id);
       const memberToken = this.RootStore.memberStore.token ?? "";
       await deleteItem(id, "waterTest", memberToken);
-      this.fetchWaterTestList();
+      this.refresh();
     } catch (error) {
       console.log(error);
     }
@@ -98,7 +96,6 @@ class WaterTestStore {
     };
     try {
       const memberToken = this.RootStore.memberStore.token;
-
       const response = await fetch(urlService, {
         method: "POST",
         headers: {
