@@ -7,7 +7,7 @@ import SocialStore from "./SocialStore";
 import AlertStore from "./AlertStore";
 import EventStore from "./EventStore";
 
-export type WebServiceState = "pending" | "done" | "error";
+export type WebServiceState = "starting" | "pending" | "done" | "error";
 
 export class RootStore {
   memberStore: MemberStore;

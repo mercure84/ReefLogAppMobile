@@ -32,7 +32,7 @@ class TankStore {
 
   @observable tankList: Tank[] = [];
   @observable fetchState: WebServiceState = "pending";
-  @observable tankState: WebServiceState = "pending";
+  @observable updateState: WebServiceState = "pending";
   @observable tankImageState: WebServiceState = "pending";
   @observable tankPicture: ArrayBuffer | null = null;
 
@@ -107,7 +107,7 @@ class TankStore {
 
   @action
   async storeUploadImageTank(photo: ImageSourcePropType | any) {
-    this.tankState = "pending";
+    this.updateState = "pending";
 
     try {
       console.log("Store is uploading an image to DB");
@@ -128,10 +128,10 @@ class TankStore {
         },
         body: data,
       });
-      this.tankState = "done";
+      this.updateState = "done";
     } catch (error) {
       console.log(error);
-      this.tankState = "error";
+      this.updateState = "error";
     }
   }
 }

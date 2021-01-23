@@ -29,12 +29,12 @@ class EventStore {
 
   @action
   async fetchEvents(): Promise<Event[]> {
-    this.fetchState = "pending";
+    this.fetchState = "starting";
     if (this.RootStore.tankStore.fetchState === "done") {
       const tankId = this.RootStore.tankStore.tankList[0].id;
       if (tankId) {
         try {
-          console.log("Store is fetching  Events");
+          console.log("Store is fetching  Events for tank n° " + tankId);
           const memberToken = this.RootStore.memberStore.token;
           const urlService = urlServer + "api/getEventList/" + tankId;
           const response = await fetch(urlService, {
@@ -46,7 +46,10 @@ class EventStore {
             },
           });
           const events: Promise<Event[]> = response.json();
-          this.events = await events;
+          runInAction(async () => {
+            this.events = await events;
+          });
+          console.log("Events Success");
           this.fetchState = "done";
           return events;
         } catch (error) {
@@ -110,8 +113,8 @@ class EventStore {
   @action
   refresh = () => {
     this.events = [];
-    this.fetchState = "pending";
     this.updateState = "done";
+    this.fetchState = "pending";
   };
 }
 

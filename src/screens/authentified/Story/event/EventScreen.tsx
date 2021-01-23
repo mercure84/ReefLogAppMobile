@@ -19,16 +19,19 @@ import { EventFormModal } from "./EventFormModal";
 
 export const EventScreen = observer(() => {
   const { eventStore } = RootStore;
+  const [isEventFormVisible, setEventFormVisible] = useState(false);
 
   useEffect(() => {
-    if (eventStore.fetchState === "pending") {
+    if (
+      eventStore.updateState === "done" &&
+      eventStore.fetchState === "pending"
+    ) {
       eventStore.fetchEvents();
     }
   }, [eventStore.fetchState]);
 
   const isEventLoading = eventStore.fetchState === "pending";
   const events = eventStore.eventsData;
-  const [isEventFormVisible, setEventFormVisible] = useState(false);
 
   const HeaderComponent = () => {
     return (

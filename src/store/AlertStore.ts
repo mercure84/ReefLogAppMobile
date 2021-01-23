@@ -53,7 +53,7 @@ class AlertStore {
   async fetchAlerts(): Promise<Alert[]> {
     this.alertState = "pending";
     if (
-      this.RootStore.tankStore.tankState === "done" &&
+      this.RootStore.tankStore.updateState === "done" &&
       this.RootStore.tankStore.tankList.length > 0
     ) {
       try {
@@ -87,7 +87,7 @@ class AlertStore {
   @action
   async fetchNotifications(): Promise<Alert[]> {
     if (
-      this.RootStore.tankStore.tankState === "done" &&
+      this.RootStore.tankStore.updateState === "done" &&
       this.RootStore.tankStore.tankList.length > 0
     ) {
       this.notificationsState = "pending";

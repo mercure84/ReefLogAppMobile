@@ -37,13 +37,12 @@ class WaterTestStore {
 
   @action
   async fetchWaterTestList(): Promise<WaterTest[]> {
-    this.fetchState = "pending";
+    this.fetchState = "starting";
     if (this.RootStore.tankStore.tankList.length > 0) {
       const tankId = this.RootStore.tankStore.tankList[0].id;
-      console.log("Store is fetching  WaterTestList for Tank n°  ", tankId);
       if (tankId) {
         try {
-          console.log("Store is fetching  WaterTests");
+          console.log("Store is fetching  WaterTestList for Tank n°  ", tankId);
           const memberToken = this.RootStore.memberStore.token;
           const urlService = urlServer + "api/getWaterTestList/" + tankId;
           const response = await fetch(urlService, {
@@ -56,10 +55,10 @@ class WaterTestStore {
           });
           const waterTestList: Promise<WaterTest[]> = response.json();
           runInAction(async () => {
-            console.log("waterTestList Success");
             this.waterTestList = await waterTestList;
           });
           this.fetchState = "done";
+          console.log("waterTestList Success");
           this.RootStore.alertStore.notificationsState = "pending";
           return waterTestList;
         } catch (error) {
@@ -123,8 +122,8 @@ class WaterTestStore {
   @action
   refresh = () => {
     this.waterTestList = [];
-    this.fetchState = "pending";
     this.updateState = "done";
+    this.fetchState = "pending";
   };
 }
 
