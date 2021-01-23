@@ -29,6 +29,8 @@ class WaterTestStore {
 
   @observable waterTestList: WaterTest[] = [];
   @observable fetchState: WebServiceState = "pending";
+  @observable updateState: WebServiceState = "done";
+
   @computed get waterTestListData() {
     return toJS(this.waterTestList);
   }
@@ -75,20 +77,23 @@ class WaterTestStore {
   @action
   async storeDeleteWaterTest(id: string) {
     try {
+      this.updateState = "pending";
       console.log("Store is deleting the waterTest n° " + id);
       const memberToken = this.RootStore.memberStore.token ?? "";
       await deleteItem(id, "waterTest", memberToken);
       this.refresh();
     } catch (error) {
       console.log(error);
+      this.updateState = "error";
     }
   }
 
   @action
   saveWaterTest = async (newWaterTest: WaterTest, update: boolean) => {
+    this.updateState = "pending";
     const suffixUrl = update ? "api/updateWaterTest" : "api/addNewWaterTest";
-    //purge du champ de l'aquarium si on est dans le cas d'un update
     newWaterTest.aquarium = undefined;
+    console.log("Store is starting to save a WaterTest");
     const urlService = urlServer + suffixUrl;
     const newWaterTestForm = {
       aquariumId: this.RootStore.tankStore.tankList[0].id,
@@ -107,9 +112,11 @@ class WaterTestStore {
       });
       const dataResponse = response.json();
       console.log("Tests enregistrés");
+      this.refresh();
       return dataResponse;
     } catch (error) {
       console.log(error);
+      this.updateState = "error";
     }
   };
 
@@ -117,6 +124,7 @@ class WaterTestStore {
   refresh = () => {
     this.waterTestList = [];
     this.fetchState = "pending";
+    this.updateState = "done";
   };
 }
 

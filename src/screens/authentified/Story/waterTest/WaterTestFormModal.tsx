@@ -38,7 +38,6 @@ export const WaterTestFormModal = ({
   const [infoMessage, setInfoMessage] = useState(
     "Saisissez les données de vos tests !"
   );
-  const navigation = useNavigation();
 
   const checkForm = () => {
     let goodValues = 0;
@@ -59,17 +58,13 @@ export const WaterTestFormModal = ({
   const submitWaterTest = async () => {
     if (waterTest !== undefined && checkForm()) {
       setLoading(true);
-      setInfoMessage(
-        "Votre formulaire est correct, nous allons l'enregistrer... "
-      );
       const response = RootStore.waterTestStore.saveWaterTest(
         waterTest,
         toUpdate
       );
 
-      if (response != null) {
-        RootStore.waterTestStore.fetchWaterTestList();
-        setInfoMessage("Le test a bien été enregistré !");
+      if (response !== null) {
+        console.log("Le test a bien été enregistré !");
         setLoading(false);
         showForm(false);
       } else {

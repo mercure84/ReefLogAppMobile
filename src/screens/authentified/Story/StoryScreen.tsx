@@ -20,7 +20,10 @@ export const StoryScreen = observer(() => {
   const { eventStore, waterTestStore, tankStore } = RootStore;
 
   useEffect(() => {
-    if (waterTestStore.fetchState === "pending") {
+    if (
+      waterTestStore.updateState === "done" &&
+      waterTestStore.fetchState === "pending"
+    ) {
       waterTestStore.fetchWaterTestList();
     }
   }, [waterTestStore.fetchState]);
@@ -56,9 +59,7 @@ export const StoryScreen = observer(() => {
                 <View style={styles.lastEvent}>
                   <Text>Mon dernier test enregistré :</Text>
 
-                  <WaterTestItem
-                    waterTest={RootStore.waterTestStore.waterTestList[0]}
-                  />
+                  <WaterTestItem waterTest={waterTestStore.waterTestList[0]} />
                 </View>
               )
             )}
@@ -77,7 +78,7 @@ export const StoryScreen = observer(() => {
                   <Text>Mon dernier évènement enregistré :</Text>
 
                   <EventItem
-                    event={RootStore.eventStore.events[0]}
+                    event={eventStore.events[0]}
                     updateItemCallBack={() => null}
                   />
                 </>

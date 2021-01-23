@@ -1,7 +1,6 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { StoryScreen } from "./StoryScreen";
-import { NewTestScreen } from "./waterTest/NewTestScreen";
 import { EventScreen } from "./event/EventScreen";
 import { WaterTestScreen } from "./waterTest/WaterTestScreen";
 import { CountScreen } from "./counting/CountingScreen";
@@ -19,12 +18,6 @@ export const StoryNavigator = () => {
       <Stack.Screen
         name="waterTests"
         component={WaterTestScreen}
-        initialParams={{ waterTest: null }}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="addTests"
-        component={NewTestScreen}
         initialParams={{ waterTest: null }}
         options={{ headerShown: false }}
       />

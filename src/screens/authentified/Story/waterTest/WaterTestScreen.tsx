@@ -22,13 +22,16 @@ export const WaterTestScreen = observer(() => {
   const { waterTestStore } = RootStore;
 
   useEffect(() => {
-    if (waterTestStore.fetchState === "pending") {
+    if (
+      waterTestStore.updateState === "done" &&
+      waterTestStore.fetchState === "pending"
+    ) {
       waterTestStore.fetchWaterTestList();
     }
   }, [waterTestStore.fetchState]);
 
   const isTestsLoading = RootStore.waterTestStore.fetchState === "pending";
-  const dataWaterTestList = RootStore.waterTestStore.waterTestListData;
+  const waterTests = RootStore.waterTestStore.waterTestListData;
 
   const HeaderComponent = () => {
     return (
@@ -56,10 +59,10 @@ export const WaterTestScreen = observer(() => {
 
         <FlatList
           ListHeaderComponent={<HeaderComponent />}
-          data={dataWaterTestList}
+          data={waterTests}
           renderItem={({ item }) => <WaterTestItem waterTest={item} />}
           keyExtractor={({ id }) => id.toString()}
-          ListEmptyComponent={<Text>Aucun enregistrement :(</Text>}
+          ListEmptyComponent={<Text>Aucun enregistrement</Text>}
           scrollEnabled={true}
         />
       </View>
