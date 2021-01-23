@@ -40,46 +40,52 @@ export const StoryScreen = observer(() => {
       <Header centerComponent={<ReefHeaderTitle title="MON JOURNAL" />} />
       <View style={styles.page}>
         {hasATank ? (
-          <View style={styles.buttonContainer}>
-            <ReefButton
-              title="Tests d'eau"
-              onPress={() => navigation.navigate("waterTests")}
-            />
-            <ReefButton
-              title="Evènements de mon aquarium"
-              onPress={() => navigation.navigate("events")}
-            />
+          <View>
+            <View style={styles.buttonContainer}>
+              <ReefButton
+                size="medium"
+                title="Tests d'eau"
+                onPress={() => navigation.navigate("waterTests")}
+              />
+            </View>
+
+            {isWaterTestLoading ? (
+              <ActivityIndicator />
+            ) : (
+              RootStore.waterTestStore.waterTestList.length > 0 && (
+                <View style={styles.lastEvent}>
+                  <Text>Mon dernier test enregistré :</Text>
+
+                  <WaterTestItem
+                    waterTest={RootStore.waterTestStore.waterTestList[0]}
+                  />
+                </View>
+              )
+            )}
+            <View style={styles.buttonContainer}>
+              <ReefButton
+                size="medium"
+                title="Evènements"
+                onPress={() => navigation.navigate("events")}
+              />
+            </View>
+            {isEventLoading ? (
+              <ActivityIndicator />
+            ) : (
+              RootStore.eventStore.events.length > 0 && (
+                <>
+                  <Text>Mon dernier évènement enregistré :</Text>
+
+                  <EventItem
+                    event={RootStore.eventStore.events[0]}
+                    updateItemCallBack={() => null}
+                  />
+                </>
+              )
+            )}
           </View>
         ) : (
           <Text>Créer d'abord un Aquarium avant de consulter cette page !</Text>
-        )}
-
-        {isWaterTestLoading ? (
-          <ActivityIndicator />
-        ) : (
-          RootStore.waterTestStore.waterTestList.length > 0 && (
-            <>
-              <Text>Mon dernier test enregistré :</Text>
-
-              <WaterTestItem
-                waterTest={RootStore.waterTestStore.waterTestList[0]}
-              />
-            </>
-          )
-        )}
-        {isEventLoading ? (
-          <ActivityIndicator />
-        ) : (
-          RootStore.eventStore.events.length > 0 && (
-            <>
-              <Text>Mon dernier évènement enregistré :</Text>
-
-              <EventItem
-                event={RootStore.eventStore.events[0]}
-                updateItemCallBack={() => null}
-              />
-            </>
-          )
         )}
       </View>
     </>
@@ -88,17 +94,21 @@ export const StoryScreen = observer(() => {
 
 type Style = {
   page: ViewStyle;
+  lastEvent: ViewStyle;
   buttonContainer: ViewStyle;
 };
 
 const styles = StyleSheet.create<Style>({
   page: {
     alignContent: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
     flex: 1,
   },
+  lastEvent: {
+    marginHorizontal: 8,
+  },
   buttonContainer: {
-    alignSelf: "center",
-    justifyContent: "center",
+    marginTop: 32,
+    alignItems: "center",
   },
 });
