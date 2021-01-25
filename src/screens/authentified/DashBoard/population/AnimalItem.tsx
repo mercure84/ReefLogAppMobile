@@ -17,7 +17,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { Animal, AnimalType } from "../../../../store/AnimalStore";
 import RootStore from "../../../../store/RootStore";
-import { CustomModal } from "../../../../components/ModalDeleteConfirmation";
+import { DeleteModal } from "../../../../components/DeleteModal";
 import { getAnimalType, getIconForAnimal } from "../../../../utils/helpers";
 
 type Props = {
@@ -78,7 +78,7 @@ export const AnimalItem = ({ animal }: Props) => {
         </View>
       </View>
 
-      <CustomModal
+      <DeleteModal
         isModaleVisible={isModalVisible}
         message={`Confirmez vous la suppression de l'animal :
         ${animal.name} arrivé le ${Moment(animal.incomingDate).format("ll")} ?`}

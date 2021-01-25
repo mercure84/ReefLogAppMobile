@@ -16,7 +16,7 @@ import RootStore from "../../../../store/RootStore";
 import Moment from "moment";
 import "moment/locale/fr";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { CustomModal } from "../../../../components/ModalDeleteConfirmation";
+import { DeleteModal } from "../../../../components/DeleteModal";
 import { WaterTestFormModal } from "./WaterTestFormModal";
 
 type Props = {
@@ -86,7 +86,7 @@ export const WaterTestItem = ({ waterTest }: Props) => {
       ) : null}
       {waterTest.ph !== null ? <Text>pH : {waterTest.ph} </Text> : null}
 
-      <CustomModal
+      <DeleteModal
         isModaleVisible={isDeleteModalVisible}
         message={`Confirmez vous la suppression du test du 
         ${Moment(waterTest.date).format("lll")} ?`}

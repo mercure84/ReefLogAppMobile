@@ -19,7 +19,7 @@ type Props = {
 import createIcon from "../../../../assets/icons/createIcon.png";
 import deleteIcon from "../../../../assets/icons/deleteIcon.png";
 import RootStore from "../../../../store/RootStore";
-import { CustomModal } from "../../../../components/ModalDeleteConfirmation";
+import { DeleteModal } from "../../../../components/DeleteModal";
 import { EventFormModal } from "./EventFormModal";
 
 export const EventItem = ({ event }: Props) => {
@@ -55,9 +55,9 @@ export const EventItem = ({ event }: Props) => {
 
       <Text>{event.description}</Text>
 
-      <CustomModal
+      <DeleteModal
         isModaleVisible={isDeleteModalVisible}
-        message={`Confirmez vous la suppression de l'équipement :
+        message={`Confirmez vous la suppression de l'évènement :
         ${event.title}  ?`}
         buttonYesFonction={() => confirmDelete(event)}
         buttonNoFonction={handlePressDelete}

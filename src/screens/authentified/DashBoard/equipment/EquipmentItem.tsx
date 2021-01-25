@@ -19,7 +19,7 @@ type Props = {
 import createIcon from "../../../../assets/icons/createIcon.png";
 import deleteIcon from "../../../../assets/icons/deleteIcon.png";
 import RootStore from "../../../../store/RootStore";
-import { CustomModal } from "../../../../components/ModalDeleteConfirmation";
+import { DeleteModal } from "../../../../components/DeleteModal";
 
 export const EquipmentItem = ({ equipment }: Props) => {
   const navigation = useNavigation();
@@ -65,7 +65,7 @@ export const EquipmentItem = ({ equipment }: Props) => {
       <Text>Quantité : {equipment.quantity}</Text>
       <Text>Notes : {equipment.description}</Text>
 
-      <CustomModal
+      <DeleteModal
         isModaleVisible={isModalVisible}
         message={`Confirmez vous la suppression de l'équipement :
         ${equipment.typeOfEquipment} ${equipment.mark} ?`}
