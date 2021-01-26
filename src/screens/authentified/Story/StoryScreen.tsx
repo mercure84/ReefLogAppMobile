@@ -24,7 +24,7 @@ export const StoryScreen = observer(() => {
       waterTestStore.updateState === "done" &&
       waterTestStore.fetchState === "pending"
     ) {
-      waterTestStore.fetchWaterTestList();
+      waterTestStore.fetchWaterTests();
     }
   }, [waterTestStore.fetchState]);
 

@@ -13,24 +13,20 @@ const ParameterScreen = () => {
   const navigation = useNavigation();
   const hasATank = RootStore.tankStore.tankList.length > 0;
 
-
   return (
     <>
-      <Header
-        centerComponent={<ReefHeaderTitle title="MES PARAMETRES" />}
-        backgroundColor="white"
-        backgroundImage={require("../../../assets/parameters.png")}
-        backgroundImageStyle={{ opacity: 0.8 }}
-      />
+      <Header centerComponent={<ReefHeaderTitle title="MES PARAMETRES" />} />
       <View style={styles.buttonContainer}>
         <ReefButton
           title="Mon profil"
           onPress={() => navigation.navigate("myProfil")}
         />
-        {hasATank && <ReefButton
-          title="Alertes"
-          onPress={() => navigation.navigate("myAlerts")}
-        />}
+        {hasATank && (
+          <ReefButton
+            title="Mes Alertes"
+            onPress={() => navigation.navigate("myAlerts")}
+          />
+        )}
         <ReefButton
           title="Outils"
           onPress={() => navigation.navigate("myTools")}
@@ -57,9 +53,9 @@ const styles = StyleSheet.create<Style>({
   buttonContainer: {
     padding: 32,
     height: "60%",
-    flexDirection: "column",
-    justifyContent: "space-around"
-  }
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
 });
 
 export default ParameterScreen;

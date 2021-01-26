@@ -37,7 +37,7 @@ export const WaterTestItem = ({ waterTest }: Props) => {
 
   const confirmDelete = (pWaterTest: WaterTest) => {
     RootStore.waterTestStore.storeDeleteWaterTest(pWaterTest.id);
-    RootStore.waterTestStore.fetchWaterTestList();
+    RootStore.waterTestStore.fetchWaterTests();
     handlePressDelete();
   };
 

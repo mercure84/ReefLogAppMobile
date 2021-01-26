@@ -36,7 +36,7 @@ class WaterTestStore {
   }
 
   @action
-  async fetchWaterTestList(): Promise<WaterTest[]> {
+  async fetchWaterTests(): Promise<WaterTest[]> {
     this.fetchState = "starting";
     if (this.RootStore.tankStore.tankList.length > 0) {
       const tankId = this.RootStore.tankStore.tankList[0].id;
@@ -67,10 +67,8 @@ class WaterTestStore {
           return [];
         }
       }
-    } else {
-      // pas d'aquariums ?
-      return [];
     }
+    return [];
   }
 
   @action

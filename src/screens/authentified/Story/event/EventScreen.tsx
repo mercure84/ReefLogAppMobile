@@ -30,7 +30,7 @@ export const EventScreen = observer(() => {
     }
   }, [eventStore.fetchState]);
 
-  const isEventLoading = eventStore.fetchState === "pending";
+  const isEventLoading = eventStore.fetchState !== "done";
   const events = eventStore.eventsData;
 
   const HeaderComponent = () => {

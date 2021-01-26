@@ -26,12 +26,12 @@ export const WaterTestScreen = observer(() => {
       waterTestStore.updateState === "done" &&
       waterTestStore.fetchState === "pending"
     ) {
-      waterTestStore.fetchWaterTestList();
+      waterTestStore.fetchWaterTests();
     }
   }, [waterTestStore.fetchState]);
 
-  const isTestsLoading = RootStore.waterTestStore.fetchState === "pending";
-  const waterTests = RootStore.waterTestStore.waterTestListData;
+  const isTestsLoading = RootStore.waterTestStore.fetchState !== "done";
+  const waterTests = waterTestStore.waterTestListData;
 
   const HeaderComponent = () => {
     return (

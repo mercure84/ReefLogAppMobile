@@ -10,7 +10,7 @@ import email from "react-native-email";
 
 import { Animal } from "../store/AnimalStore";
 import { Tank } from "../store/TankStore";
-import { TankFormModal } from "../screens/authentified/DashBoard/aquarium/TankFormModal";
+import { TypeTest } from "../store/AlertStore";
 
 export const formatStringToFloat = (text: string) => {
   return isNaN(parseFloat(text.replace(",", ".")))
@@ -98,6 +98,33 @@ export const getIconForAnimal = (animal: Animal) => {
       return coralIcon;
     case "anemone":
       return anemoneIcon;
+  }
+};
+
+export const getLabelForTypeTest = (typeTest: TypeTest) => {
+  switch (typeTest) {
+    case TypeTest.ALCALINITY:
+      return "KH";
+    case TypeTest.AMMONIAC:
+      return "Ammoniac";
+    case TypeTest.CALCIUM:
+      return "Calcium";
+    case TypeTest.MAGNESIUM:
+      return "Magnésium";
+    case TypeTest.NITRATES:
+      return "Nitrates";
+    case TypeTest.NITRITES:
+      return "Nitrites";
+    case TypeTest.PH:
+      return "pH";
+    case TypeTest.PHOSPHATES:
+      return "Phosphates";
+    case TypeTest.SALINITY:
+      return "Salinité";
+    case TypeTest.SILICATES:
+      return "Silicates";
+    case TypeTest.TEMPERATURE:
+      return "Température";
   }
 };
 

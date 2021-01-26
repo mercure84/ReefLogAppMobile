@@ -11,17 +11,17 @@ export interface Alert {
 }
 
 export enum TypeTest {
-  TEMPERATURE = "Température",
-  SALINITY = "Salinité",
-  ALCALINITY = "KH",
-  PH = "pH",
-  CALCIUM = "Calcium",
-  MAGNESIUM = "Magnésium",
-  AMMONIAC = "Ammoniac",
-  NITRATES = "Nitrates",
-  NITRITES = "Nitrites",
-  PHOSPHATES = "Phosphates",
-  SILICATES = "Silicates",
+  TEMPERATURE,
+  SALINITY,
+  ALCALINITY,
+  PH,
+  CALCIUM,
+  MAGNESIUM,
+  AMMONIAC,
+  NITRATES,
+  NITRITES,
+  PHOSPHATES,
+  SILICATES,
 }
 
 class AlertStore {
@@ -31,11 +31,12 @@ class AlertStore {
   }
 
   @observable alerts: Alert[] = [];
-  @observable alertState: WebServiceState = "pending";
+  @observable fetchState: WebServiceState = "pending";
+  @observable updateState: WebServiceState = "done";
 
   //notifications = une alerte qui indique qu'un test est en retard
   @observable notifications: Alert[] = [];
-  @observable notificationsState = "pending";
+  @observable notificationsFetchState = "pending";
 
   @computed get alertsData() {
     return toJS(this.alerts).sort((a, b) =>
@@ -51,17 +52,13 @@ class AlertStore {
 
   @action
   async fetchAlerts(): Promise<Alert[]> {
-    this.alertState = "pending";
-    if (
-      this.RootStore.tankStore.updateState === "done" &&
-      this.RootStore.tankStore.tankList.length > 0
-    ) {
+    this.fetchState = "starting";
+    if (this.RootStore.tankStore.fetchState === "done") {
       try {
         console.log("Store is fetching Alerts");
         const memberToken = this.RootStore.memberStore.token;
         const tankId = this.RootStore.tankStore.tankList[0]?.id;
         const urlService = urlServer + "api/getAlerts/" + tankId;
-
         const response = await fetch(urlService, {
           method: "GET",
           headers: {
@@ -71,14 +68,15 @@ class AlertStore {
           },
         });
         const alerts: Promise<Alert[]> = response.json();
-
-        this.alerts = await alerts;
-        this.alertState = "done";
-
+        runInAction(async () => {
+          this.alerts = await alerts;
+        });
+        console.log("Alerts has been fetched successful");
+        this.fetchState = "done";
         return alerts;
       } catch (error) {
         console.log(error);
-        this.alertState = "error";
+        this.fetchState = "error";
       }
     }
     return [];
@@ -90,7 +88,7 @@ class AlertStore {
       this.RootStore.tankStore.updateState === "done" &&
       this.RootStore.tankStore.tankList.length > 0
     ) {
-      this.notificationsState = "pending";
+      this.notificationsFetchState = "starting";
       try {
         console.log("Store is fetching Notifications");
         const memberToken = this.RootStore.memberStore.token;
@@ -104,14 +102,14 @@ class AlertStore {
             Authorization: memberToken ?? "",
           },
         });
-        this.notificationsState = "done";
+        this.notificationsFetchState = "done";
         const notifications: Promise<Alert[]> = response.json();
         console.log("notifications success");
         this.notifications = await this.notifications;
         return notifications;
       } catch (error) {
         console.log(error);
-        this.notificationsState = "error";
+        this.notificationsFetchState = "error";
       }
     }
     return [];
@@ -119,6 +117,7 @@ class AlertStore {
 
   @action
   saveAlerts = async (alerts: Alert[]) => {
+    this.updateState = "pending";
     const urlService = urlServer + "api/addAlertsCollection";
     const alertsForm = {
       aquariumId: this.RootStore.tankStore.tankList[0].id,
@@ -136,12 +135,20 @@ class AlertStore {
         body: JSON.stringify(alertsForm),
       });
       const dataResponse = response.json();
-      console.log("Alerts envoyées");
-      this.notificationsState = "pending";
+      console.log("Alertes enregistrées");
+      this.refresh();
       return dataResponse;
     } catch (error) {
       console.log(error);
     }
+  };
+
+  @action
+  refresh = () => {
+    this.alerts = [];
+    this.updateState = "done";
+    this.fetchState = "pending";
+    this.notificationsFetchState = "pending";
   };
 }
 
