@@ -11,12 +11,15 @@ export const AlertsScreen = observer(() => {
   const { alertStore } = RootStore;
 
   useEffect(() => {
-    if (
-      alertStore.updateState === "done" &&
-      alertStore.fetchState === "pending"
-    ) {
-      alertStore.fetchAlerts();
-    }
+    const getAlerts = async () => {
+      if (
+        alertStore.updateState === "done" &&
+        alertStore.fetchState === "pending"
+      ) {
+        await alertStore.fetchAlerts();
+      }
+    };
+    getAlerts();
   }, [alertStore.fetchState]);
 
   const isAlertsLoading = alertStore.fetchState !== "done";

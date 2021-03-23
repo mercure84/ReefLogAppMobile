@@ -20,18 +20,24 @@ export const StoryScreen = observer(() => {
   const { eventStore, waterTestStore, tankStore } = RootStore;
 
   useEffect(() => {
-    if (
-      waterTestStore.updateState === "done" &&
-      waterTestStore.fetchState === "pending"
-    ) {
-      waterTestStore.fetchWaterTests();
-    }
+    const getWaterTests = async () => {
+      if (
+        waterTestStore.updateState === "done" &&
+        waterTestStore.fetchState === "pending"
+      ) {
+        await waterTestStore.fetchWaterTests();
+      }
+    };
+    getWaterTests();
   }, [waterTestStore.fetchState]);
 
   useEffect(() => {
-    if (eventStore.fetchState === "pending") {
-      eventStore.fetchEvents();
-    }
+    const getEvents = async () => {
+      if (eventStore.fetchState === "pending") {
+        await eventStore.fetchEvents();
+      }
+    };
+    getEvents();
   }, [eventStore.fetchState]);
 
   const isWaterTestLoading = waterTestStore.fetchState === "pending";

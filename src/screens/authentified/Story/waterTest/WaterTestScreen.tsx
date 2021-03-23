@@ -22,12 +22,15 @@ export const WaterTestScreen = observer(() => {
   const { waterTestStore } = RootStore;
 
   useEffect(() => {
-    if (
-      waterTestStore.updateState === "done" &&
-      waterTestStore.fetchState === "pending"
-    ) {
-      waterTestStore.fetchWaterTests();
-    }
+    const getWaterTests = async () => {
+      if (
+        waterTestStore.updateState === "done" &&
+        waterTestStore.fetchState === "pending"
+      ) {
+        await waterTestStore.fetchWaterTests();
+      }
+    };
+    getWaterTests();
   }, [waterTestStore.fetchState]);
 
   const isTestsLoading = RootStore.waterTestStore.fetchState !== "done";

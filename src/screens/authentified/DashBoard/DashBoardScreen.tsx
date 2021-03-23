@@ -28,27 +28,36 @@ const DashboardScreen = observer(() => {
   const { memberStore, tankStore, alertStore } = RootStore;
 
   useEffect(() => {
-    if (memberStore.memberState !== "done") {
-      memberStore.fetchMember();
-    } else {
-      setMember(memberStore.member);
-    }
+    const getMember = async () => {
+      if (memberStore.memberState !== "done") {
+        await memberStore.fetchMember();
+      } else {
+        setMember(memberStore.member);
+      }
+    };
+    getMember();
   }, [memberStore.memberState]);
 
   useEffect(() => {
-    if (member && tankStore.fetchState !== "done") {
-      tankStore.fetchTankList();
-    } else {
-      setTankList(tankStore.tankList);
-    }
+    const getTank = async () => {
+      if (member && tankStore.fetchState !== "done") {
+        await tankStore.fetchTankList();
+      } else {
+        setTankList(tankStore.tankList);
+      }
+    };
+    getTank();
   }, [member, tankStore.fetchState]);
 
   useEffect(() => {
-    if (tankList && alertStore.notificationsFetchState !== "done") {
-      alertStore.fetchNotifications();
-    } else {
-      setNotifications(alertStore.notifications);
-    }
+    const getNotifications = async () => {
+      if (tankList && alertStore.notificationsFetchState !== "done") {
+        await alertStore.fetchNotifications();
+      } else {
+        setNotifications(alertStore.notifications);
+      }
+    };
+    getNotifications();
   }, [tankList, alertStore.notificationsFetchState]);
 
   const isLoading =

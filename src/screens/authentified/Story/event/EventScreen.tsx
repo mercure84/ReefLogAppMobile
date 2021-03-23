@@ -22,12 +22,15 @@ export const EventScreen = observer(() => {
   const [isEventFormVisible, setEventFormVisible] = useState(false);
 
   useEffect(() => {
-    if (
-      eventStore.updateState === "done" &&
-      eventStore.fetchState === "pending"
-    ) {
-      eventStore.fetchEvents();
-    }
+    const getEvents = async () => {
+      if (
+        eventStore.updateState === "done" &&
+        eventStore.fetchState === "pending"
+      ) {
+        await eventStore.fetchEvents();
+      }
+    };
+    getEvents();
   }, [eventStore.fetchState]);
 
   const isEventLoading = eventStore.fetchState !== "done";
