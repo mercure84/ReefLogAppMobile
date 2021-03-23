@@ -10,7 +10,7 @@ class MemberStore {
     this.RootStore = RootStore;
   }
   @observable member: Member | undefined = undefined;
-  @observable token: string | undefined = undefined;
+  @observable token: string = "";
 
   @observable memberState: WebServiceState = "pending"; // "pending" / "done" / "error"
 

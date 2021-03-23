@@ -183,22 +183,33 @@ export const SignupForm = ({
           margin: 8,
         }}
       >
-        <ReefButton
-          size="medium"
-          title="Créer mon compte"
-          onPress={() => submitNewMember(signUpForm)}
-          disabled={isLoading}
-        />
-        <ReefButton
-          size="medium"
-          title="Déjà enregistré ?"
-          onPress={() => {
-            if (toggleWelcomeComponents) {
-              toggleWelcomeComponents(WelcomeElement.LOGIN);
-            }
-          }}
-          disabled={isLoading}
-        />
+        {isUpdating ? (
+          <ReefButton
+            size="medium"
+            title="Enregistrer"
+            onPress={() => submitNewMember(signUpForm)}
+            disabled={isLoading}
+          />
+        ) : (
+          <>
+            <ReefButton
+              size="medium"
+              title="Créer mon compte"
+              onPress={() => submitNewMember(signUpForm)}
+              disabled={isLoading}
+            />
+            <ReefButton
+              size="medium"
+              title="Déjà enregistré ?"
+              onPress={() => {
+                if (toggleWelcomeComponents) {
+                  toggleWelcomeComponents(WelcomeElement.LOGIN);
+                }
+              }}
+              disabled={isLoading}
+            />
+          </>
+        )}
       </View>
       <InfoModal
         isModaleVisible={isModalInfoVisible}

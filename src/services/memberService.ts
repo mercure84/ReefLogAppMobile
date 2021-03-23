@@ -3,18 +3,16 @@ import { getData } from "./storageDevice";
 
 // typage d'un membre
 
-export type Member =
-  | {
-      id: string;
-      lastName?: string;
-      firstName?: any;
-      userName: string;
-      email: string;
-      password: string;
-      signupDate: string;
-      role: string;
-    }
-  | undefined;
+export type Member = {
+  id: string;
+  lastName?: string;
+  firstName?: any;
+  userName: string;
+  email: string;
+  password: string;
+  signupDate: string;
+  role: string;
+};
 
 export type SignUp = {
   idToUpdate?: string;
@@ -113,7 +111,7 @@ export const checkToken = async (pEmail: string, pToken: string) => {
 export const getMemberDetail = async (
   pEmail: string,
   token: string
-): Promise<Member> => {
+): Promise<Member | undefined> => {
   const email = pEmail.toLocaleLowerCase();
   const urlService = urlServer + "api/getMemberDetail/" + email;
 
