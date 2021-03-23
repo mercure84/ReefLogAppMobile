@@ -15,14 +15,17 @@ import { ReefHeaderTitle } from "../../../components/ReefHeaderTitle";
 import { Member } from "../../../services/memberService";
 import { Tank } from "../../../store/TankStore";
 import { TankFormModal } from "./aquarium/TankFormModal";
+import { Alert } from "../../../store/AlertStore";
+import { Notifications } from "./notifications/Notifications";
 
 const DashboardScreen = observer(() => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);
   const [isTankItemVisible, setTankItemVisible] = useState(true);
   const [member, setMember] = useState<Member>(undefined);
   const [tankList, setTankList] = useState<Tank[]>([]);
+  const [notifications, setNotifications] = useState<Alert[]>([]);
 
-  const { memberStore, tankStore } = RootStore;
+  const { memberStore, tankStore, alertStore } = RootStore;
 
   useEffect(() => {
     if (memberStore.memberState !== "done") {
@@ -40,8 +43,18 @@ const DashboardScreen = observer(() => {
     }
   }, [member, tankStore.fetchState]);
 
+  useEffect(() => {
+    if (tankList && alertStore.notificationsFetchState !== "done") {
+      alertStore.fetchNotifications();
+    } else {
+      setNotifications(alertStore.notifications);
+    }
+  }, [tankList, alertStore.notificationsFetchState]);
+
   const isLoading =
-    memberStore.memberState === "pending" && tankStore.fetchState === "pending";
+    memberStore.memberState === "pending" &&
+    tankStore.fetchState === "pending" &&
+    alertStore.notificationsFetchState === "pending";
   const newTankPress = () => setNewTankFormVisible(true);
   const toggleTankForm = () => {
     setTankItemVisible(!isTankItemVisible);
@@ -74,6 +87,8 @@ const DashboardScreen = observer(() => {
           <ReefButton title="Créer un Aquarium" onPress={newTankPress} />
         </>
       )}
+
+      {!isLoading && <Notifications notifications={notifications} />}
 
       {isNewTankFormVisible && (
         <TankFormModal

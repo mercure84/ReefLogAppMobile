@@ -7,7 +7,7 @@ type Props = {
 };
 
 export const Notifications = ({ notifications }: Props) => {
-  return notifications != null && notifications.length > 0 ? (
+  return notifications.length > 0 ? (
     <View style={{ padding: 8 }}>
       <Text>
         Vous avez actuellement {notifications.length} alerte(s) sur vos tests.

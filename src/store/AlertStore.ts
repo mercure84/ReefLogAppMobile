@@ -84,10 +84,7 @@ class AlertStore {
 
   @action
   async fetchNotifications(): Promise<Alert[]> {
-    if (
-      this.RootStore.tankStore.updateState === "done" &&
-      this.RootStore.tankStore.tankList.length > 0
-    ) {
+    if (this.RootStore.tankStore.fetchState === "done") {
       this.notificationsFetchState = "starting";
       try {
         console.log("Store is fetching Notifications");
@@ -102,10 +99,10 @@ class AlertStore {
             Authorization: memberToken ?? "",
           },
         });
-        this.notificationsFetchState = "done";
         const notifications: Promise<Alert[]> = response.json();
         console.log("notifications success");
-        this.notifications = await this.notifications;
+        this.notifications = await notifications;
+        this.notificationsFetchState = "done";
         return notifications;
       } catch (error) {
         console.log(error);
