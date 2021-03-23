@@ -81,6 +81,9 @@ export const WaterTestItem = ({ waterTest }: Props) => {
       {waterTest.nitrites !== null ? (
         <Text>NO2 : {waterTest.nitrites} ppm</Text>
       ) : null}
+      {waterTest.phosphates !== null ? (
+        <Text>PO4 : {waterTest.phosphates} ppm</Text>
+      ) : null}
       {waterTest.silicates !== null ? (
         <Text>Silicates : {waterTest.silicates} ppm </Text>
       ) : null}
