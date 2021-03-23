@@ -59,7 +59,7 @@ class WaterTestStore {
           });
           this.fetchState = "done";
           console.log("waterTestList Success");
-          this.RootStore.alertStore.notificationsState = "pending";
+          this.RootStore.alertStore.notificationsFetchState = "pending";
           return waterTestList;
         } catch (error) {
           console.log(error);

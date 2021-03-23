@@ -43,11 +43,6 @@ export const AlertsForm = observer(({ existingAlerts }: Props) => {
   };
   return (
     <>
-      <ReefButton
-        size="medium"
-        title="Enregistrer"
-        onPress={() => submitAlert()}
-      />
       {isSubmitting && <ActivityIndicator />}
       {Object.entries(myAlerts).map(([key, value]) => (
         <View style={styles.switchContainer} key={key}>
@@ -69,6 +64,19 @@ export const AlertsForm = observer(({ existingAlerts }: Props) => {
           />
         </View>
       ))}
+      <View
+        style={{
+          alignSelf: "center",
+          flexDirection: "row",
+          margin: 8,
+        }}
+      >
+        <ReefButton
+          size="medium"
+          title="Enregistrer"
+          onPress={() => submitAlert()}
+        />
+      </View>
     </>
   );
 });

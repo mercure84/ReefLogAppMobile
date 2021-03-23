@@ -84,7 +84,10 @@ class AlertStore {
 
   @action
   async fetchNotifications(): Promise<Alert[]> {
-    if (this.RootStore.tankStore.fetchState === "done") {
+    if (
+      this.RootStore.tankStore.fetchState === "done" &&
+      this.notificationsFetchState !== "starting"
+    ) {
       this.notificationsFetchState = "starting";
       try {
         console.log("Store is fetching Notifications");
