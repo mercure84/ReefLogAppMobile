@@ -1,22 +1,22 @@
 import { observable, action, runInAction } from "mobx";
 import { getData } from "../services/storageDevice";
 import { getMemberDetail, Member } from "../services/memberService";
-import { RootStore as RootStoreType } from "./RootStore";
+import { RootStore as RootStoreType, WebServiceState } from "./RootStore";
 
 class MemberStore {
   RootStore: RootStoreType;
 
-  constructor(RootStore) {
+  constructor(RootStore: RootStoreType) {
     this.RootStore = RootStore;
   }
-  @observable member: Member;
-  @observable token: string;
+  @observable member: Member | undefined = undefined;
+  @observable token: string = "";
 
-  @observable memberState = "pending"; // "pending" / "done" / "error"
+  @observable memberState: WebServiceState = "pending"; // "pending" / "done" / "error"
 
   // récupération des détails du membre pour alimenter notre store
   @action
-  async fetchMember(): Promise<Member> {
+  async fetchMember() {
     this.memberState = "pending";
 
     try {
@@ -29,9 +29,8 @@ class MemberStore {
       runInAction(() => {
         this.token = asyncStoredToken;
         this.member = memberDetail;
-        this.memberState = "done";
       });
-
+      this.memberState = "done";
       return memberDetail;
     } catch (error) {
       console.log(error);

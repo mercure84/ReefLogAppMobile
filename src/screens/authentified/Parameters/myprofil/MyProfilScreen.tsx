@@ -4,6 +4,7 @@ import { View, ViewStyle, StyleSheet } from "react-native";
 import { ProfilForm } from "./ProfilForm";
 import RootStore from "../../../../store/RootStore";
 import { GoBackButton } from "../../../../components/GoBackButton";
+import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
 
 export const MyProfilScreen = () => {
   const member = RootStore.memberStore.member;
@@ -12,13 +13,9 @@ export const MyProfilScreen = () => {
     <View style={styles.page}>
       <Header
         leftComponent={<GoBackButton />}
-        centerComponent={
-          <Text style={{ fontSize: 16 }}>Modifier mon profil</Text>
-        }
-        backgroundColor="pink"
+        centerComponent={<ReefHeaderTitle title="MON PROFIL" />}
       />
-
-      <ProfilForm memberToUpdate={member} />
+      {member && <ProfilForm memberToUpdate={member} />}
     </View>
   );
 };
@@ -29,6 +26,6 @@ type Style = {
 
 const styles = StyleSheet.create<Style>({
   page: {
-    alignItems: "stretch"
-  }
+    alignItems: "stretch",
+  },
 });

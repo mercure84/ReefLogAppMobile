@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   View,
-  Text,
   ActivityIndicator,
   StyleSheet,
   ViewStyle,
@@ -10,138 +9,214 @@ import {
 import { signUpService, SignUp } from "../../../services/memberService";
 import { ReefButton } from "../../../components/ReefButton";
 
-import { MessageInfo } from "../../../components/MessageInfo";
 import { TextInput } from "react-native-gesture-handler";
-import { Card } from "react-native-elements";
 import RootStore from "../../../store/RootStore";
-
-const checkPassword = (password, repassword): boolean => {
-  if (password !== null && repassword !== null) {
-    return password === repassword && password.length > 5;
-  } else return false;
-};
+import { WelcomeElement } from "../WelcomeScreen";
+import { Text } from "react-native-elements";
+import { InfoModal } from "../../../components/InfoModal";
 
 type Props = {
   showSignupForm?: (boolean: boolean) => void;
-  homeInfoCallBack?: (string: string) => void;
   memberToUpdate?: SignUp;
+  toggleWelcomeComponents?: (welcomeElement: WelcomeElement) => void;
+};
+
+const initNewSignUp: SignUp = {
+  idToUpdate: undefined,
+  email: "",
+  password: "",
+  repassword: "",
+  userName: "",
 };
 
 export const SignupForm = ({
   showSignupForm,
   memberToUpdate,
-  homeInfoCallBack,
+  toggleWelcomeComponents,
 }: Props) => {
-  const [signUpForm, setSignUpForm] = useState<SignUp>(memberToUpdate);
+  const [signUpForm, setSignUpForm] = useState<SignUp>(
+    memberToUpdate ?? initNewSignUp
+  );
   const [localInfo, setLocalInfo] = useState("");
-
-  const isUpdating = memberToUpdate !== null;
+  const isUpdating = memberToUpdate !== undefined;
   const [isLoading, setLoading] = useState(false);
+  const [isModalInfoVisible, showModalInfo] = useState(false);
+  const [message, setMessage] = useState("");
 
-  const submitNewMember = async (signUpForm: SignUp) => {
-    if (checkPassword(signUpForm.password, signUpForm.repassword)) {
-      setLoading(true);
-      const response = await signUpService(signUpForm, isUpdating);
-      setLoading(false);
-      console.log("réponse status = " + response.role);
-      if (response.role === "USER") {
-        if (isUpdating) {
-          RootStore.memberStore.fetchMember();
-          homeInfoCallBack("Compte mis à jour");
-        } else {
-          homeInfoCallBack(
-            "Votre compte a bien été créé ! un email de confirmation a été envoyé à " +
-              response.email
-          );
-          showSignupForm(false);
-        }
-      } else {
-        setLocalInfo("Un problème est survenu : " + response.message);
-      }
-    } else {
-      setLocalInfo(
-        "Il y a un souci avec votre formulaire ! vérifiez vos mots de passe"
-      );
+  const checkSamePassword = (password: string, repassword: string): boolean => {
+    if (password !== null && repassword !== null) {
+      return password === repassword && password.length > 5;
+    } else return false;
+  };
+
+  const { password, repassword, email, userName } = signUpForm;
+
+  const showInfo = (message: string): void => {
+    setMessage(message);
+    showModalInfo(true);
+  };
+
+  const handlePressOK = () => {
+    showModalInfo(false);
+    if (toggleWelcomeComponents) {
+      toggleWelcomeComponents(WelcomeElement.LOGIN);
     }
   };
 
-  return (
-    <View style={{ padding: 8 }}>
-      {isLoading && <ActivityIndicator />}
-      <MessageInfo message={localInfo} />
-
-      <Card
-        title={
-          isUpdating ? "Modification de votre compte " : "Création d'un compte"
+  const submitNewMember = useCallback(
+    async (signUpForm: SignUp) => {
+      setLocalInfo("");
+      const isFormValid =
+        checkSamePassword(password, repassword) &&
+        password.length > 5 &&
+        userName.length > 3 &&
+        email.length > 4;
+      if (isFormValid) {
+        setLoading(true);
+        const response = await signUpService(signUpForm, isUpdating);
+        setLoading(false);
+        console.log("réponse status = " + response.role);
+        if (response.role === "USER") {
+          if (isUpdating) {
+            RootStore.memberStore.fetchMember();
+          } else {
+            showInfo(
+              "Votre compte vient d'être créé, une confirmation a été envoyée à votre adresse mail : " +
+                email
+            );
+            if (showSignupForm) {
+              showSignupForm(false);
+            }
+          }
+        } else {
+          setLocalInfo("Un problème est survenu : " + response.message);
         }
-      >
-        <View style={styles.input}>
-          <Text>Mon email</Text>
-          <TextInput
-            style={styles.textInput}
-            textContentType="emailAddress"
-            keyboardType="email-address"
-            maxLength={30}
-            autoCompleteType="email"
-            placeholder="email@email.fr"
-            onChangeText={(text) =>
-              setSignUpForm({ ...signUpForm, email: text })
-            }
-            defaultValue={
-              isUpdating && signUpForm.email !== null ? signUpForm.email : null
-            }
-          />
-        </View>
-        <View style={styles.input}>
-          <Text>Mon pseudo</Text>
-          <TextInput
-            style={styles.textInput}
-            textContentType="nickname"
-            maxLength={12}
-            autoCompleteType="off"
-            placeholder="pseudo"
-            onChangeText={(text) =>
-              setSignUpForm({ ...signUpForm, userName: text })
-            }
-            defaultValue={
-              isUpdating && signUpForm.userName ? signUpForm.userName : null
-            }
-          />
-        </View>
-        <View style={styles.input}>
-          <Text>Mon password</Text>
-          <TextInput
-            style={styles.textInput}
-            textContentType="newPassword"
-            secureTextEntry={true}
-            maxLength={12}
-            autoCompleteType="off"
-            placeholder="mot de passe"
-            onChangeText={(text) => {
-              setSignUpForm({ ...signUpForm, password: text });
-            }}
-          />
-        </View>
-        <View style={styles.input}>
-          <Text>Confirmer le mdp </Text>
-          <TextInput
-            style={styles.textInput}
-            textContentType="newPassword"
-            secureTextEntry={true}
-            maxLength={12}
-            autoCompleteType="off"
-            placeholder="mot de passe"
-            onChangeText={(text) =>
-              setSignUpForm({ ...signUpForm, repassword: text })
-            }
-          />
-        </View>
+      } else {
+        setLocalInfo(
+          "Il y a un souci avec votre formulaire ! vérifiez vos mots de passe."
+        );
+      }
+    },
+    [signUpForm]
+  );
 
-        <ReefButton
-          title="Créer mon compte"
-          onPress={() => submitNewMember(signUpForm)}
+  return (
+    <View>
+      {isLoading && (
+        <View>
+          <ActivityIndicator size="large" color="green" />
+        </View>
+      )}
+
+      <View>
+        <Text style={styles.textInfo}>{localInfo}</Text>
+      </View>
+
+      <View style={styles.input}>
+        <TextInput
+          style={styles.textInput}
+          textContentType="emailAddress"
+          keyboardType="email-address"
+          maxLength={30}
+          autoCompleteType="email"
+          placeholder="E-mail"
+          onChangeText={(text) => setSignUpForm({ ...signUpForm, email: text })}
+          defaultValue={isUpdating && email !== null ? email : ""}
+          editable={!isLoading}
         />
-      </Card>
+      </View>
+      <View style={styles.input}>
+        <TextInput
+          style={styles.textInput}
+          textContentType="nickname"
+          maxLength={12}
+          autoCompleteType="off"
+          placeholder="Pseudo"
+          onChangeText={(text) =>
+            setSignUpForm({ ...signUpForm, userName: text })
+          }
+          defaultValue={isUpdating && userName ? userName : ""}
+          editable={!isLoading}
+        />
+      </View>
+      <View style={styles.input}>
+        <TextInput
+          style={styles.textInput}
+          textContentType="newPassword"
+          secureTextEntry={true}
+          maxLength={12}
+          autoCompleteType="off"
+          placeholder="Mot de passe"
+          onChangeText={(text) => {
+            setSignUpForm({ ...signUpForm, password: text });
+          }}
+          editable={!isLoading}
+        />
+      </View>
+      <View style={styles.input}>
+        <TextInput
+          style={styles.textInput}
+          textContentType="newPassword"
+          secureTextEntry={true}
+          maxLength={12}
+          autoCompleteType="off"
+          placeholder="Confirmation du mot de passe"
+          onChangeText={(text) =>
+            setSignUpForm({ ...signUpForm, repassword: text })
+          }
+          editable={!isLoading}
+        />
+      </View>
+
+      {password !== "" && password.length < 6 && (
+        <View>
+          <Text style={styles.textInfo}>
+            Le mot de passe doit comporter au moins 6 caractères
+          </Text>
+        </View>
+      )}
+
+      <View
+        style={{
+          alignSelf: "center",
+          flexDirection: "row",
+          margin: 8,
+        }}
+      >
+        {isUpdating ? (
+          <ReefButton
+            size="medium"
+            title="Enregistrer"
+            onPress={() => submitNewMember(signUpForm)}
+            disabled={isLoading}
+          />
+        ) : (
+          <>
+            <ReefButton
+              size="medium"
+              title="Créer mon compte"
+              onPress={() => submitNewMember(signUpForm)}
+              disabled={isLoading}
+            />
+            <ReefButton
+              size="medium"
+              title="Déjà enregistré ?"
+              onPress={() => {
+                if (toggleWelcomeComponents) {
+                  toggleWelcomeComponents(WelcomeElement.LOGIN);
+                }
+              }}
+              disabled={isLoading}
+            />
+          </>
+        )}
+      </View>
+      <InfoModal
+        isModaleVisible={isModalInfoVisible}
+        message={message}
+        OKButtonFunction={handlePressOK}
+        onHide={handlePressOK}
+      />
     </View>
   );
 };
@@ -149,6 +224,7 @@ export const SignupForm = ({
 type Style = {
   input: ViewStyle;
   textInput: TextStyle;
+  textInfo: TextStyle;
 };
 
 const styles = StyleSheet.create<Style>({
@@ -156,12 +232,19 @@ const styles = StyleSheet.create<Style>({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingVertical: 2,
+    borderBottomWidth: 1,
+    borderBottomColor: "grey",
+    marginBottom: 8,
+    alignSelf: "center",
   },
   textInput: {
-    backgroundColor: "lightgrey",
     textAlign: "center",
     height: 40,
-    width: "65%",
-    borderRadius: 5,
+    width: 320,
+  },
+  textInfo: {
+    fontSize: 12,
+    textAlign: "center",
+    color: "red",
   },
 });

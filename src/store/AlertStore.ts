@@ -1,5 +1,5 @@
 import { observable, action, runInAction, computed, toJS } from "mobx";
-import { RootStore as RootStoreType } from "./RootStore";
+import { RootStore as RootStoreType, WebServiceState } from "./RootStore";
 import { urlServer } from "../constants/constants";
 
 export interface Alert {
@@ -11,31 +11,32 @@ export interface Alert {
 }
 
 export enum TypeTest {
-  TEMPERATURE = "Température",
-  SALINITY = "Salinité",
-  ALCALINITY = "KH",
-  PH = "pH",
-  CALCIUM = "Calcium",
-  MAGNESIUM = "Magnésium",
-  AMMONIAC = "Ammoniac",
-  NITRATES = "Nitrates",
-  NITRITES = "Nitrites",
-  PHOSPHATES = "Phosphates",
-  SILICATES = "Silicates",
+  TEMPERATURE,
+  SALINITY,
+  ALCALINITY,
+  PH,
+  CALCIUM,
+  MAGNESIUM,
+  AMMONIAC,
+  NITRATES,
+  NITRITES,
+  PHOSPHATES,
+  SILICATES,
 }
 
 class AlertStore {
   RootStore: RootStoreType;
-  constructor(RootStore) {
+  constructor(RootStore: RootStoreType) {
     this.RootStore = RootStore;
   }
 
   @observable alerts: Alert[] = [];
-  @observable alertState = "pending";
+  @observable fetchState: WebServiceState = "pending";
+  @observable updateState: WebServiceState = "done";
 
-  //alerte positive = une alerte qui indique qu'un test est en retard
-  @observable positiveAlerts: Alert[] = [];
-  @observable positiveAlertsState = "pending";
+  //notifications = une alerte qui indique qu'un test est en retard
+  @observable notifications: Alert[] = [];
+  @observable notificationsFetchState = "pending";
 
   @computed get alertsData() {
     return toJS(this.alerts).sort((a, b) =>
@@ -43,80 +44,80 @@ class AlertStore {
     );
   }
 
-  @computed get positiveAlertsData() {
-    return toJS(this.positiveAlerts).sort((a, b) =>
+  @computed get notificationsData() {
+    return toJS(this.notifications).sort((a, b) =>
       a.typeTest > b.typeTest ? 1 : b.typeTest > a.typeTest ? -1 : 0
     );
   }
 
   @action
   async fetchAlerts(): Promise<Alert[]> {
-    this.alertState = "pending";
-    if (
-      this.RootStore.tankStore.tankState === "done" &&
-      this.RootStore.tankStore.tankList.length > 0
-    ) {
+    this.fetchState = "starting";
+    if (this.RootStore.tankStore.fetchState === "done") {
       try {
         console.log("Store is fetching Alerts");
         const memberToken = this.RootStore.memberStore.token;
-        const tankId = this.RootStore.tankStore.tankList[0].id;
+        const tankId = this.RootStore.tankStore.tankList[0]?.id;
         const urlService = urlServer + "api/getAlerts/" + tankId;
-
         const response = await fetch(urlService, {
           method: "GET",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            Authorization: memberToken,
+            Authorization: memberToken ?? "",
           },
         });
         const alerts: Promise<Alert[]> = response.json();
-
-        this.alerts = await alerts;
-        this.alertState = "done";
-
+        runInAction(async () => {
+          this.alerts = await alerts;
+        });
+        console.log("Alerts has been fetched successful");
+        this.fetchState = "done";
         return alerts;
       } catch (error) {
         console.log(error);
-        this.alertState = "error";
+        this.fetchState = "error";
       }
     }
+    return [];
   }
 
   @action
-  async fetchPositiveAlerts(): Promise<Alert[]> {
+  async fetchNotifications(): Promise<Alert[]> {
     if (
-      this.RootStore.tankStore.tankState === "done" &&
-      this.RootStore.tankStore.tankList.length > 0
+      this.RootStore.tankStore.fetchState === "done" &&
+      this.notificationsFetchState !== "starting"
     ) {
-      this.positiveAlertsState = "pending";
+      this.notificationsFetchState = "starting";
       try {
-        console.log("Store is fetching positive Alerts");
+        console.log("Store is fetching Notifications");
         const memberToken = this.RootStore.memberStore.token;
-        const tankId = this.RootStore.tankStore.tankList[0].id;
+        const tankId = this.RootStore.tankStore.tankList[0]?.id;
         const urlService = urlServer + "api/showAlerts/" + tankId;
         const response = await fetch(urlService, {
           method: "GET",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            Authorization: memberToken,
+            Authorization: memberToken ?? "",
           },
         });
-        this.positiveAlertsState = "done";
-        const positiveAlerts: Promise<Alert[]> = response.json();
-        console.log("positive alerts success");
-        this.positiveAlerts = await positiveAlerts;
-        return positiveAlerts;
+        const notifications: Promise<Alert[]> = response.json();
+        console.log("notifications success");
+        this.notifications = await notifications;
+        this.notificationsFetchState = "done";
+        return notifications;
       } catch (error) {
         console.log(error);
-        this.positiveAlertsState = "error";
+        this.notificationsFetchState = "error";
       }
     }
+    return [];
   }
 
   @action
   saveAlerts = async (alerts: Alert[]) => {
+    this.updateState = "pending";
     const urlService = urlServer + "api/addAlertsCollection";
     const alertsForm = {
       aquariumId: this.RootStore.tankStore.tankList[0].id,
@@ -129,17 +130,25 @@ class AlertStore {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: memberToken,
+          Authorization: memberToken ?? "",
         },
         body: JSON.stringify(alertsForm),
       });
       const dataResponse = response.json();
-      console.log("Alerts envoyées");
-      this.positiveAlertsState = "pending";
+      console.log("Alertes enregistrées");
+      this.refresh();
       return dataResponse;
     } catch (error) {
       console.log(error);
     }
+  };
+
+  @action
+  refresh = () => {
+    this.alerts = [];
+    this.updateState = "done";
+    this.fetchState = "pending";
+    this.notificationsFetchState = "pending";
   };
 }
 

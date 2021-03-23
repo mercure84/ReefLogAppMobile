@@ -6,7 +6,7 @@ import {
   View,
   ViewStyle,
   ImageStyle,
-  TextStyle
+  TextStyle,
 } from "react-native";
 import createIcon from "../../../../assets/icons/createIcon.png";
 import deleteIcon from "../../../../assets/icons/deleteIcon.png";
@@ -17,7 +17,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { Animal, AnimalType } from "../../../../store/AnimalStore";
 import RootStore from "../../../../store/RootStore";
-import { CustomModal } from "../../../../components/ModalDeleteConfirmation";
+import { DeleteModal } from "../../../../components/DeleteModal";
 import { getAnimalType, getIconForAnimal } from "../../../../utils/helpers";
 
 type Props = {
@@ -42,9 +42,9 @@ export const AnimalItem = ({ animal }: Props) => {
     handlePressDelete();
   };
   return (
-    <View style={styles.testContainer}>
+    <View style={styles.mainContainer}>
       <View style={styles.horizontalWrapper}>
-        <View >
+        <View>
           <View style={styles.leftWrapper}>
             <Image style={styles.icon} source={getIconForAnimal(animal)} />
             <View style={styles.animalTitle}>
@@ -54,9 +54,8 @@ export const AnimalItem = ({ animal }: Props) => {
 
               <Text>{`${animal[getAnimalType(animal) + "Species"]} ${
                 animal.name ?? ""
-                }`}</Text>
+              }`}</Text>
             </View>
-
           </View>
           <Text style={styles.date}>
             Date d'arrivée : {Moment(animal.incomingDate).format("ll")}
@@ -79,7 +78,7 @@ export const AnimalItem = ({ animal }: Props) => {
         </View>
       </View>
 
-      <CustomModal
+      <DeleteModal
         isModaleVisible={isModalVisible}
         message={`Confirmez vous la suppression de l'animal :
         ${animal.name} arrivé le ${Moment(animal.incomingDate).format("ll")} ?`}
@@ -91,7 +90,7 @@ export const AnimalItem = ({ animal }: Props) => {
 };
 
 type Style = {
-  testContainer: ViewStyle;
+  mainContainer: ViewStyle;
   groupIcon: ViewStyle;
   horizontalWrapper: ViewStyle;
   animalType: TextStyle;
@@ -103,35 +102,35 @@ type Style = {
 
 const styles = StyleSheet.create<Style>({
   leftWrapper: {
-    flexDirection: "row"
+    flexDirection: "row",
   },
-  testContainer: {
+  mainContainer: {
     borderColor: "grey",
     borderRadius: 4,
     borderWidth: 1,
     padding: 8,
-    margin: 8
+    margin: 8,
   },
   animalTitle: {
     marginLeft: 16,
-    justifyContent: "flex-start"
+    justifyContent: "flex-start",
   },
   groupIcon: {
     flexDirection: "row",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   icon: {
     height: 32,
     width: 32,
   },
   date: {
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   animalType: {
-    color: "blue"
+    color: "blue",
   },
   horizontalWrapper: {
     flexDirection: "row",
-    justifyContent: "space-between"
-  }
+    justifyContent: "space-between",
+  },
 });

@@ -13,76 +13,92 @@ import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { loginService } from "../../../services/memberService";
 import { storeData } from "../../../services/storageDevice";
 import { useNavigation } from "@react-navigation/native";
-import { Card } from "react-native-elements";
+import { WelcomeElement } from "../WelcomeScreen";
+import { InfoModal } from "../../../components/InfoModal";
 
 type Props = {
-  homeInfoCallBack: (string: string) => void;
-  toggleWelcomeCompoents: (string: string) => void;
+  toggleWelcomeComponents: (welcomeElement: WelcomeElement) => void;
 };
 
-export const LoginForm = ({
-  homeInfoCallBack,
-  toggleWelcomeCompoents,
-}: Props) => {
+export const LoginForm = ({ toggleWelcomeComponents }: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setLoading] = useState(false);
   const navigation = useNavigation();
+  const [isModalInfoVisible, showModalInfo] = useState(false);
+  const [message, setMessage] = useState("");
 
-  const submitLogin = async (pEmail, pPassword) => {
+  const submitLogin = async (pEmail: string, pPassword: string) => {
     setLoading(true);
     const response = await loginService(pEmail, pPassword);
     setLoading(false);
-
-    if (response.token != null) {
-      homeInfoCallBack("Vous êtes connecté !");
-      toggleWelcomeCompoents("login");
+    if (response.token) {
+      console.log("Authentification réussie !");
       storeData("token", "Bearer " + response.token);
       storeData("emailUser", email);
+      setEmail("");
+      setPassword("");
       navigation.navigate("AuthentOk");
-      homeInfoCallBack(null);
     } else {
-      homeInfoCallBack("Un problème est survenu : " + response.message);
+      setMessage("Un problème est survenu : " + response.message);
+      showModalInfo(true);
     }
   };
-  const handlePassWordRecover = () => toggleWelcomeCompoents("passRecover");
-
+  const handlePassWordRecover = () =>
+    toggleWelcomeComponents(WelcomeElement.PASSRECOVER);
+  const handleSignup = () => toggleWelcomeComponents(WelcomeElement.SIGNUP);
+  const handlePressOK = () => {
+    showModalInfo(false);
+  };
   return (
-    <View style={{ padding: 8 }}>
+    <View>
       {isLoading && <ActivityIndicator />}
-      <Card>
-        <View style={styles.input}>
-          <Text>Mon email : </Text>
-          <TextInput
-            style={styles.textInput}
-            textContentType="emailAddress"
-            keyboardType="email-address"
-            maxLength={30}
-            autoCompleteType="email"
-            placeholder="email@email.fr"
-            onChangeText={(text) => setEmail(text)}
-          />
-        </View>
-        <View style={styles.input}>
-          <Text>Mon mot de passe</Text>
-          <TextInput
-            style={styles.textInput}
-            textContentType="newPassword"
-            secureTextEntry={true}
-            maxLength={12}
-            autoCompleteType="off"
-            placeholder="mot de passe"
-            onChangeText={(text) => setPassword(text)}
-          />
-        </View>
+      <View style={styles.input}>
+        <TextInput
+          style={styles.textInput}
+          textContentType="emailAddress"
+          keyboardType="email-address"
+          maxLength={30}
+          autoCompleteType="email"
+          placeholder="E-mail"
+          onChangeText={(text) => setEmail(text)}
+        />
+      </View>
+      <View style={styles.input}>
+        <TextInput
+          style={styles.textInput}
+          textContentType="newPassword"
+          secureTextEntry={true}
+          maxLength={12}
+          autoCompleteType="off"
+          placeholder="Mot de passe"
+          onChangeText={(text) => setPassword(text)}
+        />
+      </View>
+      <TouchableOpacity
+        onPress={handlePassWordRecover}
+        style={{ alignSelf: "center", margin: 8 }}
+      >
+        <Text>Mot de passe oublié ?</Text>
+      </TouchableOpacity>
+      <View style={{ alignSelf: "center", flexDirection: "row", margin: 8 }}>
         <ReefButton
+          size="medium"
           title="Connexion"
           onPress={() => submitLogin(email, password)}
         />
-        <TouchableOpacity onPress={handlePassWordRecover}>
-          <Text>Mot de passe oublié ?</Text>
-        </TouchableOpacity>
-      </Card>
+        <ReefButton
+          size="medium"
+          title="Pas de compte ?"
+          onPress={handleSignup}
+        />
+      </View>
+      <InfoModal
+        isModaleVisible={isModalInfoVisible}
+        message={message}
+        OKButtonFunction={handlePressOK}
+        onHide={handlePressOK}
+      />
     </View>
   );
 };
@@ -97,12 +113,14 @@ const styles = StyleSheet.create<Style>({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingVertical: 2,
+    borderBottomWidth: 1,
+    borderBottomColor: "grey",
+    marginBottom: 8,
+    alignSelf: "center",
   },
   textInput: {
-    backgroundColor: "lightgrey",
     textAlign: "center",
     height: 40,
-    width: "65%",
-    borderRadius: 5,
+    width: 320,
   },
 });

@@ -79,7 +79,7 @@ class AnimalStore {
   @action
   async fetchAnimals(): Promise<Animal[]> {
     this.animalState = "pending";
-    if (this.RootStore.tankStore.tankState === "done") {
+    if (this.RootStore.tankStore.updateState === "done") {
       const tankId = this.RootStore.tankStore.tankList[0].id;
       if (tankId !== null) {
         try {

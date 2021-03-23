@@ -32,7 +32,7 @@ class EquipmentStore {
   @action
   async fetchEquipments(): Promise<Equipment[]> {
     this.equipmentState = "pending";
-    if (this.RootStore.tankStore.tankState === "done") {
+    if (this.RootStore.tankStore.updateState === "done") {
       const tankId = this.RootStore.tankStore.tankList[0].id;
       if (tankId !== null) {
         try {

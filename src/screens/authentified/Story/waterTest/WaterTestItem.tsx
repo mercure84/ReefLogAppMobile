@@ -7,7 +7,7 @@ import {
   View,
   ViewStyle,
   ImageStyle,
-  TextStyle
+  TextStyle,
 } from "react-native";
 import createIcon from "../../../../assets/icons/createIcon.png";
 import deleteIcon from "../../../../assets/icons/deleteIcon.png";
@@ -16,32 +16,33 @@ import RootStore from "../../../../store/RootStore";
 import Moment from "moment";
 import "moment/locale/fr";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { useNavigation } from "@react-navigation/native";
-import { CustomModal } from "../../../../components/ModalDeleteConfirmation";
+import { DeleteModal } from "../../../../components/DeleteModal";
+import { WaterTestFormModal } from "./WaterTestFormModal";
 
 type Props = {
   waterTest: WaterTest;
 };
 
 export const WaterTestItem = ({ waterTest }: Props) => {
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [isUpdateModalVisible, setUpdateModalVisible] = useState(false);
 
-  const navigation = useNavigation();
-  const handlePress = () =>
-    navigation.navigate("addTests", { waterTest: waterTest });
+  const handlePress = () => {
+    setUpdateModalVisible(true);
+  };
 
   const handlePressDelete = () => {
-    isModalVisible ? setModalVisible(false) : setModalVisible(true);
+    setDeleteModalVisible(!isDeleteModalVisible);
   };
 
   const confirmDelete = (pWaterTest: WaterTest) => {
     RootStore.waterTestStore.storeDeleteWaterTest(pWaterTest.id);
-    RootStore.waterTestStore.fetchWaterTestList();
+    RootStore.waterTestStore.fetchWaterTests();
     handlePressDelete();
   };
 
   return (
-    <View style={styles.testContainer}>
+    <View style={styles.mainContainer}>
       <View style={styles.header}>
         <View style={styles.item}>
           <Text style={styles.date}>
@@ -80,24 +81,35 @@ export const WaterTestItem = ({ waterTest }: Props) => {
       {waterTest.nitrites !== null ? (
         <Text>NO2 : {waterTest.nitrites} ppm</Text>
       ) : null}
+      {waterTest.phosphates !== null ? (
+        <Text>PO4 : {waterTest.phosphates} ppm</Text>
+      ) : null}
       {waterTest.silicates !== null ? (
         <Text>Silicates : {waterTest.silicates} ppm </Text>
       ) : null}
       {waterTest.ph !== null ? <Text>pH : {waterTest.ph} </Text> : null}
 
-      <CustomModal
-        isModaleVisible={isModalVisible}
+      <DeleteModal
+        isModaleVisible={isDeleteModalVisible}
         message={`Confirmez vous la suppression du test du 
         ${Moment(waterTest.date).format("lll")} ?`}
         buttonYesFonction={() => confirmDelete(waterTest)}
         buttonNoFonction={handlePressDelete}
       />
+
+      {isUpdateModalVisible && (
+        <WaterTestFormModal
+          waterTestToSave={waterTest}
+          showForm={setUpdateModalVisible}
+          visible={isUpdateModalVisible}
+        />
+      )}
     </View>
   );
 };
 
 type Style = {
-  testContainer: ViewStyle;
+  mainContainer: ViewStyle;
   header: ViewStyle;
   icon: ImageStyle;
   item: ViewStyle;
@@ -105,25 +117,25 @@ type Style = {
 };
 
 const styles = StyleSheet.create<Style>({
-  testContainer: {
+  mainContainer: {
     borderColor: "grey",
     borderRadius: 4,
     borderWidth: 1,
     padding: 8,
-    margin: 8
+    margin: 8,
   },
   item: {
-    flex: 3
+    flex: 3,
   },
   header: {
     flexDirection: "row",
-    justifyContent: "space-around"
+    justifyContent: "space-around",
   },
   icon: {
     height: 32,
-    width: 32
+    width: 32,
   },
   date: {
-    fontWeight: "bold"
-  }
+    fontWeight: "bold",
+  },
 });

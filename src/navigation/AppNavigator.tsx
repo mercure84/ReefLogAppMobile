@@ -12,18 +12,16 @@ const Stack = createStackNavigator();
 import dashboardIcon from "../assets/icons/home.png";
 import settingsIcon from "../assets/icons/settings-6.png";
 import story from "../assets/icons/notepad.png";
-import social from "../assets/icons/social.png";
 
 import { StoryNavigator } from "../screens/authentified/Story/StoryNavigator";
 import { DashBoardNavigator } from "../screens/authentified/DashBoard/DashBoardNavigator";
 import { ParameterNavigator } from "../screens/authentified/Parameters/ParameterNavigator";
-import { SocialNavigator } from "../screens/authentified/Social/SocialNavigator";
 
 const TabNavigator = () => {
   return (
     <Tab.Navigator initialRouteName="DashBoard">
       <Tab.Screen
-        name="Home"
+        name="Accueil"
         component={DashBoardNavigator}
         options={{
           tabBarIcon: () => (
@@ -40,17 +38,6 @@ const TabNavigator = () => {
           ),
         }}
       />
-
-      <Tab.Screen
-        name="Communauté"
-        component={SocialNavigator}
-        options={{
-          tabBarIcon: () => (
-            <Image source={social} style={{ height: 24, width: 24 }} />
-          ),
-        }}
-      />
-
       <Tab.Screen
         name="Paramètres"
         component={ParameterNavigator}
@@ -64,7 +51,11 @@ const TabNavigator = () => {
   );
 };
 
-export const MainNavigator = ({ isTokenOK }) => {
+type Props = {
+  isTokenOK: boolean;
+};
+
+export const MainNavigator = ({ isTokenOK }: Props) => {
   return (
     <NavigationContainer>
       <Stack.Navigator headerMode="none">

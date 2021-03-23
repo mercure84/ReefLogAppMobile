@@ -5,7 +5,7 @@ import { getData } from "./storageDevice";
 
 export type Member = {
   id: string;
-  lastName?: any;
+  lastName?: string;
   firstName?: any;
   userName: string;
   email: string;
@@ -39,7 +39,6 @@ export const signUpService = async (
   };
   try {
     const token = await getData("token");
-
     const response = await fetch(urlService, {
       method: "POST",
       headers: {
@@ -82,7 +81,7 @@ export const loginService = async (pEmail: string, pPassword: string) => {
 };
 
 // service checkToken
-export const checkToken = async (pEmail: string, pToken) => {
+export const checkToken = async (pEmail: string, pToken: string) => {
   const urlService = urlServer + "api/checkToken";
   const dataToValidate = {
     email: pEmail.toLowerCase(),
@@ -112,7 +111,7 @@ export const checkToken = async (pEmail: string, pToken) => {
 export const getMemberDetail = async (
   pEmail: string,
   token: string
-): Promise<Member> => {
+): Promise<Member | undefined> => {
   const email = pEmail.toLocaleLowerCase();
   const urlService = urlServer + "api/getMemberDetail/" + email;
 
@@ -131,27 +130,25 @@ export const getMemberDetail = async (
     return dataResponse;
   } catch (error) {
     console.log(error);
+    return undefined;
   }
 };
 
-
 export const getPasswordRecover = async (pEmail: string) => {
   const email = pEmail.toLocaleLowerCase();
-  const urlService = urlServer+"api/recoverPassword/" + email
+  const urlService = urlServer + "api/recoverPassword/" + email;
   try {
-    console.log("on demande le recover pour le membre : ", email)
+    console.log("on demande le recover pour le membre : ", email);
     const response = await fetch(urlService, {
       method: "GET",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        
-      }
+      },
     });
-    const dataResponse = response.json();
     console.log("Requête recoverPassword finie");
-    return dataResponse;
+    return response;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};

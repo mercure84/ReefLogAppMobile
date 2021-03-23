@@ -6,5 +6,9 @@ type Props = {
   message: string;
 };
 
-export const MessageInfo = ({ message }: Props) =>
-  message != null && <Text>{message}</Text>;
+export const MessageInfo = ({ message }: Props) => {
+  if (message) {
+    return <Text>{message}</Text>;
+  }
+  return <></>;
+};

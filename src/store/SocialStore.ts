@@ -6,11 +6,11 @@ import { Tank } from "./TankStore";
 class SocialStore {
   RootStore: RootStoreType;
 
-  constructor(RootStore) {
+  constructor(RootStore: RootStoreType) {
     this.RootStore = RootStore;
   }
 
-  @observable socialTanks: Tank[];
+  @observable socialTanks: Tank[] = [];
   @observable socialState = "pending";
 
   @computed get socialTanksData() {

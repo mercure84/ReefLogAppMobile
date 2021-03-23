@@ -29,3 +29,6 @@
 *.jpeg          binary
 *.png           binary
 *.so            binary
+
+# specific for windows script files
+*.bat text eol=crlf

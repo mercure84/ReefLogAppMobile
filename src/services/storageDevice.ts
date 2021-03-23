@@ -1,4 +1,4 @@
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const getData = async (key: string): Promise<string> => {
   try {
@@ -17,7 +17,7 @@ export const storeData = async (key: string, value: string) => {
   }
 };
 
-export const removeData = async key => {
+export const removeData = async (key: string) => {
   try {
     await AsyncStorage.removeItem(key);
   } catch (error) {

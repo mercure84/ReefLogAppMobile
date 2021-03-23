@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -7,43 +7,64 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { Header } from "react-native-elements";
-import { MessageInfo } from "../../../components/MessageInfo";
-import { NewTankForm } from "./aquarium/TankForm";
 import { observer } from "mobx-react";
 import RootStore from "../../../store/RootStore";
 import { MainTankItem } from "./aquarium/MainTankItem";
-import { useNavigation } from "@react-navigation/native";
-import { TankPicture } from "./aquarium/TankPicture";
 import { ReefButton } from "../../../components/ReefButton";
 import { ReefHeaderTitle } from "../../../components/ReefHeaderTitle";
-import { PositiveAlerts } from "./alerts/PositiveAlerts";
+import { Member } from "../../../services/memberService";
+import { Tank } from "../../../store/TankStore";
+import { TankFormModal } from "./aquarium/TankFormModal";
+import { Alert } from "../../../store/AlertStore";
+import { Notifications } from "./notifications/Notifications";
 
 const DashboardScreen = observer(() => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);
   const [isTankItemVisible, setTankItemVisible] = useState(true);
-  const [messageInfo, setMessageInfo] = useState("");
-  const navigation = useNavigation();
+  const [member, setMember] = useState<Member>(undefined);
+  const [tankList, setTankList] = useState<Tank[]>([]);
+  const [notifications, setNotifications] = useState<Alert[]>([]);
 
-  if (RootStore.memberStore.memberState === "pending") {
-    RootStore.memberStore.fetchMember();
-  }
-  if (RootStore.tankStore.tankState === "pending") {
-    RootStore.tankStore.fetchTankList();
-  }
-  if (RootStore.alertStore.positiveAlertsState === "pending") {
-    RootStore.alertStore.fetchPositiveAlerts();
-  }
+  const { memberStore, tankStore, alertStore } = RootStore;
 
-  const isMemberLoading = RootStore.memberStore.memberState === "pending";
-  const isTankLoading = RootStore.tankStore.tankState === "pending";
-  const isPositiveAlertsLoading = RootStore.alertStore.positiveAlertsState === "pending";
+  useEffect(() => {
+    const getMember = async () => {
+      if (memberStore.memberState !== "done") {
+        await memberStore.fetchMember();
+      } else {
+        setMember(memberStore.member);
+      }
+    };
+    getMember();
+  }, [memberStore.memberState]);
 
-  const member = RootStore.memberStore.member;
-  const tankList = RootStore.tankStore.tankList.slice();
-  const positiveAlerts = RootStore.alertStore.positiveAlertsData;
+  useEffect(() => {
+    const getTank = async () => {
+      if (member && tankStore.fetchState !== "done") {
+        await tankStore.fetchTankList();
+      } else {
+        setTankList(tankStore.tankList);
+      }
+    };
+    getTank();
+  }, [member, tankStore.fetchState]);
+
+  useEffect(() => {
+    const getNotifications = async () => {
+      if (tankList && alertStore.notificationsFetchState !== "done") {
+        await alertStore.fetchNotifications();
+      } else {
+        setNotifications(alertStore.notifications);
+      }
+    };
+    getNotifications();
+  }, [tankList, alertStore.notificationsFetchState]);
+
+  const isLoading =
+    memberStore.memberState === "pending" &&
+    tankStore.fetchState === "pending" &&
+    alertStore.notificationsFetchState === "pending";
   const newTankPress = () => setNewTankFormVisible(true);
-  const populationPress = () => navigation.navigate("handlePopulation");
-  const equipmentPress = () => navigation.navigate("handleEquipment");
   const toggleTankForm = () => {
     setTankItemVisible(!isTankItemVisible);
     setNewTankFormVisible(!isNewTankFormVisible);
@@ -51,53 +72,38 @@ const DashboardScreen = observer(() => {
 
   return (
     <View style={styles.page}>
-      <Header
-        centerComponent={<ReefHeaderTitle title="TABLEAU DE BORD" />}
-        backgroundColor="white"
-        backgroundImage={require("../../../assets/dashboard.png")}
-        backgroundImageStyle={{ opacity: 0.8 }}
-      />
+      <Header centerComponent={<ReefHeaderTitle title="TABLEAU DE BORD" />} />
 
-      <MessageInfo message={messageInfo} />
-      {isMemberLoading ? (
-        <ActivityIndicator />
+      {isLoading ? (
+        <ActivityIndicator size="large" />
       ) : (
-          <Text style={{ fontSize: 16 }}>
-            Bienvenue {member.userName.toLocaleUpperCase()} !
-          </Text>
-        )}
-
-      {isTankLoading && <ActivityIndicator />}
-
-      {tankList.length > 0 && !isNewTankFormVisible && (
-        <>
-
-          {isPositiveAlertsLoading ? (<ActivityIndicator />) : <PositiveAlerts positiveAlerts={positiveAlerts} />}
-
-          <MainTankItem editFunction={toggleTankForm} tank={tankList[0]} />
-          <TankPicture />
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-around" }}
-          >
-            <ReefButton title="Mes pensionnaires" onPress={populationPress} />
-            <ReefButton title="Mon équipement" onPress={equipmentPress} />
-          </View>
-        </>
+        <Text style={{ fontSize: 16 }}>
+          Bienvenue {member?.userName.toLocaleUpperCase()} !
+        </Text>
       )}
 
-      {tankList.length === 0 && (
+      {isLoading ? (
+        <ActivityIndicator size="large" />
+      ) : (
+        tankList?.length > 0 && (
+          <MainTankItem editFunction={toggleTankForm} tank={tankList[0]} />
+        )
+      )}
+
+      {!isLoading && tankList?.length === 0 && (
         <>
           <Text>Vous n'avez pas d'aquarium : créez en un !</Text>
           <ReefButton title="Créer un Aquarium" onPress={newTankPress} />
         </>
       )}
 
+      {!isLoading && <Notifications notifications={notifications} />}
+
       {isNewTankFormVisible && (
-        <NewTankForm
-          memberId={member.id}
-          infoCallBack={setMessageInfo}
+        <TankFormModal
           showFormCallback={toggleTankForm}
           tankToSave={tankList[0] ?? null}
+          visible={isNewTankFormVisible}
         />
       )}
     </View>
