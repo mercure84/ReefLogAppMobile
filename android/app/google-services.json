@@ -1,34 +1,33 @@
 {
   "project_info": {
-    "project_number": "677282630802",
-    "firebase_url": "https://reeflog-b3773.firebaseio.com",
-    "project_id": "reeflog-b3773",
-    "storage_bucket": "reeflog-b3773.appspot.com"
+    "project_number": "318905685096",
+    "project_id": "log4reef",
+    "storage_bucket": "log4reef.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:677282630802:android:8c175f904e7b30e1b42a4b",
+        "mobilesdk_app_id": "1:318905685096:android:6047a60bbd60e9a2d8d7dd",
         "android_client_info": {
-          "package_name": "com.mobilereeflog"
+          "package_name": "com.centropygebicolor.log4reef"
         }
       },
       "oauth_client": [
         {
-          "client_id": "677282630802-atdn5i6lt3njjijk044n0lt15ru1dv24.apps.googleusercontent.com",
+          "client_id": "318905685096-g5ru38rp05r34h52ii7mq9837ekp7cgn.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDiXVVSPrdUu11NL-RXxuiW0Uw9p0Cfsuc"
+          "current_key": "AIzaSyDhEHpJvZj0KnZqrdzcSd101um7zn57YdY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "677282630802-atdn5i6lt3njjijk044n0lt15ru1dv24.apps.googleusercontent.com",
+              "client_id": "318905685096-g5ru38rp05r34h52ii7mq9837ekp7cgn.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

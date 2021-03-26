@@ -128,7 +128,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.mobilereeflog"
+        applicationId "com.centropygebicolor.log4reef"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

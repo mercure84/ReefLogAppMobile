@@ -1,4 +1,4 @@
-package com.mobilereeflog;
+package com.centropygebicolor.log4reef;
 
 import com.facebook.react.ReactActivity;
 
