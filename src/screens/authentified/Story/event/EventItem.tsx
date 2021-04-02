@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Event } from "../../../../store/EventStore";
-import { useNavigation } from "@react-navigation/native";
 import {
   ViewStyle,
   TextStyle,

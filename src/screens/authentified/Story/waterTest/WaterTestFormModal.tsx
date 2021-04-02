@@ -5,7 +5,6 @@ import {
   ViewStyle,
   TextStyle,
   StyleSheet,
-  ActivityIndicator,
   Modal,
   ModalProps,
 } from "react-native";
@@ -18,6 +17,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { ReefButton } from "../../../../components/ReefButton";
 import { formatStringToFloat } from "../../../../utils/helpers";
 import { waterTestFormInputs } from "./constants";
+import { ReefActivityIndicator } from "../../../../components/ReefActivityIndicator";
 
 type Props = {
   waterTestToSave: WaterTest | null;
@@ -88,7 +88,7 @@ export const WaterTestFormModal = ({
   return (
     <Modal visible={visible} animationType="slide" transparent>
       <View style={styles.modalView}>
-        {isLoading && <ActivityIndicator />}
+        {isLoading && <ReefActivityIndicator />}
         <MessageInfo message={infoMessage} />
         <View style={styles.inputInlineContainer}>
           <Text>Horodatage :</Text>

@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react";
-import {
-  View,
-  ActivityIndicator,
-  FlatList,
-  Text,
-  ViewStyle,
-  StyleSheet,
-} from "react-native";
+import { View, FlatList, Text, ViewStyle, StyleSheet } from "react-native";
 import { GoBackButton } from "../../../../components/GoBackButton";
 import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
 import { ReefButton } from "../../../../components/ReefButton";
@@ -15,6 +8,7 @@ import { Header } from "react-native-elements";
 import { WaterTestItem } from "./WaterTestItem";
 import RootStore from "../../../../store/RootStore";
 import { WaterTestFormModal } from "./WaterTestFormModal";
+import { ReefActivityIndicator } from "../../../../components/ReefActivityIndicator";
 
 export const WaterTestScreen = observer(() => {
   const [isWaterTestFormVisible, setWaterTestFormVisible] = useState(false);
@@ -58,7 +52,7 @@ export const WaterTestScreen = observer(() => {
   return (
     <View>
       <View style={styles.page}>
-        {isTestsLoading && <ActivityIndicator />}
+        {isTestsLoading && <ReefActivityIndicator />}
 
         <FlatList
           ListHeaderComponent={<HeaderComponent />}

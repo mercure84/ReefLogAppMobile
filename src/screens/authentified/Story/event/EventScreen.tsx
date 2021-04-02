@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react";
-import {
-  View,
-  ActivityIndicator,
-  FlatList,
-  Text,
-  ViewStyle,
-  StyleSheet,
-} from "react-native";
+import { View, FlatList, Text, ViewStyle, StyleSheet } from "react-native";
 import { GoBackButton } from "../../../../components/GoBackButton";
 import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
 import { Header } from "react-native-elements";
@@ -16,6 +9,7 @@ import { ReefButton } from "../../../../components/ReefButton";
 
 import { EventItem } from "./EventItem";
 import { EventFormModal } from "./EventFormModal";
+import { ReefActivityIndicator } from "../../../../components/ReefActivityIndicator";
 
 export const EventScreen = observer(() => {
   const { eventStore } = RootStore;
@@ -58,7 +52,7 @@ export const EventScreen = observer(() => {
   return (
     <View>
       <View style={styles.page}>
-        {isEventLoading && <ActivityIndicator />}
+        {isEventLoading && <ReefActivityIndicator />}
 
         <FlatList
           ListHeaderComponent={<HeaderComponent />}
