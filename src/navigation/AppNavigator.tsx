@@ -25,7 +25,7 @@ const TabNavigator = () => {
         component={DashBoardNavigator}
         options={{
           tabBarIcon: () => (
-            <Image source={dashboardIcon} style={{ height: 24, width: 24 }} />
+            <Image source={dashboardIcon} style={{ height: 32, width: 32 }} />
           ),
         }}
       />
@@ -34,7 +34,7 @@ const TabNavigator = () => {
         component={StoryNavigator}
         options={{
           tabBarIcon: () => (
-            <Image source={story} style={{ height: 24, width: 24 }} />
+            <Image source={story} style={{ height: 32, width: 32 }} />
           ),
         }}
       />
@@ -43,7 +43,7 @@ const TabNavigator = () => {
         component={ParameterNavigator}
         options={{
           tabBarIcon: () => (
-            <Image source={settingsIcon} style={{ height: 24, width: 24 }} />
+            <Image source={settingsIcon} style={{ height: 32, width: 32 }} />
           ),
         }}
       />
