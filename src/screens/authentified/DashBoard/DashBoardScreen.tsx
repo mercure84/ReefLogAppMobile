@@ -17,6 +17,7 @@ import { Tank } from "../../../store/TankStore";
 import { TankFormModal } from "./aquarium/TankFormModal";
 import { Alert } from "../../../store/AlertStore";
 import { Notifications } from "./notifications/Notifications";
+import { ReefActivityIndicator } from "../../../components/ReefActivityIndicator";
 
 const DashboardScreen = observer(() => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);
@@ -60,10 +61,9 @@ const DashboardScreen = observer(() => {
     getNotifications();
   }, [tankList, alertStore.notificationsFetchState]);
 
-  const isLoading =
-    memberStore.memberState === "pending" &&
-    tankStore.fetchState === "pending" &&
-    alertStore.notificationsFetchState === "pending";
+  const isMemberLoading = memberStore.memberState === "pending";
+  const isTankLoading = tankStore.fetchState === "pending";
+  const isNotifLoading = alertStore.notificationsFetchState === "pending";
   const newTankPress = () => setNewTankFormVisible(true);
   const toggleTankForm = () => {
     setTankItemVisible(!isTankItemVisible);
@@ -74,30 +74,30 @@ const DashboardScreen = observer(() => {
     <View style={styles.page}>
       <Header centerComponent={<ReefHeaderTitle title="TABLEAU DE BORD" />} />
 
-      {isLoading ? (
-        <ActivityIndicator size="large" />
+      {isMemberLoading ? (
+        <ReefActivityIndicator />
       ) : (
         <Text style={{ fontSize: 16 }}>
           Bienvenue {member?.userName.toLocaleUpperCase()} !
         </Text>
       )}
 
-      {isLoading ? (
-        <ActivityIndicator size="large" />
+      {isTankLoading ? (
+        <ReefActivityIndicator />
       ) : (
         tankList?.length > 0 && (
           <MainTankItem editFunction={toggleTankForm} tank={tankList[0]} />
         )
       )}
 
-      {!isLoading && tankList?.length === 0 && (
+      {!isTankLoading && tankList?.length === 0 && (
         <>
           <Text>Vous n'avez pas d'aquarium : créez en un !</Text>
           <ReefButton title="Créer un Aquarium" onPress={newTankPress} />
         </>
       )}
 
-      {!isLoading && <Notifications notifications={notifications} />}
+      {!isNotifLoading && <Notifications notifications={notifications} />}
 
       {isNewTankFormVisible && (
         <TankFormModal
