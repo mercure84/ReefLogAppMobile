@@ -7,6 +7,7 @@ import RootStore from "../../../../store/RootStore";
 import { AlertsForm } from "./AlertsForm";
 import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
 import { ReefActivityIndicator } from "../../../../components/ReefActivityIndicator";
+import { blueCB, yellowCB } from "../../../../components/colos";
 
 export const AlertsScreen = observer(() => {
   const { alertStore } = RootStore;
@@ -29,6 +30,7 @@ export const AlertsScreen = observer(() => {
   return (
     <View style={styles.page}>
       <Header
+        containerStyle={{ backgroundColor: blueCB }}
         leftComponent={<GoBackButton />}
         centerComponent={<ReefHeaderTitle title="MES ALERTES" />}
       />

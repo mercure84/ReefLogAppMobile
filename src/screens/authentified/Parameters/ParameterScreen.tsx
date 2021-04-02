@@ -8,6 +8,7 @@ import mailIcon from "../../../assets/icons/mail.png";
 import { disconnect } from "../../../services/rootService";
 import RootStore from "../../../store/RootStore";
 import { handleSuggestEmail } from "../../../utils/helpers";
+import { blueCB } from "../../../components/colos";
 
 const ParameterScreen = () => {
   const navigation = useNavigation();
@@ -15,7 +16,10 @@ const ParameterScreen = () => {
 
   return (
     <>
-      <Header centerComponent={<ReefHeaderTitle title="MES PARAMETRES" />} />
+      <Header
+        containerStyle={{ backgroundColor: blueCB }}
+        centerComponent={<ReefHeaderTitle title="MES PARAMETRES" />}
+      />
       <View style={styles.buttonContainer}>
         <ReefButton
           title="Mon profil"

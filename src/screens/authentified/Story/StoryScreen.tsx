@@ -9,6 +9,7 @@ import { ReefHeaderTitle } from "../../../components/ReefHeaderTitle";
 import { WaterTestItem } from "./waterTest/WaterTestItem";
 import { EventItem } from "./event/EventItem";
 import { ReefActivityIndicator } from "../../../components/ReefActivityIndicator";
+import { blueCB } from "../../../components/colos";
 
 export const StoryScreen = observer(() => {
   const navigation = useNavigation();
@@ -41,7 +42,10 @@ export const StoryScreen = observer(() => {
 
   return (
     <>
-      <Header centerComponent={<ReefHeaderTitle title="MON JOURNAL" />} />
+      <Header
+        containerStyle={{ backgroundColor: blueCB }}
+        centerComponent={<ReefHeaderTitle title="MON JOURNAL" />}
+      />
       <View style={styles.page}>
         {hasATank ? (
           <View>

@@ -10,6 +10,7 @@ import { ReefButton } from "../../../../components/ReefButton";
 import { EventItem } from "./EventItem";
 import { EventFormModal } from "./EventFormModal";
 import { ReefActivityIndicator } from "../../../../components/ReefActivityIndicator";
+import { blueCB } from "../../../../components/colos";
 
 export const EventScreen = observer(() => {
   const { eventStore } = RootStore;
@@ -34,6 +35,7 @@ export const EventScreen = observer(() => {
     return (
       <View>
         <Header
+          containerStyle={{ backgroundColor: blueCB }}
           leftComponent={<GoBackButton />}
           centerComponent={<ReefHeaderTitle title="MES EVENEMENTS" />}
         />

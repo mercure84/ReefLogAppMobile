@@ -16,10 +16,16 @@ import story from "../assets/icons/notepad.png";
 import { StoryNavigator } from "../screens/authentified/Story/StoryNavigator";
 import { DashBoardNavigator } from "../screens/authentified/DashBoard/DashBoardNavigator";
 import { ParameterNavigator } from "../screens/authentified/Parameters/ParameterNavigator";
+import { blueCB } from "../components/colos";
 
 const TabNavigator = () => {
   return (
-    <Tab.Navigator initialRouteName="DashBoard">
+    <Tab.Navigator
+      initialRouteName="DashBoard"
+      tabBarOptions={{
+        activeTintColor: blueCB,
+      }}
+    >
       <Tab.Screen
         name="Accueil"
         component={DashBoardNavigator}

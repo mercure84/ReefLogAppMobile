@@ -5,6 +5,7 @@ import { ProfilForm } from "./ProfilForm";
 import RootStore from "../../../../store/RootStore";
 import { GoBackButton } from "../../../../components/GoBackButton";
 import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
+import { blueCB } from "../../../../components/colos";
 
 export const MyProfilScreen = () => {
   const member = RootStore.memberStore.member;
@@ -12,6 +13,7 @@ export const MyProfilScreen = () => {
   return (
     <View style={styles.page}>
       <Header
+        containerStyle={{ backgroundColor: blueCB }}
         leftComponent={<GoBackButton />}
         centerComponent={<ReefHeaderTitle title="MON PROFIL" />}
       />

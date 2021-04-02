@@ -12,6 +12,7 @@ import { NumericStepper } from "../../../../components/NumericStepper";
 import RootStore from "../../../../store/RootStore";
 import { Alert } from "../../../../store/AlertStore";
 import { observer } from "mobx-react";
+import { blueCB, yellowCB } from "../../../../components/colos";
 
 type Props = {
   existingAlerts: Alert[];
@@ -57,8 +58,8 @@ export const AlertsForm = observer(({ existingAlerts }: Props) => {
           </View>
           <Text> jours </Text>
           <Switch
-            trackColor={{ false: "#767577", true: "#81b0ff" }}
-            thumbColor={value.active ? "#f5dd4b" : "#f4f3f4"}
+            trackColor={{ false: "#767577", true: blueCB }}
+            thumbColor={value.active ? yellowCB : "#f4f3f4"}
             onValueChange={(change) => changeIsActive(change, value)}
             value={value.active}
           />

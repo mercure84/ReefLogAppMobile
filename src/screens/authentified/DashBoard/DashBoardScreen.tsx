@@ -18,6 +18,7 @@ import { TankFormModal } from "./aquarium/TankFormModal";
 import { Alert } from "../../../store/AlertStore";
 import { Notifications } from "./notifications/Notifications";
 import { ReefActivityIndicator } from "../../../components/ReefActivityIndicator";
+import { blueCB } from "../../../components/colos";
 
 const DashboardScreen = observer(() => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);
@@ -72,7 +73,10 @@ const DashboardScreen = observer(() => {
 
   return (
     <View style={styles.page}>
-      <Header centerComponent={<ReefHeaderTitle title="TABLEAU DE BORD" />} />
+      <Header
+        containerStyle={{ backgroundColor: blueCB }}
+        centerComponent={<ReefHeaderTitle title="TABLEAU DE BORD" />}
+      />
 
       {isMemberLoading ? (
         <ReefActivityIndicator />
