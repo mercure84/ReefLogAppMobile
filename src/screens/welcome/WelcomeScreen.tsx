@@ -75,7 +75,7 @@ const HomeScreen = () => {
     console.log("Google Signing configuring");
     GoogleSignin.configure({
       webClientId:
-        "448183942719-fi4aiub0o4pk15ntk7kr1hhemdjkim2c.apps.googleusercontent.com",
+        "448183942719-of7upfoljnfupbq6o5dt3jsj9b8lge2u.apps.googleusercontent.com",
     });
     isSignedIn();
   }, []);
