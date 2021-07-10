@@ -152,3 +152,27 @@ export const getPasswordRecover = async (pEmail: string) => {
     console.log(error);
   }
 };
+
+// service oauth2 google
+
+export const getTokenWithGoogleOAuth2 = async (
+  tokenId: string,
+  email: string
+) => {
+  const urlService = urlServer + "api/oauth2/googleLogin";
+  const dataToSend = { tokenId, email };
+  try {
+    console.log("on envoie le google token ID du membre ", email);
+    const response = await fetch(urlService, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dataToSend),
+    });
+    return response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};

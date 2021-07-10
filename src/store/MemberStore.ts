@@ -11,6 +11,7 @@ class MemberStore {
   }
   @observable member: Member | undefined = undefined;
   @observable token: string = "";
+  @observable googleToken: string = "";
 
   @observable memberState: WebServiceState = "pending"; // "pending" / "done" / "error"
 

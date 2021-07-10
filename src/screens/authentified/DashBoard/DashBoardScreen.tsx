@@ -23,7 +23,7 @@ import { blueCB } from "../../../components/colos";
 const DashboardScreen = observer(() => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);
   const [isTankItemVisible, setTankItemVisible] = useState(true);
-  const [member, setMember] = useState<Member>(undefined);
+  const [member, setMember] = useState<Member>();
   const [tankList, setTankList] = useState<Tank[]>([]);
   const [notifications, setNotifications] = useState<Alert[]>([]);
 

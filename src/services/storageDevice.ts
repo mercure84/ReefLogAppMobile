@@ -1,6 +1,6 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const getData = async (key: string): Promise<string> => {
+export const getData = async (key: string) => {
   try {
     const value = await AsyncStorage.getItem(key);
     return value;
@@ -12,6 +12,7 @@ export const getData = async (key: string): Promise<string> => {
 export const storeData = async (key: string, value: string) => {
   try {
     await AsyncStorage.setItem(key, value);
+    console.log("[AsyncStorage] Stockage ", key, " ", value);
   } catch (error) {
     console.log("[AsyncStorage] Erreur dans le storeData : " + error);
   }

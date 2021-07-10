@@ -16,8 +16,10 @@ import { Text } from "react-native-elements";
 import {
   GoogleSignin,
   GoogleSigninButton,
-  statusCodes,
 } from "@react-native-google-signin/google-signin";
+import { webClientGoogleSignId } from "../../constants/constants";
+import { googleSignIn, isSignedIn } from "../../services/googleSignin";
+import { useNavigation } from "@react-navigation/native";
 
 export const componentStatusDefault = {
   showSignup: false,
@@ -34,6 +36,8 @@ export enum WelcomeElement {
 }
 
 const HomeScreen = () => {
+  const navigation = useNavigation();
+
   const [componentStatus, setComponentStatus] = useState(
     componentStatusDefault
   );
@@ -72,66 +76,20 @@ const HomeScreen = () => {
   };
 
   useEffect(() => {
-    console.log("Google Signing configuring");
+    console.log("Google Signing is configuring");
     GoogleSignin.configure({
-      webClientId:
-        "448183942719-of7upfoljnfupbq6o5dt3jsj9b8lge2u.apps.googleusercontent.com",
+      webClientId: webClientGoogleSignId,
     });
     isSignedIn();
   }, []);
 
-  const signIn = async () => {
-    // It will prompt google Signin Widget
-    try {
-      await GoogleSignin.hasPlayServices({
-        // Check if device has Google Play Services installed
-        // Always resolves to true on iOS
-        showPlayServicesUpdateDialog: true,
-      });
-      const userInfo = await GoogleSignin.signIn();
-      console.log("User Info --> ", userInfo);
-    } catch (error) {
-      console.log("Message", JSON.stringify(error));
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        console.log("User Cancelled the Login Flow");
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        console.log("Signing In");
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        console.log("Play Services Not Available or Outdated");
-      } else {
-        console.log(error.message);
-      }
-    }
-  };
-
-  const getCurrentUserInfo = async () => {
-    try {
-      let info = await GoogleSignin.signInSilently();
-      console.log("User Info --> ", info);
-    } catch (error) {
-      if (error.code === statusCodes.SIGN_IN_REQUIRED) {
-        console.log("User has not signed in yet");
-        console.log("User has not signed in yet");
-      } else {
-        console.log("Unable to get user's info");
-        console.log("Unable to get user's info");
-      }
-    }
-  };
-
-  const isSignedIn = async () => {
-    const isSignedIn = await GoogleSignin.isSignedIn();
-    if (isSignedIn) {
-      console.log("User is already signed in");
-      // Set User Info if user is already signed in
-      getCurrentUserInfo();
-    } else {
-      console.log("Please Login");
-    }
-  };
-
   const handlePressAbout = () => setAboutVisible(!isAboutVisible);
-  const handleGoogleOnPress = async () => await signIn();
+  const handleGoogleOnPress = async () => {
+    const access = await googleSignIn();
+    if (access === "success") {
+      navigation.navigate("AuthentOk");
+    }
+  };
 
   return (
     <KeyboardAvoidingView style={styles.page} behavior="height">
