@@ -32,3 +32,6 @@ commande gradlew assembleRelease
 ## Déployer l'application dans un émulateur iOS
 
 Pas encore disponible
+
+Fichier à importer :
+###src/constants/constants.tsx
