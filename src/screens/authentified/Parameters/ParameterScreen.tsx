@@ -5,7 +5,7 @@ import { Header } from "react-native-elements";
 import { ReefButton } from "../../../components/ReefButton";
 import { ReefHeaderTitle } from "../../../components/ReefHeaderTitle";
 import mailIcon from "../../../assets/icons/mail.png";
-import { disconnect } from "../../../services/rootService";
+import { logout } from "../../../services/rootService";
 import RootStore from "../../../store/RootStore";
 import { handleSuggestEmail } from "../../../utils/helpers";
 import { blueCB } from "../../../components/colos";
@@ -37,7 +37,7 @@ const ParameterScreen = () => {
         />
         <ReefButton
           title="Se déconnecter"
-          onPress={() => (disconnect(), navigation.navigate("Signout"))}
+          onPress={() => (logout(), navigation.navigate("Logout"))}
         />
 
         <ReefButton

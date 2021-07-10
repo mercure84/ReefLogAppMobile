@@ -12,7 +12,6 @@ class MemberStore {
   @observable member: Member | undefined = undefined;
   @observable token: string = "";
   @observable googleToken: string = "";
-
   @observable memberState: WebServiceState = "pending"; // "pending" / "done" / "error"
 
   // récupération des détails du membre pour alimenter notre store
@@ -38,6 +37,14 @@ class MemberStore {
       this.memberState = "error";
     }
   }
+
+  @action
+  clear = () => {
+    this.googleToken = "";
+    this.member = undefined;
+    this.memberState = "pending";
+    this.token = "";
+  };
 }
 
 export default MemberStore;

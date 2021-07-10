@@ -1,3 +1,5 @@
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import RootStore from "../store/RootStore";
 import { urlServer } from "./../constants/constants";
 import { removeData } from "./storageDevice";
 
@@ -40,6 +42,13 @@ export const deleteItem = async (
 
 //TO BE IMPLEMENTED : améliorer cette fonctionnalité !!!
 
-export const disconnect = () => {
-  removeData("token");
+export const logout = async () => {
+  const { memberStore } = RootStore;
+
+  await removeData("token");
+  await removeData("emailUser");
+
+  if (await GoogleSignin.isSignedIn()) {
+    await GoogleSignin.signOut();
+  }
 };

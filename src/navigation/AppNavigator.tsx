@@ -70,7 +70,7 @@ export const MainNavigator = ({ isTokenOK }: Props) => {
         ) : (
           <Stack.Screen name="Identified">{() => TabNavigator()}</Stack.Screen>
         )}
-        <Stack.Screen name="Signout" component={WelcomeScreen} />
+        <Stack.Screen name="Logout" component={WelcomeScreen} />
         <Stack.Screen name="AuthentOk">{() => TabNavigator()}</Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
