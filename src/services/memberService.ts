@@ -1,12 +1,10 @@
 import { urlServer } from "../constants/constants";
 import { getData } from "./storageDevice";
 
-// typage d'un membre
-
 export type Member = {
   id: string;
   lastName?: string;
-  firstName?: any;
+  firstName?: string;
   userName: string;
   email: string;
   password: string;
@@ -22,11 +20,11 @@ export type SignUp = {
   repassword: string;
 };
 
-// service signUp : add ou update a new member
+// service signUp : add or update a new member
 export const signUpService = async (
   signUpForm: SignUp,
   isUpdating?: boolean
-) => {
+): Promise<Member | Error> => {
   const urlService = !isUpdating
     ? urlServer + "api/addNewMember"
     : urlServer + "api/updateMember";
@@ -44,13 +42,14 @@ export const signUpService = async (
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: token,
+        Authorization: token ?? "",
       },
       body: JSON.stringify(newMember),
     });
-    return response.json();
+    return response.json() as Promise<Member>;
   } catch (error) {
     console.error(error);
+    return error;
   }
 };
 

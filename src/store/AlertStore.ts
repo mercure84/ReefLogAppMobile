@@ -92,7 +92,12 @@ class AlertStore {
       try {
         console.log("Store is fetching Notifications");
         const memberToken = this.RootStore.memberStore.token;
-        const tankId = this.RootStore.tankStore.tankList[0]?.id;
+        const tankId = this.RootStore.tankStore?.tankList[0]?.id;
+        console.log("Tank id = ", tankId);
+        if (!tankId) {
+          console.log("Not tank ==> return empty notifications");
+          return [];
+        }
         const urlService = urlServer + "api/showAlerts/" + tankId;
         const response = await fetch(urlService, {
           method: "GET",
