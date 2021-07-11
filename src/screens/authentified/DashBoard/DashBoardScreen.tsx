@@ -18,7 +18,7 @@ import { TankFormModal } from "./aquarium/TankFormModal";
 import { Alert } from "../../../store/AlertStore";
 import { Notifications } from "./notifications/Notifications";
 import { ReefActivityIndicator } from "../../../components/ReefActivityIndicator";
-import { blueCB } from "../../../components/colos";
+import { blueCB } from "../../../components/colors";
 
 const DashboardScreen = observer(() => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);

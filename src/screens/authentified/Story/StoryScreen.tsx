@@ -9,7 +9,7 @@ import { ReefHeaderTitle } from "../../../components/ReefHeaderTitle";
 import { WaterTestItem } from "./waterTest/WaterTestItem";
 import { EventItem } from "./event/EventItem";
 import { ReefActivityIndicator } from "../../../components/ReefActivityIndicator";
-import { blueCB } from "../../../components/colos";
+import { blueCB } from "../../../components/colors";
 
 export const StoryScreen = observer(() => {
   const navigation = useNavigation();

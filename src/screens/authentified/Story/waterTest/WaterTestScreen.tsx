@@ -9,7 +9,7 @@ import { WaterTestItem } from "./WaterTestItem";
 import RootStore from "../../../../store/RootStore";
 import { WaterTestFormModal } from "./WaterTestFormModal";
 import { ReefActivityIndicator } from "../../../../components/ReefActivityIndicator";
-import { blueCB } from "../../../../components/colos";
+import { blueCB } from "../../../../components/colors";
 
 export const WaterTestScreen = observer(() => {
   const [isWaterTestFormVisible, setWaterTestFormVisible] = useState(false);

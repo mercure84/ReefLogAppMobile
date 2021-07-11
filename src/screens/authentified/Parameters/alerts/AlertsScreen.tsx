@@ -7,7 +7,7 @@ import RootStore from "../../../../store/RootStore";
 import { AlertsForm } from "./AlertsForm";
 import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
 import { ReefActivityIndicator } from "../../../../components/ReefActivityIndicator";
-import { blueCB, yellowCB } from "../../../../components/colos";
+import { blueCB, yellowCB } from "../../../../components/colors";
 
 export const AlertsScreen = observer(() => {
   const { alertStore } = RootStore;

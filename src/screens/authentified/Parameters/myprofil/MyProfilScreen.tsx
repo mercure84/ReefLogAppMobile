@@ -5,7 +5,7 @@ import { ProfilForm } from "./ProfilForm";
 import RootStore from "../../../../store/RootStore";
 import { GoBackButton } from "../../../../components/GoBackButton";
 import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
-import { blueCB } from "../../../../components/colos";
+import { blueCB } from "../../../../components/colors";
 
 export const MyProfilScreen = () => {
   const member = RootStore.memberStore.member;

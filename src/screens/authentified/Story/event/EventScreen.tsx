@@ -10,7 +10,7 @@ import { ReefButton } from "../../../../components/ReefButton";
 import { EventItem } from "./EventItem";
 import { EventFormModal } from "./EventFormModal";
 import { ReefActivityIndicator } from "../../../../components/ReefActivityIndicator";
-import { blueCB } from "../../../../components/colos";
+import { blueCB } from "../../../../components/colors";
 
 export const EventScreen = observer(() => {
   const { eventStore } = RootStore;

@@ -12,7 +12,7 @@ import { NumericStepper } from "../../../../components/NumericStepper";
 import RootStore from "../../../../store/RootStore";
 import { Alert } from "../../../../store/AlertStore";
 import { observer } from "mobx-react";
-import { blueCB, yellowCB } from "../../../../components/colos";
+import { blueCB, yellowCB } from "../../../../components/colors";
 
 type Props = {
   existingAlerts: Alert[];

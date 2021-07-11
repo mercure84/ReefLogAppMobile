@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { View } from "react-native";
 import { Button, ButtonProps } from "react-native-elements";
-import { blueCB, yellowCB } from "./colos";
+import { blueCB, yellowCB } from "./colors";
 
 type Props = {
   title: ReactNode | string;

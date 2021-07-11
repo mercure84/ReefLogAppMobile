@@ -1,6 +1,6 @@
 import React from "react";
 import { Text } from "react-native";
-import { yellowCB } from "./colos";
+import { yellowCB } from "./colors";
 
 type Props = {
   title: string;

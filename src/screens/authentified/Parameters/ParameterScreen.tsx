@@ -8,7 +8,7 @@ import mailIcon from "../../../assets/icons/mail.png";
 import { logout } from "../../../services/rootService";
 import RootStore from "../../../store/RootStore";
 import { handleSuggestEmail } from "../../../utils/helpers";
-import { blueCB } from "../../../components/colos";
+import { blueCB } from "../../../components/colors";
 
 const ParameterScreen = () => {
   const navigation = useNavigation();

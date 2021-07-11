@@ -16,7 +16,7 @@ import story from "../assets/icons/notepad.png";
 import { StoryNavigator } from "../screens/authentified/Story/StoryNavigator";
 import { DashBoardNavigator } from "../screens/authentified/DashBoard/DashBoardNavigator";
 import { ParameterNavigator } from "../screens/authentified/Parameters/ParameterNavigator";
-import { blueCB } from "../components/colos";
+import { blueCB } from "../components/colors";
 
 const TabNavigator = () => {
   return (
