@@ -15,12 +15,26 @@ export interface Tank {
   startDate: Date;
   member?: Member;
   sumpVolume: number;
-  typeOfMaintenance: "BERLINOIS" | "JAUBERT" | "AUTRE";
+  typeOfMaintenance: MaintenanceType;
   mainPopulation: "FISH_ONLY" | "SOFT" | "MIX" | "LPS" | "SPS";
   ballingDescription?: string;
   liveRocksWeigth?: number;
   othersRocksWeight?: number;
   rawVolume?: number;
+}
+
+export enum MaintenanceType {
+  BERLINOIS = "BERLINOIS",
+  JAUBERT = "JAUBERT",
+  AUTRE = "AUTRE",
+}
+
+export enum MainPopulation {
+  FISH_ONLY = "FISH_ONLY",
+  SOFT = "SOFT",
+  MIX = "MIX",
+  LPS = "LPS",
+  SPS = "SPS",
 }
 
 class TankStore {
