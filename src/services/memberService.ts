@@ -111,26 +111,29 @@ export const getMemberDetail = async (
   pEmail: string,
   token: string
 ): Promise<Member | undefined> => {
-  const email = pEmail.toLocaleLowerCase();
-  const urlService = urlServer + "api/getMemberDetail/" + email;
+  if (pEmail) {
+    const email = pEmail.toLocaleLowerCase();
+    const urlService = urlServer + "api/getMemberDetail/" + email;
 
-  try {
-    console.log("On demande les détails du membre : " + email);
-    const response = await fetch(urlService, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-    });
-    const dataResponse = response.json();
-    console.log("Requête getMemberDetail OK");
-    return dataResponse;
-  } catch (error) {
-    console.log(error);
-    return undefined;
+    try {
+      console.log("On demande les détails du membre : " + email);
+      const response = await fetch(urlService, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      });
+      const dataResponse = response.json();
+      console.log("Requête getMemberDetail OK");
+      return dataResponse;
+    } catch (error) {
+      console.log(error);
+      return undefined;
+    }
   }
+  return;
 };
 
 export const getPasswordRecover = async (pEmail: string) => {
