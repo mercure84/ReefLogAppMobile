@@ -35,6 +35,10 @@ class WaterTestStore {
     return toJS(this.waterTestList);
   }
 
+  @action clear() {
+    this.waterTestList = [];
+  }
+
   @action
   async fetchWaterTests(): Promise<WaterTest[]> {
     this.fetchState = "starting";
@@ -77,7 +81,7 @@ class WaterTestStore {
       this.updateState = "pending";
       console.log("Store is deleting the waterTest n° " + id);
       const memberToken = this.RootStore.memberStore.token ?? "";
-      await deleteItem(id, "waterTest", memberToken);
+      await deleteItem(id, "watertest", memberToken);
       this.refresh();
     } catch (error) {
       console.log(error);

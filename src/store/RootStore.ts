@@ -29,6 +29,14 @@ export class RootStore {
     this.alertStore = new AlertStore(this);
     this.eventStore = new EventStore(this);
   }
+
+  clear() {
+    this.waterTestStore.clear();
+    this.alertStore.clear();
+    this.eventStore.clear();
+    this.tankStore.clear();
+    this.memberStore.clear();
+  }
 }
 
 export default new RootStore();

@@ -50,7 +50,9 @@ class TankStore {
   @observable tankImageState: WebServiceState = "pending";
   @observable tankPicture: ArrayBuffer | null = null;
 
-  // récupération de la liste des aquariums du membre
+  @action clear() {
+    this.tankList = [];
+  }
 
   @action
   async fetchTankList(): Promise<Tank[]> {

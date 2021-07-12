@@ -68,6 +68,10 @@ class AnimalStore {
   @observable animalSpecies: AnimalSpecies;
   @observable animalSpeciesState = "pending";
 
+  @action clear() {
+    this.animals = [];
+  }
+
   @computed get animalsData() {
     return toJS(this.animals);
   }

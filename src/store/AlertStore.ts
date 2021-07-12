@@ -50,6 +50,10 @@ class AlertStore {
     );
   }
 
+  @action clear() {
+    this.alerts = [];
+  }
+
   @action
   async fetchAlerts(): Promise<Alert[]> {
     this.fetchState = "starting";

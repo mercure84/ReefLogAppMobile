@@ -53,7 +53,7 @@ const DashboardScreen = observer(() => {
 
   useEffect(() => {
     const getNotifications = async () => {
-      if (tankList && alertStore.notificationsFetchState !== "done") {
+      if (member && tankList && alertStore.notificationsFetchState !== "done") {
         await alertStore.fetchNotifications();
       } else {
         setNotifications(alertStore.notifications);
@@ -82,7 +82,7 @@ const DashboardScreen = observer(() => {
         <ReefActivityIndicator />
       ) : (
         <Text style={{ fontSize: 16 }}>
-          Bienvenue {member?.userName.toLocaleUpperCase()} !
+          Bienvenue {member?.userName?.toLocaleUpperCase()} !
         </Text>
       )}
 

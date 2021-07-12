@@ -27,6 +27,10 @@ class EventStore {
     return toJS(this.events);
   }
 
+  @action clear() {
+    this.events = [];
+  }
+
   @action
   async fetchEvents(): Promise<Event[]> {
     this.fetchState = "starting";
