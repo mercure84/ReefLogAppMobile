@@ -49,6 +49,10 @@ export const logout = async () => {
   await removeData("token");
   await removeData("emailUser");
   if (await GoogleSignin.isSignedIn()) {
+    GoogleSignin.configure();
+    console.log("Google is logging out !");
+    await GoogleSignin.revokeAccess();
     await GoogleSignin.signOut();
   }
+  RootStore.clear();
 };

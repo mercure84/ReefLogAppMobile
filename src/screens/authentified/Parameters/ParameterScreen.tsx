@@ -14,6 +14,11 @@ const ParameterScreen = () => {
   const navigation = useNavigation();
   const hasATank = RootStore.tankStore.tankList.length > 0;
 
+  const logoutOnpress = async () => {
+    await logout();
+    navigation.navigate("Logout");
+  };
+
   return (
     <>
       <Header
@@ -35,10 +40,7 @@ const ParameterScreen = () => {
           title="Outils"
           onPress={() => navigation.navigate("myTools")}
         />
-        <ReefButton
-          title="Se déconnecter"
-          onPress={() => (logout(), navigation.navigate("Logout"))}
-        />
+        <ReefButton title="Se déconnecter" onPress={logoutOnpress} />
 
         <ReefButton
           icon={mailIcon}

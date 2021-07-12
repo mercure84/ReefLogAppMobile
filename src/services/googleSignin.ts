@@ -6,25 +6,6 @@ import RootStore from "../store/RootStore";
 import { getTokenWithGoogleOAuth2 } from "./memberService";
 import { storeData } from "./storageDevice";
 
-export const signIn = async () => {
-  try {
-    console.log("USER IS TRYING TO LOGIN WITH GOOGLE");
-    await GoogleSignin.hasPlayServices();
-    const userInfo = await GoogleSignin.signIn();
-    console.log("USER INFO = ", userInfo);
-  } catch (error) {
-    if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-      // user cancelled the login flow
-    } else if (error.code === statusCodes.IN_PROGRESS) {
-      // operation (e.g. sign in) is in progress already
-    } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-      // play services not available or outdated
-    } else {
-      // some other error happened
-    }
-  }
-};
-
 export const googleSignIn = async () => {
   const { memberStore } = RootStore;
   // It will prompt google Signin Widget
@@ -69,7 +50,7 @@ export const googleSignIn = async () => {
 export const getCurrentUserInfo = async () => {
   try {
     let info = await GoogleSignin.signInSilently();
-    console.log("User Info --> ", info);
+    console.log("[Get Current Info // User Info --> ", info);
   } catch (error) {
     if (error.code === statusCodes.SIGN_IN_REQUIRED) {
       console.log("User has not signed in yet");
@@ -84,7 +65,7 @@ export const isSignedIn = async () => {
   if (isSignedIn) {
     console.log("User is already signed in");
     // Set User Info if user is already signed in
-    getCurrentUserInfo();
+    await getCurrentUserInfo();
   } else {
     console.log("Please Login");
   }

@@ -35,7 +35,7 @@ export enum WelcomeElement {
   DEFAULT,
 }
 
-const HomeScreen = () => {
+const WelcomeScreen = () => {
   const navigation = useNavigation();
 
   const [componentStatus, setComponentStatus] = useState(
@@ -170,4 +170,4 @@ const styles = StyleSheet.create<Style>({
   },
 });
 
-export default HomeScreen;
+export default WelcomeScreen;
