@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, ViewStyle } from "react-native";
+import { View, StyleSheet, ViewStyle, BackHandler } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Header } from "react-native-elements";
 import { ReefButton } from "../../../components/ReefButton";
@@ -16,7 +16,8 @@ const ParameterScreen = () => {
 
   const logoutOnpress = async () => {
     await logout();
-    navigation.navigate("Logout");
+    // TO DO : disconnect proper -- this will not work on iOS
+    BackHandler.exitApp();
   };
 
   return (

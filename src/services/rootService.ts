@@ -48,10 +48,11 @@ export const deleteItem = async (
 export const logout = async () => {
   await removeData("token");
   await removeData("emailUser");
-  if (await GoogleSignin.isSignedIn()) {
-    GoogleSignin.configure();
+
+  const hasGoogle = await GoogleSignin.isSignedIn();
+  if (hasGoogle) {
     console.log("Google is logging out !");
-    await GoogleSignin.revokeAccess();
+    GoogleSignin.revokeAccess();
     await GoogleSignin.signOut();
   }
   RootStore.clear();

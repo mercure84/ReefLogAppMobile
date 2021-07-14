@@ -42,7 +42,6 @@ class MemberStore {
   clear = () => {
     this.googleToken = "";
     this.member = undefined;
-    this.memberState = "pending";
     this.token = "";
   };
 }
