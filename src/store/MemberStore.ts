@@ -10,7 +10,7 @@ class MemberStore {
     this.RootStore = RootStore;
   }
   @observable member: Member | undefined = undefined;
-  @observable token: string = "";
+  @observable token: string | undefined | null = "";
   @observable googleToken: string = "";
   @observable memberState: WebServiceState = "pending"; // "pending" / "done" / "error"
 
@@ -22,16 +22,22 @@ class MemberStore {
     try {
       const asyncStoredMail = await getData("emailUser");
       const asyncStoredToken = await getData("token");
-      const memberDetail = await getMemberDetail(
-        asyncStoredMail,
-        asyncStoredToken
-      );
-      runInAction(() => {
-        this.token = asyncStoredToken;
-        this.member = memberDetail;
-      });
-      this.memberState = "done";
-      return memberDetail;
+
+      if (asyncStoredMail != null && asyncStoredToken != null) {
+        const memberDetail = await getMemberDetail(
+          asyncStoredMail,
+          asyncStoredToken
+        );
+        runInAction(() => {
+          this.token = asyncStoredToken;
+          this.member = memberDetail;
+        });
+        this.memberState = "done";
+        return memberDetail;
+      } else {
+        console.log("no User or token stored in Async Storage");
+        return;
+      }
     } catch (error) {
       console.log(error);
       this.memberState = "error";
