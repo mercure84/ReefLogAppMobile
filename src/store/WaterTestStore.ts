@@ -4,7 +4,7 @@ import { deleteItem } from "../services/rootService";
 import { urlServer } from "../constants/constants";
 import { Tank } from "./TankStore";
 
-export interface WaterTest {
+export type WaterTest = {
   id: string;
   date?: Date;
   temperature?: number;
@@ -19,7 +19,7 @@ export interface WaterTest {
   phosphates?: number;
   silicates?: number;
   aquarium?: Tank;
-}
+};
 class WaterTestStore {
   RootStore: RootStoreType;
 
