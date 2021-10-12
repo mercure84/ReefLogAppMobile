@@ -6,7 +6,7 @@ import EquipmentStore from "./EquipmentStore";
 import SocialStore from "./SocialStore";
 import AlertStore from "./AlertStore";
 import EventStore from "./EventStore";
-import MeasureStore from "./MeasureStore";
+import GraphStore from "./GraphStore";
 
 export type WebServiceState = "starting" | "pending" | "done" | "error";
 
@@ -19,7 +19,7 @@ export class RootStore {
   socialStore: SocialStore;
   alertStore: AlertStore;
   eventStore: EventStore;
-  measureStore: MeasureStore;
+  graphStore: GraphStore;
 
   constructor() {
     this.memberStore = new MemberStore(this);
@@ -30,7 +30,7 @@ export class RootStore {
     this.socialStore = new SocialStore(this);
     this.alertStore = new AlertStore(this);
     this.eventStore = new EventStore(this);
-    this.measureStore = new MeasureStore(this);
+    this.graphStore = new GraphStore(this);
   }
 
   clear() {
@@ -39,7 +39,7 @@ export class RootStore {
     this.eventStore.clear();
     this.tankStore.clear();
     this.memberStore.clear();
-    this.measureStore.clear();
+    this.graphStore.clear();
   }
 }
 

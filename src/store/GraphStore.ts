@@ -13,7 +13,7 @@ export type Graph = {
   measures: Measure[];
 } | null;
 
-class MeasureStore {
+class GraphStore {
   RootStore: RootStoreType;
   constructor(RootStore: RootStoreType) {
     this.RootStore = RootStore;
@@ -70,4 +70,4 @@ class MeasureStore {
   }
 }
 
-export default MeasureStore;
+export default GraphStore;
