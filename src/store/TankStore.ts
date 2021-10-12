@@ -6,7 +6,7 @@ import { Member } from "../services/memberService";
 import { tan } from "react-native-reanimated";
 
 // typage aquarium
-export interface Tank {
+export type Tank = {
   id: string;
   name: string;
   length: number;
@@ -21,7 +21,7 @@ export interface Tank {
   liveRocksWeigth?: number;
   othersRocksWeight?: number;
   rawVolume?: number;
-}
+};
 
 export enum MaintenanceType {
   BERLINOIS = "BERLINOIS",

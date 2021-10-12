@@ -4,13 +4,13 @@ import { urlServer } from "./../constants/constants";
 import { deleteItem } from "../services/rootService";
 import { Tank } from "./TankStore";
 
-export interface Event {
+export type Event = {
   id: string;
   date?: Date;
   title?: string;
   description?: string;
   aquarium?: Tank;
-}
+};
 
 class EventStore {
   RootStore: RootStoreType;

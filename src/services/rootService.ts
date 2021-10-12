@@ -40,7 +40,7 @@ export const deleteItem = async (
     return dataResponse;
   } catch (error) {
     console.log(error);
-    return error;
+    return error as Error;
   }
 };
 

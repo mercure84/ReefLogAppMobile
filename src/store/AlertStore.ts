@@ -2,13 +2,13 @@ import { observable, action, runInAction, computed, toJS } from "mobx";
 import { RootStore as RootStoreType, WebServiceState } from "./RootStore";
 import { urlServer } from "../constants/constants";
 
-export interface Alert {
+export type Alert = {
   id?: string;
   typeTest: TypeTest;
   targetValue: number;
   dayInterval: number;
   active: boolean;
-}
+};
 
 export enum TypeTest {
   TEMPERATURE,

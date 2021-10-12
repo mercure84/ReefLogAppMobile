@@ -4,7 +4,7 @@ import { deleteItem } from "../services/rootService";
 import { urlServer } from "../constants/constants";
 import { Tank } from "./TankStore";
 
-export interface Animal {
+export type Animal = {
   id: number;
   quantity: number;
   name: string;
@@ -26,9 +26,9 @@ export interface Animal {
   molluskSpecies?: string;
   crustaceanSpecies?: string;
   cucumberSpecies?: string;
-}
+};
 
-export interface AnimalSpecies {
+export type AnimalSpecies = {
   star?: string[];
   crustacean?: string[];
   anemone?: string[];
@@ -39,7 +39,7 @@ export interface AnimalSpecies {
   mollusk?: string[];
   lps?: string[];
   soft?: string[];
-}
+};
 
 export enum AnimalType {
   star = "Etoile",
