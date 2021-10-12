@@ -43,14 +43,14 @@ class GraphStore {
             " for tank n°  ",
             tankId
           );
-          const memberToken = this.RootStore.memberStore.token;
-          const urlService = urlServer + "api/getWaterTestList/" + tankId;
+          const urlService =
+            urlServer + "api/getWaterTestsForGraph/" + tankId + "/" + typeTest;
+          console.log("URLSERVICE = ", urlService);
           const response = await fetch(urlService, {
             method: "GET",
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
-              Authorization: memberToken ?? "",
             },
           });
           const graph: Promise<Graph> = response.json();
@@ -58,7 +58,7 @@ class GraphStore {
             this.graph = await graph;
           });
           this.fetchState = "done";
-          console.log("Graph success");
+          console.log("Graph success : ", JSON.stringify(graph));
           return graph;
         } catch (error) {
           console.log("Error during fetching graph : ", error);

@@ -4,6 +4,7 @@ import { StoryScreen } from "./StoryScreen";
 import { EventScreen } from "./event/EventScreen";
 import { WaterTestScreen } from "./waterTest/WaterTestScreen";
 import { CountScreen } from "./counting/CountingScreen";
+import { GraphScreen } from "./graph/GraphScreen";
 
 const Stack = createStackNavigator();
 
@@ -29,6 +30,11 @@ export const StoryNavigator = () => {
       <Stack.Screen
         name="counting"
         component={CountScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="graph"
+        component={GraphScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

@@ -55,6 +55,11 @@ export const StoryScreen = observer(() => {
                 title="Tests d'eau"
                 onPress={() => navigation.navigate("waterTests")}
               />
+              <ReefButton
+                size="medium"
+                title="Graphiques"
+                onPress={() => navigation.navigate("graph")}
+              />
             </View>
 
             {isWaterTestLoading ? (
@@ -112,6 +117,7 @@ const styles = StyleSheet.create<Style>({
   },
   buttonContainer: {
     marginTop: 32,
-    alignItems: "center",
+    alignSelf: "center",
+    flexDirection: "row",
   },
 });
