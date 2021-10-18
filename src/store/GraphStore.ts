@@ -28,6 +28,7 @@ class GraphStore {
 
   @action clear() {
     this.graph = null;
+    this.fetchState = "pending";
   }
 
   @action
