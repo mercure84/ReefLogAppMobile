@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { Header } from "react-native-elements";
-import { Grid, LineChart, XAxis } from "react-native-svg-charts";
+import { Grid, LineChart, XAxis, YAxis } from "react-native-svg-charts";
 import { blueCB } from "../../../../components/colors";
 import { GoBackButton } from "../../../../components/GoBackButton";
 import { ReefActivityIndicator } from "../../../../components/ReefActivityIndicator";
@@ -102,13 +102,19 @@ export const GraphScreen = observer(() => {
       {graphData && graphData?.measures.length < 2 ? (
         <Text>Pas de données suffisantes pour dessiner un graphique</Text>
       ) : (
-        <>
+        <View style={{ height: "70%", padding: 8 }}>
+          {/*           <YAxis
+            data={data}
+            svg={{
+              fill: "grey",
+              fontSize: 10,
+            }}
+            formatLabel={(value) => `${value}`}
+            numberOfTicks={graphData?.measures.length ?? 5}
+          /> */}
           <LineChart
             style={{
-              height: "70%",
-              width: "90%",
-              padding: 8,
-              alignSelf: "center",
+              flex: 1,
             }}
             data={data}
             yAccessor={({ item }) => item.value}
@@ -122,30 +128,25 @@ export const GraphScreen = observer(() => {
           >
             <Grid />
           </LineChart>
-          <XAxis
-            data={data}
-            svg={{
-              fill: "black",
-              fontSize: 8,
-              fontWeight: "bold",
-              rotation: 20,
-              originY: 30,
-              y: 5,
-            }}
-            xAccessor={({ item }) => item.date}
-            scale={scale.scaleTime}
-            numberOfTicks={10}
-            style={{
-              marginHorizontal: -15,
-              height: 20,
-              width: "90%",
-              padding: 8,
-              alignSelf: "center",
-            }}
-            contentInset={{ left: 10, right: 25 }}
-            formatLabel={(value) => moment(value).format("Do MM YY")}
-          />
-        </>
+          <View style={{ height: 200 }}>
+            <XAxis
+              data={data}
+              svg={{
+                fill: "black",
+                fontSize: 8,
+                fontWeight: "bold",
+                rotation: 45,
+                translateY: 10,
+              }}
+              xAccessor={({ item }) => item.date}
+              scale={scale.scaleTime}
+              numberOfTicks={graphData?.measures.length ?? 5}
+              style={{ height: 150 }}
+              contentInset={{ left: 10, right: 10 }}
+              formatLabel={(value) => moment(value).format("DD MM YY")}
+            />
+          </View>
+        </View>
       )}
     </View>
   );
