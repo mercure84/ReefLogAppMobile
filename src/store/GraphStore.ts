@@ -46,7 +46,6 @@ class GraphStore {
           );
           const urlService =
             urlServer + "api/getWaterTestsForGraph/" + tankId + "/" + typeTest;
-          console.log("URLSERVICE = ", urlService);
           const response = await fetch(urlService, {
             method: "GET",
             headers: {
@@ -59,7 +58,6 @@ class GraphStore {
             this.graph = await graph;
           });
           this.fetchState = "done";
-          console.log("Graph success : ", JSON.stringify(graph));
           return graph;
         } catch (error) {
           console.log("Error during fetching graph : ", error);
