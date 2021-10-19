@@ -102,32 +102,34 @@ export const GraphScreen = observer(() => {
       {graphData && graphData?.measures.length < 2 ? (
         <Text>Pas de données suffisantes pour dessiner un graphique</Text>
       ) : (
-        <View style={{ height: "70%", padding: 8 }}>
-          {/*           <YAxis
-            data={data}
-            svg={{
-              fill: "grey",
-              fontSize: 10,
-            }}
-            formatLabel={(value) => `${value}`}
-            numberOfTicks={graphData?.measures.length ?? 5}
-          /> */}
-          <LineChart
-            style={{
-              flex: 1,
-            }}
-            data={data}
-            yAccessor={({ item }) => item.value}
-            xAccessor={({ item }) => item.date}
-            xScale={scale.scaleTime}
-            contentInset={{ top: 10, bottom: 10 }}
-            curve={shape.curveLinear}
-            yMin={minMaxY.minY}
-            yMax={minMaxY.maxY}
-            svg={{ stroke: "rgb(55, 65, 244)" }}
-          >
-            <Grid />
-          </LineChart>
+        <View style={{ padding: 16, alignContent: "center" }}>
+          <View style={{ flexDirection: "row", height: "50%" }}>
+            <YAxis
+              data={data}
+              svg={{
+                fill: "black",
+                fontSize: 10,
+              }}
+              yAccessor={({ item }) => item.value}
+              formatLabel={(value) => `${value}`}
+              numberOfTicks={8}
+            />
+            <LineChart
+              style={{
+                flex: 1,
+              }}
+              data={data}
+              yAccessor={({ item }) => item.value}
+              xScale={scale.scaleTime}
+              contentInset={{ top: 10, bottom: 10 }}
+              curve={shape.curveLinear}
+              yMin={minMaxY.minY}
+              yMax={minMaxY.maxY}
+              svg={{ stroke: "rgb(55, 65, 244)" }}
+            >
+              <Grid />
+            </LineChart>
+          </View>
           <View style={{ height: 200 }}>
             <XAxis
               data={data}
@@ -140,8 +142,8 @@ export const GraphScreen = observer(() => {
               }}
               xAccessor={({ item }) => item.date}
               scale={scale.scaleTime}
-              numberOfTicks={graphData?.measures.length ?? 5}
-              style={{ height: 150 }}
+              numberOfTicks={6}
+              style={{ height: 150, marginLeft: 12 }}
               contentInset={{ left: 10, right: 10 }}
               formatLabel={(value) => moment(value).format("DD MM YY")}
             />
