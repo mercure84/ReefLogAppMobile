@@ -33,7 +33,6 @@ export const googleSignIn = async () => {
       return "error";
     }
   } catch (error) {
-    console.log("Message", JSON.stringify(error));
     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
       console.log("User Cancelled the Login Flow");
     } else if (error.code === statusCodes.IN_PROGRESS) {
@@ -41,7 +40,7 @@ export const googleSignIn = async () => {
     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
       console.log("Play Services Not Available or Outdated");
     } else {
-      console.log(error.message);
+      console.log(error?.message);
     }
     return "error";
   }
