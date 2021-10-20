@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  StyleSheet,
-  ViewStyle,
-  Text,
-  ActivityIndicator,
-} from "react-native";
+import { View, StyleSheet, ViewStyle, Text } from "react-native";
 import { Header } from "react-native-elements";
 import { observer } from "mobx-react";
 import RootStore from "../../../store/RootStore";
