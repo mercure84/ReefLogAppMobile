@@ -25,38 +25,43 @@ const DashboardScreen = observer(() => {
 
   useEffect(() => {
     const getMember = async () => {
-      if (memberStore.memberState !== "done") {
+      if (memberStore.fetchState === "pending") {
         await memberStore.fetchMember();
-      } else {
+      }
+      if (memberStore.fetchState === "done") {
         setMember(memberStore.member);
       }
     };
     getMember();
-  }, [memberStore.memberState]);
+  }, [memberStore.fetchState]);
 
   useEffect(() => {
     const getTank = async () => {
-      if (member && tankStore.fetchState !== "done") {
+      if (member && tankStore.fetchState === "pending") {
         await tankStore.fetchTankList();
-      } else {
-        setTankList(tankStore.tankList);
       }
+      if (tankStore.fetchState === "done") setTankList(tankStore.tankList);
     };
     getTank();
   }, [member, tankStore.fetchState]);
 
   useEffect(() => {
     const getNotifications = async () => {
-      if (member && tankList && alertStore.notificationsFetchState !== "done") {
+      if (
+        member &&
+        tankList &&
+        alertStore.notificationsFetchState === "pending"
+      ) {
         await alertStore.fetchNotifications();
-      } else {
+      }
+      if (alertStore.fetchState === "done") {
         setNotifications(alertStore.notifications);
       }
     };
     getNotifications();
   }, [tankList, alertStore.notificationsFetchState]);
 
-  const isMemberLoading = memberStore.memberState === "pending";
+  const isMemberLoading = memberStore.fetchState === "pending";
   const isTankLoading = tankStore.fetchState === "pending";
   const isNotifLoading = alertStore.notificationsFetchState === "pending";
   const newTankPress = () => setNewTankFormVisible(true);

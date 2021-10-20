@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
@@ -17,6 +17,7 @@ import { StoryNavigator } from "../screens/authentified/Story/StoryNavigator";
 import { DashBoardNavigator } from "../screens/authentified/DashBoard/DashBoardNavigator";
 import { ParameterNavigator } from "../screens/authentified/Parameters/ParameterNavigator";
 import { blueCB } from "../components/colors";
+import RootStore from "../store/RootStore";
 
 const TabNavigator = () => {
   return (
@@ -62,6 +63,23 @@ type Props = {
 };
 
 export const MainNavigator = ({ isTokenOK }: Props) => {
+  const {
+    memberStore,
+    tankStore,
+    alertStore,
+    waterTestStore,
+    eventStore,
+    graphStore,
+  } = RootStore;
+  useEffect(() => {
+    memberStore.init();
+    tankStore.clear();
+    alertStore.clear();
+    waterTestStore.refresh();
+    eventStore.refresh();
+    graphStore.clear();
+  }, []);
+
   return (
     <NavigationContainer>
       <Stack.Navigator headerMode="none">

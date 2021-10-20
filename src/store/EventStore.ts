@@ -27,9 +27,10 @@ class EventStore {
     return toJS(this.events);
   }
 
-  @action clear() {
+  @action clear = () => {
     this.events = [];
-  }
+    this.fetchState = "pending";
+  };
 
   @action
   async fetchEvents(): Promise<Event[]> {

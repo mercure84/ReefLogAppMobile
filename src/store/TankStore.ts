@@ -52,6 +52,7 @@ class TankStore {
 
   @action clear() {
     this.tankList = [];
+    this.fetchState = "pending";
   }
 
   @action

@@ -52,6 +52,7 @@ class AlertStore {
 
   @action clear() {
     this.alerts = [];
+    this.fetchState = "pending";
   }
 
   @action

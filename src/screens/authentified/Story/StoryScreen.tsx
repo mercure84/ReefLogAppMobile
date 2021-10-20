@@ -16,6 +16,7 @@ export const StoryScreen = observer(() => {
   const { eventStore, waterTestStore, tankStore } = RootStore;
 
   useEffect(() => {
+    console.log("Fetching water Test !");
     const getWaterTests = async () => {
       if (
         waterTestStore.updateState === "done" &&
