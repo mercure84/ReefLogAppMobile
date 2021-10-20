@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
@@ -16,16 +16,23 @@ import story from "../assets/icons/notepad.png";
 import { StoryNavigator } from "../screens/authentified/Story/StoryNavigator";
 import { DashBoardNavigator } from "../screens/authentified/DashBoard/DashBoardNavigator";
 import { ParameterNavigator } from "../screens/authentified/Parameters/ParameterNavigator";
+import { blueCB } from "../components/colors";
+import RootStore from "../store/RootStore";
 
 const TabNavigator = () => {
   return (
-    <Tab.Navigator initialRouteName="DashBoard">
+    <Tab.Navigator
+      initialRouteName="DashBoard"
+      tabBarOptions={{
+        activeTintColor: blueCB,
+      }}
+    >
       <Tab.Screen
         name="Accueil"
         component={DashBoardNavigator}
         options={{
           tabBarIcon: () => (
-            <Image source={dashboardIcon} style={{ height: 24, width: 24 }} />
+            <Image source={dashboardIcon} style={{ height: 32, width: 32 }} />
           ),
         }}
       />
@@ -34,7 +41,7 @@ const TabNavigator = () => {
         component={StoryNavigator}
         options={{
           tabBarIcon: () => (
-            <Image source={story} style={{ height: 24, width: 24 }} />
+            <Image source={story} style={{ height: 32, width: 32 }} />
           ),
         }}
       />
@@ -43,7 +50,7 @@ const TabNavigator = () => {
         component={ParameterNavigator}
         options={{
           tabBarIcon: () => (
-            <Image source={settingsIcon} style={{ height: 24, width: 24 }} />
+            <Image source={settingsIcon} style={{ height: 32, width: 32 }} />
           ),
         }}
       />
@@ -56,6 +63,23 @@ type Props = {
 };
 
 export const MainNavigator = ({ isTokenOK }: Props) => {
+  const {
+    memberStore,
+    tankStore,
+    alertStore,
+    waterTestStore,
+    eventStore,
+    graphStore,
+  } = RootStore;
+  useEffect(() => {
+    memberStore.init();
+    tankStore.clear();
+    alertStore.clear();
+    waterTestStore.refresh();
+    eventStore.refresh();
+    graphStore.clear();
+  }, []);
+
   return (
     <NavigationContainer>
       <Stack.Navigator headerMode="none">
@@ -64,7 +88,7 @@ export const MainNavigator = ({ isTokenOK }: Props) => {
         ) : (
           <Stack.Screen name="Identified">{() => TabNavigator()}</Stack.Screen>
         )}
-        <Stack.Screen name="Signout" component={WelcomeScreen} />
+        <Stack.Screen name="Logout" component={WelcomeScreen} />
         <Stack.Screen name="AuthentOk">{() => TabNavigator()}</Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>

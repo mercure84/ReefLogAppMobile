@@ -1,3 +1,8 @@
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import { Animal } from "../store/AnimalStore";
+import { Equipment } from "../store/EquipmentStore";
+import RootStore from "../store/RootStore";
+import { WaterTest } from "../store/WaterTestStore";
 import { urlServer } from "./../constants/constants";
 import { removeData } from "./storageDevice";
 
@@ -17,12 +22,12 @@ const getUrlService = (item: string) => {
 //FONCTION QUI PERMET D'APPELER LE SERVICE DE SUPPRESSION DE ANIMAL, EQUIPMENT, WATERTEST, EVENT
 export const deleteItem = async (
   pId: number | string,
-  kindItem: string,
+  kindItem: "animal" | "watertest" | "equipment" | "event",
   token: string
-) => {
+): Promise<Animal | WaterTest | Equipment | Event | Error> => {
   const urlService = urlServer + getUrlService(kindItem) + pId;
   try {
-    console.log("Demande de suppression de l'équipement n° " + pId);
+    console.log("Demande de suppression de " + kindItem + " n° " + pId);
     const response = await fetch(urlService, {
       method: "GET",
       headers: {
@@ -35,11 +40,20 @@ export const deleteItem = async (
     return dataResponse;
   } catch (error) {
     console.log(error);
+    return error as Error;
   }
 };
 
 //TO BE IMPLEMENTED : améliorer cette fonctionnalité !!!
+export const logout = async () => {
+  await removeData("token");
+  await removeData("emailUser");
 
-export const disconnect = () => {
-  removeData("token");
+  const hasGoogle = await GoogleSignin.isSignedIn();
+  if (hasGoogle) {
+    console.log("Google is logging out !");
+    GoogleSignin.revokeAccess();
+    await GoogleSignin.signOut();
+  }
+  RootStore.clear();
 };

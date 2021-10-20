@@ -10,33 +10,51 @@ class MemberStore {
     this.RootStore = RootStore;
   }
   @observable member: Member | undefined = undefined;
-  @observable token: string = "";
-
-  @observable memberState: WebServiceState = "pending"; // "pending" / "done" / "error"
+  @observable token: string | undefined | null = "";
+  @observable googleToken: string = "";
+  @observable fetchState: WebServiceState = "pending"; // "pending" / "done" / "error"
 
   // récupération des détails du membre pour alimenter notre store
   @action
   async fetchMember() {
-    this.memberState = "pending";
-
+    this.fetchState = "starting";
     try {
       const asyncStoredMail = await getData("emailUser");
       const asyncStoredToken = await getData("token");
-      const memberDetail = await getMemberDetail(
-        asyncStoredMail,
-        asyncStoredToken
-      );
-      runInAction(() => {
-        this.token = asyncStoredToken;
-        this.member = memberDetail;
-      });
-      this.memberState = "done";
-      return memberDetail;
+
+      if (asyncStoredMail != null && asyncStoredToken != null) {
+        const memberDetail = await getMemberDetail(
+          asyncStoredMail,
+          asyncStoredToken
+        );
+        runInAction(() => {
+          this.token = asyncStoredToken;
+          this.member = memberDetail;
+        });
+        this.fetchState = "done";
+        return memberDetail;
+      } else {
+        console.log("no User or token stored in Async Storage");
+        return;
+      }
     } catch (error) {
       console.log(error);
-      this.memberState = "error";
+      this.fetchState = "error";
     }
   }
+
+  @action
+  clear = () => {
+    this.googleToken = "";
+    this.member = undefined;
+    this.token = "";
+    this.fetchState = "pending";
+  };
+
+  @action
+  init = () => {
+    this.fetchState = "pending";
+  };
 }
 
 export default MemberStore;

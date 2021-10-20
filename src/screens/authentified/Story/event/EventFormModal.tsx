@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import RootStore from "../../../../store/RootStore";
 import {
-  ActivityIndicator,
   View,
   ViewStyle,
   TextStyle,
@@ -17,6 +16,7 @@ import Moment from "moment";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { ReefButton } from "../../../../components/ReefButton";
 import { Event } from "../../../../store/EventStore";
+import { ReefActivityIndicator } from "../../../../components/ReefActivityIndicator";
 
 type Props = {
   eventToSave: Event | null;
@@ -73,7 +73,7 @@ export const EventFormModal = ({ eventToSave, showForm, visible }: Props) => {
   return (
     <Modal visible={visible} animationType="slide" transparent>
       <View style={styles.modalView}>
-        {isLoading && <ActivityIndicator />}
+        {isLoading && <ReefActivityIndicator />}
         <View style={styles.inputInlineContainer}>
           <Text>Date</Text>
           <ReefButton

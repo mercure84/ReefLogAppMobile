@@ -16,5 +16,9 @@ export const Notifications = ({ notifications }: Props) => {
         .map((alert) => alert.typeTest)
         .join(", ")}`}</Text>
     </View>
-  ) : null;
+  ) : (
+    <View>
+      <Text>Vous n'avez aucune alerte de test.</Text>
+    </View>
+  );
 };

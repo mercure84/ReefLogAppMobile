@@ -1,12 +1,10 @@
 import { urlServer } from "../constants/constants";
 import { getData } from "./storageDevice";
 
-// typage d'un membre
-
 export type Member = {
   id: string;
   lastName?: string;
-  firstName?: any;
+  firstName?: string;
   userName: string;
   email: string;
   password: string;
@@ -22,11 +20,11 @@ export type SignUp = {
   repassword: string;
 };
 
-// service signUp : add ou update a new member
+// service signUp : add or update a new member
 export const signUpService = async (
   signUpForm: SignUp,
   isUpdating?: boolean
-) => {
+): Promise<Member | Error> => {
   const urlService = !isUpdating
     ? urlServer + "api/addNewMember"
     : urlServer + "api/updateMember";
@@ -44,13 +42,14 @@ export const signUpService = async (
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: token,
+        Authorization: token ?? "",
       },
       body: JSON.stringify(newMember),
     });
-    return response.json();
+    return response.json() as Promise<Member>;
   } catch (error) {
     console.error(error);
+    return error;
   }
 };
 
@@ -112,26 +111,29 @@ export const getMemberDetail = async (
   pEmail: string,
   token: string
 ): Promise<Member | undefined> => {
-  const email = pEmail.toLocaleLowerCase();
-  const urlService = urlServer + "api/getMemberDetail/" + email;
+  if (pEmail) {
+    const email = pEmail.toLocaleLowerCase();
+    const urlService = urlServer + "api/getMemberDetail/" + email;
 
-  try {
-    console.log("On demande les détails du membre : " + email);
-    const response = await fetch(urlService, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-    });
-    const dataResponse = response.json();
-    console.log("Requête getMemberDetail OK");
-    return dataResponse;
-  } catch (error) {
-    console.log(error);
-    return undefined;
+    try {
+      console.log("On demande les détails du membre : " + email);
+      const response = await fetch(urlService, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      });
+      const dataResponse = response.json();
+      console.log("Requête getMemberDetail OK");
+      return dataResponse;
+    } catch (error) {
+      console.log(error);
+      return undefined;
+    }
   }
+  return;
 };
 
 export const getPasswordRecover = async (pEmail: string) => {
@@ -148,6 +150,30 @@ export const getPasswordRecover = async (pEmail: string) => {
     });
     console.log("Requête recoverPassword finie");
     return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// service oauth2 google
+
+export const getTokenWithGoogleOAuth2 = async (
+  tokenId: string,
+  email: string
+) => {
+  const urlService = urlServer + "api/oauth2/googleLogin";
+  const dataToSend = { tokenId, email };
+  try {
+    console.log("on envoie le google token ID du membre ", email);
+    const response = await fetch(urlService, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dataToSend),
+    });
+    return response.json();
   } catch (error) {
     console.log(error);
   }

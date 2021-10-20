@@ -4,7 +4,7 @@ import { deleteItem } from "../services/rootService";
 import { urlServer } from "../constants/constants";
 import { Tank } from "./TankStore";
 
-export interface Equipment {
+export type Equipment = {
   dateInstallation?: Date;
   id?: number;
   typeOfEquipment: string;
@@ -14,11 +14,11 @@ export interface Equipment {
   power?: number;
   quantity?: number;
   aquarium?: Tank;
-}
+};
 class EquipmentStore {
   RootStore: RootStoreType;
 
-  constructor(RootStore) {
+  constructor(RootStore: RootStoreType) {
     this.RootStore = RootStore;
   }
 

@@ -1,11 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ViewStyle,
-  ActivityIndicator,
-} from "react-native";
+import { View, Text, StyleSheet, ViewStyle } from "react-native";
 import { Header } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import RootStore from "../../../store/RootStore";
@@ -14,12 +8,15 @@ import { ReefButton } from "../../../components/ReefButton";
 import { ReefHeaderTitle } from "../../../components/ReefHeaderTitle";
 import { WaterTestItem } from "./waterTest/WaterTestItem";
 import { EventItem } from "./event/EventItem";
+import { ReefActivityIndicator } from "../../../components/ReefActivityIndicator";
+import { blueCB } from "../../../components/colors";
 
 export const StoryScreen = observer(() => {
   const navigation = useNavigation();
   const { eventStore, waterTestStore, tankStore } = RootStore;
 
   useEffect(() => {
+    console.log("Fetching water Test !");
     const getWaterTests = async () => {
       if (
         waterTestStore.updateState === "done" &&
@@ -46,7 +43,10 @@ export const StoryScreen = observer(() => {
 
   return (
     <>
-      <Header centerComponent={<ReefHeaderTitle title="MON JOURNAL" />} />
+      <Header
+        containerStyle={{ backgroundColor: blueCB }}
+        centerComponent={<ReefHeaderTitle title="MON JOURNAL" />}
+      />
       <View style={styles.page}>
         {hasATank ? (
           <View>
@@ -56,10 +56,15 @@ export const StoryScreen = observer(() => {
                 title="Tests d'eau"
                 onPress={() => navigation.navigate("waterTests")}
               />
+              <ReefButton
+                size="medium"
+                title="Graphiques"
+                onPress={() => navigation.navigate("graph")}
+              />
             </View>
 
             {isWaterTestLoading ? (
-              <ActivityIndicator />
+              <ReefActivityIndicator />
             ) : (
               RootStore.waterTestStore.waterTestList.length > 0 && (
                 <View style={styles.lastItem}>
@@ -77,7 +82,7 @@ export const StoryScreen = observer(() => {
               />
             </View>
             {isEventLoading ? (
-              <ActivityIndicator />
+              <ReefActivityIndicator />
             ) : (
               RootStore.eventStore.events.length > 0 && (
                 <View style={styles.lastItem}>
@@ -113,6 +118,7 @@ const styles = StyleSheet.create<Style>({
   },
   buttonContainer: {
     marginTop: 32,
-    alignItems: "center",
+    alignSelf: "center",
+    flexDirection: "row",
   },
 });

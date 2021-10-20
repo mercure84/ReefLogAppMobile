@@ -1,5 +1,6 @@
 import React from "react";
 import { Text } from "react-native";
+import { yellowCB } from "./colors";
 
 type Props = {
   title: string;
@@ -10,7 +11,7 @@ export const ReefHeaderTitle = ({ title }: Props) => {
     <Text
       style={{
         fontSize: 24,
-        color: "white",
+        color: yellowCB,
         textShadowColor: "black",
         fontWeight: "bold",
         textShadowOffset: { width: 1, height: 4 },

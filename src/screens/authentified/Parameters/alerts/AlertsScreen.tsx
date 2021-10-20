@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Header } from "react-native-elements";
-import { View, ViewStyle, StyleSheet, ActivityIndicator } from "react-native";
+import { View, ViewStyle, StyleSheet } from "react-native";
 import { GoBackButton } from "../../../../components/GoBackButton";
 import { observer } from "mobx-react";
 import RootStore from "../../../../store/RootStore";
 import { AlertsForm } from "./AlertsForm";
 import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
+import { ReefActivityIndicator } from "../../../../components/ReefActivityIndicator";
+import { blueCB, yellowCB } from "../../../../components/colors";
 
 export const AlertsScreen = observer(() => {
   const { alertStore } = RootStore;
@@ -28,11 +30,12 @@ export const AlertsScreen = observer(() => {
   return (
     <View style={styles.page}>
       <Header
+        containerStyle={{ backgroundColor: blueCB }}
         leftComponent={<GoBackButton />}
         centerComponent={<ReefHeaderTitle title="MES ALERTES" />}
       />
       {isAlertsLoading ? (
-        <ActivityIndicator />
+        <ReefActivityIndicator />
       ) : (
         <AlertsForm existingAlerts={alerts} />
       )}

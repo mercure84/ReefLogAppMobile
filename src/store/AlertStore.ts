@@ -2,26 +2,26 @@ import { observable, action, runInAction, computed, toJS } from "mobx";
 import { RootStore as RootStoreType, WebServiceState } from "./RootStore";
 import { urlServer } from "../constants/constants";
 
-export interface Alert {
+export type Alert = {
   id?: string;
   typeTest: TypeTest;
   targetValue: number;
   dayInterval: number;
   active: boolean;
-}
+};
 
 export enum TypeTest {
-  TEMPERATURE,
-  SALINITY,
-  ALCALINITY,
-  PH,
-  CALCIUM,
-  MAGNESIUM,
-  AMMONIAC,
-  NITRATES,
-  NITRITES,
-  PHOSPHATES,
-  SILICATES,
+  TEMPERATURE = "TEMPERATURE",
+  SALINITY = "SALINITY",
+  ALCALINITY = "ALCALINITY",
+  PH = "PH",
+  CALCIUM = "CALCIUM",
+  MAGNESIUM = "MAGNESIUM",
+  AMMONIAC = "AMMONIAC",
+  NITRATES = "NITRATES",
+  NITRITES = "NITRITES",
+  PHOSPHATES = "PHOSPHATES",
+  SILICATES = "SILICATES",
 }
 
 class AlertStore {
@@ -48,6 +48,11 @@ class AlertStore {
     return toJS(this.notifications).sort((a, b) =>
       a.typeTest > b.typeTest ? 1 : b.typeTest > a.typeTest ? -1 : 0
     );
+  }
+
+  @action clear() {
+    this.alerts = [];
+    this.fetchState = "pending";
   }
 
   @action
@@ -92,7 +97,12 @@ class AlertStore {
       try {
         console.log("Store is fetching Notifications");
         const memberToken = this.RootStore.memberStore.token;
-        const tankId = this.RootStore.tankStore.tankList[0]?.id;
+        const tankId = this.RootStore.tankStore?.tankList[0]?.id;
+        console.log("Tank id = ", tankId);
+        if (!tankId) {
+          console.log("Not tank ==> return empty notifications");
+          return [];
+        }
         const urlService = urlServer + "api/showAlerts/" + tankId;
         const response = await fetch(urlService, {
           method: "GET",

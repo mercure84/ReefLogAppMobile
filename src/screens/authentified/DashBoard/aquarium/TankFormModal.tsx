@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   ViewStyle,
@@ -10,7 +10,11 @@ import {
   Modal,
   KeyboardAvoidingView,
 } from "react-native";
-import { Tank } from "../../../../store/TankStore";
+import {
+  MainPopulation,
+  MaintenanceType,
+  Tank,
+} from "../../../../store/TankStore";
 import RootStore from "../../../../store/RootStore";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Moment from "moment";
@@ -38,6 +42,16 @@ export const TankFormModal = ({
 
   const isUpdating = tankToSave !== null;
   const { tankStore } = RootStore;
+
+  useEffect(() => {
+    if (!isUpdating) {
+      setTank({
+        ...tank,
+        mainPopulation: MainPopulation.MIX,
+        typeOfMaintenance: MaintenanceType.BERLINOIS,
+      });
+    }
+  }, [isUpdating]);
 
   const checkForm = () => {
     let isValide = false;
@@ -136,7 +150,9 @@ export const TankFormModal = ({
                   name: text,
                 })
               }
-              defaultValue={isUpdating && tank.name !== null ? tank.name : ""}
+              defaultValue={
+                isUpdating && tank.name !== null ? tank.name : "Mon récif"
+              }
             />
           </View>
           <View style={styles.inputInlineContainer}>
@@ -221,14 +237,22 @@ export const TankFormModal = ({
             <Picker
               style={{ height: 50, width: 150 }}
               mode="dropdown"
-              selectedValue={tank?.typeOfMaintenance ?? "BERLINOIS"}
-              onValueChange={(itemValue) =>
-                setTank({ ...tank, typeOfMaintenance: itemValue.toString() })
+              selectedValue={
+                tank?.typeOfMaintenance ?? MaintenanceType.BERLINOIS
               }
+              onValueChange={(itemValue) => {
+                setTank({
+                  ...tank,
+                  typeOfMaintenance: itemValue as MaintenanceType,
+                });
+              }}
             >
-              <Picker.Item label="Berlinois" value="BERLINOIS" />
-              <Picker.Item label="Jaubert" value="JAUBERT" />
-              <Picker.Item label="Autre" value="AUTRE" />
+              <Picker.Item
+                label="Berlinois"
+                value={MaintenanceType.BERLINOIS}
+              />
+              <Picker.Item label="Jaubert" value={MaintenanceType.JAUBERT} />
+              <Picker.Item label="Autre" value={MaintenanceType.AUTRE} />
             </Picker>
           </View>
           <View style={styles.inputInlineContainer}>
@@ -238,14 +262,17 @@ export const TankFormModal = ({
               mode="dropdown"
               selectedValue={tank?.mainPopulation ?? "MIX"}
               onValueChange={(itemValue) =>
-                setTank({ ...tank, mainPopulation: itemValue.toString() })
+                setTank({
+                  ...tank,
+                  mainPopulation: itemValue as MainPopulation,
+                })
               }
             >
-              <Picker.Item label="Fish-Only" value="FISH_ONLY" />
-              <Picker.Item label="Mixte" value="MIX" />
-              <Picker.Item label="Mous" value="SOFT" />
-              <Picker.Item label="LPS" value="LPS" />
-              <Picker.Item label="SPS" value="SPS" />
+              <Picker.Item label="Fish-Only" value={MainPopulation.FISH_ONLY} />
+              <Picker.Item label="Mixte" value={MainPopulation.MIX} />
+              <Picker.Item label="Mous" value={MainPopulation.SOFT} />
+              <Picker.Item label="LPS" value={MainPopulation.LPS} />
+              <Picker.Item label="SPS" value={MainPopulation.SPS} />
             </Picker>
           </View>
           <ReefButton title="Enregistrer" onPress={() => saveTank()} />

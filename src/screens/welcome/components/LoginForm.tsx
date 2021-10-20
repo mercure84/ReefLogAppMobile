@@ -34,8 +34,8 @@ export const LoginForm = ({ toggleWelcomeComponents }: Props) => {
     setLoading(false);
     if (response.token) {
       console.log("Authentification réussie !");
-      storeData("token", "Bearer " + response.token);
-      storeData("emailUser", email);
+      await storeData("token", "Bearer " + response.token);
+      await storeData("emailUser", email);
       setEmail("");
       setPassword("");
       navigation.navigate("AuthentOk");

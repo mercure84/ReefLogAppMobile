@@ -59,3 +59,4 @@ buck-out/
 /ios/Pods/
 
 #android/gradle.properties
+src/constants/constants.tsx

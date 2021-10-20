@@ -6,7 +6,7 @@ import { Member } from "../services/memberService";
 import { tan } from "react-native-reanimated";
 
 // typage aquarium
-export interface Tank {
+export type Tank = {
   id: string;
   name: string;
   length: number;
@@ -15,12 +15,26 @@ export interface Tank {
   startDate: Date;
   member?: Member;
   sumpVolume: number;
-  typeOfMaintenance: "BERLINOIS" | "JAUBERT" | "AUTRE";
+  typeOfMaintenance: MaintenanceType;
   mainPopulation: "FISH_ONLY" | "SOFT" | "MIX" | "LPS" | "SPS";
   ballingDescription?: string;
   liveRocksWeigth?: number;
   othersRocksWeight?: number;
   rawVolume?: number;
+};
+
+export enum MaintenanceType {
+  BERLINOIS = "BERLINOIS",
+  JAUBERT = "JAUBERT",
+  AUTRE = "AUTRE",
+}
+
+export enum MainPopulation {
+  FISH_ONLY = "FISH_ONLY",
+  SOFT = "SOFT",
+  MIX = "MIX",
+  LPS = "LPS",
+  SPS = "SPS",
 }
 
 class TankStore {
@@ -36,7 +50,10 @@ class TankStore {
   @observable tankImageState: WebServiceState = "pending";
   @observable tankPicture: ArrayBuffer | null = null;
 
-  // récupération de la liste des aquariums du membre
+  @action clear() {
+    this.tankList = [];
+    this.fetchState = "pending";
+  }
 
   @action
   async fetchTankList(): Promise<Tank[]> {

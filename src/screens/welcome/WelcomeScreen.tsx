@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { LoginForm } from "./components/LoginForm";
 import { SignupForm } from "./components/SignupForm";
@@ -13,6 +13,13 @@ import { About } from "./components/About";
 import { ReefButton } from "../../components/ReefButton";
 import { PassWordRecoverForm } from "./components/PassWordRecoverForm";
 import { Text } from "react-native-elements";
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+} from "@react-native-google-signin/google-signin";
+import { webClientGoogleSignId } from "../../constants/constants";
+import { googleSignIn, isSignedIn } from "../../services/googleSignin";
+import { useNavigation } from "@react-navigation/native";
 
 export const componentStatusDefault = {
   showSignup: false,
@@ -28,7 +35,9 @@ export enum WelcomeElement {
   DEFAULT,
 }
 
-const HomeScreen = () => {
+const WelcomeScreen = () => {
+  const navigation = useNavigation();
+
   const [componentStatus, setComponentStatus] = useState(
     componentStatusDefault
   );
@@ -66,7 +75,21 @@ const HomeScreen = () => {
     }
   };
 
+  useEffect(() => {
+    console.log("Google Signing is configuring");
+    GoogleSignin.configure({
+      webClientId: webClientGoogleSignId,
+    });
+    isSignedIn();
+  }, []);
+
   const handlePressAbout = () => setAboutVisible(!isAboutVisible);
+  const handleGoogleOnPress = async () => {
+    const access = await googleSignIn();
+    if (access === "success") {
+      navigation.navigate("AuthentOk");
+    }
+  };
 
   return (
     <KeyboardAvoidingView style={styles.page} behavior="height">
@@ -89,6 +112,12 @@ const HomeScreen = () => {
               onPress={() => {
                 toggleWelcomeComponents(WelcomeElement.LOGIN);
               }}
+            />
+            <GoogleSigninButton
+              style={{ width: 192, height: 48 }}
+              size={GoogleSigninButton.Size.Wide}
+              color={GoogleSigninButton.Color.Dark}
+              onPress={handleGoogleOnPress}
             />
           </View>
         )}
@@ -141,4 +170,4 @@ const styles = StyleSheet.create<Style>({
   },
 });
 
-export default HomeScreen;
+export default WelcomeScreen;

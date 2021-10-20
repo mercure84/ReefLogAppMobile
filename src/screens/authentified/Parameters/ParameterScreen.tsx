@@ -1,21 +1,31 @@
 import React from "react";
-import { View, StyleSheet, ViewStyle } from "react-native";
+import { View, StyleSheet, ViewStyle, BackHandler } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Header } from "react-native-elements";
 import { ReefButton } from "../../../components/ReefButton";
 import { ReefHeaderTitle } from "../../../components/ReefHeaderTitle";
 import mailIcon from "../../../assets/icons/mail.png";
-import { disconnect } from "../../../services/rootService";
+import { logout } from "../../../services/rootService";
 import RootStore from "../../../store/RootStore";
 import { handleSuggestEmail } from "../../../utils/helpers";
+import { blueCB } from "../../../components/colors";
 
 const ParameterScreen = () => {
   const navigation = useNavigation();
   const hasATank = RootStore.tankStore.tankList.length > 0;
 
+  const logoutOnpress = async () => {
+    await logout();
+    // TO DO : disconnect proper -- this will not work on iOS
+    BackHandler.exitApp();
+  };
+
   return (
     <>
-      <Header centerComponent={<ReefHeaderTitle title="MES PARAMETRES" />} />
+      <Header
+        containerStyle={{ backgroundColor: blueCB }}
+        centerComponent={<ReefHeaderTitle title="MES PARAMETRES" />}
+      />
       <View style={styles.buttonContainer}>
         <ReefButton
           title="Mon profil"
@@ -31,10 +41,7 @@ const ParameterScreen = () => {
           title="Outils"
           onPress={() => navigation.navigate("myTools")}
         />
-        <ReefButton
-          title="Se déconnecter"
-          onPress={() => (disconnect(), navigation.navigate("Signout"))}
-        />
+        <ReefButton title="Se déconnecter" onPress={logoutOnpress} />
 
         <ReefButton
           icon={mailIcon}

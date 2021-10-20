@@ -4,7 +4,7 @@ import { deleteItem } from "../services/rootService";
 import { urlServer } from "../constants/constants";
 import { Tank } from "./TankStore";
 
-export interface WaterTest {
+export type WaterTest = {
   id: string;
   date?: Date;
   temperature?: number;
@@ -19,7 +19,7 @@ export interface WaterTest {
   phosphates?: number;
   silicates?: number;
   aquarium?: Tank;
-}
+};
 class WaterTestStore {
   RootStore: RootStoreType;
 
@@ -33,6 +33,10 @@ class WaterTestStore {
 
   @computed get waterTestListData() {
     return toJS(this.waterTestList);
+  }
+
+  @action clear() {
+    this.waterTestList = [];
   }
 
   @action
@@ -77,7 +81,7 @@ class WaterTestStore {
       this.updateState = "pending";
       console.log("Store is deleting the waterTest n° " + id);
       const memberToken = this.RootStore.memberStore.token ?? "";
-      await deleteItem(id, "waterTest", memberToken);
+      await deleteItem(id, "watertest", memberToken);
       this.refresh();
     } catch (error) {
       console.log(error);

@@ -1,4 +1,4 @@
-package com.mobilereeflog;
+package com.centropygebicolor.log4reef;
 
 import android.app.Application;
 import android.content.Context;
