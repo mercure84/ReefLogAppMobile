@@ -62,10 +62,10 @@ public class MainApplication extends Application implements ReactApplication {
          We use reflection here to pick up the class that initializes Flipper,
         since Flipper library is not available in release mode
         */
-        Class<?> aClass = Class.forName("com.rndiffapp.ReactNativeFlipper");
+        Class<?> aClass = Class.forName("com.centropygebicolor.log4reef.ReactNativeFlipper");
         aClass.getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
               .invoke(null, context, reactInstanceManager);
-      } catch (ClassNotFoundException e) {
+      } catch (ClassNotFoundException e) { 
         e.printStackTrace();
       } catch (NoSuchMethodException e) {
         e.printStackTrace();
