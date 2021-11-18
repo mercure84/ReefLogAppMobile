@@ -1,4 +1,4 @@
-import { observer } from "mobx-react-lite";
+import { observer } from "mobx-react";
 import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { Header } from "react-native-elements";
