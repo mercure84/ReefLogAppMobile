@@ -10,7 +10,8 @@ export const ReefHeaderTitle = ({ title }: Props) => {
   return (
     <Text
       style={{
-        fontSize: 24,
+        fontSize: 22,
+        flexShrink: 1,
         color: yellowCB,
         textShadowColor: "black",
         fontWeight: "bold",

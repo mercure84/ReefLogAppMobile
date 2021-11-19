@@ -114,7 +114,7 @@ const WelcomeScreen = () => {
               }}
             />
             <GoogleSigninButton
-              style={{ width: 192, height: 48 }}
+              style={{ width: "100%", height: "25%" }}
               size={GoogleSigninButton.Size.Wide}
               color={GoogleSigninButton.Color.Dark}
               onPress={handleGoogleOnPress}
