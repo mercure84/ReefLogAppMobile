@@ -6,11 +6,12 @@ import urchinIcon from "../assets/icons/urchin.png";
 import molluskIcon from "../assets/icons/mollusk.png";
 import cucumberIcon from "../assets/icons/cucumber.png";
 import anemoneIcon from "../assets/icons/anemone.png";
-import email from "react-native-email";
+import qs from "qs";
 
 import { Animal } from "../store/AnimalStore";
 import { Tank } from "../store/TankStore";
 import { TypeTest } from "../store/AlertStore";
+import { Linking } from "react-native";
 
 export const formatStringToFloat = (text: string) => {
   return isNaN(parseFloat(text.replace(",", ".")))
@@ -187,9 +188,13 @@ export const getMasseVolumique = (S: number, T: number, P: number) => {
   return Math.round((rho / (1 - P / K)) * 100) / 100;
 };
 
-export const handleSuggestEmail = () => {
-  const recipient = ["julien.marcesse@gmail.com"];
-  email(recipient, {
-    subject: "Une suggestion sur votre appli ReefLog",
-  }).catch(console.error);
+export const handleSuggestEmail = async () => {
+  const to = "mercure8492@gmail.com";
+
+  const query = qs.stringify({
+    subject: "Une suggestion pour l'application Log4Reef",
+  });
+  const url = `mailto:${to}?${query}`;
+
+  return Linking.openURL(url);
 };

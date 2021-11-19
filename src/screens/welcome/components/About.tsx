@@ -17,7 +17,7 @@ export const About = () => {
       </Text>
       <TouchableOpacity onPress={handleSuggestEmail}>
         <Text style={{ textAlign: "center", color: "blue" }}>
-          Pour toute question / suggestion :{"\n"}julien.marcesse@gmail.com
+          Pour toute question / suggestion :{"\n"}mercure8492@gmail.com
         </Text>
       </TouchableOpacity>
       <Text style={{ color: "orange", alignSelf: "center" }}>
