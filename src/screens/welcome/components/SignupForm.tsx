@@ -75,7 +75,6 @@ export const SignupForm = ({
         setLoading(true);
         const response = await signUpService(signUpForm, isUpdating);
         setLoading(false);
-        console.log("réponse status = " + response.role);
         if (response.role === "USER") {
           if (isUpdating) {
             RootStore.memberStore.fetchMember();
@@ -100,6 +99,8 @@ export const SignupForm = ({
     [signUpForm]
   );
 
+  const signedByOAuth = RootStore.memberStore.googleToken !== "";
+
   return (
     <View>
       {isLoading && (
@@ -118,7 +119,7 @@ export const SignupForm = ({
           textContentType="emailAddress"
           keyboardType="email-address"
           maxLength={30}
-          autoCompleteType="email"
+          autoComplete="email"
           placeholder="E-mail"
           onChangeText={(text) => setSignUpForm({ ...signUpForm, email: text })}
           defaultValue={isUpdating && email !== null ? email : ""}
@@ -130,7 +131,7 @@ export const SignupForm = ({
           style={styles.textInput}
           textContentType="nickname"
           maxLength={12}
-          autoCompleteType="off"
+          autoComplete="off"
           placeholder="Pseudo"
           onChangeText={(text) =>
             setSignUpForm({ ...signUpForm, userName: text })
@@ -145,7 +146,7 @@ export const SignupForm = ({
           textContentType="newPassword"
           secureTextEntry={true}
           maxLength={12}
-          autoCompleteType="off"
+          autoComplete="off"
           placeholder="Mot de passe"
           onChangeText={(text) => {
             setSignUpForm({ ...signUpForm, password: text });
@@ -159,7 +160,7 @@ export const SignupForm = ({
           textContentType="newPassword"
           secureTextEntry={true}
           maxLength={12}
-          autoCompleteType="off"
+          autoComplete="off"
           placeholder="Confirmation du mot de passe"
           onChangeText={(text) =>
             setSignUpForm({ ...signUpForm, repassword: text })
@@ -176,6 +177,15 @@ export const SignupForm = ({
         </View>
       )}
 
+      {signedByOAuth && (
+        <View>
+          <Text style={styles.textInfo}>
+            Vous ne pouvez pas modifier votre profil car vous êtes authentifié
+            par un service tiers.
+          </Text>
+        </View>
+      )}
+
       <View
         style={{
           alignSelf: "center",
@@ -188,7 +198,7 @@ export const SignupForm = ({
             size="medium"
             title="Enregistrer"
             onPress={() => submitNewMember(signUpForm)}
-            disabled={isLoading}
+            disabled={isLoading || signedByOAuth}
           />
         ) : (
           <>
