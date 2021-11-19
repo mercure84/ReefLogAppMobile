@@ -5,10 +5,12 @@ import {
   ViewStyle,
   StyleSheet,
   TextInput,
-  TextStyle
+  TextStyle,
 } from "react-native";
 import { Header } from "react-native-elements";
+import { blueCB } from "../../../../components/colors";
 import { GoBackButton } from "../../../../components/GoBackButton";
+import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
 import { getMasseVolumique } from "../../../../utils/helpers";
 
 export const ToolsScreen = () => {
@@ -21,8 +23,8 @@ export const ToolsScreen = () => {
     <View style={styles.page}>
       <Header
         leftComponent={<GoBackButton />}
-        centerComponent={<Text style={{ fontSize: 16 }}>Mes outils</Text>}
-        backgroundColor="pink"
+        containerStyle={{ backgroundColor: blueCB }}
+        centerComponent={<ReefHeaderTitle title="OUTILS" />}
       />
 
       <View style={styles.container}>
@@ -33,7 +35,7 @@ export const ToolsScreen = () => {
           style={styles.textInput}
           maxLength={6}
           keyboardType="decimal-pad"
-          onChangeText={text => setSalinity(parseFloat(text))}
+          onChangeText={(text) => setSalinity(parseFloat(text))}
         />
         <Text>Indiquez la température (°C)</Text>
 
@@ -42,7 +44,7 @@ export const ToolsScreen = () => {
           maxLength={6}
           keyboardType="decimal-pad"
           defaultValue={"25"}
-          onChangeText={text => setTemperature(parseFloat(text))}
+          onChangeText={(text) => setTemperature(parseFloat(text))}
         />
 
         <Text>Equivalent masse volumique (g/L aéromètre JBL) :</Text>
@@ -62,25 +64,25 @@ type Style = {
 
 const styles = StyleSheet.create<Style>({
   page: {
-    alignItems: "stretch"
+    alignItems: "stretch",
   },
   container: {
-    padding: 8
+    padding: 8,
   },
   textInput: {
     backgroundColor: "#DADBDD",
     borderRadius: 4,
     marginBottom: 8,
     width: "30%",
-    textAlign: "center"
+    textAlign: "center",
   },
   subtitle: {
     fontSize: 16,
     fontWeight: "bold",
-    marginBottom: 16
+    marginBottom: 16,
   },
   result: {
     color: "red",
-    padding: 16
-  }
+    padding: 16,
+  },
 });

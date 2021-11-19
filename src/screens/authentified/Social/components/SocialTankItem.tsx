@@ -1,5 +1,4 @@
 import React from "react";
-import { Tank } from "../../../../services/tankService";
 import {
   View,
   Text,
@@ -12,6 +11,7 @@ import {
 import Moment from "moment";
 import "moment/locale/fr";
 import memberIcon from "../../../../assets/icons/social.png";
+import { Tank } from "../../../../store/TankStore";
 
 type Props = {
   tank: Tank;
@@ -24,7 +24,7 @@ export const SocialTankItem = ({ tank, editFunction }: Props) => {
       <View style={styles.header}>
         <Text style={styles.mainTitle}>{tank.name}</Text>
         <Image source={memberIcon} style={styles.icon} />
-        <Text style={styles.mainTitle}>{tank.member.userName}</Text>
+        <Text style={styles.mainTitle}>{tank?.member?.userName}</Text>
       </View>
       <Text style={styles.detailText}>
         Mis en eau : {Moment(tank.startDate).format("ll")}

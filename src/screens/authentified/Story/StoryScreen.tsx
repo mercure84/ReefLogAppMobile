@@ -53,12 +53,12 @@ export const StoryScreen = observer(() => {
             <View style={styles.buttonContainer}>
               <ReefButton
                 size="medium"
-                title="Tests d'eau"
+                title="Tests"
                 onPress={() => navigation.navigate("waterTests")}
               />
               <ReefButton
                 size="medium"
-                title="Graphiques"
+                title="Données"
                 onPress={() => navigation.navigate("graph")}
               />
             </View>
