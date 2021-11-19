@@ -90,17 +90,16 @@ class AlertStore {
   @action
   async fetchNotifications(): Promise<Alert[]> {
     if (
-      this.RootStore.tankStore.fetchState === "done" &&
+      this.RootStore.tankStore.tankList.length > 0 &&
       this.notificationsFetchState !== "starting"
     ) {
       this.notificationsFetchState = "starting";
       try {
-        console.log("Store is fetching Notifications");
         const memberToken = this.RootStore.memberStore.token;
         const tankId = this.RootStore.tankStore?.tankList[0]?.id;
-        console.log("Tank id = ", tankId);
+        console.log("Store is fetching Notifications for thank n° ", tankId);
         if (!tankId) {
-          console.log("Not tank ==> return empty notifications");
+          console.log("No tank ==> return empty notifications");
           return [];
         }
         const urlService = urlServer + "api/showAlerts/" + tankId;
@@ -113,8 +112,14 @@ class AlertStore {
           },
         });
         const notifications: Promise<Alert[]> = response.json();
-        console.log("notifications success");
-        this.notifications = await notifications;
+        runInAction(async () => {
+          this.notifications = await notifications;
+        });
+        console.log(
+          "notifications success : ",
+          this.notifications.length,
+          " alertes trouvées."
+        );
         this.notificationsFetchState = "done";
         return notifications;
       } catch (error) {

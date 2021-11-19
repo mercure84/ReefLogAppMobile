@@ -3,7 +3,6 @@ import { RootStore as RootStoreType, WebServiceState } from "./RootStore";
 import { ImageSourcePropType } from "react-native";
 import { urlServer } from "../constants/constants";
 import { Member } from "../services/memberService";
-import { tan } from "react-native-reanimated";
 
 // typage aquarium
 export type Tank = {

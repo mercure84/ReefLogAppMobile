@@ -47,14 +47,10 @@ const DashboardScreen = observer(() => {
 
   useEffect(() => {
     const getNotifications = async () => {
-      if (
-        member &&
-        tankList &&
-        alertStore.notificationsFetchState === "pending"
-      ) {
+      if (tankList && alertStore.notificationsFetchState === "pending") {
         await alertStore.fetchNotifications();
       }
-      if (alertStore.fetchState === "done") {
+      if (alertStore.notificationsFetchState === "done") {
         setNotifications(alertStore.notifications);
       }
     };
@@ -100,7 +96,11 @@ const DashboardScreen = observer(() => {
         </>
       )}
 
-      {!isNotifLoading && <Notifications notifications={notifications} />}
+      {isNotifLoading ? (
+        <ReefActivityIndicator />
+      ) : (
+        <Notifications notifications={notifications} />
+      )}
 
       {isNewTankFormVisible && (
         <TankFormModal
