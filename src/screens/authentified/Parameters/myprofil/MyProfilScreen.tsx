@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Header, Text } from "react-native-elements";
 import { View, ViewStyle, StyleSheet } from "react-native";
 import { ProfilForm } from "./ProfilForm";
 import RootStore from "../../../../store/RootStore";
 import { GoBackButton } from "../../../../components/GoBackButton";
 import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
-import { darkColor } from "../../../../utils/helpers";
+import { ThemeContext } from "../../../../../App";
 
 export const MyProfilScreen = () => {
   const member = RootStore.memberStore.member;
-
+  const { darkColor } = useContext(ThemeContext).theme;
   return (
     <View style={styles.page}>
       <Header

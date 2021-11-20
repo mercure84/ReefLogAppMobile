@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useMemo, useState } from "react";
 import { Provider } from "mobx-react";
 import { MainNavigator } from "./src/navigation/AppNavigator";
 import { getData } from "./src/services/storageDevice";
 import { checkToken } from "./src/services/memberService";
 import RootStore from "./src/store/RootStore";
 import { ReefActivityIndicator } from "./src/components/ReefActivityIndicator";
+import { myThemes } from "./src/components/colors";
+
+export const ThemeContext = createContext(myThemes[0]);
 
 export default function App() {
   const [isLoading, setLoading] = useState(true);
@@ -30,9 +33,11 @@ export default function App() {
   }, []);
 
   return (
-    <Provider RootStore={RootStore}>
-      {isLoading && <ReefActivityIndicator />}
-      <MainNavigator isTokenOK={isAuthentified} />
-    </Provider>
+    <ThemeContext.Provider value={myThemes[1]}>
+      <Provider RootStore={RootStore}>
+        {isLoading && <ReefActivityIndicator />}
+        <MainNavigator isTokenOK={isAuthentified} />
+      </Provider>
+    </ThemeContext.Provider>
   );
 }

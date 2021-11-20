@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   Text,
@@ -8,16 +8,17 @@ import {
   TextStyle,
 } from "react-native";
 import { Header } from "react-native-elements";
+import { ThemeContext } from "../../../../../App";
 import { GoBackButton } from "../../../../components/GoBackButton";
 import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
-import { darkColor, getMasseVolumique } from "../../../../utils/helpers";
+import { getMasseVolumique } from "../../../../utils/helpers";
 
 export const ToolsScreen = () => {
   const [salinity, setSalinity] = useState(0);
   const [temperature, setTemperature] = useState(25);
 
   const resultat = getMasseVolumique(salinity, temperature, 0);
-
+  const { darkColor } = useContext(ThemeContext).theme;
   return (
     <View style={styles.page}>
       <Header

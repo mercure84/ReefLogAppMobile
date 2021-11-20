@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import { View, FlatList, Text, ViewStyle, StyleSheet } from "react-native";
 import { GoBackButton } from "../../../../components/GoBackButton";
@@ -10,11 +10,12 @@ import { ReefButton } from "../../../../components/ReefButton";
 import { EventItem } from "./EventItem";
 import { EventFormModal } from "./EventFormModal";
 import { ReefActivityIndicator } from "../../../../components/ReefActivityIndicator";
-import { darkColor } from "../../../../utils/helpers";
+import { ThemeContext } from "../../../../../App";
 
 export const EventScreen = observer(() => {
   const { eventStore } = RootStore;
   const [isEventFormVisible, setEventFormVisible] = useState(false);
+  const { darkColor } = useContext(ThemeContext).theme;
 
   useEffect(() => {
     const getEvents = async () => {

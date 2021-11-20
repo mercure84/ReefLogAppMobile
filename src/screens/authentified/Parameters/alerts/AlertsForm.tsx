@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   Text,
@@ -12,7 +12,7 @@ import { NumericStepper } from "../../../../components/NumericStepper";
 import RootStore from "../../../../store/RootStore";
 import { Alert } from "../../../../store/AlertStore";
 import { observer } from "mobx-react";
-import { clearColor, darkColor } from "../../../../utils/helpers";
+import { ThemeContext } from "../../../../../App";
 
 type Props = {
   existingAlerts: Alert[];
@@ -22,6 +22,7 @@ export const AlertsForm = observer(({ existingAlerts }: Props) => {
   const [alerts, setAlerts] = useState(existingAlerts);
   const [isSubmitting, setSubmitting] = useState(false);
   const myAlerts = alerts.length > 0 ? alerts : existingAlerts;
+  const { darkColor, clearColor } = useContext(ThemeContext).theme;
 
   const changeIsActive = (isActive: boolean, pAlert: Alert) => {
     const index = alerts.findIndex((alert) => alert === pAlert);

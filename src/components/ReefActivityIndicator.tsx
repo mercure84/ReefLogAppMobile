@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { ActivityIndicator } from "react-native";
-import { darkColor } from "../utils/helpers";
+import { ThemeContext } from "../../App";
 
 export const ReefActivityIndicator = () => {
-  return <ActivityIndicator size="large" color={darkColor} />;
+  const context = useContext(ThemeContext);
+  return <ActivityIndicator size="large" color={context.theme.darkColor} />;
 };

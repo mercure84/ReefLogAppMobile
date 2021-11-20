@@ -1,5 +1,5 @@
 import { observer } from "mobx-react";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { Header } from "react-native-elements";
 import { Grid, LineChart, XAxis, YAxis } from "react-native-svg-charts";
@@ -12,8 +12,7 @@ import * as scale from "d3-scale";
 import * as shape from "d3-shape";
 import moment from "moment";
 import { Picker } from "@react-native-picker/picker";
-import { darkColor } from "../../../../utils/helpers";
-
+import { ThemeContext } from "../../../../../App";
 type dataLine = {
   date: moment.Moment;
   value: number;
@@ -22,6 +21,8 @@ type dataLine = {
 const minMaxDefault = { minY: 0, maxY: 0 };
 
 export const GraphScreen = observer(() => {
+  const { darkColor } = useContext(ThemeContext).theme;
+
   const { graphStore } = RootStore;
   const [waterTest, setWaterTest] = useState<TypeTest | null>(
     TypeTest.ALCALINITY

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Header } from "react-native-elements";
 import { View, ViewStyle, StyleSheet } from "react-native";
 import { GoBackButton } from "../../../../components/GoBackButton";
@@ -7,9 +7,10 @@ import RootStore from "../../../../store/RootStore";
 import { AlertsForm } from "./AlertsForm";
 import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
 import { ReefActivityIndicator } from "../../../../components/ReefActivityIndicator";
-import { darkColor } from "../../../../utils/helpers";
+import { ThemeContext } from "../../../../../App";
 
 export const AlertsScreen = observer(() => {
+  const { darkColor } = useContext(ThemeContext).theme;
   const { alertStore } = RootStore;
 
   useEffect(() => {

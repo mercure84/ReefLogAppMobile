@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, StyleSheet, ViewStyle, Text } from "react-native";
 import { Header } from "react-native-elements";
 import { observer } from "mobx-react";
@@ -12,7 +12,7 @@ import { TankFormModal } from "./aquarium/TankFormModal";
 import { Alert } from "../../../store/AlertStore";
 import { Notifications } from "./notifications/Notifications";
 import { ReefActivityIndicator } from "../../../components/ReefActivityIndicator";
-import { darkColor } from "../../../utils/helpers";
+import { ThemeContext } from "../../../../App";
 
 const DashboardScreen = observer(() => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);
@@ -23,6 +23,7 @@ const DashboardScreen = observer(() => {
 
   const { memberStore, tankStore, alertStore } = RootStore;
 
+  const { darkColor } = useContext(ThemeContext).theme;
   useEffect(() => {
     const getMember = async () => {
       if (memberStore.fetchState === "pending") {

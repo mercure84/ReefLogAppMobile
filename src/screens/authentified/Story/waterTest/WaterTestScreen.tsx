@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import { View, FlatList, Text, ViewStyle, StyleSheet } from "react-native";
 import { GoBackButton } from "../../../../components/GoBackButton";
@@ -9,12 +9,13 @@ import { WaterTestItem } from "./WaterTestItem";
 import RootStore from "../../../../store/RootStore";
 import { WaterTestFormModal } from "./WaterTestFormModal";
 import { ReefActivityIndicator } from "../../../../components/ReefActivityIndicator";
-import { darkColor } from "../../../../utils/helpers";
+import { ThemeContext } from "../../../../../App";
 
 export const WaterTestScreen = observer(() => {
   const [isWaterTestFormVisible, setWaterTestFormVisible] = useState(false);
 
   const { waterTestStore } = RootStore;
+  const { darkColor } = useContext(ThemeContext).theme;
 
   useEffect(() => {
     const getWaterTests = async () => {

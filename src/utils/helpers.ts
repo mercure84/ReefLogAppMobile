@@ -136,11 +136,3 @@ export const handleSuggestEmail = async () => {
 
   return Linking.openURL(url);
 };
-
-//méthode pour retourner le thème couleur du membre
-export const getColorTheme = () => {
-  return myThemes[RootStore.memberStore.member?.themeColor ?? 0].theme;
-};
-
-export const darkColor = getColorTheme().darkColor;
-export const clearColor = getColorTheme().clearColor;

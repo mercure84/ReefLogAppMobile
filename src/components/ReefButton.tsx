@@ -1,7 +1,7 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useContext } from "react";
 import { View } from "react-native";
 import { Button, ButtonProps } from "react-native-elements";
-import { clearColor, darkColor } from "../utils/helpers";
+import { ThemeContext } from "../../App";
 
 type Props = {
   title: ReactNode | string;
@@ -26,6 +26,8 @@ export const ReefButton = ({
         return 320;
     }
   };
+
+  const { darkColor, clearColor } = useContext(ThemeContext).theme;
 
   return (
     <View style={{ margin: 4, width: sizeWidth() }}>

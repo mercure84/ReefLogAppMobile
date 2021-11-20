@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { View, Text, StyleSheet, ViewStyle } from "react-native";
 import { Header } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
@@ -9,11 +9,12 @@ import { ReefHeaderTitle } from "../../../components/ReefHeaderTitle";
 import { WaterTestItem } from "./waterTest/WaterTestItem";
 import { EventItem } from "./event/EventItem";
 import { ReefActivityIndicator } from "../../../components/ReefActivityIndicator";
-import { darkColor } from "../../../utils/helpers";
+import { ThemeContext } from "../../../../App";
 
 export const StoryScreen = observer(() => {
   const navigation = useNavigation();
   const { eventStore, waterTestStore, tankStore } = RootStore;
+  const { darkColor } = useContext(ThemeContext).theme;
 
   useEffect(() => {
     console.log("Fetching water Test !");

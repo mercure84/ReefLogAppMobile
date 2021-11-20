@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Text } from "react-native";
-import { clearColor } from "../utils/helpers";
+import { ThemeContext } from "../../App";
 
 type Props = {
   title: string;
 };
 
 export const ReefHeaderTitle = ({ title }: Props) => {
+  const { clearColor } = useContext(ThemeContext).theme;
+
   return (
     <Text
       style={{

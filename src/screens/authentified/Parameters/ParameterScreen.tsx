@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, StyleSheet, ViewStyle, BackHandler } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Header } from "react-native-elements";
@@ -7,7 +7,8 @@ import { ReefHeaderTitle } from "../../../components/ReefHeaderTitle";
 import mailIcon from "../../../assets/icons/mail.png";
 import { logout } from "../../../services/rootService";
 import RootStore from "../../../store/RootStore";
-import { darkColor, handleSuggestEmail } from "../../../utils/helpers";
+import { handleSuggestEmail } from "../../../utils/helpers";
+import { ThemeContext } from "../../../../App";
 
 const ParameterScreen = () => {
   const navigation = useNavigation();
@@ -18,6 +19,7 @@ const ParameterScreen = () => {
     // TO DO : disconnect proper -- this will not work on iOS
     BackHandler.exitApp();
   };
+  const { darkColor } = useContext(ThemeContext).theme;
 
   return (
     <>
