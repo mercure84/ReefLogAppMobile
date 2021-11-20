@@ -1,11 +1,12 @@
-import React, { useContext, useState } from "react";
-import { Header, Text } from "react-native-elements";
+import React, { useContext } from "react";
+import { Header } from "react-native-elements";
 import { View, ViewStyle, StyleSheet } from "react-native";
 import { ProfilForm } from "./ProfilForm";
 import RootStore from "../../../../store/RootStore";
 import { GoBackButton } from "../../../../components/GoBackButton";
 import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
 import { ThemeContext } from "../../../../../App";
+import { ThemeSelector } from "./ThemeSelector";
 
 export const MyProfilScreen = () => {
   const member = RootStore.memberStore.member;
@@ -18,6 +19,7 @@ export const MyProfilScreen = () => {
         centerComponent={<ReefHeaderTitle title="MON PROFIL" />}
       />
       {member && <ProfilForm memberToUpdate={member} />}
+      <ThemeSelector />
     </View>
   );
 };

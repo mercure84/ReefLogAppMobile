@@ -256,5 +256,6 @@ const styles = StyleSheet.create<Style>({
     fontSize: 12,
     textAlign: "center",
     color: "red",
+    paddingHorizontal: 8,
   },
 });
