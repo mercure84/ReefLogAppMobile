@@ -13,6 +13,7 @@ import { Alert } from "../../../store/AlertStore";
 import { Notifications } from "./notifications/Notifications";
 import { ReefActivityIndicator } from "../../../components/ReefActivityIndicator";
 import { ThemeContext } from "../../../../App";
+import { myThemes } from "../../../components/colors";
 
 const DashboardScreen = observer(() => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);
@@ -22,8 +23,9 @@ const DashboardScreen = observer(() => {
   const [notifications, setNotifications] = useState<Alert[]>([]);
 
   const { memberStore, tankStore, alertStore } = RootStore;
+  const { setTheme } = useContext(ThemeContext);
 
-  const { darkColor } = useContext(ThemeContext).theme;
+  const { darkColor } = useContext(ThemeContext).theme.theme;
   useEffect(() => {
     const getMember = async () => {
       if (memberStore.fetchState === "pending") {
@@ -35,6 +37,10 @@ const DashboardScreen = observer(() => {
     };
     getMember();
   }, [memberStore.fetchState]);
+
+  useEffect(() => {
+    setTheme(myThemes[member?.themeColor ?? 0]);
+  }, [member?.themeColor]);
 
   useEffect(() => {
     const getTank = async () => {

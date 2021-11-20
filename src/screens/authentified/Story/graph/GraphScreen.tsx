@@ -21,7 +21,7 @@ type dataLine = {
 const minMaxDefault = { minY: 0, maxY: 0 };
 
 export const GraphScreen = observer(() => {
-  const { darkColor } = useContext(ThemeContext).theme;
+  const { darkColor } = useContext(ThemeContext).theme.theme;
 
   const { graphStore } = RootStore;
   const [waterTest, setWaterTest] = useState<TypeTest | null>(

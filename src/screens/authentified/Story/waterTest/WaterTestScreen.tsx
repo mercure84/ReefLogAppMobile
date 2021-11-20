@@ -15,7 +15,7 @@ export const WaterTestScreen = observer(() => {
   const [isWaterTestFormVisible, setWaterTestFormVisible] = useState(false);
 
   const { waterTestStore } = RootStore;
-  const { darkColor } = useContext(ThemeContext).theme;
+  const { darkColor } = useContext(ThemeContext).theme.theme;
 
   useEffect(() => {
     const getWaterTests = async () => {

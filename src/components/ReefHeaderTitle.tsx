@@ -7,7 +7,7 @@ type Props = {
 };
 
 export const ReefHeaderTitle = ({ title }: Props) => {
-  const { clearColor } = useContext(ThemeContext).theme;
+  const { clearColor } = useContext(ThemeContext).theme.theme;
 
   return (
     <Text

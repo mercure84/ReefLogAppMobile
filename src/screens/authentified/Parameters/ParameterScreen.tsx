@@ -19,7 +19,7 @@ const ParameterScreen = () => {
     // TO DO : disconnect proper -- this will not work on iOS
     BackHandler.exitApp();
   };
-  const { darkColor } = useContext(ThemeContext).theme;
+  const { darkColor } = useContext(ThemeContext).theme.theme;
 
   return (
     <>

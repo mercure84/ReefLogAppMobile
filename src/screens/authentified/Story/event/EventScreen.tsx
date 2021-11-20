@@ -15,7 +15,7 @@ import { ThemeContext } from "../../../../../App";
 export const EventScreen = observer(() => {
   const { eventStore } = RootStore;
   const [isEventFormVisible, setEventFormVisible] = useState(false);
-  const { darkColor } = useContext(ThemeContext).theme;
+  const { darkColor } = useContext(ThemeContext).theme.theme;
 
   useEffect(() => {
     const getEvents = async () => {

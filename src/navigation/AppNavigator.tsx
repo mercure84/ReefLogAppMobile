@@ -20,7 +20,7 @@ import RootStore from "../store/RootStore";
 import { ThemeContext } from "../../App";
 
 const TabNavigator = () => {
-  const { darkColor } = useContext(ThemeContext).theme;
+  const { darkColor } = useContext(ThemeContext).theme.theme;
 
   return (
     <Tab.Navigator

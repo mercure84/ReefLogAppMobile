@@ -22,7 +22,7 @@ export const AlertsForm = observer(({ existingAlerts }: Props) => {
   const [alerts, setAlerts] = useState(existingAlerts);
   const [isSubmitting, setSubmitting] = useState(false);
   const myAlerts = alerts.length > 0 ? alerts : existingAlerts;
-  const { darkColor, clearColor } = useContext(ThemeContext).theme;
+  const { darkColor, clearColor } = useContext(ThemeContext).theme.theme;
 
   const changeIsActive = (isActive: boolean, pAlert: Alert) => {
     const index = alerts.findIndex((alert) => alert === pAlert);

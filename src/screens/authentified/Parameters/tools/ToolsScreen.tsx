@@ -18,7 +18,7 @@ export const ToolsScreen = () => {
   const [temperature, setTemperature] = useState(25);
 
   const resultat = getMasseVolumique(salinity, temperature, 0);
-  const { darkColor } = useContext(ThemeContext).theme;
+  const { darkColor } = useContext(ThemeContext).theme.theme;
   return (
     <View style={styles.page}>
       <Header

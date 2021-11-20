@@ -27,7 +27,7 @@ export const ReefButton = ({
     }
   };
 
-  const { darkColor, clearColor } = useContext(ThemeContext).theme;
+  const { darkColor, clearColor } = useContext(ThemeContext).theme.theme;
 
   return (
     <View style={{ margin: 4, width: sizeWidth() }}>

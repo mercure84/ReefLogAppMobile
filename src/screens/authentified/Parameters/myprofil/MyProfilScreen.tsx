@@ -9,7 +9,7 @@ import { ThemeContext } from "../../../../../App";
 
 export const MyProfilScreen = () => {
   const member = RootStore.memberStore.member;
-  const { darkColor } = useContext(ThemeContext).theme;
+  const { darkColor } = useContext(ThemeContext).theme.theme;
   return (
     <View style={styles.page}>
       <Header

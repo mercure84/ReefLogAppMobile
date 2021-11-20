@@ -14,7 +14,7 @@ import { ThemeContext } from "../../../../App";
 export const StoryScreen = observer(() => {
   const navigation = useNavigation();
   const { eventStore, waterTestStore, tankStore } = RootStore;
-  const { darkColor } = useContext(ThemeContext).theme;
+  const { darkColor } = useContext(ThemeContext).theme.theme;
 
   useEffect(() => {
     console.log("Fetching water Test !");

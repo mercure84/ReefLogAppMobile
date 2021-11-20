@@ -10,7 +10,7 @@ import { ReefActivityIndicator } from "../../../../components/ReefActivityIndica
 import { ThemeContext } from "../../../../../App";
 
 export const AlertsScreen = observer(() => {
-  const { darkColor } = useContext(ThemeContext).theme;
+  const { darkColor } = useContext(ThemeContext).theme.theme;
   const { alertStore } = RootStore;
 
   useEffect(() => {
