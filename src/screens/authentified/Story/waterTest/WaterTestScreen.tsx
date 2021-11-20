@@ -9,7 +9,7 @@ import { WaterTestItem } from "./WaterTestItem";
 import RootStore from "../../../../store/RootStore";
 import { WaterTestFormModal } from "./WaterTestFormModal";
 import { ReefActivityIndicator } from "../../../../components/ReefActivityIndicator";
-import { blueCB } from "../../../../components/colors";
+import { darkColor } from "../../../../utils/helpers";
 
 export const WaterTestScreen = observer(() => {
   const [isWaterTestFormVisible, setWaterTestFormVisible] = useState(false);
@@ -36,7 +36,7 @@ export const WaterTestScreen = observer(() => {
       <View>
         <Header
           leftComponent={<GoBackButton />}
-          containerStyle={{ backgroundColor: blueCB }}
+          containerStyle={{ backgroundColor: darkColor }}
           centerComponent={<ReefHeaderTitle title="MES TESTS" />}
         />
 

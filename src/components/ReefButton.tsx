@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { View } from "react-native";
 import { Button, ButtonProps } from "react-native-elements";
-import { blueCB, yellowCB } from "./colors";
+import { clearColor, darkColor } from "../utils/helpers";
 
 type Props = {
   title: ReactNode | string;
@@ -34,11 +34,11 @@ export const ReefButton = ({
         onPress={onPress}
         disabled={disabled}
         buttonStyle={{
-          backgroundColor: yellowCB,
-          borderColor: blueCB,
+          backgroundColor: clearColor,
+          borderColor: darkColor,
           borderWidth: 1,
         }}
-        titleStyle={{ color: blueCB }}
+        titleStyle={{ color: darkColor }}
       />
     </View>
   );

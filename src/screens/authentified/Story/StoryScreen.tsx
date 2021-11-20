@@ -9,7 +9,7 @@ import { ReefHeaderTitle } from "../../../components/ReefHeaderTitle";
 import { WaterTestItem } from "./waterTest/WaterTestItem";
 import { EventItem } from "./event/EventItem";
 import { ReefActivityIndicator } from "../../../components/ReefActivityIndicator";
-import { blueCB } from "../../../components/colors";
+import { darkColor } from "../../../utils/helpers";
 
 export const StoryScreen = observer(() => {
   const navigation = useNavigation();
@@ -44,7 +44,7 @@ export const StoryScreen = observer(() => {
   return (
     <>
       <Header
-        containerStyle={{ backgroundColor: blueCB }}
+        containerStyle={{ backgroundColor: darkColor }}
         centerComponent={<ReefHeaderTitle title="MON JOURNAL" />}
       />
       <View style={styles.page}>

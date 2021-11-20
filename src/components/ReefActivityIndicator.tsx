@@ -1,7 +1,7 @@
 import React from "react";
 import { ActivityIndicator } from "react-native";
-import { blueCB } from "./colors";
+import { darkColor } from "../utils/helpers";
 
 export const ReefActivityIndicator = () => {
-  return <ActivityIndicator size="large" color={blueCB} />;
+  return <ActivityIndicator size="large" color={darkColor} />;
 };

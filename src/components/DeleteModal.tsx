@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Button, ViewStyle, StyleSheet, Modal } from "react-native";
+import { View, Text, ViewStyle, StyleSheet, Modal } from "react-native";
 import { ReefButton } from "./ReefButton";
 
 type Props = {

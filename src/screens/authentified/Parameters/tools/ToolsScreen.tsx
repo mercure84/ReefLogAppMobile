@@ -8,10 +8,9 @@ import {
   TextStyle,
 } from "react-native";
 import { Header } from "react-native-elements";
-import { blueCB } from "../../../../components/colors";
 import { GoBackButton } from "../../../../components/GoBackButton";
 import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
-import { getMasseVolumique } from "../../../../utils/helpers";
+import { darkColor, getMasseVolumique } from "../../../../utils/helpers";
 
 export const ToolsScreen = () => {
   const [salinity, setSalinity] = useState(0);
@@ -23,7 +22,7 @@ export const ToolsScreen = () => {
     <View style={styles.page}>
       <Header
         leftComponent={<GoBackButton />}
-        containerStyle={{ backgroundColor: blueCB }}
+        containerStyle={{ backgroundColor: darkColor }}
         centerComponent={<ReefHeaderTitle title="OUTILS" />}
       />
 

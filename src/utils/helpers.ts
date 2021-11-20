@@ -3,6 +3,8 @@ import qs from "qs";
 import { Tank } from "../store/TankStore";
 import { TypeTest } from "../store/AlertStore";
 import { Linking } from "react-native";
+import { myThemes } from "../components/colors";
+import RootStore from "../store/RootStore";
 
 export const formatStringToFloat = (text: string) => {
   return isNaN(parseFloat(text.replace(",", ".")))
@@ -123,6 +125,7 @@ export const getMasseVolumique = (S: number, T: number, P: number) => {
   return Math.round((rho / (1 - P / K)) * 100) / 100;
 };
 
+/// méthode pour l'envoi d'un mail
 export const handleSuggestEmail = async () => {
   const to = "mercure8492@gmail.com";
 
@@ -133,3 +136,11 @@ export const handleSuggestEmail = async () => {
 
   return Linking.openURL(url);
 };
+
+//méthode pour retourner le thème couleur du membre
+export const getColorTheme = () => {
+  return myThemes[RootStore.memberStore.member?.themeColor ?? 0].theme;
+};
+
+export const darkColor = getColorTheme().darkColor;
+export const clearColor = getColorTheme().clearColor;

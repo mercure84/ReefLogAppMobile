@@ -7,8 +7,7 @@ import { ReefHeaderTitle } from "../../../components/ReefHeaderTitle";
 import mailIcon from "../../../assets/icons/mail.png";
 import { logout } from "../../../services/rootService";
 import RootStore from "../../../store/RootStore";
-import { handleSuggestEmail } from "../../../utils/helpers";
-import { blueCB } from "../../../components/colors";
+import { darkColor, handleSuggestEmail } from "../../../utils/helpers";
 
 const ParameterScreen = () => {
   const navigation = useNavigation();
@@ -23,7 +22,7 @@ const ParameterScreen = () => {
   return (
     <>
       <Header
-        containerStyle={{ backgroundColor: blueCB }}
+        containerStyle={{ backgroundColor: darkColor }}
         centerComponent={<ReefHeaderTitle title="MES PARAMETRES" />}
       />
       <View style={styles.buttonContainer}>

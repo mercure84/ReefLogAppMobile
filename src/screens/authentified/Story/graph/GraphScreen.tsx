@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { Header } from "react-native-elements";
 import { Grid, LineChart, XAxis, YAxis } from "react-native-svg-charts";
-import { blueCB } from "../../../../components/colors";
 import { GoBackButton } from "../../../../components/GoBackButton";
 import { ReefActivityIndicator } from "../../../../components/ReefActivityIndicator";
 import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
@@ -13,6 +12,7 @@ import * as scale from "d3-scale";
 import * as shape from "d3-shape";
 import moment from "moment";
 import { Picker } from "@react-native-picker/picker";
+import { darkColor } from "../../../../utils/helpers";
 
 type dataLine = {
   date: moment.Moment;
@@ -68,7 +68,7 @@ export const GraphScreen = observer(() => {
   return (
     <View>
       <Header
-        containerStyle={{ backgroundColor: blueCB }}
+        containerStyle={{ backgroundColor: darkColor }}
         leftComponent={<GoBackButton />}
         centerComponent={<ReefHeaderTitle title="GRAPHIQUES" />}
       />

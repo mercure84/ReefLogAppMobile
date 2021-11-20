@@ -16,15 +16,15 @@ import story from "../assets/icons/notepad.png";
 import { StoryNavigator } from "../screens/authentified/Story/StoryNavigator";
 import { DashBoardNavigator } from "../screens/authentified/DashBoard/DashBoardNavigator";
 import { ParameterNavigator } from "../screens/authentified/Parameters/ParameterNavigator";
-import { blueCB } from "../components/colors";
 import RootStore from "../store/RootStore";
+import { darkColor } from "../utils/helpers";
 
 const TabNavigator = () => {
   return (
     <Tab.Navigator
       initialRouteName="DashBoard"
       tabBarOptions={{
-        activeTintColor: blueCB,
+        activeTintColor: darkColor as string,
       }}
     >
       <Tab.Screen

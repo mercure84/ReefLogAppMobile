@@ -1,7 +1,8 @@
-import { observable, action, runInAction } from "mobx";
+import { observable, action, runInAction, computed } from "mobx";
 import { getData } from "../services/storageDevice";
 import { getMemberDetail, Member } from "../services/memberService";
 import { RootStore as RootStoreType, WebServiceState } from "./RootStore";
+import { myThemes } from "../components/colors";
 
 class MemberStore {
   RootStore: RootStoreType;

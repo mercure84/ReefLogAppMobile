@@ -4,7 +4,7 @@ import {
   Text,
   TouchableOpacity,
   ViewStyle,
-  StyleSheet
+  StyleSheet,
 } from "react-native";
 
 type Props = {
@@ -18,7 +18,7 @@ export const NumericStepper = ({
   minValue,
   maxValue,
   value,
-  onChange
+  onChange,
 }: Props) => {
   const handleMinus = () => {
     if (value > minValue) {
@@ -50,8 +50,8 @@ export const NumericStepper = ({
 };
 
 type Style = {
-  leftButton;
-  container;
+  leftButton: ViewStyle;
+  container: ViewStyle;
   rightButton: ViewStyle;
 };
 
@@ -61,16 +61,16 @@ const styles = StyleSheet.create<Style>({
     width: 16,
     alignItems: "center",
     borderRadius: 4,
-    marginHorizontal: 8
+    marginHorizontal: 8,
   },
   rightButton: {
     backgroundColor: "red",
     width: 16,
     alignItems: "center",
     borderRadius: 4,
-    marginHorizontal: 8
+    marginHorizontal: 8,
   },
   container: {
-    flexDirection: "row"
-  }
+    flexDirection: "row",
+  },
 });
