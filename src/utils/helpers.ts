@@ -1,14 +1,5 @@
-import fishIcon from "../assets/icons/fish.png";
-import coralIcon from "../assets/icons/coral.png";
-import crustaceanIcon from "../assets/icons/crustacean.png";
-import starIcon from "../assets/icons/star.png";
-import urchinIcon from "../assets/icons/urchin.png";
-import molluskIcon from "../assets/icons/mollusk.png";
-import cucumberIcon from "../assets/icons/cucumber.png";
-import anemoneIcon from "../assets/icons/anemone.png";
 import qs from "qs";
 
-import { Animal } from "../store/AnimalStore";
 import { Tank } from "../store/TankStore";
 import { TypeTest } from "../store/AlertStore";
 import { Linking } from "react-native";
@@ -23,39 +14,6 @@ export const formatStringToInteger = (text: string) => {
   return isNaN(parseInt(text.replace(",", ".")))
     ? 0
     : parseInt(text.replace(",", "."));
-};
-
-export const getAnimalType = (animal: Animal) => {
-  if (animal.crustaceanSpecies !== undefined) {
-    return "crustacean";
-  }
-  if (animal.softSpecies !== undefined) {
-    return "soft";
-  }
-  if (animal.lpsSpecies !== undefined) {
-    return "lps";
-  }
-  if (animal.spsSpecies !== undefined) {
-    return "sps";
-  }
-  if (animal.fishSpecies !== undefined) {
-    return "fish";
-  }
-  if (animal.anemoneSpecies !== undefined) {
-    return "anemone";
-  }
-  if (animal.molluskSpecies !== undefined) {
-    return "mollusk";
-  }
-  if (animal.cucumberSpecies !== undefined) {
-    return "cucumber";
-  }
-  if (animal.urchinSpecies !== undefined) {
-    return "urchin";
-  }
-  if (animal.starSpecies !== undefined) {
-    return "star";
-  }
 };
 
 export const getPopulation = (
@@ -77,29 +35,6 @@ export const getPopulation = (
     return "Coraux Sps";
   }
   return "";
-};
-
-export const getIconForAnimal = (animal: Animal) => {
-  switch (getAnimalType(animal)) {
-    case "fish":
-      return fishIcon;
-    case "urchin":
-      return urchinIcon;
-    case "crustacean":
-      return crustaceanIcon;
-    case "cucumber":
-      return cucumberIcon;
-    case "star":
-      return starIcon;
-    case "mollusk":
-      return molluskIcon;
-    case "lps":
-    case "soft":
-    case "sps":
-      return coralIcon;
-    case "anemone":
-      return anemoneIcon;
-  }
 };
 
 export const getLabelForTypeTest = (typeTest: TypeTest) => {

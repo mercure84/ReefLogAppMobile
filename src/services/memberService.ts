@@ -10,6 +10,7 @@ export type Member = {
   password: string;
   signupDate: string;
   role: string;
+  themeColor: number;
 };
 
 export type SignUp = {
