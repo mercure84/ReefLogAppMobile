@@ -6,7 +6,7 @@ import { ReefButton } from "../../../../components/ReefButton";
 import RootStore from "../../../../store/RootStore";
 
 export const ThemeSelector = () => {
-  const { setTheme, theme } = useContext(ThemeContext);
+  const { setTheme } = useContext(ThemeContext);
   const [selectedTheme, setSelectedTheme] = useState(
     RootStore.memberStore.member?.themeColor
   );
@@ -16,8 +16,10 @@ export const ThemeSelector = () => {
     setTheme(myThemes[themeNumber]);
   };
 
-  const saveTheme = () => {
-    return null;
+  const saveTheme = async () => {
+    if (selectedTheme || selectedTheme === 0) {
+      await RootStore.memberStore.saveThemeMember(selectedTheme);
+    }
   };
 
   return (

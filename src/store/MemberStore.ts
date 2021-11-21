@@ -3,6 +3,7 @@ import { getData } from "../services/storageDevice";
 import { getMemberDetail, Member } from "../services/memberService";
 import { RootStore as RootStoreType, WebServiceState } from "./RootStore";
 import { myThemes } from "../components/colors";
+import { urlServer } from "../constants/constants";
 
 class MemberStore {
   RootStore: RootStoreType;
@@ -14,6 +15,7 @@ class MemberStore {
   @observable token: string | undefined | null = "";
   @observable googleToken: string = "";
   @observable fetchState: WebServiceState = "pending"; // "pending" / "done" / "error"
+  @observable updateState: WebServiceState = "pending";
 
   // récupération des détails du membre pour alimenter notre store
   @action
@@ -43,6 +45,36 @@ class MemberStore {
       this.fetchState = "error";
     }
   }
+
+  @action
+  saveThemeMember = async (themeNumber: number) => {
+    this.updateState = "starting";
+    const urlService = urlServer + "api/setMemberTheme";
+
+    const themeForm = {
+      email: this.member?.email,
+      themeNumber,
+    };
+
+    try {
+      const memberToken = this.RootStore.memberStore.token;
+      const response = await fetch(urlService, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: memberToken ?? "",
+        },
+        body: JSON.stringify(themeForm),
+      });
+      const dataResponse = response.json();
+      console.log("Le thème couleur a été sauvegardé !", themeNumber);
+      return dataResponse;
+    } catch (error) {
+      console.log(error);
+      this.updateState = "error";
+    }
+  };
 
   @action
   clear = () => {
