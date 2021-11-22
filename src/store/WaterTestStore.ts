@@ -82,6 +82,10 @@ class WaterTestStore {
       console.log("Store is deleting the waterTest n° " + id);
       const memberToken = this.RootStore.memberStore.token ?? "";
       await deleteItem(id, "watertest", memberToken);
+      runInAction(() => {
+        this.updateState = "done";
+      });
+      this;
       this.refresh();
     } catch (error) {
       console.log(error);

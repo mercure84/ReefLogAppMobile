@@ -35,9 +35,9 @@ export const WaterTestItem = ({ waterTest }: Props) => {
     setDeleteModalVisible(!isDeleteModalVisible);
   };
 
-  const confirmDelete = (pWaterTest: WaterTest) => {
-    RootStore.waterTestStore.storeDeleteWaterTest(pWaterTest.id);
-    RootStore.waterTestStore.fetchWaterTests();
+  const confirmDelete = async (pWaterTest: WaterTest) => {
+    await RootStore.waterTestStore.storeDeleteWaterTest(pWaterTest.id);
+    await RootStore.waterTestStore.fetchWaterTests();
     handlePressDelete();
   };
 

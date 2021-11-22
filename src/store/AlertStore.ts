@@ -114,12 +114,12 @@ class AlertStore {
         const notifications: Promise<Alert[]> = response.json();
         runInAction(async () => {
           this.notifications = await notifications;
+          console.log(
+            "notifications success : ",
+            this.notifications.length,
+            " alertes trouvées."
+          );
         });
-        console.log(
-          "notifications success : ",
-          this.notifications.length,
-          " alertes trouvées."
-        );
         this.notificationsFetchState = "done";
         return notifications;
       } catch (error) {

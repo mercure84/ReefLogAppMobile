@@ -32,8 +32,8 @@ export const EventItem = ({ event }: Props) => {
     setDeleteModalVisible(!isDeleteModalVisible);
   };
 
-  const confirmDelete = (pEvent: Event) => {
-    RootStore.eventStore.storeDeleteEvent(pEvent.id);
+  const confirmDelete = async (pEvent: Event) => {
+    await RootStore.eventStore.storeDeleteEvent(pEvent.id);
     handlePressDelete();
   };
 

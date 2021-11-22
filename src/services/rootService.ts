@@ -1,6 +1,4 @@
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
-import { Animal } from "../store/AnimalStore";
-import { Equipment } from "../store/EquipmentStore";
 import RootStore from "../store/RootStore";
 import { WaterTest } from "../store/WaterTestStore";
 import { urlServer } from "./../constants/constants";
@@ -8,11 +6,7 @@ import { removeData } from "./storageDevice";
 
 const getUrlService = (item: string) => {
   switch (item) {
-    case "equipment":
-      return "api/deleteEquipment/";
-    case "animal":
-      return "api/deleteAnimal/";
-    case "waterTest":
+    case "watertest":
       return "api/deleteWaterTest/";
     case "event":
       return "api/deleteEvent/";
@@ -22,9 +16,9 @@ const getUrlService = (item: string) => {
 //FONCTION QUI PERMET D'APPELER LE SERVICE DE SUPPRESSION DE ANIMAL, EQUIPMENT, WATERTEST, EVENT
 export const deleteItem = async (
   pId: number | string,
-  kindItem: "animal" | "watertest" | "equipment" | "event",
+  kindItem: "watertest" | "event",
   token: string
-): Promise<Animal | WaterTest | Equipment | Event | Error> => {
+): Promise<WaterTest | Event | Error> => {
   const urlService = urlServer + getUrlService(kindItem) + pId;
   try {
     console.log("Demande de suppression de " + kindItem + " n° " + pId);

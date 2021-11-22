@@ -74,7 +74,7 @@ class EventStore {
       const memberToken = this.RootStore.memberStore.token ?? "";
       await deleteItem(id, "event", memberToken);
       runInAction(() => {
-        this.fetchState = "done";
+        this.updateState = "done";
       });
       this.refresh();
     } catch (error) {
