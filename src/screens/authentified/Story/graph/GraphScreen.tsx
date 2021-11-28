@@ -13,6 +13,8 @@ import * as shape from "d3-shape";
 import moment from "moment";
 import { Picker } from "@react-native-picker/picker";
 import { ThemeContext } from "../../../../../App";
+import { sortBy } from "lodash";
+
 type dataLine = {
   date: moment.Moment;
   value: number;
@@ -58,10 +60,12 @@ export const GraphScreen = observer(() => {
 
         myData.push({ date: dateToNumber, value: measure.value });
       });
-      setData(myData);
+      const sortedData = sortBy(myData, ["date", "asc"]);
+      setData(sortedData);
+      console.log("DATA SORTED = ", sortedData);
       setMinMaxY({
-        minY: minValue - 1,
-        maxY: maxValue + 1,
+        minY: minValue * 0.7,
+        maxY: maxValue * 1.3,
       });
     }
   }, [graphData]);

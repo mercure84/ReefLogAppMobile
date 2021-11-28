@@ -39,7 +39,7 @@ class GraphStore {
       if (tankId) {
         try {
           console.log(
-            "Store is fetching  graph ",
+            "Store is fetching graph ",
             typeTest,
             " for tank n°  ",
             tankId

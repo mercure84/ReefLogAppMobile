@@ -99,6 +99,7 @@ export const SignupForm = ({
     [signUpForm]
   );
 
+  console.log("GOOGLE OKEN ???", RootStore.memberStore);
   const signedByOAuth = RootStore.memberStore.googleToken !== "";
 
   return (
