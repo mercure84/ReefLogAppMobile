@@ -3,9 +3,6 @@ import qs from "qs";
 import { Tank } from "../store/TankStore";
 import { TypeTest } from "../store/AlertStore";
 import { Linking } from "react-native";
-import { myThemes } from "../components/colors";
-import RootStore from "../store/RootStore";
-
 export const formatStringToFloat = (text: string) => {
   return isNaN(parseFloat(text.replace(",", ".")))
     ? 0

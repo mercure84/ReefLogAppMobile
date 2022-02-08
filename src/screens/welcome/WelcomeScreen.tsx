@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import { LoginForm } from "./components/LoginForm";
-import { SignupForm } from "./components/SignupForm";
 import {
   View,
   ViewStyle,
@@ -10,8 +8,6 @@ import {
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { About } from "./components/About";
-import { ReefButton } from "../../components/ReefButton";
-import { PassWordRecoverForm } from "./components/PassWordRecoverForm";
 import { Text } from "react-native-elements";
 import {
   GoogleSignin,
@@ -38,42 +34,7 @@ export enum WelcomeElement {
 const WelcomeScreen = () => {
   const navigation = useNavigation();
 
-  const [componentStatus, setComponentStatus] = useState(
-    componentStatusDefault
-  );
   const [isAboutVisible, setAboutVisible] = useState(false);
-
-  const toggleWelcomeComponents = (element: WelcomeElement) => {
-    switch (element) {
-      case WelcomeElement.LOGIN:
-        setComponentStatus({
-          showSignup: false,
-          showLogin: true,
-          showPassRecover: false,
-          showButtons: false,
-        });
-        return;
-      case WelcomeElement.SIGNUP:
-        setComponentStatus({
-          showSignup: true,
-          showLogin: false,
-          showPassRecover: false,
-          showButtons: false,
-        });
-        return;
-      case WelcomeElement.PASSRECOVER:
-        setComponentStatus({
-          showSignup: false,
-          showLogin: false,
-          showPassRecover: true,
-          showButtons: false,
-        });
-        return;
-      case WelcomeElement.DEFAULT:
-        setComponentStatus(componentStatusDefault);
-        return;
-    }
-  };
 
   useEffect(() => {
     console.log("Google Signing is configuring");
@@ -92,53 +53,25 @@ const WelcomeScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.page} behavior="height">
+    <>
       <View style={styles.header}>
         <Text h2>Log4Reef</Text>
       </View>
       <View style={styles.mainContainer}>
-        {componentStatus.showButtons && (
-          <View style={{ padding: 8 }}>
-            <ReefButton
-              size="large"
-              title="Créer un compte"
-              onPress={() => {
-                toggleWelcomeComponents(WelcomeElement.SIGNUP);
-              }}
-            />
-            <ReefButton
-              size="large"
-              title="Se connecter"
-              onPress={() => {
-                toggleWelcomeComponents(WelcomeElement.LOGIN);
-              }}
-            />
-            <GoogleSigninButton
-              style={{ width: "100%", height: "25%" }}
-              size={GoogleSigninButton.Size.Wide}
-              color={GoogleSigninButton.Color.Dark}
-              onPress={handleGoogleOnPress}
-            />
-          </View>
-        )}
-        {componentStatus.showLogin && (
-          <LoginForm toggleWelcomeComponents={toggleWelcomeComponents} />
-        )}
-        {componentStatus.showSignup && (
-          <SignupForm toggleWelcomeComponents={toggleWelcomeComponents} />
-        )}
-        {componentStatus.showPassRecover && (
-          <PassWordRecoverForm
-            toggleWelcomeComponents={toggleWelcomeComponents}
+        <View style={{ padding: 8 }}>
+          <GoogleSigninButton
+            style={{ width: "100%", height: "30%" }}
+            size={GoogleSigninButton.Size.Wide}
+            color={GoogleSigninButton.Color.Dark}
+            onPress={handleGoogleOnPress}
           />
-        )}
+        </View>
       </View>
       <TouchableOpacity style={styles.about} onPress={handlePressAbout}>
         <Text>A propos ©</Text>
       </TouchableOpacity>
-
       {isAboutVisible && <About />}
-    </KeyboardAvoidingView>
+    </>
   );
 };
 
