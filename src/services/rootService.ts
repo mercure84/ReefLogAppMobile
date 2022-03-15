@@ -16,7 +16,7 @@ const getUrlService = (item: string) => {
 //FONCTION QUI PERMET D'APPELER LE SERVICE DE SUPPRESSION DE ANIMAL, EQUIPMENT, WATERTEST, EVENT
 export const deleteItem = async (
   pId: number | string,
-  kindItem: "watertest" | "event",
+  kindItem: "watertest" | "event" | "fish",
   token: string
 ): Promise<WaterTest | Event | Error> => {
   const urlService = urlServer + getUrlService(kindItem) + pId;
