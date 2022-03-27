@@ -14,6 +14,7 @@ import { Notifications } from "./notifications/Notifications";
 import { ReefActivityIndicator } from "../../../components/ReefActivityIndicator";
 import { ThemeContext } from "../../../../App";
 import { myThemes } from "../../../components/colors";
+import { Fishes } from "./fishes/Fishes";
 
 const DashboardScreen = observer(() => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);
@@ -108,6 +109,8 @@ const DashboardScreen = observer(() => {
       ) : (
         <Notifications notifications={notifications} />
       )}
+
+      <Fishes />
 
       {isNewTankFormVisible && (
         <TankFormModal

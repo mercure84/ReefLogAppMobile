@@ -6,11 +6,13 @@ import { Tank } from "./TankStore";
 
 export type Fish = {
   id: string;
+  sex: "MALE" | "FEMALE" | "UNDEFINED";
   arrivalDate?: Date;
   birthDate?: Date;
   name: string;
   note?: string;
   aquarium?: Tank;
+  quantity?: number;
 };
 
 class FishStore {
@@ -87,14 +89,15 @@ class FishStore {
   @action
   saveFish = async (newFish: Fish, update: boolean) => {
     this.updateState = "pending";
-    const suffixUrl = update ? "api/updateFish" : "api/addFish";
+    const suffixUrl = update ? "api/updateAnimal/Fish" : "api/addAnimal/Fish";
     newFish.aquarium = undefined;
-    console.log("Store is starting to save a Fish");
     const urlService = urlServer + suffixUrl;
     const newFishForm = {
       aquariumId: this.RootStore.tankStore.tankList[0].id,
       fish: newFish,
     };
+    console.log("Store is starting to save a Fish : ", newFishForm);
+
     try {
       const memberToken = this.RootStore.memberStore.token;
 

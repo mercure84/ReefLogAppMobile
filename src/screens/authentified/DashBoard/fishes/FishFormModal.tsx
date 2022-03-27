@@ -1,41 +1,37 @@
 import React, { useState } from "react";
-
-import RootStore from "../../../../store/RootStore";
 import {
-  View,
-  ViewStyle,
-  TextStyle,
-  StyleSheet,
-  Text,
   Modal,
   ModalProps,
+  StyleSheet,
+  Text,
+  TextInput,
+  TextStyle,
+  View,
+  ViewStyle,
 } from "react-native";
-
-import { TextInput } from "react-native-gesture-handler";
+import { ReefActivityIndicator } from "../../../../components/ReefActivityIndicator";
+import { ReefButton } from "../../../../components/ReefButton";
+import { Fish } from "../../../../store/FishStore";
+import RootStore from "../../../../store/RootStore";
 import Moment from "moment";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { ReefButton } from "../../../../components/ReefButton";
-import { Event } from "../../../../store/EventStore";
-import { ReefActivityIndicator } from "../../../../components/ReefActivityIndicator";
 
 type Props = {
-  eventToSave: Event | null;
+  fishToSave: Fish | null;
   showForm: React.Dispatch<React.SetStateAction<boolean>>;
 } & ModalProps;
 
-export const EventFormModal = ({ eventToSave, showForm, visible }: Props) => {
-  const myEvent: Event = eventToSave ?? { id: "" };
+export const FishFormModal = ({ fishToSave, showForm, visible }: Props) => {
+  const myFish: Fish = fishToSave ?? { id: "", name: "", sex: "UNDEFINED" };
 
-  const [event, setEvent] = useState<Event>(myEvent);
+  const [fish, setFish] = useState<Fish>(myFish);
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
-  const [infoMessage, setInfoMessage] = useState(
-    "Décrivez votre nouvel évènement... !"
-  );
-  const isUpdating = eventToSave !== null;
+  const [infoMessage, setInfoMessage] = useState("Décrivez votre poisson... !");
+  const isUpdating = fishToSave !== null;
   const [isLoading, setLoading] = useState(false);
 
   const checkForm = () => {
-    if (event.title !== "") {
+    if (fish.name !== "") {
       return true;
     } else {
       setInfoMessage("Oups il ya un problème dans votre formulaire");
@@ -45,11 +41,11 @@ export const EventFormModal = ({ eventToSave, showForm, visible }: Props) => {
 
   const submitEvent = async () => {
     setLoading(true);
-    if (event !== undefined && checkForm()) {
+    if (fish !== undefined && checkForm()) {
       setInfoMessage("Le formulaire est valide ! Enregistrement en cours...");
-      const response = RootStore.eventStore.saveEvent(event, isUpdating);
+      const response = RootStore.fishStore.saveFish(fish, isUpdating);
       if (response != null) {
-        setInfoMessage("L'évènement a été enregistré !");
+        setInfoMessage("Le poisson a été enregistré !");
         setLoading(false);
         showForm(false);
       } else {
@@ -59,12 +55,11 @@ export const EventFormModal = ({ eventToSave, showForm, visible }: Props) => {
     }
   };
 
-  const setDate = (date: Date) => {
+  const setArrivalDate = (date: Date) => {
     setDatePickerVisible(false);
-
-    setEvent({
-      ...event,
-      date: date,
+    setFish({
+      ...fish,
+      arrivalDate: date,
     });
     setDatePickerVisible(false);
   };
@@ -74,12 +69,12 @@ export const EventFormModal = ({ eventToSave, showForm, visible }: Props) => {
       <View style={styles.modalView}>
         {isLoading && <ReefActivityIndicator />}
         <View style={styles.inputInlineContainer}>
-          <Text>Date</Text>
+          <Text>Date d'arrivée</Text>
           <ReefButton
             size="medium"
             title={
-              event !== null
-                ? Moment(event.date).format("ll").toString()
+              fish !== null
+                ? Moment(fish.arrivalDate).format("ll").toString()
                 : Moment(new Date()).format("ll").toString()
             }
             onPress={() => setDatePickerVisible(true)}
@@ -91,7 +86,7 @@ export const EventFormModal = ({ eventToSave, showForm, visible }: Props) => {
             locale="fr-FR"
             mode="date"
             display="calendar"
-            onConfirm={setDate}
+            onConfirm={setArrivalDate}
             onCancel={() => setDatePickerVisible(false)}
           />
         </View>
@@ -101,9 +96,9 @@ export const EventFormModal = ({ eventToSave, showForm, visible }: Props) => {
             <TextInput
               style={styles.textInput}
               maxLength={100}
-              placeholder={"Titre : 100 caractères maxi"}
-              onChangeText={(text) => setEvent({ ...event, title: text })}
-              defaultValue={event !== null ? event.title : ""}
+              placeholder={"Nom : 100 caractères maxi"}
+              onChangeText={(text) => setFish({ ...fish, name: text })}
+              defaultValue={fish !== null ? fish.name : ""}
             />
           </View>
         </View>
@@ -114,8 +109,8 @@ export const EventFormModal = ({ eventToSave, showForm, visible }: Props) => {
               style={styles.textInput}
               maxLength={250}
               placeholder={"Notes : 250 caractères maxi"}
-              onChangeText={(text) => setEvent({ ...event, description: text })}
-              defaultValue={event !== null ? event.description : ""}
+              onChangeText={(text) => setFish({ ...fish, note: text })}
+              defaultValue={fish !== null ? fish.note : ""}
               multiline={true}
             />
           </View>
@@ -186,3 +181,6 @@ const styles = StyleSheet.create<Style>({
     padding: 16,
   },
 });
+function setEvent(arg0: any): void {
+  throw new Error("Function not implemented.");
+}
