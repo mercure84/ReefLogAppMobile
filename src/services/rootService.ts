@@ -10,6 +10,8 @@ const getUrlService = (item: string) => {
       return "api/deleteWaterTest/";
     case "event":
       return "api/deleteEvent/";
+    case "fish":
+      return "api/deleteAnimal/";
   }
 };
 
