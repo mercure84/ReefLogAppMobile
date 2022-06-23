@@ -1,10 +1,27 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, ViewStyle } from "react-native";
 import { ReefButton } from "../../../../components/ReefButton";
+import { Fish } from "../../../../store/FishStore";
+import RootStore from "../../../../store/RootStore";
 
 export const Fishes = () => {
   const navigation = useNavigation();
+  const { fishStore } = RootStore;
+  const [fishes, setFishes] = useState<Fish[]>([]);
+
+  console.log("JULIEN ===> ", fishStore.fetchState);
+  useEffect(() => {
+    const getFishes = async () => {
+      if (fishStore.updateState === "done") {
+        setFishes(fishStore.fishesData);
+      }
+      if (fishStore.fetchState === "pending") {
+        await fishStore.fetchFishes();
+      }
+    };
+    getFishes();
+  }, [fishStore.fetchState]);
 
   return (
     <>
@@ -16,7 +33,7 @@ export const Fishes = () => {
         />
       </View>
 
-      <Text>Je maintiens 0 pensionnaires</Text>
+      <Text>{`Je maintiens ${fishes.length ?? 0} pensionnaires`}</Text>
       <Text>Dernier recensement : </Text>
     </>
   );

@@ -11,10 +11,11 @@ import {
 } from "react-native";
 import { ReefActivityIndicator } from "../../../../components/ReefActivityIndicator";
 import { ReefButton } from "../../../../components/ReefButton";
-import { Fish } from "../../../../store/FishStore";
+import { Fish, SizeType } from "../../../../store/FishStore";
 import RootStore from "../../../../store/RootStore";
 import Moment from "moment";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { Picker } from "@react-native-picker/picker";
 
 type Props = {
   fishToSave: Fish | null;
@@ -22,7 +23,12 @@ type Props = {
 } & ModalProps;
 
 export const FishFormModal = ({ fishToSave, showForm, visible }: Props) => {
-  const myFish: Fish = fishToSave ?? { id: "", name: "", sex: "UNDEFINED" };
+  const myFish: Fish = fishToSave ?? {
+    id: "",
+    name: "",
+    sex: "UNDEFINED",
+    size: SizeType.M,
+  };
 
   const [fish, setFish] = useState<Fish>(myFish);
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
@@ -39,7 +45,7 @@ export const FishFormModal = ({ fishToSave, showForm, visible }: Props) => {
     }
   };
 
-  const submitEvent = async () => {
+  const submit = async () => {
     setLoading(true);
     if (fish !== undefined && checkForm()) {
       setInfoMessage("Le formulaire est valide ! Enregistrement en cours...");
@@ -104,6 +110,27 @@ export const FishFormModal = ({ fishToSave, showForm, visible }: Props) => {
         </View>
 
         <View style={styles.inputInlineContainer}>
+          <Text>Taille</Text>
+          <Picker
+            style={{ height: 50, width: 150 }}
+            mode="dropdown"
+            selectedValue={fish.size}
+            onValueChange={(itemValue) => {
+              setFish({
+                ...fish,
+                size: itemValue as SizeType,
+              });
+            }}
+          >
+            <Picker.Item label="XS" value={SizeType.XS} />
+            <Picker.Item label="S" value={SizeType.S} />
+            <Picker.Item label="M" value={SizeType.M} />
+            <Picker.Item label="L" value={SizeType.L} />
+            <Picker.Item label="XL" value={SizeType.XL} />
+          </Picker>
+        </View>
+
+        <View style={styles.inputInlineContainer}>
           <View style={styles.input}>
             <TextInput
               style={styles.textInput}
@@ -120,7 +147,7 @@ export const FishFormModal = ({ fishToSave, showForm, visible }: Props) => {
           <ReefButton
             size="medium"
             title="Enregistrer"
-            onPress={() => submitEvent()}
+            onPress={() => submit()}
           />
           <ReefButton
             size="medium"

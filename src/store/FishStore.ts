@@ -4,6 +4,14 @@ import { urlServer } from "./../constants/constants";
 import { deleteItem } from "../services/rootService";
 import { Tank } from "./TankStore";
 
+export enum SizeType {
+  XS,
+  S,
+  M,
+  L,
+  XL,
+}
+
 export type Fish = {
   id: string;
   sex: "MALE" | "FEMALE" | "UNDEFINED";
@@ -13,6 +21,7 @@ export type Fish = {
   note?: string;
   aquarium?: Tank;
   quantity?: number;
+  size: SizeType;
 };
 
 class FishStore {
@@ -44,7 +53,7 @@ class FishStore {
         try {
           console.log("Store is fetching  Fishes for tank n° " + tankId);
           const memberToken = this.RootStore.memberStore.token;
-          const urlService = urlServer + "api/getFishList/" + tankId;
+          const urlService = urlServer + "api/getAnimals/Fishes/" + tankId;
           const response = await fetch(urlService, {
             method: "GET",
             headers: {
@@ -66,6 +75,8 @@ class FishStore {
         }
       }
     }
+    console.log("No tank loaded, no fish to load");
+    this.fetchState = "pending";
     return [];
   }
 
