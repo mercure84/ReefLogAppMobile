@@ -27,29 +27,34 @@ export const ThemeSelector = () => {
       <Text style={{ fontWeight: "bold" }}>
         Changer les couleurs de l'application
       </Text>
-      <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+      <View style={{ flexDirection: "column", flexWrap: "wrap" }}>
         <ReefButton
-          title="C. bicolor"
-          size="small"
+          title="Centropyge bicolor"
+          size="medium"
           onPress={() => changeTheme(0)}
         ></ReefButton>
         <ReefButton
-          title="N. armatus"
-          size="small"
+          title="Neocirrithes armatus"
+          size="medium"
           onPress={() => changeTheme(1)}
         ></ReefButton>
         <ReefButton
-          title="A. ocellaris"
-          size="small"
+          title="Amphiprion ocellaris"
+          size="medium"
           onPress={() => changeTheme(2)}
         ></ReefButton>
         <ReefButton
-          title="N. decora"
-          size="small"
+          title="Nemateleotris decora"
+          size="medium"
           onPress={() => changeTheme(3)}
         ></ReefButton>
+        <ReefButton
+          title="Pterapogon kauderni"
+          size="medium"
+          onPress={() => changeTheme(4)}
+        ></ReefButton>
       </View>
-      <View>
+      <View style={{ marginTop: 16 }}>
         <ReefButton
           title="Sauvegarder le thème"
           size="medium"

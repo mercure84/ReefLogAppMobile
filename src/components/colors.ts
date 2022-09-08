@@ -18,14 +18,17 @@ export const white = "#F4F6F7";
 export const grey = "#E7DFE8";
 export const fuschia = "#A114B8";
 
+//Kauderni Dark Mode
+
 export type ColorTheme = {
   clearColor: ColorValue;
   darkColor: ColorValue;
 };
 
 export type Theme = {
-  name: "cb" | "ocellaris" | "decora" | "armatus";
+  name: "cb" | "ocellaris" | "decora" | "armatus" | "kauderni";
   theme: ColorTheme;
+  darkMode?: boolean;
 };
 
 export const myThemes: Theme[] = [
@@ -33,4 +36,9 @@ export const myThemes: Theme[] = [
   { name: "armatus", theme: { clearColor: red, darkColor: black } },
   { name: "ocellaris", theme: { clearColor: white, darkColor: orange } },
   { name: "decora", theme: { clearColor: grey, darkColor: fuschia } },
+  {
+    name: "kauderni",
+    theme: { clearColor: "#000000", darkColor: "#FFFFFF" },
+    darkMode: true,
+  },
 ];
