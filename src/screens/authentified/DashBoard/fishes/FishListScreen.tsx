@@ -10,8 +10,10 @@ import { ReefHeaderTitle } from "../../../../components/ReefHeaderTitle";
 import RootStore from "../../../../store/RootStore";
 import { FishItem } from "./FishItem";
 import { FishFormModal } from "./FishFormModal";
+import { observer } from "mobx-react";
+import { Fish } from "../../../../store/FishStore";
 
-export const FishListScreen = () => {
+export const FishListScreen = observer(() => {
   const { darkColor } = useContext(ThemeContext).theme.theme;
   const { fishStore } = RootStore;
 
@@ -54,8 +56,8 @@ export const FishListScreen = () => {
       {isFishLoading && <ReefActivityIndicator />}
       <FlatList
         ListHeaderComponent={<HeaderComponent />}
-        data={null}
-        renderItem={({ item }) => <FishItem fish={item} />}
+        data={fishes}
+        renderItem={({ item }: { item: Fish }) => <FishItem fish={item} />}
         keyExtractor={({ id }) => id.toString()}
         ListEmptyComponent={() => <Text>Aucun enregistrement</Text>}
         scrollEnabled={true}
@@ -70,4 +72,4 @@ export const FishListScreen = () => {
       )}
     </View>
   );
-};
+});

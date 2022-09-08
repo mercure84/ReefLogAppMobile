@@ -12,11 +12,19 @@ export enum SizeType {
   XL,
 }
 
+export enum SexType {
+  MALE,
+  FEMALE,
+  UNDEFINED,
+}
+
 export type Fish = {
   id: string;
-  sex: "MALE" | "FEMALE" | "UNDEFINED";
-  arrivalDate?: Date;
+  sex: SexType;
+  incomingDate?: Date;
+  exitDate?: Date;
   birthDate?: Date;
+  deathDate?: Date;
   name: string;
   note?: string;
   aquarium?: Tank;
@@ -66,7 +74,7 @@ class FishStore {
           runInAction(async () => {
             this.fishes = await fishes;
           });
-          console.log("Fishes Success");
+          console.log("Fishes Success : ");
           this.fetchState = "done";
           return fishes;
         } catch (error) {

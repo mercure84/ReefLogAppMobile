@@ -42,7 +42,12 @@ export const FishItem = ({ fish }: Props) => {
       <View style={styles.header}>
         <View style={styles.item}>
           <Text style={styles.date}>{fish.name}</Text>
-          <Text>Date d'arrivée : {Moment(fish.arrivalDate).format("lll")}</Text>
+          <Text>Date d'arrivée : {Moment(fish.incomingDate).format("ll")}</Text>
+          {fish.birthDate && (
+            <Text>
+              Date de naissance : {Moment(fish.birthDate).format("ll")}
+            </Text>
+          )}
         </View>
         <TouchableOpacity onPress={handlePress}>
           <Image source={createIcon} style={styles.icon} />

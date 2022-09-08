@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { ReefActivityIndicator } from "../../../../components/ReefActivityIndicator";
 import { ReefButton } from "../../../../components/ReefButton";
-import { Fish, SizeType } from "../../../../store/FishStore";
+import { Fish, SexType, SizeType } from "../../../../store/FishStore";
 import RootStore from "../../../../store/RootStore";
 import Moment from "moment";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -26,12 +26,13 @@ export const FishFormModal = ({ fishToSave, showForm, visible }: Props) => {
   const myFish: Fish = fishToSave ?? {
     id: "",
     name: "",
-    sex: "UNDEFINED",
+    sex: SexType.UNDEFINED,
     size: SizeType.M,
   };
 
   const [fish, setFish] = useState<Fish>(myFish);
-  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
+  const [isIncomingDatePickerVisible, showIncomingDatePicker] = useState(false);
+  const [isBirthDatePickerVisible, showBirthDatePicker] = useState(false);
   const [infoMessage, setInfoMessage] = useState("Décrivez votre poisson... !");
   const isUpdating = fishToSave !== null;
   const [isLoading, setLoading] = useState(false);
@@ -61,13 +62,21 @@ export const FishFormModal = ({ fishToSave, showForm, visible }: Props) => {
     }
   };
 
-  const setArrivalDate = (date: Date) => {
-    setDatePickerVisible(false);
+  const setIncomingDate = (date: Date) => {
+    showIncomingDatePicker(false);
+
     setFish({
       ...fish,
-      arrivalDate: date,
+      incomingDate: date,
     });
-    setDatePickerVisible(false);
+  };
+  const setBirthDate = (date: Date) => {
+    showBirthDatePicker(false);
+
+    setFish({
+      ...fish,
+      birthDate: date,
+    });
   };
 
   return (
@@ -80,20 +89,42 @@ export const FishFormModal = ({ fishToSave, showForm, visible }: Props) => {
             size="medium"
             title={
               fish !== null
-                ? Moment(fish.arrivalDate).format("ll").toString()
+                ? Moment(fish.incomingDate).format("ll").toString()
                 : Moment(new Date()).format("ll").toString()
             }
-            onPress={() => setDatePickerVisible(true)}
+            onPress={() => showIncomingDatePicker(true)}
           />
 
           <DateTimePickerModal
-            isVisible={isDatePickerVisible}
-            date={new Date()}
+            isVisible={isIncomingDatePickerVisible}
+            date={new Date(Moment(fish.incomingDate).toString()) ?? new Date()}
             locale="fr-FR"
             mode="date"
             display="calendar"
-            onConfirm={setArrivalDate}
-            onCancel={() => setDatePickerVisible(false)}
+            onConfirm={setIncomingDate}
+            onCancel={() => showIncomingDatePicker(false)}
+          />
+        </View>
+        <View style={styles.inputInlineContainer}>
+          <Text>Date de naissance ? </Text>
+          <ReefButton
+            size="medium"
+            title={
+              fish !== null
+                ? Moment(fish.birthDate).format("ll").toString()
+                : Moment(new Date()).format("ll").toString()
+            }
+            onPress={() => showBirthDatePicker(true)}
+          />
+
+          <DateTimePickerModal
+            isVisible={isBirthDatePickerVisible}
+            date={new Date(Moment(fish.birthDate).toString()) ?? new Date()}
+            locale="fr-FR"
+            mode="date"
+            display="calendar"
+            onConfirm={setBirthDate}
+            onCancel={() => showBirthDatePicker(false)}
           />
         </View>
 
@@ -127,6 +158,25 @@ export const FishFormModal = ({ fishToSave, showForm, visible }: Props) => {
             <Picker.Item label="M" value={SizeType.M} />
             <Picker.Item label="L" value={SizeType.L} />
             <Picker.Item label="XL" value={SizeType.XL} />
+          </Picker>
+        </View>
+
+        <View style={styles.inputInlineContainer}>
+          <Text>Sexe</Text>
+          <Picker
+            style={{ height: 50, width: 150 }}
+            mode="dropdown"
+            selectedValue={fish.sex}
+            onValueChange={(itemValue) => {
+              setFish({
+                ...fish,
+                sex: itemValue,
+              });
+            }}
+          >
+            <Picker.Item label="Mâle" value={SexType.MALE} />
+            <Picker.Item label="Femelle" value={SexType.FEMALE} />
+            <Picker.Item label="Non binaire" value={SexType.UNDEFINED} />
           </Picker>
         </View>
 
