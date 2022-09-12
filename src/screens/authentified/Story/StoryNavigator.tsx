@@ -3,8 +3,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { StoryScreen } from "./StoryScreen";
 import { EventScreen } from "./event/EventScreen";
 import { WaterTestScreen } from "./waterTest/WaterTestScreen";
-import { CountScreen } from "./counting/CountingScreen";
 import { GraphScreen } from "./graph/GraphScreen";
+import { CountScreen } from "./counting/CountScrean";
 
 const Stack = createStackNavigator();
 

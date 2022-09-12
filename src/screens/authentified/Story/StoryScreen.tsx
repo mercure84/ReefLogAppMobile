@@ -93,6 +93,14 @@ export const StoryScreen = observer(() => {
                 </View>
               )
             )}
+
+            <View style={styles.buttonContainer}>
+              <ReefButton
+                size="large"
+                title="Recenser mes poissons"
+                onPress={() => navigation.navigate("counting")}
+              />
+            </View>
           </View>
         ) : (
           <Text>Créer d'abord un Aquarium avant de consulter cette page !</Text>
@@ -118,7 +126,7 @@ const styles = StyleSheet.create<Style>({
     marginHorizontal: 8,
   },
   buttonContainer: {
-    marginTop: 32,
+    marginTop: 16,
     alignSelf: "center",
     flexDirection: "row",
   },

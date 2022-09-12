@@ -9,7 +9,7 @@ import {
   View,
   ViewStyle,
 } from "react-native";
-import { Fish } from "../../../../store/FishStore";
+import { Fish, SexType } from "../../../../store/FishStore";
 import RootStore from "../../../../store/RootStore";
 import Moment from "moment";
 import createIcon from "../../../../assets/icons/createIcon.png";
@@ -58,7 +58,7 @@ export const FishItem = ({ fish }: Props) => {
       </View>
 
       <View>
-        {fish.sex && <Text>Sexe : {fish.sex}</Text>}
+        {fish.sex !== SexType.UNDEFINED && <Text>Sexe : {fish.sex}</Text>}
         <Text>Taile : {fish.size}</Text>
         {fish.note && <Text>Notes : {fish.note}</Text>}
       </View>

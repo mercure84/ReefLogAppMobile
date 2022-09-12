@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View, ViewStyle } from "react-native";
 import { Header } from "react-native-elements";
 import { FlatList } from "react-native-gesture-handler";
 import { ThemeContext } from "../../../../../App";
@@ -12,12 +12,15 @@ import { FishItem } from "./FishItem";
 import { FishFormModal } from "./FishFormModal";
 import { observer } from "mobx-react";
 import { Fish } from "../../../../store/FishStore";
+import { useNavigation } from "@react-navigation/native";
+import { styles } from "../../../../components/styles";
 
 export const FishListScreen = observer(() => {
   const { darkColor } = useContext(ThemeContext).theme.theme;
   const { fishStore } = RootStore;
 
   const [isFishFormVisible, setFishFormVisible] = useState(false);
+  const navigation = useNavigation();
 
   useEffect(() => {
     const getFishes = async () => {
@@ -41,11 +44,18 @@ export const FishListScreen = observer(() => {
           leftComponent={<GoBackButton />}
           centerComponent={<ReefHeaderTitle title="Mes Poissons" />}
         />
-        <ReefButton
-          title="Ajouter"
-          size="medium"
-          onPress={() => setFishFormVisible(true)}
-        />
+        <View style={styles.buttonContainer}>
+          <ReefButton
+            title="Ajouter"
+            size="medium"
+            onPress={() => setFishFormVisible(true)}
+          />
+          <ReefButton
+            title="Recenser"
+            size="medium"
+            onPress={() => navigation.navigate("counting")}
+          />
+        </View>
       </>
     );
   };

@@ -64,7 +64,6 @@ export const FishFormModal = ({ fishToSave, showForm, visible }: Props) => {
 
   const setIncomingDate = (date: Date) => {
     showIncomingDatePicker(false);
-
     setFish({
       ...fish,
       incomingDate: date,
@@ -106,13 +105,13 @@ export const FishFormModal = ({ fishToSave, showForm, visible }: Props) => {
           />
         </View>
         <View style={styles.inputInlineContainer}>
-          <Text>Date de naissance ? </Text>
+          <Text>Date de naissance</Text>
           <ReefButton
             size="medium"
             title={
-              fish !== null
+              fish.birthDate !== null
                 ? Moment(fish.birthDate).format("ll").toString()
-                : Moment(new Date()).format("ll").toString()
+                : Moment(fish.incomingDate).format("ll").toString()
             }
             onPress={() => showBirthDatePicker(true)}
           />
