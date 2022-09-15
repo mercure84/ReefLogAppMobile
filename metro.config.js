@@ -6,6 +6,7 @@
  */
 
 module.exports = {
+  sourceExts: ["js", "json", "ts", "tsx"],
   transformer: {
     getTransformOptions: async () => ({
       transform: {

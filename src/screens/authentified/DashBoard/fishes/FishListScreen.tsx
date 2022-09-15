@@ -12,8 +12,8 @@ import { FishItem } from "./FishItem";
 import { FishFormModal } from "./FishFormModal";
 import { observer } from "mobx-react";
 import { Fish } from "../../../../store/FishStore";
-import { useNavigation } from "@react-navigation/native";
 import { styles } from "../../../../components/styles";
+import { useNavigation } from "@react-navigation/native";
 
 export const FishListScreen = observer(() => {
   const { darkColor } = useContext(ThemeContext).theme.theme;
@@ -53,7 +53,11 @@ export const FishListScreen = observer(() => {
           <ReefButton
             title="Recenser"
             size="medium"
-            onPress={() => navigation.navigate("counting")}
+            onPress={() =>
+              navigation
+                .getParent()
+                ?.navigate("Journal", { screen: "counting" })
+            }
           />
         </View>
       </>

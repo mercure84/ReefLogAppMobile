@@ -1,7 +1,5 @@
 import React, { useContext, useEffect } from "react";
 import { Image } from "react-native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import WelcomeScreen from "../screens/welcome/WelcomeScreen";
 
@@ -18,17 +16,14 @@ import { DashBoardNavigator } from "../screens/authentified/DashBoard/DashBoardN
 import { ParameterNavigator } from "../screens/authentified/Parameters/ParameterNavigator";
 import RootStore from "../store/RootStore";
 import { ThemeContext } from "../../App";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
 
 const TabNavigator = () => {
   const { darkColor } = useContext(ThemeContext).theme.theme;
 
   return (
-    <Tab.Navigator
-      initialRouteName="DashBoard"
-      tabBarOptions={{
-        activeTintColor: darkColor as string,
-      }}
-    >
+    <Tab.Navigator initialRouteName="DashBoard">
       <Tab.Screen
         name="Accueil"
         component={DashBoardNavigator}
@@ -36,6 +31,7 @@ const TabNavigator = () => {
           tabBarIcon: () => (
             <Image source={dashboardIcon} style={{ height: 32, width: 32 }} />
           ),
+          headerShown: false,
         }}
       />
       <Tab.Screen
@@ -45,6 +41,7 @@ const TabNavigator = () => {
           tabBarIcon: () => (
             <Image source={story} style={{ height: 32, width: 32 }} />
           ),
+          headerShown: false,
         }}
       />
       <Tab.Screen
@@ -54,6 +51,7 @@ const TabNavigator = () => {
           tabBarIcon: () => (
             <Image source={settingsIcon} style={{ height: 32, width: 32 }} />
           ),
+          headerShown: false,
         }}
       />
     </Tab.Navigator>
@@ -84,14 +82,26 @@ export const MainNavigator = ({ isTokenOK }: Props) => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator headerMode="none">
+      <Stack.Navigator>
         {!isTokenOK ? (
-          <Stack.Screen name="Welcome" component={WelcomeScreen} />
+          <Stack.Screen
+            name="Welcome"
+            component={WelcomeScreen}
+            options={{ headerShown: false }}
+          />
         ) : (
-          <Stack.Screen name="Identified">{() => TabNavigator()}</Stack.Screen>
+          <Stack.Screen name="Identified" options={{ headerShown: false }}>
+            {() => TabNavigator()}
+          </Stack.Screen>
         )}
-        <Stack.Screen name="Logout" component={WelcomeScreen} />
-        <Stack.Screen name="AuthentOk">{() => TabNavigator()}</Stack.Screen>
+        <Stack.Screen
+          name="Logout"
+          options={{ headerShown: false }}
+          component={WelcomeScreen}
+        />
+        <Stack.Screen name="AuthentOk" options={{ headerShown: false }}>
+          {() => TabNavigator()}
+        </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
