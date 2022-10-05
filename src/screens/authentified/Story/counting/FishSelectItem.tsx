@@ -6,29 +6,39 @@ import {
   ImageStyle,
   TextStyle,
   StyleSheet,
+  Switch,
 } from "react-native";
 import { Fish, SexType } from "../../../../store/FishStore";
 
 export const FishSelectItem = ({
   fish,
-  callback,
+  changePresence,
 }: {
   fish: Fish;
-  callback: () => void;
+  changePresence: (id: Fish["id"]) => void;
 }) => {
   return (
     <>
       <View style={styles.mainContainer}>
-        <View style={styles.header}>
-          <View style={styles.item}></View>
+        <View>
+          <View style={styles.header}>
+            <View style={styles.item}></View>
+          </View>
+
+          <View>
+            <Text style={styles.date}>{fish.name}</Text>
+
+            {fish.sex !== SexType.UNDEFINED && <Text>Sexe : {fish.sex}</Text>}
+            <Text>Taile : {fish.size}</Text>
+            {fish.note && <Text>Notes : {fish.note}</Text>}
+          </View>
         </View>
 
         <View>
-          <Text style={styles.date}>{fish.name}</Text>
-
-          {fish.sex !== SexType.UNDEFINED && <Text>Sexe : {fish.sex}</Text>}
-          <Text>Taile : {fish.size}</Text>
-          {fish.note && <Text>Notes : {fish.note}</Text>}
+          <Switch
+            onValueChange={(value) => changePresence(fish.id)}
+            value={fish.isPresent}
+          />
         </View>
       </View>
     </>
@@ -50,6 +60,8 @@ const styles = StyleSheet.create<Style>({
     borderWidth: 1,
     padding: 8,
     margin: 8,
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   item: {
     flex: 3,

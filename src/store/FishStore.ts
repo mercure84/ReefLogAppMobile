@@ -30,6 +30,7 @@ export type Fish = {
   aquarium?: Tank;
   quantity?: number;
   size: SizeType;
+  isPresent?: boolean;
 };
 
 class FishStore {
