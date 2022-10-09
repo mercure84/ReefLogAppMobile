@@ -2,7 +2,7 @@ import { RootStore as RootStoreType, WebServiceState } from "./RootStore";
 import { observable, computed, toJS, action, runInAction } from "mobx";
 import { urlServer } from "./../constants/constants";
 import { deleteItem } from "../services/rootService";
-import { Tank } from "./TankStore";
+import TankStore, { Tank } from "./TankStore";
 
 export enum SizeType {
   XS,
@@ -25,6 +25,7 @@ export type Fish = {
   exitDate?: Date;
   birthDate?: Date;
   deathDate?: Date;
+  lastPresenceDate?: Date;
   name: string;
   note?: string;
   aquarium?: Tank;
@@ -132,6 +133,46 @@ class FishStore {
       });
       const dataResponse = response.json;
       console.log("New Fish saved");
+      this.refresh();
+      return dataResponse;
+    } catch (error) {
+      console.log(error);
+      this.updateState = "error";
+    }
+  };
+
+  @action
+  saveCountingFish = async (fishes: Fish[]) => {
+    this.updateState = "pending";
+    const suffixUrl = "api/countFishes";
+    const urlService = urlServer + suffixUrl;
+    let fishIds: string[] = [];
+    fishes.filter((fish) => {
+      if (fish.isPresent) {
+        fishIds.push(fish.id);
+      }
+    });
+
+    const newCountForm = {
+      fishIds,
+      aquariumId: this.RootStore.tankStore.tankList[0].id,
+    };
+    console.log("Store is starting to countFishes  : ", newCountForm);
+
+    try {
+      const memberToken = this.RootStore.memberStore.token;
+
+      const response = await fetch(urlService, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: memberToken ?? "",
+        },
+        body: JSON.stringify(newCountForm),
+      });
+      const dataResponse = response.json;
+      console.log("New Counting saved");
       this.refresh();
       return dataResponse;
     } catch (error) {

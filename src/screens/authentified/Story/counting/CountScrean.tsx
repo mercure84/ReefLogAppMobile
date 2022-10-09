@@ -1,5 +1,5 @@
 import { observer } from "mobx-react";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { FlatList, Text } from "react-native";
 import { Header } from "react-native-elements";
 import { ThemeContext } from "../../../../../App";
@@ -45,6 +45,14 @@ export const CountScreen = observer(() => {
     }
   };
 
+  const validateCounting = useCallback(async () => {
+    console.log("Counting fish ....");
+    console.log("FISHES ??? ==>", fishes);
+    if (fishes) {
+      await fishStore.saveCountingFish(fishes);
+    }
+  }, [fishes]);
+
   return (
     <>
       {isFishLoading && <ReefActivityIndicator />}
@@ -70,7 +78,12 @@ export const CountScreen = observer(() => {
         keyExtractor={({ id }) => id.toString()}
         ListEmptyComponent={() => <Text>Aucun enregistrement</Text>}
         scrollEnabled={true}
-        ListFooterComponent={<ReefButton title={"Valider le recensement"} />}
+        ListFooterComponent={
+          <ReefButton
+            title={"Valider le recensement"}
+            onPress={validateCounting}
+          />
+        }
       />
     </>
   );

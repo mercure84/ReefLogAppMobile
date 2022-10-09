@@ -48,6 +48,13 @@ export const FishItem = ({ fish }: Props) => {
               Date de naissance : {Moment(fish.birthDate).format("ll")}
             </Text>
           )}
+          {fish.lastPresenceDate && (
+            <Text>
+              {`Recensé présent il y a : ${Moment.duration(
+                Moment(new Date()).diff(Moment(fish.lastPresenceDate), "days")
+              ).asDays()} jours`}
+            </Text>
+          )}
         </View>
         <TouchableOpacity onPress={handlePress}>
           <Image source={createIcon} style={styles.icon} />
@@ -57,7 +64,7 @@ export const FishItem = ({ fish }: Props) => {
         </TouchableOpacity>
       </View>
 
-      <View>
+      <View style={styles.horizontal}>
         {fish.sex !== SexType.UNDEFINED && <Text>Sexe : {fish.sex}</Text>}
         <Text>Taile : {fish.size}</Text>
         {fish.note && <Text>Notes : {fish.note}</Text>}
@@ -85,6 +92,7 @@ export const FishItem = ({ fish }: Props) => {
 type Style = {
   mainContainer: ViewStyle;
   header: ViewStyle;
+  horizontal: ViewStyle;
   icon: ImageStyle;
   item: ViewStyle;
   date: TextStyle;
@@ -104,6 +112,10 @@ const styles = StyleSheet.create<Style>({
   header: {
     flexDirection: "row",
     justifyContent: "space-around",
+  },
+  horizontal: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   icon: {
     height: 32,

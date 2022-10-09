@@ -34,7 +34,6 @@ export const Fishes = () => {
       </View>
 
       <Text>{`Je maintiens ${fishes.length ?? 0} pensionnaires`}</Text>
-      <Text>Dernier recensement : </Text>
     </>
   );
 };
