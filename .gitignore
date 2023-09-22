@@ -63,4 +63,4 @@ yarn-error.log
 # testing
 /coverage
 
-src/constants/constants.ts
+**/constants/constants.ts
