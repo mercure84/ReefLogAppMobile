@@ -62,3 +62,5 @@ yarn-error.log
 .metro-health-check*
 # testing
 /coverage
+
+src/constants/constants.ts
