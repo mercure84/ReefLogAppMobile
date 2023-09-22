@@ -1,27 +1,27 @@
-import React, { useContext, useEffect } from "react";
-import { View, Text, StyleSheet, ViewStyle } from "react-native";
-import { Header } from "react-native-elements";
-import { useNavigation } from "@react-navigation/native";
-import RootStore from "../../../store/RootStore";
-import { observer } from "mobx-react";
-import { ReefButton } from "../../../components/ReefButton";
-import { ReefHeaderTitle } from "../../../components/ReefHeaderTitle";
-import { WaterTestItem } from "./waterTest/WaterTestItem";
-import { EventItem } from "./event/EventItem";
-import { ReefActivityIndicator } from "../../../components/ReefActivityIndicator";
-import { ThemeContext } from "../../../../App";
+import React, {useContext, useEffect} from 'react';
+import {View, Text, StyleSheet, ViewStyle} from 'react-native';
+import {Header} from 'react-native-elements';
+import {useNavigation} from '@react-navigation/native';
+import RootStore from '../../../store/RootStore';
+import {observer} from 'mobx-react';
+import {ReefButton} from '../../../components/ReefButton';
+import {ReefHeaderTitle} from '../../../components/ReefHeaderTitle';
+import {WaterTestItem} from './waterTest/WaterTestItem';
+import {EventItem} from './event/EventItem';
+import {ReefActivityIndicator} from '../../../components/ReefActivityIndicator';
+import {ThemeContext} from '../../../../App';
 
 export const StoryScreen = observer(() => {
   const navigation = useNavigation();
-  const { eventStore, waterTestStore, tankStore } = RootStore;
-  const { darkColor } = useContext(ThemeContext).theme.theme;
+  const {eventStore, waterTestStore, tankStore} = RootStore;
+  const {darkColor} = useContext(ThemeContext).theme.theme;
 
   useEffect(() => {
-    console.log("Fetching water Test !");
+    console.log('Fetching water Test !');
     const getWaterTests = async () => {
       if (
-        waterTestStore.updateState === "done" &&
-        waterTestStore.fetchState === "pending"
+        waterTestStore.updateState === 'done' &&
+        waterTestStore.fetchState === 'pending'
       ) {
         await waterTestStore.fetchWaterTests();
       }
@@ -31,21 +31,21 @@ export const StoryScreen = observer(() => {
 
   useEffect(() => {
     const getEvents = async () => {
-      if (eventStore.fetchState === "pending") {
+      if (eventStore.fetchState === 'pending') {
         await eventStore.fetchEvents();
       }
     };
     getEvents();
   }, [eventStore.fetchState]);
 
-  const isWaterTestLoading = waterTestStore.fetchState === "pending";
-  const isEventLoading = eventStore.fetchState === "pending";
+  const isWaterTestLoading = waterTestStore.fetchState === 'pending';
+  const isEventLoading = eventStore.fetchState === 'pending';
   const hasATank = tankStore.tankList.length > 0;
 
   return (
     <>
       <Header
-        containerStyle={{ backgroundColor: darkColor }}
+        containerStyle={{backgroundColor: darkColor}}
         centerComponent={<ReefHeaderTitle title="MON JOURNAL" />}
       />
       <View style={styles.page}>
@@ -55,12 +55,12 @@ export const StoryScreen = observer(() => {
               <ReefButton
                 size="medium"
                 title="Tests"
-                onPress={() => navigation.navigate("waterTests")}
+                onPress={() => navigation.navigate('waterTests')}
               />
               <ReefButton
                 size="medium"
                 title="Données"
-                onPress={() => navigation.navigate("graph")}
+                onPress={() => navigation.navigate('graph')}
               />
             </View>
 
@@ -79,7 +79,7 @@ export const StoryScreen = observer(() => {
               <ReefButton
                 size="medium"
                 title="Evènements"
-                onPress={() => navigation.navigate("events")}
+                onPress={() => navigation.navigate('events')}
               />
             </View>
             {isEventLoading ? (
@@ -94,13 +94,15 @@ export const StoryScreen = observer(() => {
               )
             )}
 
-            <View style={styles.buttonContainer}>
-              <ReefButton
-                size="large"
-                title="Recenser mes poissons"
-                onPress={() => navigation.navigate("counting")}
-              />
-            </View>
+            {false && (
+              <View style={styles.buttonContainer}>
+                <ReefButton
+                  size="large"
+                  title="Recenser mes poissons"
+                  onPress={() => navigation.navigate('counting')}
+                />
+              </View>
+            )}
           </View>
         ) : (
           <Text>Créer d'abord un Aquarium avant de consulter cette page !</Text>
@@ -118,8 +120,8 @@ type Style = {
 
 const styles = StyleSheet.create<Style>({
   page: {
-    alignContent: "center",
-    justifyContent: "space-between",
+    alignContent: 'center',
+    justifyContent: 'space-between',
     flex: 1,
   },
   lastItem: {
@@ -127,7 +129,7 @@ const styles = StyleSheet.create<Style>({
   },
   buttonContainer: {
     marginTop: 16,
-    alignSelf: "center",
-    flexDirection: "row",
+    alignSelf: 'center',
+    flexDirection: 'row',
   },
 });

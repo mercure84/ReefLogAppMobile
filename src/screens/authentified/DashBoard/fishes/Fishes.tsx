@@ -1,22 +1,22 @@
-import { useNavigation } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, ViewStyle } from "react-native";
-import { ReefButton } from "../../../../components/ReefButton";
-import { Fish } from "../../../../store/FishStore";
-import RootStore from "../../../../store/RootStore";
+import {useNavigation} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, Text, View, ViewStyle} from 'react-native';
+import {ReefButton} from '../../../../components/ReefButton';
+import {Fish} from '../../../../store/FishStore';
+import RootStore from '../../../../store/RootStore';
 
 export const Fishes = () => {
   const navigation = useNavigation();
-  const { fishStore } = RootStore;
+  const {fishStore} = RootStore;
   const [fishes, setFishes] = useState<Fish[]>([]);
 
-  console.log("JULIEN ===> ", fishStore.fetchState);
+  console.log('JULIEN ===> ', fishStore.fetchState);
   useEffect(() => {
     const getFishes = async () => {
-      if (fishStore.updateState === "done") {
+      if (fishStore.updateState === 'done') {
         setFishes(fishStore.fishesData);
       }
-      if (fishStore.fetchState === "pending") {
+      if (fishStore.fetchState === 'pending') {
         await fishStore.fetchFishes();
       }
     };
@@ -25,15 +25,15 @@ export const Fishes = () => {
 
   return (
     <>
-      <View style={styles.buttonContainer}>
+      {/*       <View style={styles.buttonContainer}>
         <ReefButton
           size="medium"
           title="Mes poissons"
-          onPress={() => navigation.navigate("fishes")}
+          onPress={() => navigation.navigate('fishes')}
         />
       </View>
 
-      <Text>{`Je maintiens ${fishes.length ?? 0} pensionnaires`}</Text>
+      <Text>{`Je maintiens ${fishes.length ?? 0} pensionnaires`}</Text> */}
     </>
   );
 };
@@ -45,7 +45,7 @@ type Style = {
 const styles = StyleSheet.create<Style>({
   buttonContainer: {
     marginTop: 32,
-    alignSelf: "center",
-    flexDirection: "row",
+    alignSelf: 'center',
+    flexDirection: 'row',
   },
 });
