@@ -110,8 +110,6 @@ const DashboardScreen = observer(() => {
         <Notifications notifications={notifications} />
       )}
 
-      {member && tankStore.fetchState === 'done' && <Fishes />}
-
       {isNewTankFormVisible && (
         <TankFormModal
           showFormCallback={toggleTankForm}

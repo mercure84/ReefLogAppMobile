@@ -10,7 +10,6 @@ export const Fishes = () => {
   const {fishStore} = RootStore;
   const [fishes, setFishes] = useState<Fish[]>([]);
 
-  console.log('JULIEN ===> ', fishStore.fetchState);
   useEffect(() => {
     const getFishes = async () => {
       if (fishStore.updateState === 'done') {
