@@ -1,21 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from 'react';
 
-import {
-  View,
-  ViewStyle,
-  StyleSheet,
-  KeyboardAvoidingView,
-} from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { About } from "./components/About";
-import { Text } from "react-native-elements";
+import {View, ViewStyle, StyleSheet, KeyboardAvoidingView} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {About} from './components/About';
+import {Text} from 'react-native-elements';
 import {
   GoogleSignin,
   GoogleSigninButton,
-} from "@react-native-google-signin/google-signin";
-import { webClientGoogleSignId } from "../../constants/constants";
-import { googleSignIn, isSignedIn } from "../../services/googleSignin";
-import { useNavigation } from "@react-navigation/native";
+} from '@react-native-google-signin/google-signin';
+import {webClientGoogleSignId} from '../../constants/constants';
+import {googleSignIn, isSignedIn} from '../../services/googleSignin';
+import {useNavigation} from '@react-navigation/native';
 
 export const componentStatusDefault = {
   showSignup: false,
@@ -37,7 +32,7 @@ const WelcomeScreen = () => {
   const [isAboutVisible, setAboutVisible] = useState(false);
 
   useEffect(() => {
-    console.log("Google Signing is configuring");
+    console.log('Google Signing is configuring');
     GoogleSignin.configure({
       webClientId: webClientGoogleSignId,
     });
@@ -47,8 +42,9 @@ const WelcomeScreen = () => {
   const handlePressAbout = () => setAboutVisible(!isAboutVisible);
   const handleGoogleOnPress = async () => {
     const access = await googleSignIn();
-    if (access === "success") {
-      navigation.navigate("AuthentOk");
+    console.log('JULIEN ACESS ?? ', access);
+    if (access === 'success') {
+      navigation.navigate('AuthentOk');
     }
   };
 
@@ -58,9 +54,9 @@ const WelcomeScreen = () => {
         <Text h2>Log4Reef</Text>
       </View>
       <View style={styles.mainContainer}>
-        <View style={{ padding: 8 }}>
+        <View style={{padding: 8}}>
           <GoogleSigninButton
-            style={{ width: "100%", height: "30%" }}
+            style={{width: '100%', height: '30%'}}
             size={GoogleSigninButton.Size.Wide}
             color={GoogleSigninButton.Color.Dark}
             onPress={handleGoogleOnPress}
@@ -84,22 +80,22 @@ type Style = {
 
 const styles = StyleSheet.create<Style>({
   about: {
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
     margin: 8,
-    alignSelf: "center",
+    alignSelf: 'center',
   },
   page: {
-    alignItems: "center",
+    alignItems: 'center',
     flex: 1,
   },
   header: {
     marginBottom: 64,
-    alignItems: "center",
+    alignItems: 'center',
   },
   mainContainer: {
     padding: 24,
     flex: 1,
-    justifyContent: "space-around",
+    justifyContent: 'space-around',
   },
 });
 

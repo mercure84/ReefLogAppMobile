@@ -14,11 +14,19 @@
       },
       "oauth_client": [
         {
-          "client_id": "448183942719-ths0kmj0ngt7evn8ikhc0fen2e9tig1i.apps.googleusercontent.com",
+          "client_id": "448183942719-9hvi7918lsqd5hqebacee2c34i2h440d.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.centropygebicolor.log4reef",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+            "certificate_hash": "295b7327673b4adf5fc4210fe89c205c74bc4396"
+          }
+        },
+        {
+          "client_id": "448183942719-sohfm2ln6e4r7b56dkp4gjf3acklvq2a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.centropygebicolor.log4reef",
+            "certificate_hash": "29e3d5f7b7cf7dc1def1d1ee5a0e56b4b97b6280"
           }
         },
         {

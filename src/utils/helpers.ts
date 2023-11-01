@@ -16,7 +16,7 @@ export const formatStringToInteger = (text: string) => {
 };
 
 export const getPopulation = (
-  mainPopulation: Tank["mainPopulation"]
+  mainPopulation: Tank["mainPopulation"],
 ): string => {
   if (mainPopulation === "FISH_ONLY") {
     return "Fish only";
@@ -124,10 +124,10 @@ export const getMasseVolumique = (S: number, T: number, P: number) => {
 
 /// méthode pour l'envoi d'un mail
 export const handleSuggestEmail = async () => {
-  const to = "mercure8492@gmail.com";
+  const to = "julien.marcesse@gmail.com";
 
   const query = qs.stringify({
-    subject: "Une suggestion pour l'application Log4Reef",
+    subject: "Une suggestion ou un problème avec l'application Log4Reef",
   });
   const url = `mailto:${to}?${query}`;
 

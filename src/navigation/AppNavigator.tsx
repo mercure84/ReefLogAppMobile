@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Image } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import WelcomeScreen from "../screens/welcome/WelcomeScreen";
@@ -15,13 +15,10 @@ import { StoryNavigator } from "../screens/authentified/Story/StoryNavigator";
 import { DashBoardNavigator } from "../screens/authentified/DashBoard/DashBoardNavigator";
 import { ParameterNavigator } from "../screens/authentified/Parameters/ParameterNavigator";
 import RootStore from "../store/RootStore";
-import { ThemeContext } from "../../App";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 
 const TabNavigator = () => {
-  const { darkColor } = useContext(ThemeContext).theme.theme;
-
   return (
     <Tab.Navigator initialRouteName="DashBoard">
       <Tab.Screen

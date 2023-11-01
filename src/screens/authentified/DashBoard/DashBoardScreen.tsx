@@ -1,20 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
-import { View, StyleSheet, ViewStyle, Text } from "react-native";
-import { Header } from "react-native-elements";
-import { observer } from "mobx-react";
-import RootStore from "../../../store/RootStore";
-import { MainTankItem } from "./aquarium/MainTankItem";
-import { ReefButton } from "../../../components/ReefButton";
-import { ReefHeaderTitle } from "../../../components/ReefHeaderTitle";
-import { Member } from "../../../services/memberService";
-import { Tank } from "../../../store/TankStore";
-import { TankFormModal } from "./aquarium/TankFormModal";
-import { Alert } from "../../../store/AlertStore";
-import { Notifications } from "./notifications/Notifications";
-import { ReefActivityIndicator } from "../../../components/ReefActivityIndicator";
-import { ThemeContext } from "../../../../App";
-import { myThemes } from "../../../components/colors";
-import { Fishes } from "./fishes/Fishes";
+import React, {useContext, useEffect, useState} from 'react';
+import {View, StyleSheet, ViewStyle, Text} from 'react-native';
+import {Header} from 'react-native-elements';
+import {observer} from 'mobx-react';
+import RootStore from '../../../store/RootStore';
+import {MainTankItem} from './aquarium/MainTankItem';
+import {ReefButton} from '../../../components/ReefButton';
+import {ReefHeaderTitle} from '../../../components/ReefHeaderTitle';
+import {Member} from '../../../services/memberService';
+import {Tank} from '../../../store/TankStore';
+import {TankFormModal} from './aquarium/TankFormModal';
+import {Alert} from '../../../store/AlertStore';
+import {Notifications} from './notifications/Notifications';
+import {ReefActivityIndicator} from '../../../components/ReefActivityIndicator';
+import {ThemeContext} from '../../../../App';
+import {myThemes} from '../../../components/colors';
+import {Fishes} from './fishes/Fishes';
 
 const DashboardScreen = observer(() => {
   const [isNewTankFormVisible, setNewTankFormVisible] = useState(false);
@@ -23,16 +23,16 @@ const DashboardScreen = observer(() => {
   const [tankList, setTankList] = useState<Tank[]>([]);
   const [notifications, setNotifications] = useState<Alert[]>([]);
 
-  const { memberStore, tankStore, alertStore } = RootStore;
-  const { setTheme } = useContext(ThemeContext);
+  const {memberStore, tankStore, alertStore} = RootStore;
+  const {setTheme} = useContext(ThemeContext);
 
-  const { darkColor } = useContext(ThemeContext).theme.theme;
+  const {darkColor} = useContext(ThemeContext).theme.theme;
   useEffect(() => {
     const getMember = async () => {
-      if (memberStore.fetchState === "pending") {
+      if (memberStore.fetchState === 'pending') {
         await memberStore.fetchMember();
       }
-      if (memberStore.fetchState === "done") {
+      if (memberStore.fetchState === 'done') {
         setMember(memberStore.member);
       }
     };
@@ -45,29 +45,29 @@ const DashboardScreen = observer(() => {
 
   useEffect(() => {
     const getTank = async () => {
-      if (member && tankStore.fetchState === "pending") {
+      if (member && tankStore.fetchState === 'pending') {
         await tankStore.fetchTankList();
       }
-      if (tankStore.fetchState === "done") setTankList(tankStore.tankList);
+      if (tankStore.fetchState === 'done') setTankList(tankStore.tankList);
     };
     getTank();
   }, [member, tankStore.fetchState]);
 
   useEffect(() => {
     const getNotifications = async () => {
-      if (tankList && alertStore.notificationsFetchState === "pending") {
+      if (tankList && alertStore.notificationsFetchState === 'pending') {
         await alertStore.fetchNotifications();
       }
-      if (alertStore.notificationsFetchState === "done") {
+      if (alertStore.notificationsFetchState === 'done') {
         setNotifications(alertStore.notifications);
       }
     };
     getNotifications();
   }, [tankList, alertStore.notificationsFetchState]);
 
-  const isMemberLoading = memberStore.fetchState === "pending";
-  const isTankLoading = tankStore.fetchState === "pending";
-  const isNotifLoading = alertStore.notificationsFetchState === "pending";
+  const isMemberLoading = memberStore.fetchState === 'pending';
+  const isTankLoading = tankStore.fetchState === 'pending';
+  const isNotifLoading = alertStore.notificationsFetchState === 'pending';
   const newTankPress = () => setNewTankFormVisible(true);
   const toggleTankForm = () => {
     setTankItemVisible(!isTankItemVisible);
@@ -77,14 +77,14 @@ const DashboardScreen = observer(() => {
   return (
     <View style={styles.page}>
       <Header
-        containerStyle={{ backgroundColor: darkColor }}
+        containerStyle={{backgroundColor: darkColor}}
         centerComponent={<ReefHeaderTitle title="TABLEAU DE BORD" />}
       />
 
       {isMemberLoading ? (
         <ReefActivityIndicator />
       ) : (
-        <Text style={{ fontSize: 16 }}>
+        <Text style={{fontSize: 16}}>
           Bienvenue {member?.userName?.toLocaleUpperCase()} !
         </Text>
       )}
@@ -110,8 +110,6 @@ const DashboardScreen = observer(() => {
         <Notifications notifications={notifications} />
       )}
 
-      {member && tankStore.fetchState === "done" && <Fishes />}
-
       {isNewTankFormVisible && (
         <TankFormModal
           showFormCallback={toggleTankForm}
@@ -129,7 +127,7 @@ type Style = {
 
 const styles = StyleSheet.create<Style>({
   page: {
-    alignItems: "center",
+    alignItems: 'center',
   },
 });
 

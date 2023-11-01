@@ -1,6 +1,6 @@
-import { observable, action, runInAction, computed, toJS } from "mobx";
-import { RootStore as RootStoreType, WebServiceState } from "./RootStore";
-import { urlServer } from "../constants/constants";
+import {observable, action, runInAction, computed, toJS} from 'mobx';
+import {RootStore as RootStoreType, WebServiceState} from './RootStore';
+import {urlServer} from '../constants/constants';
 
 export type Alert = {
   id?: string;
@@ -11,17 +11,17 @@ export type Alert = {
 };
 
 export enum TypeTest {
-  TEMPERATURE = "TEMPERATURE",
-  SALINITY = "SALINITY",
-  ALCALINITY = "ALCALINITY",
-  PH = "PH",
-  CALCIUM = "CALCIUM",
-  MAGNESIUM = "MAGNESIUM",
-  AMMONIAC = "AMMONIAC",
-  NITRATES = "NITRATES",
-  NITRITES = "NITRITES",
-  PHOSPHATES = "PHOSPHATES",
-  SILICATES = "SILICATES",
+  TEMPERATURE = 'TEMPERATURE',
+  SALINITY = 'SALINITY',
+  ALCALINITY = 'ALCALINITY',
+  PH = 'PH',
+  CALCIUM = 'CALCIUM',
+  MAGNESIUM = 'MAGNESIUM',
+  AMMONIAC = 'AMMONIAC',
+  NITRATES = 'NITRATES',
+  NITRITES = 'NITRITES',
+  PHOSPHATES = 'PHOSPHATES',
+  SILICATES = 'SILICATES',
 }
 
 class AlertStore {
@@ -31,57 +31,57 @@ class AlertStore {
   }
 
   @observable alerts: Alert[] = [];
-  @observable fetchState: WebServiceState = "pending";
-  @observable updateState: WebServiceState = "done";
+  @observable fetchState: WebServiceState = 'pending';
+  @observable updateState: WebServiceState = 'done';
 
   //notifications = une alerte qui indique qu'un test est en retard
   @observable notifications: Alert[] = [];
-  @observable notificationsFetchState = "pending";
+  @observable notificationsFetchState = 'pending';
 
   @computed get alertsData() {
     return toJS(this.alerts).sort((a, b) =>
-      a.typeTest > b.typeTest ? 1 : b.typeTest > a.typeTest ? -1 : 0
+      a.typeTest > b.typeTest ? 1 : b.typeTest > a.typeTest ? -1 : 0,
     );
   }
 
   @computed get notificationsData() {
     return toJS(this.notifications).sort((a, b) =>
-      a.typeTest > b.typeTest ? 1 : b.typeTest > a.typeTest ? -1 : 0
+      a.typeTest > b.typeTest ? 1 : b.typeTest > a.typeTest ? -1 : 0,
     );
   }
 
   @action clear() {
     this.alerts = [];
-    this.fetchState = "pending";
+    this.fetchState = 'pending';
   }
 
   @action
   async fetchAlerts(): Promise<Alert[]> {
-    this.fetchState = "starting";
-    if (this.RootStore.tankStore.fetchState === "done") {
+    this.fetchState = 'starting';
+    if (this.RootStore.tankStore.fetchState === 'done') {
       try {
-        console.log("Store is fetching Alerts");
+        console.log('Store is fetching Alerts');
         const memberToken = this.RootStore.memberStore.token;
         const tankId = this.RootStore.tankStore.tankList[0]?.id;
-        const urlService = urlServer + "api/getAlerts/" + tankId;
+        const urlService = urlServer + 'api/getAlerts/' + tankId;
         const response = await fetch(urlService, {
-          method: "GET",
+          method: 'GET',
           headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: memberToken ?? "",
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: memberToken ?? '',
           },
         });
         const alerts: Promise<Alert[]> = response.json();
         runInAction(async () => {
           this.alerts = await alerts;
         });
-        console.log("Alerts has been fetched successful");
-        this.fetchState = "done";
+        console.log('Alerts has been fetched successful');
+        this.fetchState = 'done';
         return alerts;
       } catch (error) {
         console.log(error);
-        this.fetchState = "error";
+        this.fetchState = 'error';
       }
     }
     return [];
@@ -89,42 +89,47 @@ class AlertStore {
 
   @action
   async fetchNotifications(): Promise<Alert[]> {
+    if (this.RootStore.tankStore.tankList.length === 0) {
+      this.notificationsFetchState = 'done';
+      console.log('NO TANK');
+      return [];
+    }
     if (
       this.RootStore.tankStore.tankList.length > 0 &&
-      this.notificationsFetchState !== "starting"
+      this.notificationsFetchState !== 'starting'
     ) {
-      this.notificationsFetchState = "starting";
+      this.notificationsFetchState = 'starting';
       try {
         const memberToken = this.RootStore.memberStore.token;
         const tankId = this.RootStore.tankStore?.tankList[0]?.id;
-        console.log("Store is fetching Notifications for thank n° ", tankId);
+        console.log('Store is fetching Notifications for thank n° ', tankId);
         if (!tankId) {
-          console.log("No tank ==> return empty notifications");
+          console.log('No tank ==> return empty notifications');
           return [];
         }
-        const urlService = urlServer + "api/showAlerts/" + tankId;
+        const urlService = urlServer + 'api/showAlerts/' + tankId;
         const response = await fetch(urlService, {
-          method: "GET",
+          method: 'GET',
           headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: memberToken ?? "",
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: memberToken ?? '',
           },
         });
         const notifications: Promise<Alert[]> = response.json();
         runInAction(async () => {
           this.notifications = await notifications;
           console.log(
-            "notifications success : ",
+            'notifications success : ',
             this.notifications.length,
-            " alertes trouvées."
+            ' alertes trouvées.',
           );
         });
-        this.notificationsFetchState = "done";
+        this.notificationsFetchState = 'done';
         return notifications;
       } catch (error) {
         console.log(error);
-        this.notificationsFetchState = "error";
+        this.notificationsFetchState = 'error';
       }
     }
     return [];
@@ -132,8 +137,8 @@ class AlertStore {
 
   @action
   saveAlerts = async (alerts: Alert[]) => {
-    this.updateState = "pending";
-    const urlService = urlServer + "api/addAlertsCollection";
+    this.updateState = 'pending';
+    const urlService = urlServer + 'api/addAlertsCollection';
     const alertsForm = {
       aquariumId: this.RootStore.tankStore.tankList[0].id,
       alerts: alerts,
@@ -141,16 +146,16 @@ class AlertStore {
     try {
       const memberToken = this.RootStore.memberStore.token;
       const response = await fetch(urlService, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: memberToken ?? "",
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: memberToken ?? '',
         },
         body: JSON.stringify(alertsForm),
       });
       const dataResponse = response.json();
-      console.log("Alertes enregistrées");
+      console.log('Alertes enregistrées');
       this.refresh();
       return dataResponse;
     } catch (error) {
@@ -161,9 +166,9 @@ class AlertStore {
   @action
   refresh = () => {
     this.alerts = [];
-    this.updateState = "done";
-    this.fetchState = "pending";
-    this.notificationsFetchState = "pending";
+    this.updateState = 'done';
+    this.fetchState = 'pending';
+    this.notificationsFetchState = 'pending';
   };
 }
 
